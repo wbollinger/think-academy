@@ -87,7 +87,7 @@ public class Robot {
 	}
 
 	public void setDir(int direction) {
-		debugln("setDir(" + direction + ")");
+		//debugln("setDir(" + direction + ")");
 		this.dir = direction;
 	}
 
