@@ -18,13 +18,10 @@ public class Robot {
 
 	String name;
 
-	double wheelDiameter = 5.6; // both in cm
-	double robotDiameter = 13.6;
-
-	// final double angleError =
-	// 1.0+((360.0-280.0)/360.0)+((360.0-354.0)/360.0)+((360.0-365.0)/360.0);
-	// at full voltage, gives accurate turns at 40 power.
-	double angleError = (360.0 / 305.0);
+	// Set in constructor; depends on robot name
+	double wheelDiameter; // both in cm
+	double robotDiameter;
+	double angleError;;
 
 	NXTMotor motRight;
 	NXTMotor motLeft;
@@ -116,6 +113,11 @@ public class Robot {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
 			angleError = 1.0;
+		} else if (name.equals("Dr_Lakata")) {
+			wheelDiameter = 5.6;
+			robotDiameter = 15.9;
+			angleError = 1.0;
+			compass = new CompassHTSensor(SensorPort.S3);
 		} else {
 			// defaults for Jeremy?
 			wheelDiameter = 5.6;
@@ -136,7 +138,7 @@ public class Robot {
 		lightLeft = new LightSensor(SensorPort.S1);
 		lightRight = new LightSensor(SensorPort.S2);
 
-		touch = new TouchSensor(SensorPort.S3);
+		// touch = new TouchSensor(SensorPort.S3);
 		// compass = new CompassHTSensor(SensorPort.S3);
 
 		ultrasonic = new UltrasonicSensor(SensorPort.S4);
@@ -425,7 +427,6 @@ public class Robot {
 	}
 
 	public void goRight() {
-		debugln("goRight");
 		faceDir(0);
 		goForward();
 	}

@@ -237,6 +237,8 @@ public class StateCommand extends State {
 			// clear flag so that exit will really exit
 			isCommandLoopRunning = false;
 			robot.changeState(StateExit.getInstance());
+		} else if (command.equalsIgnoreCase("shutdown")) {
+			NXT.shutDown();
 		} else if (command.equalsIgnoreCase("mem")) {
 			debug(Runtime.getRuntime().freeMemory() + " free\n");
 			debug(Runtime.getRuntime().totalMemory() + " total\n");
