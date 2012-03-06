@@ -41,8 +41,9 @@ public class StateGridRun extends State {
 			left = robot.map.grid[robot.getX() - 1][robot.getY()];
 			upLeft = robot.map.grid[robot.getX() - 1][robot.getY() + 1];
 
-			debugln("" + up + " " + upRight + " " + right + " " + downRight + " " + 
-					down + " " + downLeft + " " + left + " " + upLeft);
+			//debugln("" + up + " " + upRight + " " + right + " " + downRight + " " + 
+			// + " " + downLeft + " " + left + " " + upLeft);
+			
 			if (up == 0) {
 				robot.goUp();
 				robot.sleep(1000);
