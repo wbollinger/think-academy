@@ -166,140 +166,139 @@ public class StateCommand extends State {
 				double distance = parseDouble(arg0);
 				robot.forwardLookForLine(distance);
 				return;
-
-			} else if (command.equalsIgnoreCase("goUpRight")) {
-				robot.goUpRight();
-			} else if (command.equalsIgnoreCase("goRight")) {
-				robot.goRight();
-			} else if (command.equalsIgnoreCase("goDownRight")) {
-				robot.goDownRight();
-			} else if (command.equalsIgnoreCase("goDown")) {
-				robot.goDown();
-			} else if (command.equalsIgnoreCase("goDownLeft")) {
-				robot.goDownLeft();
-			} else if (command.equalsIgnoreCase("goLeft")) {
-				robot.goLeft();
-			} else if (command.equalsIgnoreCase("goUpLeft")) {
-				robot.goUpLeft();
-			} else if (command.equalsIgnoreCase("sonic")) {
-				int dist = robot.ultrasonic.getDistance();
-				debugln("" + dist);
-			} else if (command.equalsIgnoreCase("lightLeft")) {
-				int val = robot.getLightLeft();
-				debugln("" + val);
-			} else if (command.equalsIgnoreCase("lightRight")) {
-				int val = robot.getLightRight();
-				debugln("" + val);
-			} else if (command.equalsIgnoreCase("comp")) {
-				float deg = robot.getDegrees();
-				debugln("" + deg);
-				// } else if (command.equalsIgnoreCase("cart")) {
-				// float deg = robot.compass.getDegreesCartesian();
-				// debugln("" + deg);
-				// } else if (command.equalsIgnoreCase("resetCart")) {
-				// robot.compass.resetCartesianZero();
-				// float deg = robot.compass.getDegreesCartesian();
-				// debugln("" + deg);
-			} else if (command.equalsIgnoreCase("rDiam")) {
-				double diam = parseDouble(arg0);
-				if (diam > 0) {
-					robot.setRobotDiameter(diam);
-				}
-				debugln("robot diam = " + robot.getRobotDiameter());
-			} else if (command.equalsIgnoreCase("wDiam")) {
-				double diam = parseDouble(arg0);
-				if (diam > 0) {
-					robot.setWheelDiameter(diam);
-				}
-				debugln("wheel diam = " + robot.getWheelDiameter());
-			} else if (command.equalsIgnoreCase("resetGrid")) {
-				robot.resetGrid();
-			} else if (command.equalsIgnoreCase("dir")) {
-				int newdir = parseInt(arg0);
-				if (newdir >= 0) {
-					robot.setDir(newdir);
-				}
-				debugln("dir = " + robot.getDir());
-			} else if (command.equalsIgnoreCase("thresh")) {
-				int newthresh = parseInt(arg0);
-				if (newthresh >= 0) {
-					StateLineFollowSingle.getInstance().setThreshold(newthresh);
-					debugln("threshold = " + newthresh);
-				}
-
-			} else if (command.equalsIgnoreCase("x")) {
-				int newX = parseInt(arg0);
-				if (newX >= 0) {
-					robot.setX(newX);
-				}
-				debugln("X = " + robot.getX());
-			} else if (command.equalsIgnoreCase("y")) {
-				int newY = parseInt(arg0);
-				if (newY >= 0) {
-					robot.setX(newY);
-				}
-				debugln("Y = " + robot.getY());
-			} else if (command.equalsIgnoreCase("status")) {
-				debugln(" dir = " + robot.getDir());
-				debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
-				debugln("dist = " + robot.ultrasonic.getDistance());
-				debugln("comp = " + robot.getDegrees());
-			} else if (command.equalsIgnoreCase("sweep")) {
-				robot.changeState(StateCompositeSweep.getInstance());
-			} else if (command.equalsIgnoreCase("bat")) {
-				debug("Battery: " + Battery.getVoltage() + "\n");
-			} else if (command.equalsIgnoreCase("echo")) {
-				for (i = 0; i < args.length; i++) {
-					if (i > 0)
-						debug(" ");
-					debug(args[i]);
-				}
-				debug("\n");
-			} else if (command.equalsIgnoreCase("exit")
-					| command.equalsIgnoreCase("quit")) {
-				// clear flag so that exit will really exit
-				isCommandLoopRunning = false;
-				robot.changeState(StateExit.getInstance());
-			} else if (command.equalsIgnoreCase("shutdown")) {
-				NXT.shutDown();
-			} else if (command.equalsIgnoreCase("mem")) {
-				debug(Runtime.getRuntime().freeMemory() + " free\n");
-				debug(Runtime.getRuntime().totalMemory() + " total\n");
-				debug(File.freeMemory() + " disk\n");
-			} else if (command.equalsIgnoreCase("prompt")) {
-				showPrompt = !showPrompt;
-			} else if (command.equalsIgnoreCase("debug")) {
-				debug("Not implemented\n");
-			} else if (command.equalsIgnoreCase("play")) {
-				int freq = parseInt(arg0);
-				int time = 200;
-				if (args.length > 1) {
-					time = parseInt(arg1);
-				}
-				Sound.playTone(freq, time);
-			} else if (command.equalsIgnoreCase("prop")) {
-				Properties props = Settings.getProperties();
-				if (args.length > 0) {
-					debugln(props.getProperty(arg0));
-				} else {
-					Enumeration<?> e = props.propertyNames();
-					while (e.hasMoreElements()) {
-						String key = (String) e.nextElement();
-						debugln(key + " = " + props.getProperty(key));
-					}
-				}
-			} else {
-				debug("?\n");
-				// // 4.5 Check if it is a filename:
-				// File f = new File(command);
-				// if (f.exists()) {
-				// debug(command + " exists\n");
-				// f.exec();
-				// } else {
-				// // Unrecognized command output error message
-				// debug(command + " unrecognized\n");
-				// }
 			}
+		} else if (command.equalsIgnoreCase("goUpRight")) {
+			robot.goUpRight();
+		} else if (command.equalsIgnoreCase("goRight")) {
+			robot.goRight();
+		} else if (command.equalsIgnoreCase("goDownRight")) {
+			robot.goDownRight();
+		} else if (command.equalsIgnoreCase("goDown")) {
+			robot.goDown();
+		} else if (command.equalsIgnoreCase("goDownLeft")) {
+			robot.goDownLeft();
+		} else if (command.equalsIgnoreCase("goLeft")) {
+			robot.goLeft();
+		} else if (command.equalsIgnoreCase("goUpLeft")) {
+			robot.goUpLeft();
+		} else if (command.equalsIgnoreCase("sonic")) {
+			int dist = robot.ultrasonic.getDistance();
+			debugln("" + dist);
+		} else if (command.equalsIgnoreCase("lightLeft")) {
+			int val = robot.getLightLeft();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("lightRight")) {
+			int val = robot.getLightRight();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("comp")) {
+			float deg = robot.getDegrees();
+			debugln("" + deg);
+			// } else if (command.equalsIgnoreCase("cart")) {
+			// float deg = robot.compass.getDegreesCartesian();
+			// debugln("" + deg);
+			// } else if (command.equalsIgnoreCase("resetCart")) {
+			// robot.compass.resetCartesianZero();
+			// float deg = robot.compass.getDegreesCartesian();
+			// debugln("" + deg);
+		} else if (command.equalsIgnoreCase("rDiam")) {
+			double diam = parseDouble(arg0);
+			if (diam > 0) {
+				robot.setRobotDiameter(diam);
+			}
+			debugln("robot diam = " + robot.getRobotDiameter());
+		} else if (command.equalsIgnoreCase("wDiam")) {
+			double diam = parseDouble(arg0);
+			if (diam > 0) {
+				robot.setWheelDiameter(diam);
+			}
+			debugln("wheel diam = " + robot.getWheelDiameter());
+		} else if (command.equalsIgnoreCase("resetGrid")) {
+			robot.resetGrid();
+		} else if (command.equalsIgnoreCase("dir")) {
+			int newdir = parseInt(arg0);
+			if (newdir >= 0) {
+				robot.setDir(newdir);
+			}
+			debugln("dir = " + robot.getDir());
+		} else if (command.equalsIgnoreCase("thresh")) {
+			int newthresh = parseInt(arg0);
+			if (newthresh >= 0) {
+				StateLineFollowSingle.getInstance().setThreshold(newthresh);
+				debugln("threshold = " + newthresh);
+			}
+
+		} else if (command.equalsIgnoreCase("x")) {
+			int newX = parseInt(arg0);
+			if (newX >= 0) {
+				robot.setX(newX);
+			}
+			debugln("X = " + robot.getX());
+		} else if (command.equalsIgnoreCase("y")) {
+			int newY = parseInt(arg0);
+			if (newY >= 0) {
+				robot.setX(newY);
+			}
+			debugln("Y = " + robot.getY());
+		} else if (command.equalsIgnoreCase("status")) {
+			debugln(" dir = " + robot.getDir());
+			debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
+			debugln("dist = " + robot.ultrasonic.getDistance());
+			debugln("comp = " + robot.getDegrees());
+		} else if (command.equalsIgnoreCase("sweep")) {
+			robot.changeState(StateCompositeSweep.getInstance());
+		} else if (command.equalsIgnoreCase("bat")) {
+			debug("Battery: " + Battery.getVoltage() + "\n");
+		} else if (command.equalsIgnoreCase("echo")) {
+			for (i = 0; i < args.length; i++) {
+				if (i > 0)
+					debug(" ");
+				debug(args[i]);
+			}
+			debug("\n");
+		} else if (command.equalsIgnoreCase("exit")
+				| command.equalsIgnoreCase("quit")) {
+			// clear flag so that exit will really exit
+			isCommandLoopRunning = false;
+			robot.changeState(StateExit.getInstance());
+		} else if (command.equalsIgnoreCase("shutdown")) {
+			NXT.shutDown();
+		} else if (command.equalsIgnoreCase("mem")) {
+			debug(Runtime.getRuntime().freeMemory() + " free\n");
+			debug(Runtime.getRuntime().totalMemory() + " total\n");
+			debug(File.freeMemory() + " disk\n");
+		} else if (command.equalsIgnoreCase("prompt")) {
+			showPrompt = !showPrompt;
+		} else if (command.equalsIgnoreCase("debug")) {
+			debug("Not implemented\n");
+		} else if (command.equalsIgnoreCase("play")) {
+			int freq = parseInt(arg0);
+			int time = 200;
+			if (args.length > 1) {
+				time = parseInt(arg1);
+			}
+			Sound.playTone(freq, time);
+		} else if (command.equalsIgnoreCase("prop")) {
+			Properties props = Settings.getProperties();
+			if (args.length > 0) {
+				debugln(props.getProperty(arg0));
+			} else {
+				Enumeration<?> e = props.propertyNames();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					debugln(key + " = " + props.getProperty(key));
+				}
+			}
+		} else {
+			debug("?\n");
+			// // 4.5 Check if it is a filename:
+			// File f = new File(command);
+			// if (f.exists()) {
+			// debug(command + " exists\n");
+			// f.exec();
+			// } else {
+			// // Unrecognized command output error message
+			// debug(command + " unrecognized\n");
+			// }
 		}
 	}
 
