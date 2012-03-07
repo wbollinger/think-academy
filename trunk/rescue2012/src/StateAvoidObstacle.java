@@ -14,8 +14,11 @@ public class StateAvoidObstacle extends State {
 	}
 
 	public void enter(Robot robot) {
-		//debug("OBENT");
+		robot.leftBlack = false;
+		robot.rightBlack = false;
+		debug("OBENT");
 		robot.stop();
+
 	}
 
 	public void execute(Robot robot) {
@@ -23,13 +26,12 @@ public class StateAvoidObstacle extends State {
 		Obstacle obstacle = new Obstacle(13, 13);
 
 		robot.backward();
-		robot.sleep(1000);
-
-		if (robot.leftSideCheck()) {
-			robot.squareLeft(obstacle);
-		} else {
-			robot.squareRight(obstacle);
-		}
+		robot.sleep(500);
+		
+		if (robot.leftSideCheck())
+		{robot.squareLeft(obstacle);}
+		else
+		{robot.squareRight(obstacle);}
 		robot.changeState(StateExit.getInstance());
 	}
 

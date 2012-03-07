@@ -22,27 +22,22 @@ public class Robot {
 	double wheelDiameter; // both in cm
 	double robotDiameter;
 	double angleError;;
-
+	boolean leftBlack = false;
+	boolean rightBlack = false;
 	NXTMotor motRight;
 	NXTMotor motLeft;
-
 	TouchSensor touch;
-
 	LightSensor lightLeft;
 	LightSensor lightRight;
 	UltrasonicSensor ultrasonic;
 	CompassHTSensor compass = null;
-
 	public int baseMotorPower;
-
 	State current_state;
 	boolean stepMode;
-
 	Map2D map;
 	private int x;
 	private int y;
 	private int dir;
-
 	BTConnection btc;
 	DataInputStream inStream;
 	DataOutputStream outStream;
@@ -84,19 +79,19 @@ public class Robot {
 	}
 
 	public void setDir(int direction) {
-		//debugln("setDir(" + direction + ")");
-		while(direction < 0) {
+		// debugln("setDir(" + direction + ")");
+		while (direction < 0) {
 			direction += 360;
 		}
 		this.dir = direction;
 	}
-	
+
 	public int getLightLeft() {
 		return (lightLeft.getLightValue());
 	}
-	
+
 	public int getLightRight() {
-		return(lightRight.getLightValue());
+		return (lightRight.getLightValue());
 	}
 
 	public static Robot getRobot() {
@@ -257,7 +252,7 @@ public class Robot {
 		}
 		motRight.stop();
 		motLeft.stop();
-		setDir((int)(getDir()-degrees));
+		setDir((int) (getDir() - degrees));
 	}
 
 	public void left(double degrees) {
@@ -278,7 +273,7 @@ public class Robot {
 		}
 		motLeft.stop();
 		motRight.stop();
-		setDir((int)(getDir()+degrees));
+		setDir((int) (getDir() + degrees));
 	}
 
 	public void forward(double distance) {
@@ -381,7 +376,7 @@ public class Robot {
 				right(Math.abs(diff));
 			}
 		}
-		//setDir(n);
+		// setDir(n);
 	}
 
 	private boolean goForward() {
@@ -506,22 +501,117 @@ public class Robot {
 	}
 
 	public void squareLeft(Obstacle obstacle) {
+		int ff = 5;
 		left(90);
-		forward(obstacle.getxLength());
+		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
+			changeState(StateFindLine.getInstance());
+			return;
+		}
 		right(90);
-		forward(obstacle.getyLength());
+		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
 		right(90);
-		forward(obstacle.getxLength());
-		left(90);
+		if(forwardLookForLine(obstacle.getxLength() + ff)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
+		right(90);
+		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
+		right(90);
+		if(forwardLookForLine(obstacle.getxLength() / 2 + ff)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
 	}
 
 	public void squareRight(Obstacle obstacle) {
+		int ff = 5;
 		right(90);
-		forward(obstacle.getxLength());
+		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
+			changeState(StateFindLine.getInstance());
+			return;
+		}
 		left(90);
-		forward(obstacle.getyLength());
+		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
 		left(90);
-		forward(obstacle.getxLength());
-		right(90);
+		if(forwardLookForLine(obstacle.getxLength() + ff)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
+		left(90);
+		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
+		left(90);
+		if(forwardLookForLine(obstacle.getxLength() / 2 + ff)){
+			changeState(StateFindLine.getInstance());
+			return;
+		}
+
+	}
+
+	public boolean forwardLookForLine(double distance) {
+		// Makes the robot go forward for the given distance, and stop if it
+		// sees a line
+
+		resetAngle();
+		while ((motLeft.getTachoCount() * Math.PI / 180) * (wheelDiameter / 2) < distance) {
+
+			if (leftBlack != true) {
+				if (lightLeft.getLightValue() < 45) {
+					leftBlack = true;
+				}
+			}
+
+			if (rightBlack != true) {
+				if (lightRight.getLightValue() < 45) {
+					rightBlack = true;
+				}
+			}
+
+			if (leftBlack == true && rightBlack == true) {
+				stop();
+				return true;
+			}
+
+			double kP = 1;
+			int leftAngle;
+			int rightAngle;
+			int error;
+
+			forward();
+
+			leftAngle = motLeft.getTachoCount();
+			rightAngle = motRight.getTachoCount();
+			error = leftAngle - rightAngle;
+			if (leftBlack == true || rightBlack == true) {
+				if (rightBlack == true) {
+					motRight.setPower(-70);
+				} else {
+					motRight.setPower(50);
+				}
+				if (leftBlack == true) {
+					motLeft.setPower(-70);
+				} else {
+					motLeft.setPower(50);
+				}
+			} else {
+				motRight.setPower((int) (baseMotorPower + (error * kP)));
+				motLeft.setPower((int) (baseMotorPower - (error * kP)));
+			}
+		}
+
+		stop();
+		resetAngle();
+		return false;
 	}
 }
