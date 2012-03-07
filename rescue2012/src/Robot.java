@@ -102,7 +102,7 @@ public class Robot {
 	}
 
 	private Robot() {
-		// check which robot this and set diameters
+		// check which robot this and set diameters, sensors
 		Properties props = Settings.getProperties();
 		name = props.getProperty("lejos.usb_name");
 		if (name.equals("NXTChris")) {
@@ -115,6 +115,7 @@ public class Robot {
 			wheelDiameter = 8.16;
 			robotDiameter = 16.4;
 			angleError = 1.0;
+			compass = new CompassHTSensor(SensorPort.S3);
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
@@ -123,7 +124,8 @@ public class Robot {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
 			angleError = 1.0;
-			compass = new CompassHTSensor(SensorPort.S3);
+			touch = new TouchSensor(SensorPort.S3);
+			//compass = new CompassHTSensor(SensorPort.S3);
 		} else {
 			// defaults for Jeremy?
 			wheelDiameter = 5.6;
@@ -144,7 +146,8 @@ public class Robot {
 		lightLeft = new LightSensor(SensorPort.S1);
 		lightRight = new LightSensor(SensorPort.S2);
 
-		touch = new TouchSensor(SensorPort.S3);
+		// Touch and Compass sensor are different depending on robot name
+		// touch = new TouchSensor(SensorPort.S3);
 		// compass = new CompassHTSensor(SensorPort.S3);
 
 		ultrasonic = new UltrasonicSensor(SensorPort.S4);
