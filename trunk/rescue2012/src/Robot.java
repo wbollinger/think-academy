@@ -85,7 +85,18 @@ public class Robot {
 
 	public void setDir(int direction) {
 		//debugln("setDir(" + direction + ")");
+		while(direction < 0) {
+			direction += 360;
+		}
 		this.dir = direction;
+	}
+	
+	public int getLightLeft() {
+		return (lightLeft.getLightValue());
+	}
+	
+	public int getLightRight() {
+		return(lightRight.getLightValue());
 	}
 
 	public static Robot getRobot() {
@@ -138,7 +149,7 @@ public class Robot {
 		lightLeft = new LightSensor(SensorPort.S1);
 		lightRight = new LightSensor(SensorPort.S2);
 
-		// touch = new TouchSensor(SensorPort.S3);
+		touch = new TouchSensor(SensorPort.S3);
 		// compass = new CompassHTSensor(SensorPort.S3);
 
 		ultrasonic = new UltrasonicSensor(SensorPort.S4);
@@ -246,6 +257,7 @@ public class Robot {
 		}
 		motRight.stop();
 		motLeft.stop();
+		setDir((int)(getDir()-degrees));
 	}
 
 	public void left(double degrees) {
@@ -266,27 +278,7 @@ public class Robot {
 		}
 		motLeft.stop();
 		motRight.stop();
-	}
-
-	public void turn(double degrees) { // positive # means right turn, negative
-										// # means left turn
-		motRight.setPower(baseMotorPower); // used when I don't want to think
-											// which direction I'm turning
-		motLeft.setPower(baseMotorPower);
-		motRight.stop();
-		motLeft.stop();
-
-		double t_init, t_final;
-		t_init = motLeft.getTachoCount();
-		t_final = (int) (degrees * angleError)
-				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-
-		while (motLeft.getTachoCount() < t_final) {
-			motRight.backward();
-			motLeft.forward();
-		}
-		motRight.stop();
-		motLeft.stop();
+		setDir((int)(getDir()+degrees));
 	}
 
 	public void forward(double distance) {
@@ -313,6 +305,7 @@ public class Robot {
 
 	public void backward(double distance) {
 		// Makes the robot go backward for the given distance
+		resetAngle();
 		while ((motLeft.getTachoCount() * Math.PI / 180 * (getWheelDiameter() / 2)) > -distance) {
 			double kP = 1;
 			int leftAngle;
@@ -388,7 +381,7 @@ public class Robot {
 				right(Math.abs(diff));
 			}
 		}
-		setDir(n);
+		//setDir(n);
 	}
 
 	private boolean goForward() {

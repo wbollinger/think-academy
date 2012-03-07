@@ -130,6 +130,8 @@ public class StateCommand extends State {
 			robot.changeState(StateGridRun.getInstance());
 		} else if (command.equalsIgnoreCase("avoid")) {
 			robot.changeState(StateAvoidObstacle.getInstance());
+		} else if (command.equalsIgnoreCase("line")) {
+			robot.changeState(StateLineFollowSingle.getInstance());
 		} else if (command.equalsIgnoreCase("right")) {
 			double degrees = parseDouble(arg0);
 			robot.right(degrees);
@@ -174,6 +176,12 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("sonic")) {
 			int dist = robot.ultrasonic.getDistance();
 			debugln("" + dist);
+		} else if (command.equalsIgnoreCase("lightLeft")) {
+			int val = robot.getLightLeft();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("lightRight")) {
+			int val = robot.getLightRight();
+			debugln("" + val);
 		} else if (command.equalsIgnoreCase("comp")) {
 			float deg = robot.getDegrees();
 			debugln("" + deg);
@@ -204,6 +212,13 @@ public class StateCommand extends State {
 				robot.setDir(newdir);
 			}
 			debugln("dir = " + robot.getDir());
+		} else if (command.equalsIgnoreCase("thresh")) {
+			int newthresh = parseInt(arg0);
+			if (newthresh >= 0) {
+				StateLineFollowSingle.getInstance().setThreshold(newthresh);
+				debugln("threshold = " + newthresh);
+			}
+			
 		} else if (command.equalsIgnoreCase("x")) {
 			int newX = parseInt(arg0);
 			if (newX >= 0) {
