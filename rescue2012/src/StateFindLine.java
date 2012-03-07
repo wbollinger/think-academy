@@ -1,0 +1,33 @@
+import lejos.*;
+import lejos.nxt.LCD;
+import lejos.nxt.Sound;
+
+//------------------------------------------------------------------------
+//  robot starting state - decides what to do when robot is turned on
+//------------------------------------------------------------------------
+public class StateFindLine extends State {
+
+	static private StateFindLine instance = new StateFindLine();
+
+	private StateFindLine() {
+	}
+
+	// this is a singleton
+	public static StateFindLine getInstance() {
+		return instance;
+	}
+
+	public void enter(Robot robot) {
+		LCD.drawString("Robot: FindLine enter",0,0);
+		robot.stop();
+		Sound.beepSequence();
+	}
+
+	public void execute(Robot robot) {
+
+	}
+
+	public void exit(Robot robot) {
+		//robot.changeState(StateLineFollower.getInstance());
+	}
+}

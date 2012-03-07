@@ -16,12 +16,14 @@ public class StateForward extends State {
 
 	public void enter(Robot robot) {
 		debug("StForward enter\n");
+		robot.forward();
 	}
 
 	public void execute(Robot robot) {
-		debug("StForward execute\n");
-		robot.forward(50);
-		robot.changeState(StateExit.getInstance());
+		while (!robot.touch.isPressed()) {
+
+		}
+		robot.changeState(StateAvoidObstacle.getInstance());
 	}
 
 	public void exit(Robot robot) {
