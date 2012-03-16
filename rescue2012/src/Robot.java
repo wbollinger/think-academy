@@ -83,6 +83,9 @@ public class Robot {
 		while (direction < 0) {
 			direction += 360;
 		}
+		while (direction > 360) {
+			direction -= 360;
+		}
 		this.dir = direction;
 	}
 
@@ -402,7 +405,7 @@ public class Robot {
 			forward(factor * Map2D.SCALE);
 			x = nextX;
 			y = nextY;
-			map.grid[x][y] = 8;
+			map.grid[x][y] = Map2D.ROBOT;
 			return true;
 		} else {
 			stop();
