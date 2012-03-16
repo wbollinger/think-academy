@@ -84,7 +84,6 @@ public class StateGridRun extends State {
 			robot.sleep(100);
 			Sound.playTone(330, 100);
 			robot.sleep(100);
-			
 			robot.changeState(StateExit.getInstance());
 		}
 		
