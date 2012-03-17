@@ -21,10 +21,13 @@ public class StateFindLine extends State {
 		LCD.drawString("Robot: FindLine enter",0,0);
 		robot.stop();
 		Sound.beepSequence();
+		robot.forward(6);
+	
 	}
 
 	public void execute(Robot robot) {
-
+		robot.findLineRight();
+		robot.changeState(StateLineFollowSingle.getInstance());
 	}
 
 	public void exit(Robot robot) {

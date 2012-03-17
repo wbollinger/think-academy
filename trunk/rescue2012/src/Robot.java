@@ -24,6 +24,7 @@ public class Robot {
 	double angleError;;
 	boolean leftBlack = false;
 	boolean rightBlack = false;
+
 	NXTMotor motRight;
 	NXTMotor motLeft;
 	TouchSensor touch;
@@ -514,22 +515,22 @@ public class Robot {
 			return;
 		}
 		right(90);
-		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		right(90);
-		if(forwardLookForLine(obstacle.getxLength() + ff)){
+		if (forwardLookForLine(obstacle.getxLength() + ff)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		right(90);
-		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		right(90);
-		if(forwardLookForLine(obstacle.getxLength() / 2 + ff)){
+		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
@@ -543,22 +544,22 @@ public class Robot {
 			return;
 		}
 		left(90);
-		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		left(90);
-		if(forwardLookForLine(obstacle.getxLength() + ff)){
+		if (forwardLookForLine(obstacle.getxLength() + ff)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		left(90);
-		if(forwardLookForLine(obstacle.getyLength() + ff + 10)){
+		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		left(90);
-		if(forwardLookForLine(obstacle.getxLength() / 2 + ff)){
+		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
 			changeState(StateFindLine.getInstance());
 			return;
 		}
@@ -619,5 +620,25 @@ public class Robot {
 		stop();
 		resetAngle();
 		return false;
+	}
+
+	public void findLineRight() {
+		// makes the robot turn left, look to reposition itself so as to resume
+		// normal line following.
+		int logic = 0;
+		robot.motRight.backward();
+		robot.motLeft.forward();
+		while (logic != 2) {
+			if (logic == 0) {
+				if (lightLeft.getLightValue() < 45) {
+					logic = 1;
+				}
+			} else if (logic == 1)
+				if (lightLeft.getLightValue() > 45) {
+					logic = 2;
+				}
+		}
+		robot.sleep(30);
+		robot.stop();
 	}
 }
