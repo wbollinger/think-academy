@@ -130,10 +130,16 @@ public class StateCommand extends State {
 			robot.changeState(StateGridRun.getInstance());
 		} else if (command.equalsIgnoreCase("avoid")) {
 			robot.changeState(StateAvoidObstacle.getInstance());
-		} else if (command.equalsIgnoreCase("david")) {
+		}
+		// David's Stuff
+		else if (command.equalsIgnoreCase("david")) {
 			robot.changeState(StateForward.getInstance());
+		} else if (command.equalsIgnoreCase("FindLine")) {
+			robot.changeState(StateFindLine.getInstance());
 		} else if (command.equalsIgnoreCase("line")) {
 			robot.changeState(StateLineFollowSingle.getInstance());
+			//
+
 		} else if (command.equalsIgnoreCase("right")) {
 			double degrees = parseDouble(arg0);
 			robot.right(degrees);
