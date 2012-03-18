@@ -32,7 +32,7 @@ public class StateAvoidObstacle extends State {
 		{robot.squareLeft(obstacle);}
 		else
 		{robot.squareRight(obstacle);}
-		robot.changeState(StateExit.getInstance());
+		robot.changeState(StateFindLine.getInstance());
 	}
 
 	public void exit(Robot robot) {
