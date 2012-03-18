@@ -197,7 +197,7 @@ public class StateCommand extends State {
 			int val = robot.getLightRight();
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("comp")) {
-			float deg = robot.getDegrees();
+			float deg = robot.getHeading();
 			debugln("" + deg);
 			// } else if (command.equalsIgnoreCase("cart")) {
 			// float deg = robot.compass.getDegreesCartesian();
@@ -206,7 +206,11 @@ public class StateCommand extends State {
 			// robot.compass.resetCartesianZero();
 			// float deg = robot.compass.getDegreesCartesian();
 			// debugln("" + deg);
-		} else if (command.equalsIgnoreCase("rDiam")) {
+		} else if (command.equalsIgnoreCase("newNorth")) {
+			robot.setNewNorth();
+			debugln("New north set to " + robot.newNorth );
+			
+		}else if (command.equalsIgnoreCase("rDiam")) {
 			double diam = parseDouble(arg0);
 			if (diam > 0) {
 				robot.setRobotDiameter(diam);
