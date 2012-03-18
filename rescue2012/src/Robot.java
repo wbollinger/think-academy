@@ -146,7 +146,7 @@ public class Robot {
 		motRight = new NXTMotor(MotorPort.B);
 		motLeft = new NXTMotor(MotorPort.C);
 
-		baseMotorPower = 40;
+		baseMotorPower = 60;
 
 		motRight.setPower(baseMotorPower);
 		motLeft.setPower(baseMotorPower);
@@ -334,6 +334,8 @@ public class Robot {
 
 	public void forward() {
 		// Makes the robot go forward in a straight line
+		motLeft.setPower(baseMotorPower);
+		motRight.setPower(baseMotorPower);
 		motLeft.forward();
 		motRight.forward();
 
@@ -341,6 +343,8 @@ public class Robot {
 
 	public void backward() {
 		// Makes the robot go forward
+		motLeft.setPower(baseMotorPower);
+		motRight.setPower(baseMotorPower);
 		motLeft.backward();
 		motRight.backward();
 	}
@@ -542,21 +546,25 @@ public class Robot {
 			
 		right(90);
 		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
+			debug("line found on first leg\n");
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		right(90);
 		if (forwardLookForLine(obstacle.getxLength() + ff)) {
+			debug("line found on second leg\n");
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		right(90);
 		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
+			debug("line found on third leg\n");
 			changeState(StateFindLine.getInstance());
 			return;
 		}
 		right(90);
 		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
+			debug("line found on fourth leg\n");
 			changeState(StateFindLine.getInstance());
 			return;
 		}
@@ -626,7 +634,7 @@ public class Robot {
 			leftAngle = motLeft.getTachoCount();
 			rightAngle = motRight.getTachoCount();
 			error = leftAngle - rightAngle;
-			if (leftBlack == true || rightBlack == true) {
+			/*if (leftBlack == true || rightBlack == true) {
 				if (rightBlack == true) {
 					motRight.setPower(-70);
 				} else {
@@ -637,7 +645,7 @@ public class Robot {
 				} else {
 					motLeft.setPower(50);
 				}
-			} else {
+			}*/  {
 				motRight.setPower((int) (baseMotorPower + (error * kP)));
 				motLeft.setPower((int) (baseMotorPower - (error * kP)));
 			}
