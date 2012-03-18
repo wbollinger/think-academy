@@ -24,6 +24,7 @@ public class Robot {
 	double angleError;;
 	boolean leftBlack = false;
 	boolean rightBlack = false;
+	float newNorth = 0.0f;
 
 	NXTMotor motRight;
 	NXTMotor motLeft;
@@ -131,11 +132,15 @@ public class Robot {
 			angleError = 1.0;
 			touch = new TouchSensor(SensorPort.S3);
 			// compass = new CompassHTSensor(SensorPort.S3);
-		} else {
-			// defaults for Jeremy?
-			wheelDiameter = 5.6;
-			robotDiameter = 17.0;
+		} else if (name.equals("JPNXT")) {
+			// defaults for Jeremy
+			wheelDiameter = 4.96;
+			robotDiameter = 13.5;
 			angleError = 1.0;
+			compass = new CompassHTSensor(SensorPort.S3);
+		} else {
+			// Unknown robot
+		
 		}
 
 		motRight = new NXTMotor(MotorPort.B);
@@ -472,6 +477,28 @@ public class Robot {
 			return compass.getDegrees();
 		}
 		return 0.0f;
+	}
+	
+	public void setNewNorth(){
+		newNorth = getHeading();
+	}
+	
+	public float getHeading() {
+		float cReading = 0.0f;
+		float fixedCReading = 0.0f;
+		
+		if (compass != null) {
+			cReading = compass.getDegrees();
+		}
+		fixedCReading = 360-cReading+90;
+		if(fixedCReading >= 360){
+			fixedCReading = fixedCReading-360;
+		}
+		fixedCReading = fixedCReading-newNorth;
+		if(fixedCReading < 0 ){
+			fixedCReading = fixedCReading + 360;
+		}
+		return fixedCReading;
 	}
 
 	public boolean getUseCommands() {
