@@ -129,7 +129,7 @@ public class Robot {
 			robotDiameter = 15.9;
 			angleError = 1.0;
 			touch = new TouchSensor(SensorPort.S3);
-			//compass = new CompassHTSensor(SensorPort.S3);
+			// compass = new CompassHTSensor(SensorPort.S3);
 		} else {
 			// defaults for Jeremy?
 			wheelDiameter = 5.6;
@@ -639,6 +639,26 @@ public class Robot {
 				}
 		}
 		robot.sleep(30);
+		robot.stop();
+	}
+
+	public void findLineRight2() {
+		// makes the robot turn right, look to reposition itself so as to resume
+		// normal line following.
+		int logic = 0;
+		robot.motRight.backward();
+		robot.motLeft.forward();
+		while (logic != 2) {
+			if (logic == 0) {
+				if (lightRight.getLightValue() < 45) {
+					logic = 1;
+				}
+			} else if (logic == 1)
+				if (lightRight.getLightValue() > 45) {
+					logic = 2;
+				}
+		}
+		Sound.beepSequence();
 		robot.stop();
 	}
 }
