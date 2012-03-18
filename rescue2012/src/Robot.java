@@ -115,6 +115,7 @@ public class Robot {
 			// 1.0+((360.0-280.0)/360.0)+((360.0-354.0)/360.0)+((360.0-365.0)/360.0);
 			// at full voltage, gives accurate turns at 40 power.
 			angleError = (360.0 / 305.0);
+			touch = new TouchSensor(SensorPort.S3);
 		} else if (name.equals("ebay")) {
 			wheelDiameter = 8.16;
 			robotDiameter = 16.4;
@@ -510,10 +511,8 @@ public class Robot {
 	public void squareLeft(Obstacle obstacle) {
 		int ff = 5;
 		left(90);
-		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
-			changeState(StateFindLine.getInstance());
-			return;
-		}
+		forward(obstacle.getxLength() / 2 + ff); 
+			
 		right(90);
 		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
 			changeState(StateFindLine.getInstance());

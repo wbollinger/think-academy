@@ -26,7 +26,7 @@ public class StateFindLine extends State {
 
 	public void execute(Robot robot) {
 		robot.findLineRight2();
-		robot.changeState(StateLineFollowSingle.getInstance());
+		robot.changeState(StateLineFollow.getInstance());
 	}
 
 	public void exit(Robot robot) {
