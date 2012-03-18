@@ -30,6 +30,6 @@ public class StateFindLine extends State {
 	}
 
 	public void exit(Robot robot) {
-		robot.debug("Found Line");
+		robot.debug("Line Straddled\n");
 	}
 }
