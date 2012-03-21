@@ -37,6 +37,7 @@ public class Robot {
 	State current_state;
 	boolean stepMode;
 	Map2D map;
+	WaveFront nav;
 	private int x;
 	private int y;
 	private int dir;
@@ -168,6 +169,7 @@ public class Robot {
 
 		map = new Map2D();
 		resetGrid();
+		nav = new WaveFront(map);
 
 		// actual BT connection is done in StateCommand
 		btc = null;
@@ -474,6 +476,44 @@ public class Robot {
 			}
 			debugln("");
 		}
+	}
+
+	public void followPath() {
+		String route = nav.makePath();
+		char dir;
+		for(int n = 0; n < route.length()-1; n++) {
+			dir = route.charAt(n);
+			
+			if ((dir == 'w')) {
+				goUp();
+				
+			} else if (dir == 'e') {
+				goUpRight();
+				
+			} else if (dir == 'd') {
+				goRight();
+				
+			} else if (dir == 'c') {
+				goDownRight();
+				
+			} else if (dir == 'x') {
+				goDown();
+				
+			} else if (dir == 'z') {
+				goDownLeft();
+				
+			} else if (dir == 'a') {
+				goLeft();
+				
+			} else if (dir == 'q') {
+				goUpLeft();
+				
+			} else {
+				Sound.playTone(440, 100);
+				sleep(100);
+			}
+		}
+		
 	}
 
 	public float getDegrees() {
