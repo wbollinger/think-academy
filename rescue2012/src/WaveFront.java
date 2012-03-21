@@ -31,7 +31,7 @@ public class WaveFront {
 	
 	int goal;
 	
-	public void makeWave(int goal) {
+	public Map2D makeWave(int goal) {
 		
 		overlay = new Map2D(scanMap);
 		this.goal = goal;
@@ -79,6 +79,7 @@ public class WaveFront {
 			System.out.println("Iteration "+counter);
 		}
 		finished = false;
+		return overlay;
 	}
 	
 	public String makePath () {
@@ -86,14 +87,15 @@ public class WaveFront {
 		StringBuilder path = new StringBuilder();
 		
 		for(x = 1; x < Map2D.COLS-1; x++) {
-			if(finished) {
-				break;
-			}
+			
 			for(y = 1; y < Map2D.ROWS-1; y++) {
 				if(overlay.grid[x][y]==Map2D.ROBOT) {
 					finished = true;
 					break;
 				}
+			}
+			if(finished) {
+				break;
 			}
 		}
 		finished = false;	
@@ -110,7 +112,10 @@ public class WaveFront {
 			left = overlay.grid[x - 1][y];
 			upLeft = overlay.grid[x - 1][y + 1];
 			
-			if ((up == n)) {
+			if(isCenterAjacentTo(goal)) {
+				finished = true;
+				
+			} else if ((up == n)) {
 				y++;
 				n--;
 				path.append("w");
@@ -152,11 +157,7 @@ public class WaveFront {
 				n--;
 				path.append("q");
 			} else {
-				if(isCenterAjacentTo(goal)) {
-					finished = true;
-				} else {
-					n++;
-				}
+				n++;
 			}
 		}
 		
@@ -203,15 +204,18 @@ public class WaveFront {
 		}
 	}
 	
-/*	
-	public static void main(String[] args) {
-		Map2D test = new Map2D();
-		Robot robot = Robot.getRobot();
-		test.seed();
-		test.print();
-		WaveFront path = new WaveFront(test, robot);
-		Map2D result = path.findPath(0);
-		result.print();
-	}
-*/	
+
+//	public static void main(String[] args) {
+//		Map2D test = new Map2D();
+//		
+//		test.seed();
+//		test.print();
+//		WaveFront path = new WaveFront(test);
+//		Map2D result = path.makeWave(Map2D.CAN);
+//		result.print();
+//		System.out.println("----------");
+//		System.out.println(path.makePath());
+//	}
+	
+
 }
