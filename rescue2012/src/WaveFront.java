@@ -18,7 +18,7 @@ public class WaveFront {
 	private int upLeft;
 	private int center;
 	
-	boolean finished = false;
+	private boolean finished = false;
 	
 	public WaveFront(Map2D scanMap) {
 		
@@ -80,6 +80,15 @@ public class WaveFront {
 		}
 		finished = false;
 		return overlay;
+	}
+	
+	public String pathTo(int x, int y) {
+		int temp = scanMap.grid[x][y];
+		scanMap.grid[x][y] = -1;
+		makeWave(-1);
+		String path = makePath();
+		scanMap.grid[x][y] = temp;
+		return path;
 	}
 	
 	public String makePath () {
@@ -165,6 +174,7 @@ public class WaveFront {
 		return path.toString();
 	}
 	
+	
 	public static boolean isSquareSet(int num) {
 		if((num > 4)&&(num < 9)) {
 			return true;
@@ -204,6 +214,37 @@ public class WaveFront {
 		}
 	}
 	
+	public char dirTo(int val) {
+		
+		if ((up == val)) {
+			return 'w';
+			
+		} else if (upRight == val) {
+			return 'e';
+			
+		} else if (right == val) {
+			return 'd';
+			
+		} else if (downRight == val) {
+			return 'c';
+			
+		} else if (down == val) {
+			return 'x';
+			
+		} else if (downLeft == val) {
+			return 'z';
+			
+		} else if (left == val) {
+			return 'a';
+			
+		} else if (upLeft == val) {
+			return 'q';
+			
+		} else {
+			return 's';
+		}
+		
+	}
 
 //	public static void main(String[] args) {
 //		Map2D test = new Map2D();

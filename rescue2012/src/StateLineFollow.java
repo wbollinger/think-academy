@@ -67,8 +67,8 @@ public class StateLineFollow extends State {
 			derivative = error - lastError;
 			Turn = (int) Math.round(Kp * error + Ki * integral + Kd
 					* derivative);
-			powerRight = robot.baseMotorPower + Turn;
-			powerLeft = robot.baseMotorPower - Turn;
+			powerRight = robot.getBaseMotorPower() + Turn;
+			powerLeft = robot.getBaseMotorPower() - Turn;
 
 			// msg = "" + Kp*error + ", " + Ki*integral;
 			// RConsole.println(msg);

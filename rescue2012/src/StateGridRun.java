@@ -84,12 +84,15 @@ public class StateGridRun extends State {
 			robot.sleep(100);
 			Sound.playTone(330, 100);
 			robot.sleep(100);
-			robot.changeState(StateExit.getInstance());
+			//robot.changeState(StateExit.getInstance());
 		}
 		
 		if (robot.getStepMode() == true) {
 			// go back to command loop after each search step
 			robot.changeState(StateCommand.getInstance());
+		} else {
+			robot.gridDone = true;
+			robot.changeState(StateFindCan.getInstance());
 		}
 
 	}

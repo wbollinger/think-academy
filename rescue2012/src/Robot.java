@@ -33,14 +33,17 @@ public class Robot {
 	LightSensor lightRight;
 	UltrasonicSensor ultrasonic;
 	CompassHTSensor compass = null;
-	public int baseMotorPower;
+	private int baseMotorPower;
 	State current_state;
 	boolean stepMode;
+	
 	Map2D map;
 	WaveFront nav;
 	private int x;
 	private int y;
 	private int dir;
+	boolean gridDone;
+	
 	BTConnection btc;
 	DataInputStream inStream;
 	DataOutputStream outStream;
@@ -75,6 +78,14 @@ public class Robot {
 
 	public void setRobotDiameter(double robotDiameter) {
 		this.robotDiameter = robotDiameter;
+	}
+
+	public void setBaseMotorPower(int baseMotorPower) {
+		this.baseMotorPower = baseMotorPower;
+	}
+
+	public int getBaseMotorPower() {
+		return baseMotorPower;
 	}
 
 	public int getDir() {
@@ -147,10 +158,10 @@ public class Robot {
 		motRight = new NXTMotor(MotorPort.B);
 		motLeft = new NXTMotor(MotorPort.C);
 
-		baseMotorPower = 60;
+		setBaseMotorPower(60);
 
-		motRight.setPower(baseMotorPower);
-		motLeft.setPower(baseMotorPower);
+		motRight.setPower(getBaseMotorPower());
+		motLeft.setPower(getBaseMotorPower());
 		motRight.stop();
 		motLeft.stop();
 
@@ -170,6 +181,7 @@ public class Robot {
 		map = new Map2D();
 		resetGrid();
 		nav = new WaveFront(map);
+		gridDone = false;
 
 		// actual BT connection is done in StateCommand
 		btc = null;
@@ -251,8 +263,8 @@ public class Robot {
 	}
 
 	public void right(double degrees) {
-		motRight.setPower(baseMotorPower);
-		motLeft.setPower(baseMotorPower);
+		motRight.setPower(getBaseMotorPower());
+		motLeft.setPower(getBaseMotorPower());
 		motRight.stop();
 		motLeft.stop();
 
@@ -271,8 +283,8 @@ public class Robot {
 	}
 
 	public void left(double degrees) {
-		motRight.setPower(baseMotorPower);
-		motLeft.setPower(baseMotorPower);
+		motRight.setPower(getBaseMotorPower());
+		motLeft.setPower(getBaseMotorPower());
 		motRight.stop();
 		motLeft.stop();
 
@@ -306,8 +318,8 @@ public class Robot {
 			leftAngle = motLeft.getTachoCount();
 			rightAngle = motRight.getTachoCount();
 			error = leftAngle - rightAngle;
-			motRight.setPower((int) (baseMotorPower + (error * kP)));
-			motLeft.setPower((int) (baseMotorPower - (error * kP)));
+			motRight.setPower((int) (getBaseMotorPower() + (error * kP)));
+			motLeft.setPower((int) (getBaseMotorPower() - (error * kP)));
 		}
 		stop();
 		resetAngle();
@@ -327,8 +339,8 @@ public class Robot {
 			leftAngle = motLeft.getTachoCount();
 			rightAngle = motRight.getTachoCount();
 			error = leftAngle - rightAngle;
-			motRight.setPower((int) (baseMotorPower - (error * kP)));
-			motLeft.setPower((int) (baseMotorPower + (error * kP)));
+			motRight.setPower((int) (getBaseMotorPower() - (error * kP)));
+			motLeft.setPower((int) (getBaseMotorPower() + (error * kP)));
 		}
 		stop();
 		resetAngle();
@@ -336,8 +348,8 @@ public class Robot {
 
 	public void forward() {
 		// Makes the robot go forward in a straight line
-		motLeft.setPower(baseMotorPower);
-		motRight.setPower(baseMotorPower);
+		motLeft.setPower(getBaseMotorPower());
+		motRight.setPower(getBaseMotorPower());
 		motLeft.forward();
 		motRight.forward();
 
@@ -345,8 +357,8 @@ public class Robot {
 
 	public void backward() {
 		// Makes the robot go forward
-		motLeft.setPower(baseMotorPower);
-		motRight.setPower(baseMotorPower);
+		motLeft.setPower(getBaseMotorPower());
+		motRight.setPower(getBaseMotorPower());
 		motLeft.backward();
 		motRight.backward();
 	}
@@ -379,7 +391,7 @@ public class Robot {
 	 * 
 	 * @return
 	 */
-	private void faceDir(int n) {
+	public void faceDir(int n) {
 		int diff = n - getDir();
 		debugln("faceDir: diff = " + diff);
 		if (diff == 0) {
@@ -397,6 +409,39 @@ public class Robot {
 		}
 		// setDir(n);
 	}
+	
+	public void faceDir(char c) {
+		
+		if ((c == 'w')) {
+			faceDir(90);
+			
+		} else if (c == 'e') {
+			faceDir(45);
+		
+		} else if (c == 'd') {
+			faceDir(0);
+					
+		} else if (c == 'c') {
+			faceDir(315);
+					
+		} else if (c == 'x') {
+			faceDir(270);
+					
+		} else if (c == 'z') {
+			faceDir(225);
+			
+		} else if (c == 'a') {
+			faceDir(180);
+				
+		} else if (c == 'q') {
+			faceDir(135);
+					
+		} else {
+			Sound.playTone(440, 100);
+			sleep(100);
+		}
+				
+	}	
 
 	private boolean goForward() {
 		double factor = 1.0;
@@ -478,7 +523,8 @@ public class Robot {
 		}
 	}
 
-	public void followPath() {
+	public void followPath(int goal) {
+		nav.makeWave(goal);
 		String route = nav.makePath();
 		char dir;
 		for(int n = 0; n < route.length()-1; n++) {
@@ -514,6 +560,119 @@ public class Robot {
 			}
 		}
 		
+	}
+	
+	public void goTo(int x, int y) {
+		String route = nav.pathTo(x, y);
+		char dir;
+		for(int n = 0; n < route.length()-1; n++) {
+			dir = route.charAt(n);
+			
+			if ((dir == 'w')) {
+				goUp();
+				
+			} else if (dir == 'e') {
+				goUpRight();
+				
+			} else if (dir == 'd') {
+				goRight();
+				
+			} else if (dir == 'c') {
+				goDownRight();
+				
+			} else if (dir == 'x') {
+				goDown();
+				
+			} else if (dir == 'z') {
+				goDownLeft();
+				
+			} else if (dir == 'a') {
+				goLeft();
+				
+			} else if (dir == 'q') {
+				goUpLeft();
+				
+			} else {
+				Sound.playTone(440, 100);
+				sleep(100);
+			}
+		}
+		
+	}
+	
+	public int sweepCan() {
+		double angle = 0;
+		int dist;
+		double edge1 = 0.0;
+		double edge2 = 0.0;
+		boolean edgeSet = false;
+		boolean done = false;
+		double canAngle = 0.0;
+		int canDist = 255;
+		
+		left(45);
+		Sound.playTone(440, 100);
+		robot.sleep(100);
+		resetAngle();
+		motLeft.forward();
+		motRight.backward();
+		
+		
+		while(Math.abs(getAngle()) < 90) { 
+			angle = Math.abs(getAngle());
+			dist = ultrasonic.getDistance();
+			if(dist < canDist) {
+				canDist = dist;
+			}
+			if((dist < 20) && !edgeSet) {
+				edge1 = angle;
+				edgeSet = true;
+				stop();
+				Sound.playTone(440, 100);
+				sleep(100);
+				motLeft.forward();
+				motRight.backward();
+			}
+			if((dist > 20) && edgeSet && !done) {
+				edge2 = angle;
+				stop();
+				done = true;
+				Sound.playTone(440, 100);
+				sleep(100);
+				motLeft.forward();
+				motRight.backward();
+			}
+			sleep(15);
+		}
+		canAngle = Math.abs((edge1+edge2)/2.0);
+		left(90.0-canAngle);
+		stop();
+		return canDist;
+		
+	}
+	
+	public void liftCan() {
+		//TODO write code after claw completed
+	}
+	
+	public void dropCan() {
+		//TODO write code after claw completed
+	}
+	
+	public void facePlatform() {
+		char dir = nav.dirTo(Map2D.PLATFORM);
+		
+		if(dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
+			faceDir(nav.dirTo(Map2D.PLATFORM));
+		} else {
+			if(getX() <= 2) {
+				goTo(2, 2);
+			}
+			else {
+				goTo(3, 2);
+			}
+			faceDir(nav.dirTo(Map2D.PLATFORM));
+		}
 	}
 
 	public float getDegrees() {
@@ -564,7 +723,7 @@ public class Robot {
 	}
 
 	public boolean leftSideCheck() {
-		// Checks to see wheter distane to left is longer than distance to
+		// Checks to see whether distance to left is longer than distance to
 		// right. Returns true is left is longer.
 		right(90);
 		sleep(300);
@@ -686,8 +845,8 @@ public class Robot {
 					motLeft.setPower(50);
 				}
 			}*/  {
-				motRight.setPower((int) (baseMotorPower + (error * kP)));
-				motLeft.setPower((int) (baseMotorPower - (error * kP)));
+				motRight.setPower((int) (getBaseMotorPower() + (error * kP)));
+				motLeft.setPower((int) (getBaseMotorPower() - (error * kP)));
 			}
 		}
 
