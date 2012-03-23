@@ -7,8 +7,8 @@ public class StateLineFollow extends State {
 
 	// Kc = 4 Pc = .25 dT = .0028
 	final double Kp = 3.25;
-	final double Ki = 0;
-	final double Kd = 0;
+	final double Ki = 0.0;
+	final double Kd = 0.0;
 	final int threshold = 30;
 
 	private StateLineFollow() {
@@ -78,7 +78,8 @@ public class StateLineFollow extends State {
 
 			lastError = error;
 			if (robot.touch.isPressed()) {
-				robot.changeState(StateBackward.getInstance());
+				robot.changeState(StateAvoidObstacle.getInstance());
+				break;
 			}
 		}
 
@@ -86,6 +87,7 @@ public class StateLineFollow extends State {
 
 	public void exit(Robot robot) {
 		debug("StLineFollow exit\n");
+		robot.stop();
 	}
 
 }
