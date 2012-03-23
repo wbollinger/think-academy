@@ -139,11 +139,11 @@ public class StateCommand extends State {
 		}
 		// David's Stuff
 		else if (command.equalsIgnoreCase("david")) {
-			robot.changeState(StateForward.getInstance());
+			robot.changeState(StateLineFollow.getInstance());
 		} else if (command.equalsIgnoreCase("FindLine")) {
 			robot.changeState(StateFindLine.getInstance());
 		} else if (command.equalsIgnoreCase("line")) {
-			robot.changeState(StateLineFollowSingle.getInstance());
+			robot.changeState(StateLineFollow.getInstance());
 			//
 
 		} else if (command.equalsIgnoreCase("right")) {

@@ -158,7 +158,7 @@ public class Robot {
 		motRight = new NXTMotor(MotorPort.B);
 		motLeft = new NXTMotor(MotorPort.C);
 
-		setBaseMotorPower(60);
+		setBaseMotorPower(50);
 
 		motRight.setPower(getBaseMotorPower());
 		motLeft.setPower(getBaseMotorPower());
