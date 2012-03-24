@@ -172,7 +172,7 @@ public class Robot {
 		motRegRight = new NXTRegulatedMotor(MotorPort.B);
 		motRegLeft = new NXTRegulatedMotor(MotorPort.C);
 
-		setBaseMotorPower(30);
+		setBaseMotorPower(50);
 
 		motRight.setPower(getBaseMotorPower());
 		motLeft.setPower(getBaseMotorPower());
@@ -304,46 +304,46 @@ public class Robot {
 	// stop();
 	// }
 
-	public void right(double degrees) {
-		motRight.setPower(getBaseMotorPower());
-		motLeft.setPower(getBaseMotorPower());
-		motRight.stop();
-		motLeft.stop();
+//	public void right(double degrees) {
+//		motRight.setPower(getBaseMotorPower());
+//		motLeft.setPower(getBaseMotorPower());
+//		motRight.stop();
+//		motLeft.stop();
+//
+//		double t_init, t_final;
+//		t_init = motLeft.getTachoCount();
+//		t_final = (int) (degrees * angleError)
+//				* (getRobotDiameter() / getWheelDiameter()) + t_init;
+//
+//		while (motLeft.getTachoCount() < t_final) {
+//			motRight.backward();
+//			motLeft.forward();
+//		}
+//		motRight.stop();
+//		motLeft.stop();
+//		setDir((int) (getDir() - degrees));
+//	}
 
-		double t_init, t_final;
-		t_init = motLeft.getTachoCount();
-		t_final = (int) (degrees * angleError)
-				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-
-		while (motLeft.getTachoCount() < t_final) {
-			motRight.backward();
-			motLeft.forward();
-		}
-		motRight.stop();
-		motLeft.stop();
-		setDir((int) (getDir() - degrees));
-	}
-
-	public void left(double degrees) {
-		motRight.setPower(getBaseMotorPower());
-		motLeft.setPower(getBaseMotorPower());
-		motRight.stop();
-		motLeft.stop();
-
-		double t_init, t_final;
-		t_init = motRight.getTachoCount();
-		t_final = (int) (degrees * angleError)
-				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-
-		while (motRight.getTachoCount() < t_final) {
-			motLeft.backward();
-			motRight.forward();
-
-		}
-		motLeft.stop();
-		motRight.stop();
-		setDir((int) (getDir() + degrees));
-	}
+//	public void left(double degrees) {
+//		motRight.setPower(getBaseMotorPower());
+//		motLeft.setPower(getBaseMotorPower());
+//		motRight.stop();
+//		motLeft.stop();
+//
+//		double t_init, t_final;
+//		t_init = motRight.getTachoCount();
+//		t_final = (int) (degrees * angleError)
+//				* (getRobotDiameter() / getWheelDiameter()) + t_init;
+//
+//		while (motRight.getTachoCount() < t_final) {
+//			motLeft.backward();
+//			motRight.forward();
+//
+//		}
+//		motLeft.stop();
+//		motRight.stop();
+//		setDir((int) (getDir() + degrees));
+//	}
 
 	public void correctedRightTurn(float degrees) {
 		float origin = getHeading();
@@ -406,7 +406,7 @@ public class Robot {
 	}
 
 	// ---------- begin testRight/Left -----------
-	public void testRight(double degrees) {
+	public void right(double degrees) {
 		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
 
 		motRegRight.resetTachoCount();
@@ -421,7 +421,7 @@ public class Robot {
 		debugln("comp " + getHeading());
 	}
 
-	public void testLeft(double degrees) {
+	public void left(double degrees) {
 		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
 
 		motRegRight.resetTachoCount();
@@ -436,7 +436,7 @@ public class Robot {
 		debugln("comp " + getHeading());
 	}
 
-	// ---------- end of testRight -----------
+	// ---------- end of testRight/Left -----------
 
 	public void forward(double distance) {
 		// Makes the robot go forward for the given distance

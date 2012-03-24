@@ -29,8 +29,8 @@ public class StateStart extends State {
 			RConsole.println("Connected!");
 			Sound.playTone(440, 200);
 		} else {
-			// jump straight to Room 3 code
-			robot.changeState(StateGridRun.getInstance());
+			// jump straight into line follower
+			robot.changeState(StateLineFollow.getInstance());
 		}
 	}
 
