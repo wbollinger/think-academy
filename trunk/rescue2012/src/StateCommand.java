@@ -150,12 +150,18 @@ public class StateCommand extends State {
 			robot.turnRightLookForLine(90);
 			//
 
-		}else if (command.equalsIgnoreCase("right")) {
+		} else if (command.equalsIgnoreCase("right")) {
 			double degrees = parseDouble(arg0);
 			robot.right(degrees);
 		} else if (command.equalsIgnoreCase("left")) {
 			double degrees = parseDouble(arg0);
 			robot.left(degrees);
+		} else if (command.equalsIgnoreCase("testRight")) {
+			double degrees = parseDouble(arg0);
+			robot.testRight(degrees);
+		} else if (command.equalsIgnoreCase("testLeft")) {
+			double degrees = parseDouble(arg0);
+			robot.testLeft(degrees);
 		} else if (command.equalsIgnoreCase("forward")) {
 			if (args.length > 0) {
 				double distance = parseDouble(arg0);
@@ -205,6 +211,9 @@ public class StateCommand extends State {
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("lightRight")) {
 			int val = robot.getLightRight();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("tachoLeft")) {
+			int val = robot.motLeft.getTachoCount();
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("comp")) {
 			float deg = robot.compass.getDegrees();

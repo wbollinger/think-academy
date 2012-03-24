@@ -1,7 +1,3 @@
-import lejos.nxt.*;
-import lejos.nxt.comm.RConsole;
-
-
 public class StateLineFollowSingle extends State{
 
 	static private StateLineFollowSingle instance = new StateLineFollowSingle();

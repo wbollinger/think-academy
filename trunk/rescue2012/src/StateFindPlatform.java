@@ -35,7 +35,7 @@ public class StateFindPlatform extends State {
 	}
 
 	public void exit(Robot robot) {
-		debugln("StFindPlatform exit");
+		//debugln("StFindPlatform exit");
 	}
 
 }
