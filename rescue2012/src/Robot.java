@@ -282,7 +282,7 @@ public class Robot {
 		}
 	}
 
-	public void correctedRightTurn(float degrees) {
+	public void correctRight(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
 		right(degrees);
@@ -307,7 +307,7 @@ public class Robot {
 			} else {
 				left(expectedVal - val);
 			}
-			if(expectedVal == 360){
+			if(expectedVal == 360 || expectedVal == -360){
 				expectedVal = 0;
 			}
 			sleep(100);
@@ -315,7 +315,7 @@ public class Robot {
 		}
 	}
 
-	public void correctedLeftTurn(float degrees) {
+	public void correctLeft(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
 		left(degrees);
@@ -324,11 +324,11 @@ public class Robot {
 		debugln("" + val);
 		val = getHeading();
 		debugln("" + val);
-		if (expectedVal < 0) {
-			expectedVal = expectedVal + 360;
-		}
 
 		while (val != expectedVal) {
+			if (expectedVal < 0) {
+				expectedVal = expectedVal + 360;
+			}
 			if (val - expectedVal > 180) {
 				expectedVal = expectedVal + 360;
 			}
@@ -340,9 +340,10 @@ public class Robot {
 			} else {
 				left(expectedVal - val);
 			}
-			if(expectedVal == 360){
+			if(expectedVal == 360 || expectedVal == -360){
 				expectedVal = 0;
 			}
+			
 			sleep(100);
 			val = getHeading();
 		}
@@ -361,7 +362,7 @@ public class Robot {
 		}
 		motRegRight.suspendRegulation();
 		motRegLeft.suspendRegulation();
-		debugln("comp " + getHeading());
+		//debugln("comp " + getHeading());
 	}
 
 	public void left(double degrees) {
@@ -376,7 +377,7 @@ public class Robot {
 		}
 		motRegRight.suspendRegulation();
 		motRegLeft.suspendRegulation();
-		debugln("comp " + getHeading());
+		//debugln("comp " + getHeading());
 	}
 
 	// ---------- end of new Right/Left -----------
@@ -801,13 +802,13 @@ public class Robot {
 	public boolean leftSideCheck() {
 		// Checks to see whether distance to left is longer than distance to
 		// right. Returns true is left is longer.
-		right(90);
+		correctRight(90);
 		sleep(300);
 		int rightDist = ultrasonic.getDistance();
-		left(180);
+		correctLeft(180);
 		sleep(300);
 		int leftDist = ultrasonic.getDistance();
-		right(90);
+		correctRight(90);
 		if (leftDist > rightDist)
 			return true;
 		else

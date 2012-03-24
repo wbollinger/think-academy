@@ -34,7 +34,7 @@ public class StateAvoidObstacle extends State {
 		if (robot.leftSideCheck()) {
 
 			robot.avoidedLeft = true;
-			robot.left(90);
+			robot.correctLeft(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 
 			if (robot.turnRightLookForLine(90)) {
@@ -81,7 +81,7 @@ public class StateAvoidObstacle extends State {
 		} else {
 
 			robot.avoidedLeft = false;
-			robot.right(90);
+			robot.correctRight(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 
 			if (robot.turnLeftLookForLine(90)) {
