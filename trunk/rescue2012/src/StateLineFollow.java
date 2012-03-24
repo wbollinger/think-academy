@@ -65,7 +65,7 @@ public class StateLineFollow extends State {
 			error = calcError(robot.lightLeft, robot.lightRight);
 			integral = integral + error;
 			derivative = error - lastError;
-			Turn = (int) Math.round(Kp * error + Ki * integral + Kd
+			Turn = (int) Util.round(Kp * error + Ki * integral + Kd
 					* derivative);
 			powerRight = robot.getBaseMotorPower() + Turn;
 			powerLeft = robot.getBaseMotorPower() - Turn;
