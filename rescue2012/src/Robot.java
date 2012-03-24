@@ -152,7 +152,7 @@ public class Robot {
 			compass = new CompassHTSensor(SensorPort.S3);
 		} else {
 			// Unknown robot
-		
+
 		}
 
 		motRight = new NXTMotor(MotorPort.B);
@@ -681,24 +681,24 @@ public class Robot {
 		}
 		return 0.0f;
 	}
-	
-	public void setNewNorth(){
+
+	public void setNewNorth() {
 		newNorth = getHeading();
 	}
-	
+
 	public float getHeading() {
 		float cReading = 0.0f;
 		float fixedCReading = 0.0f;
-		
+
 		if (compass != null) {
 			cReading = compass.getDegrees();
 		}
-		fixedCReading = 360-cReading+90;
-		if(fixedCReading >= 360){
-			fixedCReading = fixedCReading-360;
+		fixedCReading = 360 - cReading + 90;
+		if (fixedCReading >= 360) {
+			fixedCReading = fixedCReading - 360;
 		}
-		fixedCReading = fixedCReading-newNorth;
-		if(fixedCReading < 0 ){
+		fixedCReading = fixedCReading - newNorth;
+		if (fixedCReading < 0) {
 			fixedCReading = fixedCReading + 360;
 		}
 		return fixedCReading;
@@ -741,8 +741,8 @@ public class Robot {
 	public void squareLeft(Obstacle obstacle) {
 		int ff = 5;
 		left(90);
-		forward(obstacle.getxLength() / 2 + ff); 
-			
+		forward(obstacle.getxLength() / 2 + ff);
+
 		right(90);
 		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
 			debug("line found on first leg\n");
@@ -819,6 +819,7 @@ public class Robot {
 			}
 
 			if (leftBlack == true && rightBlack == true) {
+				debug("I Should Stop Here");
 				stop();
 				return true;
 			}
@@ -833,18 +834,14 @@ public class Robot {
 			leftAngle = motLeft.getTachoCount();
 			rightAngle = motRight.getTachoCount();
 			error = leftAngle - rightAngle;
-			/*if (leftBlack == true || rightBlack == true) {
-				if (rightBlack == true) {
-					motRight.setPower(-70);
-				} else {
-					motRight.setPower(50);
-				}
-				if (leftBlack == true) {
-					motLeft.setPower(-70);
-				} else {
-					motLeft.setPower(50);
-				}
-			}*/  {
+
+			if (rightBlack == true) {
+				motRight.setPower(-20);
+				motLeft.setPower(50);
+			} else if (leftBlack == true) {
+				motLeft.setPower(-20);
+				motRight.setPower(50);
+			} else {
 				motRight.setPower((int) (getBaseMotorPower() + (error * kP)));
 				motLeft.setPower((int) (getBaseMotorPower() - (error * kP)));
 			}
@@ -876,22 +873,25 @@ public class Robot {
 	}
 
 	public void findLineRight2() {
-		// makes the robot turn right, look to reposition itself so as to resume
+		// makes the robot turn right, looking to reposition itself so as to
+		// resume
 		// normal line following.
 		int logic = 0;
 		robot.motRight.backward();
 		robot.motLeft.forward();
-		while (logic != 2) {
-			if (logic == 0) {
-				if (lightRight.getLightValue() < 45) {
-					logic = 1;
-				}
-			} else if (logic == 1)
-				if (lightRight.getLightValue() > 45) {
-					logic = 2;
-				}
+		// while (logic != 2) {
+		// if (logic == 0) {
+		// if (lightRight.getLightValue() < 45) {
+		// logic = 1;
+		// }
+		// } else if (logic == 1)
+		// if (lightRight.getLightValue() > 45) {
+		// logic = 2;
+		// }
+		// }
+		while (lightLeft.getLightValue() > 45) {
 		}
-		Sound.beepSequence();
+		// Sound.beepSequence();
 		robot.stop();
 	}
 }

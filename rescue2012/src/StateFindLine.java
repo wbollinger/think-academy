@@ -20,6 +20,7 @@ public class StateFindLine extends State {
 	public void enter(Robot robot) {
 		LCD.drawString("Robot: FindLine enter",0,0);
 		robot.stop();
+		robot.sleep(70);
 		robot.forward(6);
 	
 	}
