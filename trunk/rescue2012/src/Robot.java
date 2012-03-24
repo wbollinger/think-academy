@@ -40,6 +40,7 @@ public class Robot {
 	TouchSensor touch;
 	LightSensor lightLeft;
 	LightSensor lightRight;
+	ColorSensor colorsensor;
 	UltrasonicSensor ultrasonic;
 	CompassHTSensor compass = null;
 	private int baseMotorPower;
@@ -139,6 +140,7 @@ public class Robot {
 			angleError = (360.0 / 305.0);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
+			lightLeft = new LightSensor(SensorPort.S1);
 		} else if (name.equals("ebay")) {
 			wheelDiameter = 5.6; // both in cm
 			robotDiameter = 13.6;
@@ -147,15 +149,18 @@ public class Robot {
 			// robotDiameter = 16.4;
 			// angleError = 1.0;
 			// compass = new CompassHTSensor(SensorPort.S3);
+			lightLeft = new LightSensor(SensorPort.S1);
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
 			angleError = 1.0;
+			lightLeft = new LightSensor(SensorPort.S1);
 		} else if (name.equals("Dr_Lakata")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
 			angleError = 1.0;
 			touch = new TouchSensor(SensorPort.S3);
+			lightLeft = new LightSensor(SensorPort.S1);
 			// compass = new CompassHTSensor(SensorPort.S3);
 		} else if (name.equals("JPNXT")) {
 			// defaults for Jeremy
@@ -163,6 +168,8 @@ public class Robot {
 			robotDiameter = 13.5;
 			angleError = 1.0;
 			compass = new CompassHTSensor(SensorPort.S3);
+			colorsensor = new ColorSensor(SensorPort.S1);
+			
 		} else {
 			// Unknown robot
 		}
@@ -179,7 +186,6 @@ public class Robot {
 		motRight.stop();
 		motLeft.stop();
 
-		lightLeft = new LightSensor(SensorPort.S1);
 		lightRight = new LightSensor(SensorPort.S2);
 
 		// Touch and Compass sensor are different depending on robot name
@@ -348,7 +354,7 @@ public class Robot {
 	public void correctedRightTurn(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
-		right(degrees);
+		testRight(degrees);
 		sleep(100);
 		float val = getHeading();
 		debugln("" + val);
@@ -366,9 +372,12 @@ public class Robot {
 				val = val + 360;
 			}
 			if (val > expectedVal) {
-				right(val - expectedVal);
+				testRight(val - expectedVal);
 			} else {
-				left(expectedVal - val);
+				testLeft(expectedVal - val);
+			}
+			if(expectedVal == 360){
+				expectedVal = 0;
 			}
 			sleep(100);
 			val = getHeading();
@@ -378,7 +387,7 @@ public class Robot {
 	public void correctedLeftTurn(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
-		left(degrees);
+		testLeft(degrees);
 		sleep(100);
 		float val = getHeading();
 		debugln("" + val);
@@ -396,9 +405,12 @@ public class Robot {
 				val = val + 360;
 			}
 			if (val > expectedVal) {
-				right(val - expectedVal);
+				testRight(val - expectedVal);
 			} else {
-				left(expectedVal - val);
+				testLeft(expectedVal - val);
+			}
+			if(expectedVal == 360){
+				expectedVal = 0;
 			}
 			sleep(100);
 			val = getHeading();
