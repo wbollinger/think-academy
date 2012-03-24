@@ -18,15 +18,19 @@ public class StateFindLine extends State {
 	}
 
 	public void enter(Robot robot) {
-		LCD.drawString("Robot: FindLine enter",0,0);
+		LCD.drawString("Robot: FindLine enter", 0, 0);
 		robot.stop();
 		robot.sleep(70);
 		robot.forward(6);
-	
+
 	}
 
 	public void execute(Robot robot) {
-		robot.findLineRight2();
+		if (robot.avoidedLeft) {
+			robot.findLineLeft();
+		} else {
+			robot.findLineRight();
+		}
 		robot.changeState(StateLineFollow.getInstance());
 	}
 

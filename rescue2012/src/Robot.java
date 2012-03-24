@@ -24,6 +24,7 @@ public class Robot {
 	double angleError;;
 	boolean leftBlack = false;
 	boolean rightBlack = false;
+	boolean avoidedLeft = true;
 	float newNorth = 0.0f;
 
 	NXTMotor motRight;
@@ -36,14 +37,14 @@ public class Robot {
 	private int baseMotorPower;
 	State current_state;
 	boolean stepMode;
-	
+
 	Map2D map;
 	WaveFront nav;
 	private int x;
 	private int y;
 	private int dir;
 	boolean gridDone;
-	
+
 	BTConnection btc;
 	DataInputStream inStream;
 	DataOutputStream outStream;
@@ -409,39 +410,39 @@ public class Robot {
 		}
 		// setDir(n);
 	}
-	
+
 	public void faceDir(char c) {
-		
+
 		if ((c == 'w')) {
 			faceDir(90);
-			
+
 		} else if (c == 'e') {
 			faceDir(45);
-		
+
 		} else if (c == 'd') {
 			faceDir(0);
-					
+
 		} else if (c == 'c') {
 			faceDir(315);
-					
+
 		} else if (c == 'x') {
 			faceDir(270);
-					
+
 		} else if (c == 'z') {
 			faceDir(225);
-			
+
 		} else if (c == 'a') {
 			faceDir(180);
-				
+
 		} else if (c == 'q') {
 			faceDir(135);
-					
+
 		} else {
 			Sound.playTone(440, 100);
 			sleep(100);
 		}
-				
-	}	
+
+	}
 
 	private boolean goForward() {
 		double factor = 1.0;
@@ -527,79 +528,79 @@ public class Robot {
 		nav.makeWave(goal);
 		String route = nav.makePath();
 		char dir;
-		for(int n = 0; n < route.length()-1; n++) {
+		for (int n = 0; n < route.length() - 1; n++) {
 			dir = route.charAt(n);
-			
+
 			if ((dir == 'w')) {
 				goUp();
-				
+
 			} else if (dir == 'e') {
 				goUpRight();
-				
+
 			} else if (dir == 'd') {
 				goRight();
-				
+
 			} else if (dir == 'c') {
 				goDownRight();
-				
+
 			} else if (dir == 'x') {
 				goDown();
-				
+
 			} else if (dir == 'z') {
 				goDownLeft();
-				
+
 			} else if (dir == 'a') {
 				goLeft();
-				
+
 			} else if (dir == 'q') {
 				goUpLeft();
-				
+
 			} else {
 				Sound.playTone(440, 100);
 				sleep(100);
 			}
 		}
-		
+
 	}
-	
+
 	public void goTo(int x, int y) {
 		String route = nav.pathTo(x, y);
 		char dir;
-		for(int n = 0; n < route.length()-1; n++) {
+		for (int n = 0; n < route.length() - 1; n++) {
 			dir = route.charAt(n);
-			
+
 			if ((dir == 'w')) {
 				goUp();
-				
+
 			} else if (dir == 'e') {
 				goUpRight();
-				
+
 			} else if (dir == 'd') {
 				goRight();
-				
+
 			} else if (dir == 'c') {
 				goDownRight();
-				
+
 			} else if (dir == 'x') {
 				goDown();
-				
+
 			} else if (dir == 'z') {
 				goDownLeft();
-				
+
 			} else if (dir == 'a') {
 				goLeft();
-				
+
 			} else if (dir == 'q') {
 				goUpLeft();
-				
+
 			} else {
 				Sound.playTone(440, 100);
 				sleep(100);
 			}
 		}
-		
+
 	}
-	
+
 	public int sweepCan() {
 		double angle = 0;
 		int dist;
@@ -609,22 +610,21 @@ public class Robot {
 		boolean done = false;
 		double canAngle = 0.0;
 		int canDist = 255;
-		
+
 		left(45);
 		Sound.playTone(440, 100);
 		robot.sleep(100);
 		resetAngle();
 		motLeft.forward();
 		motRight.backward();
-		
-		
-		while(Math.abs(getAngle()) < 90) { 
+
+		while (Math.abs(getAngle()) < 90) {
 			angle = Math.abs(getAngle());
 			dist = ultrasonic.getDistance();
-			if(dist < canDist) {
+			if (dist < canDist) {
 				canDist = dist;
 			}
-			if((dist < 20) && !edgeSet) {
+			if ((dist < 20) && !edgeSet) {
 				edge1 = angle;
 				edgeSet = true;
 				stop();
@@ -633,7 +633,7 @@ public class Robot {
 				motLeft.forward();
 				motRight.backward();
 			}
-			if((dist > 20) && edgeSet && !done) {
+			if ((dist > 20) && edgeSet && !done) {
 				edge2 = angle;
 				stop();
 				done = true;
@@ -644,31 +644,30 @@ public class Robot {
 			}
 			sleep(15);
 		}
-		canAngle = Math.abs((edge1+edge2)/2.0);
-		left(90.0-canAngle);
+		canAngle = Math.abs((edge1 + edge2) / 2.0);
+		left(90.0 - canAngle);
 		stop();
 		return canDist;
-		
+
 	}
-	
+
 	public void liftCan() {
-		//TODO write code after claw completed
+		// TODO write code after claw completed
 	}
-	
+
 	public void dropCan() {
-		//TODO write code after claw completed
+		// TODO write code after claw completed
 	}
-	
+
 	public void facePlatform() {
 		char dir = nav.dirTo(Map2D.PLATFORM);
-		
-		if(dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
+
+		if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
 			faceDir(nav.dirTo(Map2D.PLATFORM));
 		} else {
-			if(getX() <= 2) {
+			if (getX() <= 2) {
 				goTo(2, 2);
-			}
-			else {
+			} else {
 				goTo(3, 2);
 			}
 			faceDir(nav.dirTo(Map2D.PLATFORM));
@@ -802,6 +801,8 @@ public class Robot {
 	public boolean forwardLookForLine(double distance) {
 		// Makes the robot go forward for the given distance, and stop if it
 		// sees a line
+		leftBlack = false;
+		rightBlack = false;
 
 		resetAngle();
 		while ((motLeft.getTachoCount() * Math.PI / 180) * (wheelDiameter / 2) < distance) {
@@ -852,27 +853,118 @@ public class Robot {
 		return false;
 	}
 
-	public void findLineRight() {
-		// makes the robot turn left, look to reposition itself so as to resume
-		// normal line following.
-		int logic = 0;
-		robot.motRight.backward();
-		robot.motLeft.forward();
-		while (logic != 2) {
-			if (logic == 0) {
-				if (lightLeft.getLightValue() < 45) {
-					logic = 1;
+	public boolean turnLeftLookForLine(double degrees) {
+		// Makes the robot go forward for the given distance, and stop if it
+		// sees a line
+		leftBlack = false;
+		rightBlack = false;
+		resetAngle();
+		motLeft.backward();
+		motRight.forward();
+
+		motRight.setPower(getBaseMotorPower());
+		motLeft.setPower(getBaseMotorPower());
+
+		double t_init, t_final;
+		t_init = motRight.getTachoCount();
+		t_final = (int) (degrees * angleError)
+				* (getRobotDiameter() / getWheelDiameter()) + t_init;
+
+		while (motRight.getTachoCount() < t_final) {
+			{
+
+				if (leftBlack != true) {
+					if (lightLeft.getLightValue() < 45) {
+						leftBlack = true;
+					}
 				}
-			} else if (logic == 1)
-				if (lightLeft.getLightValue() > 45) {
-					logic = 2;
+
+				if (rightBlack != true) {
+					if (lightRight.getLightValue() < 45) {
+						rightBlack = true;
+					}
 				}
+
+				if (leftBlack == true && rightBlack == true) {
+					debug("I Should Stop Here");
+					stop();
+					return true;
+				}
+
+				if (rightBlack == true) {
+					motRight.setPower(-40);
+					motLeft.setPower(50);
+				} else if (leftBlack == true) {
+					motLeft.setPower(-40);
+					motRight.setPower(50);
+				}
+
+			}
+
 		}
-		robot.sleep(30);
-		robot.stop();
+		stop();
+		setDir((int) (getDir() + degrees));
+
+		resetAngle();
+		return false;
 	}
 
-	public void findLineRight2() {
+	public boolean turnRightLookForLine(double degrees) {
+		// Makes the robot go forward for the given distance, and stop if it
+		// sees a line
+		resetAngle();
+		motLeft.forward();
+		motRight.backward();
+
+		motRight.setPower(getBaseMotorPower());
+		motLeft.setPower(getBaseMotorPower());
+
+		double t_init, t_final;
+		t_init = motRight.getTachoCount();
+		t_final = (int) (degrees * angleError)
+				* (getRobotDiameter() / getWheelDiameter()) + t_init;
+
+		while (motRight.getTachoCount() < t_final) {
+			{
+
+				if (leftBlack != true) {
+					if (lightLeft.getLightValue() < 45) {
+						leftBlack = true;
+					}
+				}
+
+				if (rightBlack != true) {
+					if (lightRight.getLightValue() < 45) {
+						rightBlack = true;
+					}
+				}
+
+				if (leftBlack == true && rightBlack == true) {
+					debug("I Should Stop Here");
+					stop();
+					return true;
+				}
+
+				if (rightBlack == true) {
+					motRight.setPower(-40);
+					motLeft.setPower(50);
+				} else if (leftBlack == true) {
+					motLeft.setPower(-40);
+					motRight.setPower(50);
+				}
+ 
+			}
+
+		}
+		stop();
+		setDir((int) (getDir() + degrees));
+
+		resetAngle();
+		return false;
+
+	}
+
+	public void findLineRight() {
 		// makes the robot turn right, looking to reposition itself so as to
 		// resume
 		// normal line following.
@@ -890,6 +982,29 @@ public class Robot {
 		// }
 		// }
 		while (lightLeft.getLightValue() > 45) {
+		}
+		// Sound.beepSequence();
+		robot.stop();
+	}
+
+	public void findLineLeft() {
+		// makes the robot turn left, looking to reposition itself so as to
+		// resume
+		// normal line following.
+		int logic = 0;
+		robot.motRight.forward();
+		robot.motLeft.backward();
+		// while (logic != 2) {
+		// if (logic == 0) {
+		// if (lightRight.getLightValue() < 45) {
+		// logic = 1;
+		// }
+		// } else if (logic == 1)
+		// if (lightRight.getLightValue() > 45) {
+		// logic = 2;
+		// }
+		// }
+		while (lightRight.getLightValue() > 45) {
 		}
 		// Sound.beepSequence();
 		robot.stop();

@@ -144,6 +144,10 @@ public class StateCommand extends State {
 			robot.changeState(StateFindLine.getInstance());
 		} else if (command.equalsIgnoreCase("line")) {
 			robot.changeState(StateLineFollow.getInstance());
+		} else if (command.equalsIgnoreCase("leftLook")) {
+			robot.turnLeftLookForLine(90);
+		} else if (command.equalsIgnoreCase("rightLook")) {
+			robot.turnRightLookForLine(90);
 			//
 
 		} else if (command.equalsIgnoreCase("right")) {
@@ -214,9 +218,9 @@ public class StateCommand extends State {
 			// debugln("" + deg);
 		} else if (command.equalsIgnoreCase("newNorth")) {
 			robot.setNewNorth();
-			debugln("New north set to " + robot.newNorth );
-			
-		}else if (command.equalsIgnoreCase("rDiam")) {
+			debugln("New north set to " + robot.newNorth);
+
+		} else if (command.equalsIgnoreCase("rDiam")) {
 			double diam = parseDouble(arg0);
 			if (diam > 0) {
 				robot.setRobotDiameter(diam);
