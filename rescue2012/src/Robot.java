@@ -282,75 +282,6 @@ public class Robot {
 		}
 	}
 
-	// public void correctRight(double degrees){
-	// motRight.setPower(getBaseMotorPower());
-	// motLeft.setPower(getBaseMotorPower());
-	// motRight.stop();
-	// motLeft.stop();
-	// double diff;
-	// float init = compass.getDegrees();
-	// float fin = 0.0f;
-	//
-	// right(degrees);
-	// stop();
-	// fin = compass.getDegrees();
-	//
-	// if (fin < init){
-	// fin = fin + 360.0f;
-	// }
-	//
-	// diff = (double)(fin - init) - degrees;
-	//
-	// if (diff > 0){
-	// left(diff);
-	// }
-	// if (diff < 0){
-	// right(Math.abs(diff));
-	// }
-	// stop();
-	// }
-
-//	public void right(double degrees) {
-//		motRight.setPower(getBaseMotorPower());
-//		motLeft.setPower(getBaseMotorPower());
-//		motRight.stop();
-//		motLeft.stop();
-//
-//		double t_init, t_final;
-//		t_init = motLeft.getTachoCount();
-//		t_final = (int) (degrees * angleError)
-//				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-//
-//		while (motLeft.getTachoCount() < t_final) {
-//			motRight.backward();
-//			motLeft.forward();
-//		}
-//		motRight.stop();
-//		motLeft.stop();
-//		setDir((int) (getDir() - degrees));
-//	}
-
-//	public void left(double degrees) {
-//		motRight.setPower(getBaseMotorPower());
-//		motLeft.setPower(getBaseMotorPower());
-//		motRight.stop();
-//		motLeft.stop();
-//
-//		double t_init, t_final;
-//		t_init = motRight.getTachoCount();
-//		t_final = (int) (degrees * angleError)
-//				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-//
-//		while (motRight.getTachoCount() < t_final) {
-//			motLeft.backward();
-//			motRight.forward();
-//
-//		}
-//		motLeft.stop();
-//		motRight.stop();
-//		setDir((int) (getDir() + degrees));
-//	}
-
 	public void correctedRightTurn(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
@@ -417,7 +348,7 @@ public class Robot {
 		}
 	}
 
-	// ---------- begin testRight/Left -----------
+	// ---------- begin new Right/Left -----------
 	public void right(double degrees) {
 		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
 
@@ -448,7 +379,7 @@ public class Robot {
 		debugln("comp " + getHeading());
 	}
 
-	// ---------- end of testRight/Left -----------
+	// ---------- end of new Right/Left -----------
 
 	public void forward(double distance) {
 		// Makes the robot go forward for the given distance
