@@ -17,17 +17,26 @@ public class StateLineFollowSingle extends State{
 	}
 	
 	public void enter(Robot robot) {
+		debugln("EnterStateLineFollowSingle");
 		robot.forward();
 	}
 	
 	public void execute(Robot robot) {
-		if(robot.touch.isPressed()){
-			robot.changeState(StateCommand.getInstance());
-			return;
-		}
+		debugln("ExecuteStateLineFollowSingle");
+		
+//		if(robot.touch.isPressed()){
+//			robot.changeState(StateCommand.getInstance());
+//			return;
+//		}
 		
 		int lightVal = 0;
-		lightVal = robot.lightLeft.readValue();
+
+		if(robot.colorsensor != null){
+			debugln("color sensor detected");
+			lightVal = robot.colorsensor.getLightValue();
+		} else {
+			lightVal = robot.lightLeft.readValue();
+		}
 		if(lightVal < threshold) {
 			robot.motLeft.setPower(60);
 			robot.motRight.setPower(30);

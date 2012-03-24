@@ -216,7 +216,7 @@ public class StateCommand extends State {
 			int val = robot.motLeft.getTachoCount();
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("comp")) {
-			float deg = robot.compass.getDegrees();
+			float deg = robot.getHeading();
 			debugln("" + deg);
 		} else if (command.equalsIgnoreCase("newNorth")) {
 			robot.setNewNorth();
@@ -229,13 +229,21 @@ public class StateCommand extends State {
 //			double degrees = parseDouble(arg0);
 //			robot.compassRight(degrees);
 //			debugln("Right @ " + degrees + " degrees");
+		}else if (command.equalsIgnoreCase("correctLeft")) {
+			double degrees = parseDouble(arg0);
+			robot.correctedLeftTurn((float) (degrees));
 		}else if (command.equalsIgnoreCase("US")) {
 			float deg = robot.ultrasonic.getDistance();
 			debugln("" + deg);
 		}else if (command.equalsIgnoreCase("LIGHT")) {
 			float deg = robot.lightLeft.getLightValue();
 			debugln("" + deg);
-		} else if (command.equalsIgnoreCase("rDiam")) {
+		}else if (command.equalsIgnoreCase("color")) {
+			float deg = robot.colorsensor.getLightValue();
+			debugln("" + deg);
+		}else if (command.equalsIgnoreCase("colorFollow")) {
+			robot.changeState(StateLineFollowSingle.getInstance());
+		}else if (command.equalsIgnoreCase("rDiam")) {
 			double diam = parseDouble(arg0);
 			if (diam > 0) {
 				robot.setRobotDiameter(diam);
