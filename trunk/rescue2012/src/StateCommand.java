@@ -223,7 +223,7 @@ public class StateCommand extends State {
 			debugln("New north set to " + robot.newNorth);
 		} else if (command.equalsIgnoreCase("correctRight")) {
 			double degrees = parseDouble(arg0);
-			robot.correctedRightTurn((float) (degrees));
+			robot.correctRight((float) (degrees));
 //			debugln("Done" + robot.expectedVal);
 //		} else if (command.equalsIgnoreCase("compassRight")) {
 //			double degrees = parseDouble(arg0);
@@ -231,7 +231,7 @@ public class StateCommand extends State {
 //			debugln("Right @ " + degrees + " degrees");
 		}else if (command.equalsIgnoreCase("correctLeft")) {
 			double degrees = parseDouble(arg0);
-			robot.correctedLeftTurn((float) (degrees));
+			robot.correctLeft((float) (degrees));
 		}else if (command.equalsIgnoreCase("US")) {
 			float deg = robot.ultrasonic.getDistance();
 			debugln("" + deg);

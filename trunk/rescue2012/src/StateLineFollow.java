@@ -5,8 +5,8 @@ public class StateLineFollow extends State {
 	private static StateLineFollow instance = new StateLineFollow();
 
 	// Kc = 4 Pc = .25 dT = .0028
-	final double Kp = 3.25;
-	final double Ki = 0.0;
+	final double Kp = 3.5;
+	final double Ki = 0.05;
 	final double Kd = 0.0;
 	final int threshold = 30;
 
@@ -29,7 +29,7 @@ public class StateLineFollow extends State {
 				error -= 3;
 			}
 		}
-		debugln("Error: " + error);
+		//debugln("Error: " + error);
 		return error;
 	}
 
