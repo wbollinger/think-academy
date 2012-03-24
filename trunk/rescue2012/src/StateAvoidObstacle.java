@@ -23,7 +23,7 @@ public class StateAvoidObstacle extends State {
 
 	public void execute(Robot robot) {
 		// Some code to find obstacle size?
-		Obstacle obstacle = new Obstacle(10, 10);
+		Obstacle obstacle = new Obstacle(20 , 10);
 
 		double ff;
 		ff = 3 + robot.robotDiameter / 2;
@@ -37,27 +37,42 @@ public class StateAvoidObstacle extends State {
 			robot.left(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 
-			robot.right(90);
+			if (robot.turnRightLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
 					+ backDist)) {
 				debug("line found on first leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			robot.right(90);
+			if (robot.turnRightLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
+
 			if (robot.forwardLookForLine(obstacle.getxLength() + ff)) {
 				debug("line found on second leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			robot.right(90);
+			if (robot.turnRightLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
+
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
 					+ backDist)) {
 				debug("line found on third leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			robot.right(90);
+			if (robot.turnRightLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
+
 			if (robot.forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
 				debug("line found on fourth leg\n");
 				robot.changeState(StateFindLine.getInstance());
@@ -69,24 +84,34 @@ public class StateAvoidObstacle extends State {
 			robot.right(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 
-			robot.left(90);
+			if (robot.turnLeftLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
 					+ backDist)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			robot.left(90);
+			if (robot.turnLeftLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
 			if (robot.forwardLookForLine(obstacle.getxLength() + ff)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			robot.left(90);
+			if (robot.turnLeftLookForLine(90)) {
+			}
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
 					+ backDist)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			robot.left(90);
+			if (robot.turnLeftLookForLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
 			if (robot.forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
