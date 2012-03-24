@@ -75,7 +75,7 @@ public class StateLineFollow extends State {
 			robot.motLeft.setPower(powerLeft);
 
 			lastError = error;
-			if (robot.touch.isPressed()) {
+			if (robot.ultrasonic.getDistance()< 10) {
 				robot.changeState(StateAvoidObstacle.getInstance());
 				break;
 			}
