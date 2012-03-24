@@ -218,13 +218,9 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("comp")) {
 			float deg = robot.compass.getDegrees();
 			debugln("" + deg);
-			// } else if (command.equalsIgnoreCase("cart")) {
-			// float deg = robot.compass.getDegreesCartesian();
-			// debugln("" + deg);
-			// } else if (command.equalsIgnoreCase("resetCart")) {
-			// robot.compass.resetCartesianZero();
-			// float deg = robot.compass.getDegreesCartesian();
-			// debugln("" + deg);
+		} else if (command.equalsIgnoreCase("newNorth")) {
+			robot.setNewNorth();
+			debugln("New north set to " + robot.newNorth);
 		} else if (command.equalsIgnoreCase("correctRight")) {
 			double degrees = parseDouble(arg0);
 			robot.correctedRightTurn((float) (degrees));
@@ -233,10 +229,12 @@ public class StateCommand extends State {
 //			double degrees = parseDouble(arg0);
 //			robot.compassRight(degrees);
 //			debugln("Right @ " + degrees + " degrees");
-		} else if (command.equalsIgnoreCase("newNorth")) {
-			robot.setNewNorth();
-			debugln("New north set to " + robot.newNorth);
-
+		}else if (command.equalsIgnoreCase("US")) {
+			float deg = robot.ultrasonic.getDistance();
+			debugln("" + deg);
+		}else if (command.equalsIgnoreCase("LIGHT")) {
+			float deg = robot.lightLeft.getLightValue();
+			debugln("" + deg);
 		} else if (command.equalsIgnoreCase("rDiam")) {
 			double diam = parseDouble(arg0);
 			if (diam > 0) {
