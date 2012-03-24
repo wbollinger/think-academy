@@ -1,9 +1,5 @@
-import lejos.*;
-import lejos.nxt.LCD;
-import lejos.nxt.Sound;
-
 //------------------------------------------------------------------------
-//  robot starting state - decides what to do when robot is turned on
+//  Find the black line
 //------------------------------------------------------------------------
 public class StateFindLine extends State {
 
@@ -18,7 +14,7 @@ public class StateFindLine extends State {
 	}
 
 	public void enter(Robot robot) {
-		LCD.drawString("Robot: FindLine enter", 0, 0);
+		debugln("FindLine enter");
 		robot.stop();
 		robot.sleep(70);
 		robot.forward(6);
