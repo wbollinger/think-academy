@@ -225,6 +225,14 @@ public class StateCommand extends State {
 			// robot.compass.resetCartesianZero();
 			// float deg = robot.compass.getDegreesCartesian();
 			// debugln("" + deg);
+		} else if (command.equalsIgnoreCase("correctRight")) {
+			double degrees = parseDouble(arg0);
+			robot.correctedRightTurn((float) (degrees));
+//			debugln("Done" + robot.expectedVal);
+//		} else if (command.equalsIgnoreCase("compassRight")) {
+//			double degrees = parseDouble(arg0);
+//			robot.compassRight(degrees);
+//			debugln("Right @ " + degrees + " degrees");
 		} else if (command.equalsIgnoreCase("newNorth")) {
 			robot.setNewNorth();
 			debugln("New north set to " + robot.newNorth);
