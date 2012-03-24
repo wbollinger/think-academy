@@ -79,8 +79,11 @@ public class StateLineFollow extends State {
 				robot.changeState(StateAvoidObstacle.getInstance());
 				break;
 			}
+			if (robot.lightLeft.getLightValue() > 56) {
+				Sound.playTone(440, 100);
+				robot.sleep(100);
+			}
 		}
-
 	}
 
 	public void exit(Robot robot) {
