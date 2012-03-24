@@ -354,7 +354,7 @@ public class Robot {
 	public void correctedRightTurn(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
-		testRight(degrees);
+		right(degrees);
 		sleep(100);
 		float val = getHeading();
 		debugln("" + val);
@@ -372,9 +372,9 @@ public class Robot {
 				val = val + 360;
 			}
 			if (val > expectedVal) {
-				testRight(val - expectedVal);
+				right(val - expectedVal);
 			} else {
-				testLeft(expectedVal - val);
+				left(expectedVal - val);
 			}
 			if(expectedVal == 360){
 				expectedVal = 0;
@@ -387,7 +387,7 @@ public class Robot {
 	public void correctedLeftTurn(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
-		testLeft(degrees);
+		left(degrees);
 		sleep(100);
 		float val = getHeading();
 		debugln("" + val);
@@ -405,9 +405,9 @@ public class Robot {
 				val = val + 360;
 			}
 			if (val > expectedVal) {
-				testRight(val - expectedVal);
+				right(val - expectedVal);
 			} else {
-				testLeft(expectedVal - val);
+				left(expectedVal - val);
 			}
 			if(expectedVal == 360){
 				expectedVal = 0;
