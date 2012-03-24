@@ -309,68 +309,40 @@ public class Robot {
 		motLeft.setPower(getBaseMotorPower());
 		motRight.stop();
 		motLeft.stop();
-		double diff;
-		float init = compass.getDegrees();
-		float fin = 0.0f;
-		boolean settled = false;
-		double prevError = 0;
 
 		double t_init, t_final;
 		t_init = motLeft.getTachoCount();
 		t_final = (int) (degrees * angleError)
 				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-		motRight.backward();
-		motLeft.forward();
 
-		double error = t_final - motLeft.getTachoCount();
-
-		while (!settled) {
-
-			error = t_final - motLeft.getTachoCount();
-
-			if ((error == prevError) && (Math.abs(error) < errorBuff)) {
-				settled = true;
-			}
-			// debugln("" + error);
-			if (Math.abs(error) < integralBuff) {
-				integralTurn = 0;
-			} else {
-				integralTurn += (int) Util.round(error);
-			}
-			int turnPower = (int) Util.round(error * kPTurn + integralTurn
-					* kITurn);
-
-			if (turnPower > 100) {
-				turnPower = 100;
-			} else if (turnPower < -100) {
-				turnPower = -100;
-			}
-
-			motLeft.setPower(turnPower);
-			motRight.setPower(turnPower);
-			debugln("" + turnPower + "err " + error);
-
-			prevError = error;
+		while (motLeft.getTachoCount() < t_final) {
+			motRight.backward();
+			motLeft.forward();
 		}
-
-		stop();
-
-		// fin = compass.getDegrees();
-		// if (fin < init){
-		// fin = fin + 360.0f;
-		// }
-		// diff = (double)(fin - init) - degrees;
-		// if (diff > 0){
-		// left(diff);
-		// }
-		// if (diff < 0){
-		// right(Math.abs(diff));
-		// }
-		// stop();
-		// motRight.stop();
-		// motLeft.stop();
-
+		motRight.stop();
+		motLeft.stop();
 		setDir((int) (getDir() - degrees));
+	}
+
+	public void left(double degrees) {
+		motRight.setPower(getBaseMotorPower());
+		motLeft.setPower(getBaseMotorPower());
+		motRight.stop();
+		motLeft.stop();
+
+		double t_init, t_final;
+		t_init = motRight.getTachoCount();
+		t_final = (int) (degrees * angleError)
+				* (getRobotDiameter() / getWheelDiameter()) + t_init;
+
+		while (motRight.getTachoCount() < t_final) {
+			motLeft.backward();
+			motRight.forward();
+
+		}
+		motLeft.stop();
+		motRight.stop();
+		setDir((int) (getDir() + degrees));
 	}
 
 	public void correctedRightTurn(float degrees) {
@@ -465,51 +437,6 @@ public class Robot {
 	}
 
 	// ---------- end of testRight -----------
-
-	public void left(double degrees) {
-		motRight.setPower(getBaseMotorPower());
-		motLeft.setPower(getBaseMotorPower());
-		motRight.stop();
-		motLeft.stop();
-
-		double diff;
-		float init = compass.getDegrees();
-		float fin = 0.0f;
-
-		double t_init, t_final;
-		t_init = motRight.getTachoCount();
-		t_final = (int) (degrees * angleError)
-				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-		motLeft.backward();
-		motRight.forward();
-		double error = t_final - motRight.getTachoCount();
-		while (error != 0) {
-			error = t_final - motRight.getTachoCount();
-			debugln("" + error);
-			if (Math.abs(error) < integralBuff) {
-				integralTurn = 0;
-			} else {
-				integralTurn += (int) (error);
-			}
-			int turnPower = (int) (error * kPTurn + integralTurn * kITurn);
-			motLeft.setPower(turnPower);
-			motRight.setPower(turnPower);
-		}
-		stop();
-		// fin = compass.getDegrees();
-		// if (fin > init){
-		// init = init + 360.0f;
-		// }
-		// diff = (double)(fin - init) + degrees;
-		// if (diff > 0){
-		// left(diff);
-		// }
-		// if (diff < 0){
-		// right(Math.abs(diff));
-		// }
-		// stop();
-		setDir((int) (getDir() + degrees));
-	}
 
 	public void forward(double distance) {
 		// Makes the robot go forward for the given distance
