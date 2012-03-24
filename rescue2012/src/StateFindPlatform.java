@@ -1,6 +1,3 @@
-import lejos.nxt.*;
-import lejos.nxt.comm.RConsole;
-
 public class StateFindPlatform extends State {
 
 	private static StateFindPlatform instance = new StateFindPlatform();

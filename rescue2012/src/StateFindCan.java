@@ -1,6 +1,3 @@
-import lejos.nxt.*;
-import lejos.nxt.comm.RConsole;
-
 public class StateFindCan extends State {
 
 	private static StateFindCan instance = new StateFindCan();
