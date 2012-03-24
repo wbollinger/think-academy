@@ -150,7 +150,7 @@ public class StateCommand extends State {
 			robot.turnRightLookForLine(90);
 			//
 
-		} else if (command.equalsIgnoreCase("right")) {
+		}else if (command.equalsIgnoreCase("right")) {
 			double degrees = parseDouble(arg0);
 			robot.right(degrees);
 		} else if (command.equalsIgnoreCase("left")) {
@@ -207,7 +207,7 @@ public class StateCommand extends State {
 			int val = robot.getLightRight();
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("comp")) {
-			float deg = robot.getHeading();
+			float deg = robot.compass.getDegrees();
 			debugln("" + deg);
 			// } else if (command.equalsIgnoreCase("cart")) {
 			// float deg = robot.compass.getDegreesCartesian();
