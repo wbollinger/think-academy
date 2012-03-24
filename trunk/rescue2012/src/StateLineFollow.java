@@ -1,5 +1,4 @@
 import lejos.nxt.*;
-import lejos.nxt.comm.RConsole;
 
 public class StateLineFollow extends State {
 
@@ -30,7 +29,7 @@ public class StateLineFollow extends State {
 				error -= 3;
 			}
 		}
-		RConsole.println("Error: " + error);
+		debugln("Error: " + error);
 		return error;
 	}
 
@@ -55,7 +54,6 @@ public class StateLineFollow extends State {
 		robot.motRight.forward();
 		robot.motLeft.forward();
 
-		// for(int i = 0; i < 1000; i++) {
 		while (!Button.ESCAPE.isDown()) {
 
 			if (error == 0) {
@@ -71,7 +69,7 @@ public class StateLineFollow extends State {
 			powerLeft = robot.getBaseMotorPower() - Turn;
 
 			// msg = "" + Kp*error + ", " + Ki*integral;
-			// RConsole.println(msg);
+			// debugln(msg);
 
 			robot.motRight.setPower(powerRight);
 			robot.motLeft.setPower(powerLeft);
