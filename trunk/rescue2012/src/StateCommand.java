@@ -152,10 +152,10 @@ public class StateCommand extends State {
 
 		} else if (command.equalsIgnoreCase("right")) {
 			double degrees = parseDouble(arg0);
-			robot.right(degrees);
+			robot.testRight(degrees);
 		} else if (command.equalsIgnoreCase("left")) {
 			double degrees = parseDouble(arg0);
-			robot.left(degrees);
+			robot.testLeft(degrees);
 		} else if (command.equalsIgnoreCase("testRight")) {
 			double degrees = parseDouble(arg0);
 			robot.testRight(degrees);
