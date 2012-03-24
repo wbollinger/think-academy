@@ -27,12 +27,16 @@ public class Robot {
 	boolean avoidedLeft = true;
 	float newNorth = 0.0f;
 	double kPTurn = 0.1;
-	double kITurn = 0.001;
+	double kITurn = 0.0001;
 	int integralTurn;
 	int integralBuff = 2;
+	int errorBuff = 2;
 
 	NXTMotor motRight;
 	NXTMotor motLeft;
+	NXTRegulatedMotor motRegRight;
+	NXTRegulatedMotor motRegLeft;
+
 	TouchSensor touch;
 	LightSensor lightLeft;
 	LightSensor lightRight;
@@ -133,12 +137,16 @@ public class Robot {
 			// 1.0+((360.0-280.0)/360.0)+((360.0-354.0)/360.0)+((360.0-365.0)/360.0);
 			// at full voltage, gives accurate turns at 40 power.
 			angleError = (360.0 / 305.0);
-			touch = new TouchSensor(SensorPort.S3);
-		} else if (name.equals("ebay")) {
-			wheelDiameter = 8.16;
-			robotDiameter = 16.4;
-			angleError = 1.0;
+			//touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
+		} else if (name.equals("ebay")) {
+			wheelDiameter = 5.6; // both in cm
+			robotDiameter = 13.6;
+			angleError = (360.0 / 305.0);
+//			wheelDiameter = 8.16;
+//			robotDiameter = 16.4;
+//			angleError = 1.0;
+//			compass = new CompassHTSensor(SensorPort.S3);
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
@@ -157,11 +165,12 @@ public class Robot {
 			compass = new CompassHTSensor(SensorPort.S3);
 		} else {
 			// Unknown robot
-
 		}
 
 		motRight = new NXTMotor(MotorPort.B);
 		motLeft = new NXTMotor(MotorPort.C);
+		motRegRight = new NXTRegulatedMotor(MotorPort.B);
+		motRegLeft = new NXTRegulatedMotor(MotorPort.C);
 
 		setBaseMotorPower(30);
 
@@ -304,6 +313,8 @@ public class Robot {
 		double diff;
 		float init = compass.getDegrees();
 		float fin = 0.0f;
+		boolean settled = false;
+		double prevError = 0;
 		
 		double t_init, t_final;
 		t_init = motLeft.getTachoCount();
@@ -314,20 +325,36 @@ public class Robot {
 		
 		double error = t_final - motLeft.getTachoCount();
 		
-		while (error != 0) {
+		while (!settled) {
+			
 			error = t_final - motLeft.getTachoCount();
-			debugln("" + error);
+			
+			if((error == prevError) && (Math.abs(error) < errorBuff)) {
+				settled = true;
+			}
+			//debugln("" + error);
 			if(Math.abs(error) < integralBuff){
 				integralTurn = 0;
 			}else {
-				integralTurn += (int)(error);
+				integralTurn += (int) Util.round(error);
 			}
-			int turnPower = (int) (error*kPTurn + integralTurn*kITurn);
+			int turnPower = (int) Util.round(error*kPTurn + integralTurn*kITurn);
+			
+			if(turnPower > 100) {
+				turnPower = 100;
+			} else if(turnPower < -100) {
+				turnPower = -100;
+			}
+			
 			motLeft.setPower(turnPower);
 			motRight.setPower(turnPower);
+			debugln("" + turnPower + "err " + error);
+
+			prevError = error;
 		}
 		
 		stop();
+		
 //		fin = compass.getDegrees();
 //		if (fin < init){
 //			fin = fin + 360.0f;
@@ -342,8 +369,42 @@ public class Robot {
 //		stop();	
 //		motRight.stop();
 //		motLeft.stop();
+		
 		setDir((int) (getDir() - degrees));
 	}
+
+	//---------- begin testRight/Left -----------
+	public void testRight(double degrees) {
+		int angle = (int) ((degrees /* angleError*/)
+				* (getRobotDiameter() / getWheelDiameter()));
+		
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegRight.rotate(-angle, true);
+		motRegLeft.rotate(angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			sleep(10);
+		}
+		motRegRight.suspendRegulation();
+		motRegLeft.suspendRegulation();
+		debugln("comp " + getHeading());
+	}
+	public void testLeft(double degrees) {
+		int angle = (int) ((degrees /* angleError*/)
+				* (getRobotDiameter() / getWheelDiameter()));
+		
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegRight.rotate(angle, true);
+		motRegLeft.rotate(-angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			sleep(10);
+		}
+		motRegRight.suspendRegulation();
+		motRegLeft.suspendRegulation();
+		debugln("comp " + getHeading());
+	}
+	//---------- end of testRight -----------
 
 	public void left(double degrees) {
 		motRight.setPower(getBaseMotorPower());
