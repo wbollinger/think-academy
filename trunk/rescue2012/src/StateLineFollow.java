@@ -7,7 +7,7 @@ public class StateLineFollow extends State {
 	// Kc = 4 Pc = .25 dT = .0028
 	final double Kp = 3.5;
 	final double Ki = 0.05;
-	final double Kd = 0.0;
+	final double Kd = 0.01;
 	final int threshold = 30;
 
 	private StateLineFollow() {
@@ -75,14 +75,15 @@ public class StateLineFollow extends State {
 			robot.motLeft.setPower(powerLeft);
 
 			lastError = error;
-			if (robot.ultrasonic.getDistance()< 10) {
-				robot.changeState(StateAvoidObstacle.getInstance());
-				break;
-			}
-			if (robot.lightLeft.getLightValue() > 56) {
-				Sound.playTone(440, 100);
-				robot.sleep(100);
-			}
+			
+//			if (robot.ultrasonic.getDistance()< 10) {
+//				robot.changeState(StateAvoidObstacle.getInstance());
+//				break;
+//			}
+//			if (robot.lightLeft.getLightValue() > 56) {
+//				Sound.playTone(440, 100);
+//				robot.sleep(100);
+//			}
 		}
 	}
 
