@@ -148,6 +148,8 @@ public class StateCommand extends State {
 			robot.turnLeftLookForLine(90);
 		} else if (command.equalsIgnoreCase("rightLook")) {
 			robot.turnRightLookForLine(90);
+		} else if (command.equalsIgnoreCase("locate")) {
+			robot.findCanCoarse();
 			//
 
 		} else if (command.equalsIgnoreCase("right")) {
@@ -227,26 +229,26 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("correctRight")) {
 			double degrees = parseDouble(arg0);
 			robot.correctRight((float) (degrees));
-//			debugln("Done" + robot.expectedVal);
-//		} else if (command.equalsIgnoreCase("compassRight")) {
-//			double degrees = parseDouble(arg0);
-//			robot.compassRight(degrees);
-//			debugln("Right @ " + degrees + " degrees");
-		}else if (command.equalsIgnoreCase("correctLeft")) {
+			// debugln("Done" + robot.expectedVal);
+			// } else if (command.equalsIgnoreCase("compassRight")) {
+			// double degrees = parseDouble(arg0);
+			// robot.compassRight(degrees);
+			// debugln("Right @ " + degrees + " degrees");
+		} else if (command.equalsIgnoreCase("correctLeft")) {
 			double degrees = parseDouble(arg0);
 			robot.correctLeft((float) (degrees));
-		}else if (command.equalsIgnoreCase("US")) {
+		} else if (command.equalsIgnoreCase("US")) {
 			float deg = robot.ultrasonic.getDistance();
 			debugln("" + deg);
-		}else if (command.equalsIgnoreCase("LIGHT")) {
+		} else if (command.equalsIgnoreCase("LIGHT")) {
 			float deg = robot.lightLeft.getLightValue();
 			debugln("" + deg);
-		}else if (command.equalsIgnoreCase("color")) {
+		} else if (command.equalsIgnoreCase("color")) {
 			float deg = robot.colorsensor.getLightValue();
 			debugln("" + deg);
-		}else if (command.equalsIgnoreCase("colorFollow")) {
+		} else if (command.equalsIgnoreCase("colorFollow")) {
 			robot.changeState(StateLineFollowSingle.getInstance());
-		}else if (command.equalsIgnoreCase("rDiam")) {
+		} else if (command.equalsIgnoreCase("rDiam")) {
 			double diam = parseDouble(arg0);
 			if (diam > 0) {
 				robot.setRobotDiameter(diam);
