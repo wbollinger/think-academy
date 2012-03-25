@@ -237,6 +237,12 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("correctLeft")) {
 			double degrees = parseDouble(arg0);
 			robot.correctLeft((float) (degrees));
+		} else if (command.equalsIgnoreCase("correctLeftLine")) {
+			double degrees = parseDouble(arg0);
+			robot.correctLeftLine((float) (degrees));
+		} else if (command.equalsIgnoreCase("correctRightLine")) {
+			double degrees = parseDouble(arg0);
+			robot.correctRightLine((float) (degrees));
 		} else if (command.equalsIgnoreCase("US")) {
 			float deg = robot.ultrasonic.getDistance();
 			debugln("" + deg);
