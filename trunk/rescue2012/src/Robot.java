@@ -994,117 +994,177 @@ public class Robot {
 		resetAngle();
 		return false;
 	}
-
+	
 	public boolean turnLeftLookForLine(double degrees) {
-		// Makes the robot go forward for the given distance, and stop if it
+		// Makes the robot turn left the given degrees, and stop if it
 		// sees a line
 		leftBlack = false;
 		rightBlack = false;
-		resetAngle();
-		motLeft.backward();
-		motRight.forward();
-
-		motRight.setPower(getBaseMotorPower());
-		motLeft.setPower(getBaseMotorPower());
-
-		double t_init, t_final;
-		t_init = motRight.getTachoCount();
-		t_final = (int) (degrees * angleError)
-				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-
-		while (motRight.getTachoCount() < t_final) {
-			{
-
-				if (leftBlack != true) {
-					if (lightLeft.getLightValue() < 45) {
-						leftBlack = true;
-					}
+		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
+		
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegRight.rotate(angle, true);
+		motRegLeft.rotate(-angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			if (leftBlack != true) {
+				if (lightLeft.getLightValue() < 45) {
+					leftBlack = true;
 				}
-
-				if (rightBlack != true) {
-					if (lightRight.getLightValue() < 45) {
-						rightBlack = true;
-					}
-				}
-
-				if (leftBlack == true && rightBlack == true) {
-					debug("I Should Stop Here");
-					stop();
-					return true;
-				}
-
-				if (rightBlack == true) {
-					motRight.setPower(-40);
-					motLeft.setPower(50);
-				} else if (leftBlack == true) {
-					motLeft.setPower(-40);
-					motRight.setPower(50);
-				}
-
 			}
 
+			if (rightBlack != true) {
+				if (lightRight.getLightValue() < 45) {
+					rightBlack = true;
+				}
+			}
+
+			if (leftBlack == true && rightBlack == true) {
+				debug("I Should Stop Here");
+				motRegRight.suspendRegulation();
+				motRegLeft.suspendRegulation();
+				stop();
+				return true;
+			}
+			
 		}
+		if (rightBlack == true) {
+			motRight.setPower(-40);
+			motLeft.setPower(50);
+		} else if (leftBlack == true) {
+			motLeft.setPower(-40);
+			motRight.setPower(50);
+		}
+
 		stop();
 		setDir((int) (getDir() + degrees));
-
-		resetAngle();
 		return false;
-	}
-
+		}
+	
 	public boolean turnRightLookForLine(double degrees) {
-		// Makes the robot go forward for the given distance, and stop if it
+		// Makes the robot turn right for the given degrees, and stop if it
 		// sees a line
-		resetAngle();
-		motLeft.forward();
-		motRight.backward();
-
-		motRight.setPower(getBaseMotorPower());
-		motLeft.setPower(getBaseMotorPower());
-
-		double t_init, t_final;
-		t_init = motRight.getTachoCount();
-		t_final = (int) (degrees * angleError)
-				* (getRobotDiameter() / getWheelDiameter()) + t_init;
-
-		while (motRight.getTachoCount() < t_final) {
-			{
-
-				if (leftBlack != true) {
-					if (lightLeft.getLightValue() < 45) {
-						leftBlack = true;
-					}
+		leftBlack = false;
+		rightBlack = false;
+		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
+		
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegRight.rotate(-angle, true);
+		motRegLeft.rotate(angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			if (leftBlack != true) {
+				if (lightLeft.getLightValue() < 45) {
+					leftBlack = true;
 				}
-
-				if (rightBlack != true) {
-					if (lightRight.getLightValue() < 45) {
-						rightBlack = true;
-					}
-				}
-
-				if (leftBlack == true && rightBlack == true) {
-					debug("I Should Stop Here");
-					stop();
-					return true;
-				}
-
-				if (rightBlack == true) {
-					motRight.setPower(-40);
-					motLeft.setPower(50);
-				} else if (leftBlack == true) {
-					motLeft.setPower(-40);
-					motRight.setPower(50);
-				}
-
 			}
 
+			if (rightBlack != true) {
+				if (lightRight.getLightValue() < 45) {
+					rightBlack = true;
+				}
+			}
+
+			if (leftBlack == true && rightBlack == true) {
+				debug("I Should Stop Here");
+				motRegRight.suspendRegulation();
+				motRegLeft.suspendRegulation();		
+				stop();
+				return true;
+			}
 		}
+		if (rightBlack == true) {
+			motRight.setPower(-40);
+			motLeft.setPower(50);
+		} else if (leftBlack == true) {
+			motLeft.setPower(-40);
+			motRight.setPower(50);
+		}
+			
 		stop();
 		setDir((int) (getDir() + degrees));
-
-		resetAngle();
 		return false;
 
 	}
+	
+	public void correctLeftLine(float degrees) {
+		boolean line = false;
+		float origin = getHeading();
+		float expectedVal = origin + degrees;
+		line = turnLeftLookForLine(degrees);
+		sleep(100);
+		float val = getHeading();
+		debugln("" + val);
+		val = getHeading();
+		debugln("" + val);
+
+		while ((val != expectedVal) && !line) {
+			if (expectedVal < 0) {
+				expectedVal = expectedVal + 360;
+			}
+			if (val - expectedVal > 180) {
+				expectedVal = expectedVal + 360;
+			}
+			if (expectedVal - val > 180) {
+				val = val + 360;
+			}
+			if (val > expectedVal) {
+				line = turnRightLookForLine(val - expectedVal);
+			} else {
+				line = turnLeftLookForLine(expectedVal - val);
+			}
+			if(expectedVal == 360){
+				expectedVal = 0;
+			}
+			if(expectedVal > 360){
+				expectedVal = expectedVal-360;
+			}
+			
+			sleep(100);
+			val = getHeading();
+			debugln(""+expectedVal);
+		}
+	}
+	
+	public void correctRightLine(float degrees) {
+		boolean line = false;
+		float origin = getHeading();
+		float expectedVal = origin - degrees;
+		line = turnRightLookForLine(degrees);
+		sleep(100);
+		float val = getHeading();
+		debugln("" + val);
+		val = getHeading();
+		debugln("" + val);
+		if (expectedVal < 0) {
+			expectedVal = expectedVal + 360;
+		}
+
+		while ((val != expectedVal) && !line) {
+			if (val - expectedVal > 180) {
+				expectedVal = expectedVal + 360;
+			}
+			if (expectedVal - val > 180) {
+				val = val + 360;
+			}
+			if (val > expectedVal) {
+				line = turnRightLookForLine(val - expectedVal);
+			} else {
+				line = turnLeftLookForLine(expectedVal - val);
+			}
+			if(expectedVal == 360){
+				expectedVal = 0;
+			}
+			if(expectedVal > 360){
+				expectedVal = expectedVal-360;
+			}
+			sleep(100);
+			val = getHeading();
+			debugln(""+expectedVal);
+		}
+	}
+
+
 
 	public void findLineRight() {
 		// makes the robot turn right, looking to reposition itself so as to
