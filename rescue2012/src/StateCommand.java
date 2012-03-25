@@ -218,6 +218,9 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("comp")) {
 			float deg = robot.getHeading();
 			debugln("" + deg);
+		} else if (command.equalsIgnoreCase("compdeg")) {
+			float deg = robot.getDegrees();
+			debugln("" + deg);
 		} else if (command.equalsIgnoreCase("newNorth")) {
 			robot.setNewNorth();
 			debugln("New north set to " + robot.newNorth);
@@ -286,7 +289,7 @@ public class StateCommand extends State {
 			debugln(" dir = " + robot.getDir());
 			debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
 			debugln("dist = " + robot.ultrasonic.getDistance());
-			debugln("comp = " + robot.getDegrees());
+			debugln("comp = " + robot.getHeading());
 		} else if (command.equalsIgnoreCase("sweep")) {
 			robot.changeState(StateCompositeSweep.getInstance());
 		} else if (command.equalsIgnoreCase("bat")) {
