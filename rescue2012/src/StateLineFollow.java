@@ -5,10 +5,9 @@ public class StateLineFollow extends State {
 	private static StateLineFollow instance = new StateLineFollow();
 
 	// Kc = 4 Pc = .25 dT = .0028
-	final double Kp = 3.5;
-	final double Ki = 0.05;
-	final double Kd = 0.01;
-	final int threshold = 30;
+	final double Kp = 6.00;
+	final double Ki = 0.01;
+	final double Kd = 0.00;
 
 	private StateLineFollow() {
 	}
