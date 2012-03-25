@@ -11,7 +11,7 @@ public class RCJSensorMux extends SensorMux {
 	}
 
 	/**
-	 * This method return the value from a analogic sensor. Currently, SMux
+	 * This method return the value from an analog sensor. Currently, SMux
 	 * supports Touch sensor and Sound sensor
 	 * 
 	 * @param channel
@@ -21,22 +21,23 @@ public class RCJSensorMux extends SensorMux {
 	public int getAnalogValue(int channel) {
 		byte[] buf = new byte[1];
 		byte register = analogRegisters[channel - 1];
-		int ret = getData(register, buf, 1);
+		/* int ret = */getData(register, buf, 1);
 		int analogValue = buf[0] & 0xff;
 		return analogValue;
 	}
 
-	   /**
-	    * Method used to receive data from an EOPD Sensor
-	    * 
-	    * @param channel the index of the channel
-	    * @return the value
-	    */
-	   public int readEOPD(int channel){
-		   int value = 0;
-		   value = getAnalogValue(channel);
-		   //value = ((1023 - value) * 100/ 1023);
-		   return value;
-	   }
+	/**
+	 * Method used to receive data from an EOPD Sensor
+	 * 
+	 * @param channel
+	 *            the index of the channel
+	 * @return the value
+	 */
+	public int readEOPD(int channel) {
+		int value = 0;
+		value = getAnalogValue(channel);
+		// value = ((1023 - value) * 100/ 1023);
+		return value;
+	}
 
 }
