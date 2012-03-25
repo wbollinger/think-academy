@@ -274,6 +274,9 @@ public class StateCommand extends State {
 				robot.setDir(newdir);
 			}
 			debugln("dir = " + robot.getDir());
+		} else if (command.equalsIgnoreCase("eopd")) {
+			robot.getEOPD();
+			debugln("" + robot.getEOPD());
 		} else if (command.equalsIgnoreCase("thresh")) {
 			int newthresh = parseInt(arg0);
 			if (newthresh >= 0) {

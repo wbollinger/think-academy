@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import lejos.nxt.*;
 import lejos.nxt.addon.CompassHTSensor;
+import lejos.nxt.addon.EOPD;
 import lejos.nxt.comm.BTConnection;
 //import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.RConsole;
@@ -44,6 +45,9 @@ public class Robot {
 	ColorSensor colorsensor;
 	UltrasonicSensor ultrasonic;
 	CompassHTSensor compass = null;
+	EOPD eopdSensor;
+	RCJSensorMux sensorMux;
+
 	private int baseMotorPower;
 	State current_state;
 	boolean stepMode;
@@ -139,9 +143,9 @@ public class Robot {
 			// 1.0+((360.0-280.0)/360.0)+((360.0-354.0)/360.0)+((360.0-365.0)/360.0);
 			// at full voltage, gives accurate turns at 40 power.
 			angleError = (360.0 / 305.0);
+			lightLeft = new LightSensor(SensorPort.S1);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
-			lightLeft = new LightSensor(SensorPort.S1);
 		} else if (name.equals("ebay")) {
 			wheelDiameter = 5.6; // both in cm
 			robotDiameter = 13.6;
@@ -149,7 +153,11 @@ public class Robot {
 			// wheelDiameter = 8.16;
 			// robotDiameter = 16.4;
 			// angleError = 1.0;
+
 			// compass = new CompassHTSensor(SensorPort.S3);
+			// eopdSensor = new EOPD(SensorPort.S3, true /*longRange*/);
+			sensorMux = new RCJSensorMux(SensorPort.S3);
+			sensorMux.configurate();
 			lightLeft = new LightSensor(SensorPort.S1);
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
@@ -311,15 +319,15 @@ public class Robot {
 			if (expectedVal == 360) {
 				expectedVal = 0;
 			}
-			if(expectedVal > 360){
-				expectedVal = expectedVal-360;
+			if (expectedVal > 360) {
+				expectedVal = expectedVal - 360;
 			}
 			sleep(100);
 			val = getHeading();
-			debugln(""+expectedVal);
+			debugln("" + expectedVal);
 		}
 	}
-	
+
 	public void correctLeft(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
@@ -348,13 +356,13 @@ public class Robot {
 			if (expectedVal == 360) {
 				expectedVal = 0;
 			}
-			if(expectedVal > 360){
-				expectedVal = expectedVal-360;
+			if (expectedVal > 360) {
+				expectedVal = expectedVal - 360;
 			}
-			
+
 			sleep(100);
 			val = getHeading();
-			debugln(""+expectedVal);
+			debugln("" + expectedVal);
 		}
 	}
 
@@ -371,7 +379,7 @@ public class Robot {
 		}
 		motRegRight.suspendRegulation();
 		motRegLeft.suspendRegulation();
-		//debugln("comp " + getHeading());
+		// debugln("comp " + getHeading());
 	}
 
 	public void left(double degrees) {
@@ -386,7 +394,7 @@ public class Robot {
 		}
 		motRegRight.suspendRegulation();
 		motRegLeft.suspendRegulation();
-		//debugln("comp " + getHeading());
+		// debugln("comp " + getHeading());
 	}
 
 	// ---------- end of new Right/Left -----------
@@ -394,8 +402,7 @@ public class Robot {
 	public void forward(double distance) {
 		// Makes the robot go forward for the given distance
 		resetAngle();
-		while ((motLeft.getTachoCount() * Math.PI / 180)
-				* (getWheelDiameter() / 2) < distance) {
+		while ((motLeft.getTachoCount() * Math.PI / 180) * (getWheelDiameter() / 2) < distance) {
 			double kP = 1;
 			int leftAngle;
 			int rightAngle;
@@ -994,14 +1001,14 @@ public class Robot {
 		resetAngle();
 		return false;
 	}
-	
+
 	public boolean turnLeftLookForLine(double degrees) {
 		// Makes the robot turn left the given degrees, and stop if it
 		// sees a line
 		leftBlack = false;
 		rightBlack = false;
 		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
-		
+
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
 		motRegRight.rotate(angle, true);
@@ -1026,7 +1033,7 @@ public class Robot {
 				stop();
 				return true;
 			}
-			
+
 		}
 		if (rightBlack == true) {
 			motRight.setPower(-40);
@@ -1039,15 +1046,15 @@ public class Robot {
 		stop();
 		setDir((int) (getDir() + degrees));
 		return false;
-		}
-	
+	}
+
 	public boolean turnRightLookForLine(double degrees) {
 		// Makes the robot turn right for the given degrees, and stop if it
 		// sees a line
 		leftBlack = false;
 		rightBlack = false;
 		int angle = (int) ((degrees /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
-		
+
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
 		motRegRight.rotate(-angle, true);
@@ -1068,7 +1075,7 @@ public class Robot {
 			if (leftBlack == true && rightBlack == true) {
 				debug("I Should Stop Here");
 				motRegRight.suspendRegulation();
-				motRegLeft.suspendRegulation();		
+				motRegLeft.suspendRegulation();
 				stop();
 				return true;
 			}
@@ -1080,13 +1087,13 @@ public class Robot {
 			motLeft.setPower(-40);
 			motRight.setPower(50);
 		}
-			
+
 		stop();
 		setDir((int) (getDir() + degrees));
 		return false;
 
 	}
-	
+
 	public void correctLeftLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
@@ -1113,19 +1120,19 @@ public class Robot {
 			} else {
 				line = turnLeftLookForLine(expectedVal - val);
 			}
-			if(expectedVal == 360){
+			if (expectedVal == 360) {
 				expectedVal = 0;
 			}
-			if(expectedVal > 360){
-				expectedVal = expectedVal-360;
+			if (expectedVal > 360) {
+				expectedVal = expectedVal - 360;
 			}
-			
+
 			sleep(100);
 			val = getHeading();
-			debugln(""+expectedVal);
+			debugln("" + expectedVal);
 		}
 	}
-	
+
 	public void correctRightLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
@@ -1152,19 +1159,17 @@ public class Robot {
 			} else {
 				line = turnLeftLookForLine(expectedVal - val);
 			}
-			if(expectedVal == 360){
+			if (expectedVal == 360) {
 				expectedVal = 0;
 			}
-			if(expectedVal > 360){
-				expectedVal = expectedVal-360;
+			if (expectedVal > 360) {
+				expectedVal = expectedVal - 360;
 			}
 			sleep(100);
 			val = getHeading();
-			debugln(""+expectedVal);
+			debugln("" + expectedVal);
 		}
 	}
-
-
 
 	public void findLineRight() {
 		// makes the robot turn right, looking to reposition itself so as to
@@ -1210,5 +1215,27 @@ public class Robot {
 		}
 		// Sound.beepSequence();
 		robot.stop();
+	}
+
+	public int getEOPD() {
+		if (eopdSensor != null) {
+			// Return values between 4 and 100
+			return (eopdSensor.readRawValue() * 100) / 1023;
+		} else if (sensorMux != null) {
+			return sensorMux.readEOPD(3);
+		}
+		return -1;
+	}
+
+	public void status() {
+		debugln(" dir = " + robot.getDir());
+		debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
+		debugln("dist = " + robot.ultrasonic.getDistance());
+		debugln("comp = " + robot.getDegrees());
+		if (sensorMux != null) {
+			debugln("SMUX: " + sensorMux.getProductID() + " " + sensorMux.getVersion());
+			debugln("Type: " + sensorMux.getType());
+			debugln("Bat: " + sensorMux.isBatteryLow());
+		}
 	}
 }
