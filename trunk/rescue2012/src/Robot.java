@@ -31,6 +31,7 @@ public class Robot {
 	int integralTurn;
 	int integralBuff = 2;
 	int errorBuff = 2;
+	boolean useUltrasonicObstacleDetect = true;
 
 	NXTMotor motRight;
 	NXTMotor motLeft;
@@ -169,7 +170,7 @@ public class Robot {
 			angleError = 1.0;
 			compass = new CompassHTSensor(SensorPort.S3);
 			colorsensor = new ColorSensor(SensorPort.S1);
-			
+
 		} else {
 			// Unknown robot
 		}
@@ -307,7 +308,7 @@ public class Robot {
 			} else {
 				left(expectedVal - val);
 			}
-			if(expectedVal == 360){
+			if (expectedVal == 360) {
 				expectedVal = 0;
 			}
 			if(expectedVal > 360){
@@ -344,7 +345,7 @@ public class Robot {
 			} else {
 				left(expectedVal - val);
 			}
-			if(expectedVal == 360){
+			if (expectedVal == 360) {
 				expectedVal = 0;
 			}
 			if(expectedVal > 360){
@@ -410,6 +411,61 @@ public class Robot {
 		}
 		stop();
 		resetAngle();
+	}
+
+	public void findCanCoarse() {
+		robot.left(90);
+		int lowestV = 255;
+		int angle = (int) ((180 /* angleError */) * (getRobotDiameter() / getWheelDiameter()));
+
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegLeft.setSpeed(40);
+		motRegRight.setSpeed(40);
+		motRegRight.rotate(-angle, true);
+		motRegLeft.rotate(angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			debugln("F " + lowestV);
+			// debugln("N " + ultrasonic.getDistance());
+			if (ultrasonic.getDistance() < lowestV) {
+				lowestV = ultrasonic.getDistance();
+			}
+
+		}
+		motRegLeft.backward();
+		motRegRight.forward();
+		debugln("S" + ultrasonic.getDistance());
+
+		while (ultrasonic.getDistance() > lowestV + 1) {
+			debugln("R " + ultrasonic.getDistance());
+		}
+		sleep(20);
+		motRegRight.suspendRegulation();
+		motRegLeft.suspendRegulation();
+		robot.stop();
+		robot.forward(lowestV - 9);
+
+		robot.stop();
+		findCanFine();
+	}
+
+	public void findCanFine() {
+		int dist = ultrasonic.getDistance();
+		motLeft.backward();
+		motRight.forward();
+		while (true) {
+			dist = ultrasonic.getDistance();
+			if (dist < 30) {
+				if (dist - ultrasonic.getDistance() > 0) {
+					motLeft.backward();
+					motRight.forward();
+				} else {
+					stop();
+					left(5);
+					break;
+				}
+			}
+		}
 	}
 
 	public void backward(double distance) {
