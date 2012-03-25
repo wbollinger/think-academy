@@ -307,14 +307,18 @@ public class Robot {
 			} else {
 				left(expectedVal - val);
 			}
-			if(expectedVal == 360 || expectedVal == -360){
+			if(expectedVal == 360){
 				expectedVal = 0;
+			}
+			if(expectedVal > 360){
+				expectedVal = expectedVal-360;
 			}
 			sleep(100);
 			val = getHeading();
+			debugln(""+expectedVal);
 		}
 	}
-
+	
 	public void correctLeft(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
@@ -340,12 +344,16 @@ public class Robot {
 			} else {
 				left(expectedVal - val);
 			}
-			if(expectedVal == 360 || expectedVal == -360){
+			if(expectedVal == 360){
 				expectedVal = 0;
+			}
+			if(expectedVal > 360){
+				expectedVal = expectedVal-360;
 			}
 			
 			sleep(100);
 			val = getHeading();
+			debugln(""+expectedVal);
 		}
 	}
 
