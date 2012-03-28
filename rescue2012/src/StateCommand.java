@@ -144,6 +144,27 @@ public class StateCommand extends State {
 			robot.changeState(StateFindLine.getInstance());
 		} else if (command.equalsIgnoreCase("line")) {
 			robot.changeState(StateLineFollow.getInstance());
+		} else if (command.equalsIgnoreCase("kP")) {
+			if (args.length > 0) {
+				StateLineFollow.getInstance().Kp = Double.parseDouble(arg0);
+			}
+			else {
+				debugln("" + StateLineFollow.getInstance().Kp);
+			}
+		} else if (command.equalsIgnoreCase("Ki")) {
+			if (args.length > 0) {
+				StateLineFollow.getInstance().Ki = Double.parseDouble(arg0);
+			}
+			else {
+			debugln("" + StateLineFollow.getInstance().Ki);
+			}
+		} else if (command.equalsIgnoreCase("Kd")) {
+			if (args.length > 0) {
+				StateLineFollow.getInstance().Kd = Double.parseDouble(arg0);
+			}
+			else {
+			debugln("" + StateLineFollow.getInstance().Kd);
+			}
 		} else if (command.equalsIgnoreCase("leftLook")) {
 			robot.turnLeftLookForLine(90);
 		} else if (command.equalsIgnoreCase("rightLook")) {
@@ -275,7 +296,6 @@ public class StateCommand extends State {
 			}
 			debugln("dir = " + robot.getDir());
 		} else if (command.equalsIgnoreCase("eopd")) {
-			robot.getEOPD();
 			debugln("" + robot.getEOPD());
 		} else if (command.equalsIgnoreCase("thresh")) {
 			int newthresh = parseInt(arg0);
