@@ -402,7 +402,7 @@ public class Robot {
 	public void forward(double distance) {
 		// Makes the robot go forward for the given distance
 		resetAngle();
-		while ((motLeft.getTachoCount() * Math.PI / 180) * (getWheelDiameter() / 2) < distance) {
+		while ((motLeft.getTachoCount() * Math.PI / 180.0) * (getWheelDiameter() / 2.0) < distance) {
 			double kP = 1;
 			int leftAngle;
 			int rightAngle;
