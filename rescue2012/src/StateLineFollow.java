@@ -5,8 +5,8 @@ public class StateLineFollow extends State {
 	private static StateLineFollow instance = new StateLineFollow();
 
 	// Kc = 4 Pc = .25 dT = .0028
-	public double Kp = 1.00; // 6.00
-	public double Ki = 0.00; // 0.01
+	public double Kp = 6.00; // 6.00
+	public double Ki = 0.25; // 0.01
 	public double Kd = 0.00; // 0.00
 
 	private StateLineFollow() {
@@ -28,7 +28,6 @@ public class StateLineFollow extends State {
 				error -= 3;
 			}
 		}
-		//debugln("Error: " + error);
 		return error;
 	}
 
@@ -46,7 +45,7 @@ public class StateLineFollow extends State {
 		int derivative = 0;
 		int error = 0;
 
-		int Turn = 0;
+		double turn = 0;
 		int powerRight = 0;
 		int powerLeft = 0;
 
@@ -58,18 +57,22 @@ public class StateLineFollow extends State {
 			error = calcError(robot.lightLeft, robot.lightRight);
 			if (error == 0) {
 				integral = 0;
+				derivative = 0;
 			} else {
 				integral += error;
+				derivative = error - lastError;
 			}
 			derivative = error - lastError;
-			Turn = (int) Util.round(Kp * error + Ki * integral + Kd
+			//debugln("error: " + error + " integral: " + integral + " derivative: " + derivative);
+			turn = (int) Util.round(Kp * error + Ki * integral + Kd
 					* derivative);
 //			if(Turn == 0) {
 //				debugln("I'm driving straight");
 //				robot.forward(2);
 //			} else {
-				powerRight = robot.getBaseMotorPower() + Turn;
-				powerLeft = robot.getBaseMotorPower() - Turn;
+			    //debugln(""+Turn);
+				powerRight = (int) Util.round(robot.getBaseMotorPower() + turn);
+				powerLeft = (int) Util.round(robot.getBaseMotorPower() - turn);
 				robot.motRight.setPower(powerRight);
 				robot.motLeft.setPower(powerLeft);
 //			}
