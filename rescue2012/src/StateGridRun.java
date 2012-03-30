@@ -74,17 +74,27 @@ public class StateGridRun extends State {
 			robot.printMap();
 		}
 
-		if (objectFound > 1) {
-			// Goal accomplished
-			Sound.playTone(440, 100);
-			robot.sleep(100);
-			Sound.playTone(550, 100);
-			robot.sleep(100);
-			Sound.playTone(440, 100);
-			robot.sleep(100);
-			Sound.playTone(330, 100);
-			robot.sleep(100);
-			//robot.changeState(StateExit.getInstance());
+//		if (objectFound > 2) {
+//			// Goal accomplished
+//			Sound.playTone(440, 100);
+//			robot.sleep(100);
+//			Sound.playTone(550, 100);
+//			robot.sleep(100);
+//			Sound.playTone(440, 100);
+//			robot.sleep(100);
+//			Sound.playTone(330, 100);
+//			robot.sleep(100);
+//			//robot.changeState(StateExit.getInstance());
+//		}
+		
+		if(robot.map.grid[1][1] == 2){
+			robot.map.grid[1][1] = 3;
+		} else if(robot.map.grid[2][2] == 2) {
+			robot.map.grid[1][Map2D.ROWS-1] = 3;
+		} else if(robot.map.grid[2][2] == 2) {
+			robot.map.grid[Map2D.COLS-1][Map2D.ROWS-1] = 3;
+		} else if(robot.map.grid[2][2] == 2) {
+			robot.map.grid[Map2D.COLS-1][1] = 3;
 		}
 		
 		if (robot.getStepMode() == true) {
