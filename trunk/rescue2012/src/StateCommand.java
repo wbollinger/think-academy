@@ -144,6 +144,8 @@ public class StateCommand extends State {
 			robot.changeState(StateFindLine.getInstance());
 		} else if (command.equalsIgnoreCase("line")) {
 			robot.changeState(StateLineFollow.getInstance());
+		} else if (command.equalsIgnoreCase("lineReg")) {
+			robot.changeState(StateLineFollowRegulated.getInstance());
 		} else if (command.equalsIgnoreCase("kP")) {
 			if (args.length > 0) {
 				StateLineFollow.getInstance().Kp = Double.parseDouble(arg0);
@@ -164,6 +166,27 @@ public class StateCommand extends State {
 			}
 			else {
 			debugln("" + StateLineFollow.getInstance().Kd);
+			}
+		}else if (command.equalsIgnoreCase("KpReg")) {
+			if (args.length > 0) {
+				StateLineFollowRegulated.getInstance().Kp = Double.parseDouble(arg0);
+			}
+			else {
+				debugln("" + StateLineFollowRegulated.getInstance().Kp);
+			}
+		} else if (command.equalsIgnoreCase("KiReg")) {
+			if (args.length > 0) {
+				StateLineFollowRegulated.getInstance().Ki = Double.parseDouble(arg0);
+			}
+			else {
+			debugln("" + StateLineFollowRegulated.getInstance().Ki);
+			}
+		} else if (command.equalsIgnoreCase("KdReg")) {
+			if (args.length > 0) {
+				StateLineFollowRegulated.getInstance().Kd = Double.parseDouble(arg0);
+			}
+			else {
+			debugln("" + StateLineFollowRegulated.getInstance().Kd);
 			}
 		} else if (command.equalsIgnoreCase("leftLook")) {
 			robot.turnLeftLookForLine(90);
