@@ -401,23 +401,21 @@ public class Robot {
 
 	public void forward(double distance) {
 		// Makes the robot go forward for the given distance
-		resetAngle();
-		while ((motLeft.getTachoCount() * Math.PI / 180.0) * (getWheelDiameter() / 2.0) < distance) {
-			double kP = 1;
-			int leftAngle;
-			int rightAngle;
-			int error;
-
-			forward();
-
-			leftAngle = motLeft.getTachoCount();
-			rightAngle = motRight.getTachoCount();
-			error = leftAngle - rightAngle;
-			motRight.setPower((int) (getBaseMotorPower() + (error * kP)));
-			motLeft.setPower((int) (getBaseMotorPower() - (error * kP)));
+		
+		int angle;
+		angle = (int) Util.round(motLeft.getTachoCount()*(Math.PI/180.0)*(getWheelDiameter()/2.0));
+		
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegRight.rotate(angle, true);
+		motRegLeft.rotate(angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			sleep(10);
 		}
+		motRegRight.suspendRegulation();
+		motRegLeft.suspendRegulation();
 		stop();
-		resetAngle();
+		
 	}
 
 	public void findCanCoarse() {
@@ -477,40 +475,33 @@ public class Robot {
 
 	public void backward(double distance) {
 		// Makes the robot go backward for the given distance
-		resetAngle();
-		while ((motLeft.getTachoCount() * Math.PI / 180 * (getWheelDiameter() / 2)) > -distance) {
-			double kP = 1;
-			int leftAngle;
-			int rightAngle;
-			int error;
-
-			backward();
-
-			leftAngle = motLeft.getTachoCount();
-			rightAngle = motRight.getTachoCount();
-			error = leftAngle - rightAngle;
-			motRight.setPower((int) (getBaseMotorPower() - (error * kP)));
-			motLeft.setPower((int) (getBaseMotorPower() + (error * kP)));
+		int angle;
+		angle = (int) Util.round(motLeft.getTachoCount()*(Math.PI/180.0)*(getWheelDiameter()/2.0));
+		
+		motRegRight.resetTachoCount();
+		motRegLeft.resetTachoCount();
+		motRegRight.rotate(-angle, true);
+		motRegLeft.rotate(-angle, true);
+		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			sleep(10);
 		}
+		motRegRight.suspendRegulation();
+		motRegLeft.suspendRegulation();
 		stop();
-		resetAngle();
 	}
 
 	public void forward() {
 		// Makes the robot go forward in a straight line
-		motLeft.setPower(getBaseMotorPower());
-		motRight.setPower(getBaseMotorPower());
-		motLeft.forward();
-		motRight.forward();
+		motRegRight.forward();
+		motRegLeft.forward();
+		
 
 	}
 
 	public void backward() {
 		// Makes the robot go forward
-		motLeft.setPower(getBaseMotorPower());
-		motRight.setPower(getBaseMotorPower());
-		motLeft.backward();
-		motRight.backward();
+		motRegRight.backward();
+		motRegLeft.backward();
 	}
 
 	public void stop() {
