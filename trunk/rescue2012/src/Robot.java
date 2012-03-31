@@ -291,6 +291,16 @@ public class Robot {
 			e.printStackTrace();
 		}
 	}
+	
+	public void goToHeading(double angle){
+		float diff = (float)(angle - getHeading());
+		if (diff > 0) {
+			correctLeft(diff);
+		}
+		if (diff < 0) {
+			correctRight(diff);
+		}
+	}
 
 	public void correctRight(float degrees) {
 		float origin = getHeading();
