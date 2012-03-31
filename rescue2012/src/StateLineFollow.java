@@ -81,7 +81,7 @@ public class StateLineFollow extends State {
 			lastError = error;
 			
 			if (robot.ultrasonic.getDistance()< 10) {
-				robot.changeState(StateCommand.getInstance());
+				robot.changeState(StateAvoidObstacle.getInstance());
 				break;
 			}
 //			if (robot.lightLeft.getLightValue() > 56) {

@@ -28,52 +28,53 @@ public class StateAvoidObstacle extends State {
 		double ff;
 		ff = 3 + robot.robotDiameter / 2;
 		int backDist = 5;
-
+		robot.sleep(500);
 		robot.backward(backDist);
 
-		if (robot.leftSideCheck()) {
+		if (robot.obstacleSideCheck()) {
 
 			robot.avoidedLeft = true;
 			robot.correctLeft(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
-
-			if (robot.turnRightLookForLine(90)) {
-				robot.changeState(StateFindLine.getInstance());
-				return;
-			}
+			robot.correctRight(90);
+			debugln("First turn completed");
+			
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
-					+ backDist)) {
+					+ backDist+5)) {
 				debug("line found on first leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			if (robot.turnRightLookForLine(90)) {
+			debugln("First forward completed");
+			if (robot.correctRightLine(90)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-
-			if (robot.forwardLookForLine(obstacle.getxLength() + ff)) {
+			robot.sleep(500);
+			debugln("Second turn completed");
+			if (robot.forwardLookForLine(obstacle.getxLength() + ff+5)) {
 				debug("line found on second leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			if (robot.turnRightLookForLine(90)) {
+			debugln("Second forward completed");
+			if (robot.correctRightLine(90)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
 
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
-					+ backDist)) {
+					+ backDist+5)) {
 				debug("line found on third leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			if (robot.turnRightLookForLine(90)) {
+			if (robot.correctRightLine(90)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
 
-			if (robot.forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
+			if (robot.forwardLookForLine(obstacle.getxLength() / 2 + ff+5)) {
 				debug("line found on fourth leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
@@ -84,35 +85,40 @@ public class StateAvoidObstacle extends State {
 			robot.correctRight(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 
-			if (robot.turnLeftLookForLine(90)) {
+			robot.correctLeft(90);
+			debugln("First turn completed");
+			
+			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
+					+ backDist+5)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
+			debugln("First forward completed");
+			if (robot.correctLeftLine(90)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
+			robot.sleep(500);
+			debugln("Second turn completed");
+			if (robot.forwardLookForLine(obstacle.getxLength() + ff+5)) {
+				robot.changeState(StateFindLine.getInstance());
+				return;
+			}
+			debugln("Second forward completed");
+			if (robot.correctLeftLine(90)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
-					+ backDist)) {
+					+ backDist+5)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			if (robot.turnLeftLookForLine(90)) {
+			if (robot.correctLeftLine(90)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
-			if (robot.forwardLookForLine(obstacle.getxLength() + ff)) {
-				robot.changeState(StateFindLine.getInstance());
-				return;
-			}
-			if (robot.turnLeftLookForLine(90)) {
-			}
-			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
-					+ backDist)) {
-				robot.changeState(StateFindLine.getInstance());
-				return;
-			}
-			if (robot.turnLeftLookForLine(90)) {
-				robot.changeState(StateFindLine.getInstance());
-				return;
-			}
-			if (robot.forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
+			if (robot.forwardLookForLine(obstacle.getxLength() / 2 + ff+5)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}

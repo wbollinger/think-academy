@@ -154,7 +154,7 @@ public class Robot {
 			// robotDiameter = 16.4;
 			// angleError = 1.0;
 
-			// compass = new CompassHTSensor(SensorPort.S3);
+			compass = new CompassHTSensor(SensorPort.S3);
 			// eopdSensor = new EOPD(SensorPort.S3, true /*longRange*/);
 			sensorMux = new RCJSensorMux(SensorPort.S3);
 			sensorMux.configurate();
@@ -177,7 +177,8 @@ public class Robot {
 			robotDiameter = 13.5;
 			angleError = 1.0;
 			compass = new CompassHTSensor(SensorPort.S3);
-			colorsensor = new ColorSensor(SensorPort.S1);
+			//colorsensor = new ColorSensor(SensorPort.S1);
+			lightLeft = new LightSensor(SensorPort.S1);
 
 		} else {
 			// Unknown robot
@@ -377,8 +378,7 @@ public class Robot {
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
 			sleep(10);
 		}
-		motRegRight.suspendRegulation();
-		motRegLeft.suspendRegulation();
+		stop();
 		// debugln("comp " + getHeading());
 	}
 
@@ -392,8 +392,7 @@ public class Robot {
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
 			sleep(10);
 		}
-		motRegRight.suspendRegulation();
-		motRegLeft.suspendRegulation();
+		stop();
 		// debugln("comp " + getHeading());
 	}
 
@@ -403,7 +402,7 @@ public class Robot {
 		// Makes the robot go forward for the given distance
 		
 		int angle;
-		angle = (int) Util.round(motLeft.getTachoCount()*(Math.PI/180.0)*(getWheelDiameter()/2.0));
+		angle = (int) Util.round(distance/(getWheelDiameter()*Math.PI)*360);
 		
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -412,8 +411,6 @@ public class Robot {
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
 			sleep(10);
 		}
-		motRegRight.suspendRegulation();
-		motRegLeft.suspendRegulation();
 		stop();
 		
 	}
@@ -437,8 +434,7 @@ public class Robot {
 			}
 
 		}
-		motRegLeft.backward();
-		motRegRight.forward();
+		stop();
 		debugln("S" + ultrasonic.getDistance());
 
 		while (ultrasonic.getDistance() > lowestV + 1) {
@@ -476,8 +472,8 @@ public class Robot {
 	public void backward(double distance) {
 		// Makes the robot go backward for the given distance
 		int angle;
-		angle = (int) Util.round(motLeft.getTachoCount()*(Math.PI/180.0)*(getWheelDiameter()/2.0));
-		
+		angle = (int) Util.round(distance/(getWheelDiameter()*Math.PI)*360);
+	
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
 		motRegRight.rotate(-angle, true);
@@ -485,8 +481,6 @@ public class Robot {
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
 			sleep(10);
 		}
-		motRegRight.suspendRegulation();
-		motRegLeft.suspendRegulation();
 		stop();
 	}
 
@@ -506,6 +500,10 @@ public class Robot {
 
 	public void stop() {
 		// Stops both wheel motors
+		motRegLeft.stop();
+		motRegRight.stop();
+		motRegLeft.suspendRegulation();
+		motRegRight.suspendRegulation();
 		motLeft.stop();
 		motRight.stop();
 	}
@@ -861,81 +859,37 @@ public class Robot {
 		return false;
 	}
 
-	public boolean leftSideCheck() {
+	public boolean obstacleSideCheck() {
 		// Checks to see whether distance to left is longer than distance to
 		// right. Returns true is left is longer.
+		sleep(500);
 		correctRight(90);
-		sleep(300);
-		int rightDist = ultrasonic.getDistance();
+		sleep(500);
+		
+		int n = 5;
+		int rightDist = 0;
+		int aveRightDist = 0;
+		for(int i = 0; i < n; i++){
+			rightDist = rightDist+ultrasonic.getDistance();
+		}
+		aveRightDist = rightDist/n;
+		
 		correctLeft(180);
-		sleep(300);
-		int leftDist = ultrasonic.getDistance();
+		sleep(500);
+		
+		int leftDist = 0;
+		int aveLeftDist = 0;
+		for(int i = 0; i < n; i++){
+			leftDist = leftDist+ultrasonic.getDistance();
+		}
+		aveLeftDist = leftDist/n;
 		correctRight(90);
-		if (leftDist > rightDist)
+		debugln("right: " + aveRightDist + ". Left: " + aveLeftDist);
+		if (aveLeftDist > aveRightDist) {
 			return true;
-		else
+		}else {
 			return false;
-	}
-
-	public void squareLeft(Obstacle obstacle) {
-		int ff = 5;
-		left(90);
-		forward(obstacle.getxLength() / 2 + ff);
-
-		right(90);
-		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
-			debug("line found on first leg\n");
-			changeState(StateFindLine.getInstance());
-			return;
 		}
-		right(90);
-		if (forwardLookForLine(obstacle.getxLength() + ff)) {
-			debug("line found on second leg\n");
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-		right(90);
-		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
-			debug("line found on third leg\n");
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-		right(90);
-		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
-			debug("line found on fourth leg\n");
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-	}
-
-	public void squareRight(Obstacle obstacle) {
-		int ff = 5;
-		right(90);
-		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-		left(90);
-		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-		left(90);
-		if (forwardLookForLine(obstacle.getxLength() + ff)) {
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-		left(90);
-		if (forwardLookForLine(obstacle.getyLength() + ff + 10)) {
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-		left(90);
-		if (forwardLookForLine(obstacle.getxLength() / 2 + ff)) {
-			changeState(StateFindLine.getInstance());
-			return;
-		}
-
 	}
 
 	public boolean forwardLookForLine(double distance) {
@@ -965,16 +919,8 @@ public class Robot {
 				return true;
 			}
 
-			double kP = 1;
-			int leftAngle;
-			int rightAngle;
-			int error;
-
 			forward();
 
-			leftAngle = motLeft.getTachoCount();
-			rightAngle = motRight.getTachoCount();
-			error = leftAngle - rightAngle;
 
 			if (rightBlack == true) {
 				motRight.setPower(-20);
@@ -982,10 +928,8 @@ public class Robot {
 			} else if (leftBlack == true) {
 				motLeft.setPower(-20);
 				motRight.setPower(50);
-			} else {
-				motRight.setPower((int) (getBaseMotorPower() + (error * kP)));
-				motLeft.setPower((int) (getBaseMotorPower() - (error * kP)));
-			}
+			} 
+
 		}
 
 		stop();
@@ -1019,8 +963,6 @@ public class Robot {
 
 			if (leftBlack == true && rightBlack == true) {
 				debug("I Should Stop Here");
-				motRegRight.suspendRegulation();
-				motRegLeft.suspendRegulation();
 				stop();
 				return true;
 			}
@@ -1065,8 +1007,6 @@ public class Robot {
 
 			if (leftBlack == true && rightBlack == true) {
 				debug("I Should Stop Here");
-				motRegRight.suspendRegulation();
-				motRegLeft.suspendRegulation();
 				stop();
 				return true;
 			}
@@ -1085,7 +1025,7 @@ public class Robot {
 
 	}
 
-	public void correctLeftLine(float degrees) {
+	public boolean correctLeftLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
@@ -1122,9 +1062,10 @@ public class Robot {
 			val = getHeading();
 			debugln("" + expectedVal);
 		}
+		return line;
 	}
 
-	public void correctRightLine(float degrees) {
+	public boolean correctRightLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
@@ -1160,6 +1101,7 @@ public class Robot {
 			val = getHeading();
 			debugln("" + expectedVal);
 		}
+		return line;
 	}
 
 	public void findLineRight() {
@@ -1167,8 +1109,7 @@ public class Robot {
 		// resume
 		// normal line following.
 		int logic = 0;
-		robot.motRight.backward();
-		robot.motLeft.forward();
+		robot.turnRightLookForLine(180);
 		// while (logic != 2) {
 		// if (logic == 0) {
 		// if (lightRight.getLightValue() < 45) {
@@ -1189,19 +1130,7 @@ public class Robot {
 		// makes the robot turn left, looking to reposition itself so as to
 		// resume
 		// normal line following.
-		int logic = 0;
-		robot.motRight.forward();
-		robot.motLeft.backward();
-		// while (logic != 2) {
-		// if (logic == 0) {
-		// if (lightRight.getLightValue() < 45) {
-		// logic = 1;
-		// }
-		// } else if (logic == 1)
-		// if (lightRight.getLightValue() > 45) {
-		// logic = 2;
-		// }
-		// }
+		robot.correctLeftLine(180);
 		while (lightRight.getLightValue() > 45) {
 		}
 		// Sound.beepSequence();

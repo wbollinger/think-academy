@@ -192,7 +192,9 @@ public class StateCommand extends State {
 			robot.turnLeftLookForLine(90);
 		} else if (command.equalsIgnoreCase("rightLook")) {
 			robot.turnRightLookForLine(90);
-		} else if (command.equalsIgnoreCase("locate")) {
+		} else if (command.equalsIgnoreCase("forwardLook")) {
+			robot.forwardLookForLine(100);
+		}else if (command.equalsIgnoreCase("locate")) {
 			robot.findCanCoarse();
 			//
 
