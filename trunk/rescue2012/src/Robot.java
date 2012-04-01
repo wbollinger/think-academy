@@ -146,6 +146,7 @@ public class Robot {
 			// at full voltage, gives accurate turns at 40 power.
 			angleError = (360.0 / 305.0);
 			lightLeft = new LightSensor(SensorPort.S1);
+			lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
 		} else if (name.equals("ebay")) {
@@ -161,6 +162,7 @@ public class Robot {
 			sensorMux = new RCJSensorMux(SensorPort.S3);
 			sensorMux.configurate();
 			lightLeft = new LightSensor(SensorPort.S1);
+			lightRight = new LightSensor(SensorPort.S2);
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
@@ -170,9 +172,10 @@ public class Robot {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
 			angleError = 1.0;
-			touch = new TouchSensor(SensorPort.S3);
+			//touch = new TouchSensor(SensorPort.S3);
 			lightLeft = new LightSensor(SensorPort.S1);
-			// compass = new CompassHTSensor(SensorPort.S3);
+			lightRight = new LightSensor(SensorPort.S2);
+			compass = new CompassHTSensor(SensorPort.S3);
 		} else if (name.equals("JPNXT")) {
 			// defaults for Jeremy
 			wheelDiameter = 4.96;
@@ -181,6 +184,7 @@ public class Robot {
 			compass = new CompassHTSensor(SensorPort.S3);
 			//colorsensor = new ColorSensor(SensorPort.S1);
 			lightLeft = new LightSensor(SensorPort.S1);
+			lightRight = new LightSensor(SensorPort.S2);
 
 		} else {
 			// Unknown robot
@@ -197,8 +201,6 @@ public class Robot {
 		motLeft.setPower(getBaseMotorPower());
 		motRight.stop();
 		motLeft.stop();
-
-		lightRight = new LightSensor(SensorPort.S2);
 
 		// Touch and Compass sensor are different depending on robot name
 		// touch = new TouchSensor(SensorPort.S3);
