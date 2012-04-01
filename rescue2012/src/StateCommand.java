@@ -130,8 +130,6 @@ public class StateCommand extends State {
 			robot.changeState(StateGridRun.getInstance());
 		} else if (command.equalsIgnoreCase("avoid")) {
 			robot.changeState(StateAvoidObstacle.getInstance());
-		} else if (command.equalsIgnoreCase("sweep")) {
-			robot.sweepCan();
 		} else if (command.equalsIgnoreCase("goTo")) {
 			robot.goTo(Integer.parseInt(arg0), Integer.parseInt(arg1));
 		} else if (command.equalsIgnoreCase("findCan")) {

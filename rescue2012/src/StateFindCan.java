@@ -22,13 +22,11 @@ public class StateFindCan extends State {
 	public void execute(Robot robot) {
 		debugln("StFindCan execute");
 		
-		int dist;
-		
 		robot.followPath(Map2D.CAN);
-		dist = robot.sweepCan();
-		robot.forward(dist);
+		//TODO: sweep for can
+		robot.forward();
 		robot.liftCan();
-		robot.backward(dist);
+		robot.backward();
 		robot.changeState(StateFindPlatform.getInstance());
 	}
 
