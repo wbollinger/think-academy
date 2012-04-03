@@ -27,6 +27,7 @@ public class StateGridRun extends State {
 	}
 
 	public void enter(Robot robot) {
+		robot.setNewNorth();
 	}
 
 	public void execute(Robot robot) {
@@ -45,62 +46,50 @@ public class StateGridRun extends State {
 			// + " " + downLeft + " " + left + " " + upLeft);
 			
 			if (up == 0) {
-				robot.goUp();
+				objectFound += robot.goUp();
 				robot.sleep(1000);
 			} else if (upRight == 0) {
-				robot.goUpRight();
+				objectFound += robot.goUpRight();
 				robot.sleep(1000);
 			} else if (right == 0) {
-				robot.goRight();
+				objectFound += robot.goRight();
 				robot.sleep(1000);
 			} else if (downRight == 0) {
-				robot.goDownRight();
+				objectFound += robot.goDownRight();
 				robot.sleep(1000);
 			} else if (down == 0) {
-				robot.goDown();
+				objectFound += robot.goDown();
 				robot.sleep(1000);
 			} else if (downLeft == 0) {
-				robot.goDownLeft();
+				objectFound += robot.goDownLeft();
 				robot.sleep(1000);
 			} else if (left == 0) {
-				robot.goLeft();
+				objectFound += robot.goLeft();
 				robot.sleep(1000);
 			} else if (upLeft == 0) {
-				robot.goLeft();
+				objectFound += robot.goLeft();
 				robot.sleep(1000);
 			}
 
 			// debug(robot.getX() + "	" + robot.getY()+"\n");
 			robot.printMap();
 		}
-
-//		if (objectFound > 2) {
-//			// Goal accomplished
-//			Sound.playTone(440, 100);
-//			robot.sleep(100);
-//			Sound.playTone(550, 100);
-//			robot.sleep(100);
-//			Sound.playTone(440, 100);
-//			robot.sleep(100);
-//			Sound.playTone(330, 100);
-//			robot.sleep(100);
-//			//robot.changeState(StateExit.getInstance());
-//		}
 		
-		if(robot.map.grid[1][1] == 2){
-			robot.map.grid[1][1] = 3;
-		} else if(robot.map.grid[2][2] == 2) {
-			robot.map.grid[1][Map2D.ROWS-1] = 3;
-		} else if(robot.map.grid[2][2] == 2) {
-			robot.map.grid[Map2D.COLS-1][Map2D.ROWS-1] = 3;
-		} else if(robot.map.grid[2][2] == 2) {
-			robot.map.grid[Map2D.COLS-1][1] = 3;
+		if (robot.map.grid[1][1] == Map2D.CAN){
+			robot.map.grid[1][1] = Map2D.PLATFORM;
+		} else if (robot.map.grid[1][Map2D.ROWS-2] == Map2D.CAN) {
+			robot.map.grid[1][Map2D.ROWS-2] = Map2D.PLATFORM;
+		} else if (robot.map.grid[Map2D.COLS-1][Map2D.ROWS-2] == Map2D.CAN) {
+			robot.map.grid[Map2D.COLS-2][Map2D.ROWS-2] = Map2D.PLATFORM;
+		} else if (robot.map.grid[Map2D.COLS-2][1] == Map2D.CAN) {
+			robot.map.grid[Map2D.COLS-2][1] = Map2D.PLATFORM;
 		}
 		
-		if (robot.getStepMode() == true) {
-			// go back to command loop after each search step
+		if (robot.getStepMode() == true || Button.ENTER.isDown()) {
+			// go back to command loop after each search step or if enter is pressed
 			robot.changeState(StateCommand.getInstance());
-		} else {
+		} 
+		else if (objectFound == 2) {
 			robot.gridDone = true;
 			robot.changeState(StateFindCan.getInstance());
 		}
@@ -108,5 +97,7 @@ public class StateGridRun extends State {
 	}
 
 	public void exit(Robot robot) {
+		robot.printMap();
+		debugln("State GridRun exit");
 	}
 }
