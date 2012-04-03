@@ -152,6 +152,15 @@ public class StateCommand extends State {
 				return;
 			}
 			robot.backward();
+		} else if (command.equalsIgnoreCase("power")) {
+			if (args.length > 0) {
+				int power = parseInt(arg0);
+				robot.setBaseMotorPower(power);
+				return;
+			} else {
+				debugln("power level:"+robot.getBaseMotorPower());
+			}
+			
 		} else if (command.equalsIgnoreCase("line")) {
 			robot.changeState(StateLineFollow.getInstance());
 		} else if (command.equalsIgnoreCase("kP")) {
