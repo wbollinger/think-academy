@@ -7,8 +7,8 @@ public class Map2D {
 	public static final int ROWS = (90/SCALE)+2;
 	
 	public static final int WALL = 1;		// Wall
-	public static final int PLATFORM = 2;	// Platform
-	public static final int CAN = 3;		// Can
+	public static final int CAN = 2;		// Can
+	public static final int PLATFORM = 3;	// Platform
 	public static final int ROBOT = 4;		// Robot
 	
 	int[][] grid = new int[COLS][ROWS];
