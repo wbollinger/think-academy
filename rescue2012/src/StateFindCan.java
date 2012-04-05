@@ -33,7 +33,7 @@ public class StateFindCan extends State {
 		robot.debugln("Can Lifted");
 		robot.sleep(100);
 		robot.forward(10);
-		robot.changeState(StateFindPlatform.getInstance());
+		robot.changeState(StateCommand.getInstance());
 	}
 
 	public void exit(Robot robot) {
