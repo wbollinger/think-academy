@@ -23,6 +23,7 @@ public class Robot {
 	double wheelDiameter; // both in cm
 	double robotDiameter;
 	double angleError;
+	int thresh = 4;
 	boolean leftBlack = false;
 	boolean rightBlack = false;
 	boolean avoidedLeft = true;
@@ -821,80 +822,73 @@ public class Robot {
 
 	public void findCanCoarse() {
 		setBaseMotorPower(20);
-		robot.left(45);
+		robot.left(55);
 
-		int lastValue = 0;
-		int currentValue = 0;
+		int currentValue = 50;
+		if (ultrasonic.getDistance() < 50) {
+			currentValue = ultrasonic.getDistance();
+		}
+		int lastValue = currentValue;
 		int difference = 0;
+		
 		setBaseMotorPower(20);
 		motRight.backward();
 		motLeft.forward();
+
 		while (true) {
 
-			if (Math.abs(lastValue - currentValue) > 5) {
+			if (Math.abs(lastValue - currentValue )> thresh) {
 				break;
 			}
 			lastValue = currentValue;
-			if (ultrasonic.getDistance() < 35) {
+			if (ultrasonic.getDistance() < 50) {
 				currentValue = ultrasonic.getDistance();
 			}
 			difference = lastValue - currentValue;
-			debugln("" + difference);
+			debugln("Cur " + currentValue);
+			debugln("Last " + lastValue);
+			debugln("Dif " + difference);
 		}
-
-		// while (motRegRight.isMoving() || motRegLeft.isMoving()) {
-		// debugln("F " + lowestV);
-		// // debugln("N " + ultrasonic.getDistance());
-		// if (ultrasonic.getDistance() < lowestV) {
-		// lowestV = ultrasonic.getDistance();
-		// }
-		//
-		// }
-		// motRegLeft.backward();
-		// motRegRight.forward();
-		// debugln("S" + ultrasonic.getDistance());
-		//
-		// while (ultrasonic.getDistance() > lowestV + 1) {
-		// debugln("R " + ultrasonic.getDistance());
-		// }
-		// sleep(20);
-		// motRegRight.suspendRegulation();
-		// motRegLeft.suspendRegulation();
-		// robot.stop();
-		// robot.forward(lowestV - 9);
-
-		robot.sleep(200);
-		debug("" + getHeading());
+		robot.stop();
+		robot.sleep(1000);
+		debug("Head L " + getHeading());
 		double headL = getHeading();
-		correctRight(60);
-		setBaseMotorPower(30);
+		correctRight(55);
+		setBaseMotorPower(20);
 		motLeft.backward();
 		motRight.forward();
-		lastValue = 0;
-		currentValue = 0;
-		difference = 0;
+		currentValue= 50;
+		if (ultrasonic.getDistance() < 50) {
+			currentValue = ultrasonic.getDistance();
+		}
+		lastValue = currentValue;
+
 		while (true) {
 
-			if (Math.abs(lastValue - currentValue) > 5) {
+			if (Math.abs(lastValue - currentValue )> thresh) {
 				break;
 			}
 			lastValue = currentValue;
-			if (ultrasonic.getDistance() < 35) {
+			if (ultrasonic.getDistance() < 50) {
 				currentValue = ultrasonic.getDistance();
 			}
 			difference = lastValue - currentValue;
-			debugln("" + difference);
+			debugln("Cur " + currentValue);
+			debugln("Last " + lastValue);
+			debugln("Dif " + difference);
 		}
-		robot.sleep(200);
-		debug("" + getHeading());
+		robot.stop();
+		robot.sleep(1000);
+		debugln("headR " + getHeading());
 		double headR = getHeading();
-
-		double headC = (headR + headL) / 2;
-		debugln("" + headC);
+		double headC;
+		if (Math.abs(headR - headL) >= 100) {
+			headC = (headR + headL) / 2 - 180;
+		} else {
+			headC = (headR + headL) / 2;
+		}
+		debugln("Head C " + headC);
 		goToHeading(Math.round(headC)); // findCanFine();
-		stop();
-		robot.forward();
-		while (ultrasonic.getDistance() > 15);
 		stop();
 	}
 
