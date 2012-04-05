@@ -57,7 +57,7 @@ public class WaveFront {
 					left = overlay.grid[x - 1][y];
 					upLeft = overlay.grid[x - 1][y + 1];
 					
-					if (isSquareSet(center)) {
+					if (isSquareSet(center)||(center == goal)) {
 						if (isCenterAjacentTo(Map2D.ROBOT)) {
 							finished = true;
 						} 
@@ -122,6 +122,7 @@ public class WaveFront {
 			upLeft = overlay.grid[x - 1][y + 1];
 			
 			if(isCenterAjacentTo(goal)) {
+				path.append(dirTo(goal));
 				finished = true;
 				
 			} else if ((up == n)) {
@@ -252,10 +253,14 @@ public class WaveFront {
 //		test.seed();
 //		test.print();
 //		WaveFront path = new WaveFront(test);
+//		System.out.println("Starting pathing");
 //		Map2D result = path.makeWave(Map2D.CAN);
+//		System.out.println("Wave created");
 //		result.print();
 //		System.out.println("----------");
+//		System.out.println("Making Path");
 //		System.out.println(path.makePath());
+//		System.out.println("Path made");
 //	}
 	
 
