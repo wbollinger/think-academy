@@ -158,54 +158,57 @@ public class StateCommand extends State {
 				robot.setBaseMotorPower(power);
 				return;
 			} else {
-				debugln("power level:"+robot.getBaseMotorPower());
+				debugln("power level:" + robot.getBaseMotorPower());
 			}
-			
+		} else if (command.equalsIgnoreCase("point")) {
+			if (args.length > 0) {
+				double angle = parseDouble(arg0);
+				robot.goToHeading(angle);
+				return;
+			}
+
 		} else if (command.equalsIgnoreCase("line")) {
 			robot.changeState(StateLineFollow.getInstance());
 		} else if (command.equalsIgnoreCase("kP")) {
 			if (args.length > 0) {
 				StateLineFollow.getInstance().Kp = Double.parseDouble(arg0);
-			}
-			else {
+			} else {
 				debugln("" + StateLineFollow.getInstance().Kp);
 			}
 		} else if (command.equalsIgnoreCase("Ki")) {
 			if (args.length > 0) {
 				StateLineFollow.getInstance().Ki = Double.parseDouble(arg0);
-			}
-			else {
-			debugln("" + StateLineFollow.getInstance().Ki);
+			} else {
+				debugln("" + StateLineFollow.getInstance().Ki);
 			}
 		} else if (command.equalsIgnoreCase("Kd")) {
 			if (args.length > 0) {
 				StateLineFollow.getInstance().Kd = Double.parseDouble(arg0);
-			}
-			else {
-			debugln("" + StateLineFollow.getInstance().Kd);
+			} else {
+				debugln("" + StateLineFollow.getInstance().Kd);
 			}
 		} else if (command.equalsIgnoreCase("lineReg")) {
 			robot.changeState(StateLineFollowRegulated.getInstance());
 		} else if (command.equalsIgnoreCase("KpReg")) {
 			if (args.length > 0) {
-				StateLineFollowRegulated.getInstance().Kp = Double.parseDouble(arg0);
-			}
-			else {
+				StateLineFollowRegulated.getInstance().Kp = Double
+						.parseDouble(arg0);
+			} else {
 				debugln("" + StateLineFollowRegulated.getInstance().Kp);
 			}
 		} else if (command.equalsIgnoreCase("KiReg")) {
 			if (args.length > 0) {
-				StateLineFollowRegulated.getInstance().Ki = Double.parseDouble(arg0);
-			}
-			else {
-			debugln("" + StateLineFollowRegulated.getInstance().Ki);
+				StateLineFollowRegulated.getInstance().Ki = Double
+						.parseDouble(arg0);
+			} else {
+				debugln("" + StateLineFollowRegulated.getInstance().Ki);
 			}
 		} else if (command.equalsIgnoreCase("KdReg")) {
 			if (args.length > 0) {
-				StateLineFollowRegulated.getInstance().Kd = Double.parseDouble(arg0);
-			}
-			else {
-			debugln("" + StateLineFollowRegulated.getInstance().Kd);
+				StateLineFollowRegulated.getInstance().Kd = Double
+						.parseDouble(arg0);
+			} else {
+				debugln("" + StateLineFollowRegulated.getInstance().Kd);
 			}
 		} else if (command.equalsIgnoreCase("avoid")) {
 			robot.changeState(StateAvoidObstacle.getInstance());
@@ -238,7 +241,8 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("getAngle")) {
 			double angle = robot.getAngle();
 			debug("" + angle);
-		} else if (command.equalsIgnoreCase("sonic") || command.equalsIgnoreCase("US")) {
+		} else if (command.equalsIgnoreCase("sonic")
+				|| command.equalsIgnoreCase("US")) {
 			int dist = robot.ultrasonic.getDistance();
 			debugln("" + dist);
 		} else if (command.equalsIgnoreCase("lightLeft")) {
