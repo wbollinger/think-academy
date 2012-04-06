@@ -34,13 +34,12 @@ public class StateAvoidObstacle extends State {
 		if (robot.obstacleSideCheck()) {
 
 			robot.avoidedLeft = true;
-			robot.correctLeft(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 			robot.correctRight(90);
 			debugln("First turn completed");
 			
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
-					+ backDist+5)) {
+					+ backDist+10)) {
 				debug("line found on first leg\n");
 				robot.changeState(StateFindLine.getInstance());
 				return;
@@ -82,14 +81,13 @@ public class StateAvoidObstacle extends State {
 		} else {
 
 			robot.avoidedLeft = false;
-			robot.correctRight(90);
 			robot.forward(obstacle.getxLength() / 2 + ff);
 
 			robot.correctLeft(90);
 			debugln("First turn completed");
 			
 			if (robot.forwardLookForLine(obstacle.getyLength() + 2 * ff
-					+ backDist+5)) {
+					+ backDist+10)) {
 				robot.changeState(StateFindLine.getInstance());
 				return;
 			}
