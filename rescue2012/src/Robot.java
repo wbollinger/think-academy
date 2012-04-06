@@ -833,31 +833,39 @@ public class Robot {
 		stop();
 		debugln("stop findline");
 	}
-
+public int sonicAverage (){
+	int average = 0;
+	int count = 5;
+	while ( count > 0){
+		average= average + ultrasonic.getDistance();
+		count = count -1;
+	}
+	average = average / 5;
+	return average;
+}
+	
 	public void findCanCoarse() {
 		setBaseMotorPower(20);
 		robot.left(55);
 		int storage;
 
-		int currentValue = 50;
-		if (ultrasonic.getDistance() < 50) {
-			currentValue = ultrasonic.getDistance();
+		int currentValue = 40;
+		if (sonicAverage () < 40) {
+			currentValue = sonicAverage ();
 		}
 		int lastValue = currentValue;
 		int difference = 0;
 
-		setBaseMotorPower(20);
-		motRight.backward();
-		motLeft.forward();
-
 		while (true) {
-
+			right(2);
+			stop();
+			sleep(50);
 			if (lastValue - currentValue > thresh) {
 				break;
 			}
 			lastValue = currentValue;
-			storage = ultrasonic.getDistance();
-			if (storage < 50) {
+			storage = sonicAverage ();
+			if (storage < 40) {
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
@@ -869,24 +877,25 @@ public class Robot {
 		robot.sleep(1000);
 		debug("Head L " + getHeading());
 		double headL = getHeading();
+		if (headL > 180)
+		{headL = headL - 360;}
 		correctRight(55);
-		setBaseMotorPower(20);
-		motLeft.backward();
-		motRight.forward();
-		currentValue = 50;
-		if (ultrasonic.getDistance() < 50) {
-			currentValue = ultrasonic.getDistance();
+		currentValue = 40;
+		if (sonicAverage () < 40) {
+			currentValue = sonicAverage ();
 		}
 		lastValue = currentValue;
 
 		while (true) {
-
+			left(2);
+			stop();
+			sleep(50);
 			if (lastValue - currentValue > thresh) {
 				break;
 			}
 			lastValue = currentValue;
-			storage = ultrasonic.getDistance();
-			if (storage < 50) {
+			storage = sonicAverage ();
+			if (storage < 40) {
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
@@ -898,10 +907,14 @@ public class Robot {
 		robot.sleep(1000);
 		debugln("headR " + getHeading());
 		double headR = getHeading();
+		if (headR > 180)
+		{headR = headR - 360;}
 		double headC;
 
 		headC = Math.round((headR + headL) / 2);
 
+		
+		
 		debugln("Head C " + headC);
 		goToHeading(Math.round(headC)); // findCanFine();
 		stop();
