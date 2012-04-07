@@ -23,7 +23,7 @@ public class StateFindPlatform extends State {
 		debugln("StFindPlatform execute");
 		robot.followPath(Map2D.PLATFORM);
 		debugln("ajacent to platform");
-		robot.facePlatform();
+		robot.faceTarget(Map2D.PLATFORM);
 		
 		while(!robot.touch.isPressed()) {
 			robot.forward();

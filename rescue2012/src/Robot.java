@@ -117,8 +117,7 @@ public class Robot {
 
 		motRight = new NXTMotor(MotorPort.B);
 		motLeft = new NXTMotor(MotorPort.C);
-		setBaseMotorPower(50);
-		stop();
+		setBaseMotorPower(70);
 
 		motRegRight = new NXTRegulatedMotor(MotorPort.B);
 		motRegLeft = new NXTRegulatedMotor(MotorPort.C);
@@ -1164,10 +1163,6 @@ public int sonicAverage (){
 			}
 		}
 		debugln("ajacent to can");
-		char turn = route.charAt(route.length() - 1);
-		debugln("" + turn);
-		faceDir(turn);
-		debugln("facing can");
 
 	}
 
@@ -1225,18 +1220,20 @@ public int sonicAverage (){
 		sleep(100);
 	}
 
-	public void facePlatform() {
-		char dir = nav.dirTo(Map2D.PLATFORM);
+	public void faceTarget(int target) {
+		char dir = nav.dirTo(target);
 
-		if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
-			faceDir(nav.dirTo(Map2D.PLATFORM));
+		if (nav.isInCenter(target)) { //TODO: if can is in the middle, don't drive there
+			
+		} else if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q'){
+			faceDir(nav.dirTo(target));
 		} else {
 			if (getX() <= 2) {
 				goTo(2, 2);
 			} else {
 				goTo(3, 2);
 			}
-			faceDir(nav.dirTo(Map2D.PLATFORM));
+			faceDir(nav.dirTo(target));
 		}
 	}
 

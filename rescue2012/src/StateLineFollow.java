@@ -5,9 +5,9 @@ public class StateLineFollow extends State {
 	private static StateLineFollow instance = new StateLineFollow();
 
 	// Kc = 4 Pc = .25 dT = .0028
-	public double Kp = 6.00; // 6.00
-	public double Ki = 0.25; // 0.01
-	public double Kd = 0.00; // 0.00
+	public double Kp = 10.00; // 6.00
+	public double Ki = 0.70; // 0.25 
+	public double Kd = 6.00; // 0.00 
 
 	private StateLineFollow() {
 	}
@@ -52,7 +52,7 @@ public class StateLineFollow extends State {
 		robot.motRight.forward();
 		robot.motLeft.forward();
 
-		while (!Button.ESCAPE.isDown()) {
+		while (!Button.ENTER.isDown()) {
 
 			error = calcError(robot.lightLeft, robot.lightRight);
 			if (error == 0) {
@@ -89,6 +89,7 @@ public class StateLineFollow extends State {
 //				robot.sleep(100);
 //			}
 		}
+		robot.changeState(StateCommand.getInstance());
 	}
 
 	public void exit(Robot robot) {
