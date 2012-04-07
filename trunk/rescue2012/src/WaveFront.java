@@ -246,6 +246,10 @@ public class WaveFront {
 		}
 		
 	}
+	
+	public boolean isInCenter(int goal) {
+		return false;
+	}
 
 //	public static void main(String[] args) {
 //		Map2D test = new Map2D();
