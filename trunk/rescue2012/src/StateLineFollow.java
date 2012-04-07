@@ -52,7 +52,7 @@ public class StateLineFollow extends State {
 		robot.motRight.forward();
 		robot.motLeft.forward();
 
-		while (!Button.ENTER.isDown()) {
+		while (!Button.ESCAPE.isDown()) {
 
 			error = calcError(robot.lightLeft, robot.lightRight);
 			if (error == 0) {
@@ -82,14 +82,20 @@ public class StateLineFollow extends State {
 			
 			if (robot.ultrasonic.getDistance() < 10) {
 				robot.changeState(StateAvoidObstacle.getInstance());
-				break;
+				return;
 			}
-//			if (robot.lightLeft.getLightValue() > 56) {
-//				Sound.playTone(440, 100);
-//				robot.sleep(100);
-//			}
+			if (robot.lightLeft.getLightValue() > 60||robot.lightRight.getLightValue()>60) {
+				Sound.playTone(440, 100);
+				robot.stop();
+				robot.changeState(StateCommand.getInstance());
+				return;
+			}
+			if(Button.ENTER.isDown()) {
+				robot.changeState(StateCommand.getInstance());
+				return;
+			}
 		}
-		robot.changeState(StateCommand.getInstance());
+		
 	}
 
 	public void exit(Robot robot) {
