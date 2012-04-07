@@ -536,11 +536,9 @@ public class Robot {
 	public void stop() {
 		// Stops both wheel motors
 		if (isRegulated) {
-			Sound.playTone(880,100);
-				
 			motRegLeft.stop(true);
 			motRegRight.stop(true);
-			Sound.playTone(440,100);
+			Sound.playTone(440,10);
 			sleep(100);
 			motRegLeft.suspendRegulation();
 			motRegRight.suspendRegulation();
