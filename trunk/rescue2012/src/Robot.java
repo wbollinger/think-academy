@@ -37,6 +37,8 @@ public class Robot {
 	NXTRegulatedMotor motRegLeft;
 	private int baseMotorAcceleration;
 	private boolean isRegulated;
+	
+	ArduRCJ servoDriver;
 
 	TouchSensor touch;
 	LightSensor lightLeft;
@@ -74,6 +76,8 @@ public class Robot {
 			lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
+			ultrasonic = new UltrasonicSensor(SensorPort.S4);
+			ultrasonic.continuous();
 		} else if (name.equals("ebay")) {
 			wheelDiameter = 5.6; // both in cm
 			robotDiameter = 13.6;
@@ -85,12 +89,18 @@ public class Robot {
 			// eopdSensor = new EOPD(SensorPort.S3, true /*longRange*/);
 			// sensorMux = new RCJSensorMux(SensorPort.S3);
 			// sensorMux.configurate();
+			servoDriver = new ArduRCJ(SensorPort.S4);
+			NXTMotor arduPower = new NXTMotor(MotorPort.A);
+			arduPower.setPower(100);
+			arduPower.forward();
 
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
 			angleError = 1.0;
 			lightLeft = new LightSensor(SensorPort.S1);
+			ultrasonic = new UltrasonicSensor(SensorPort.S4);
+			ultrasonic.continuous();
 		} else if (name.equals("Dr_Lakata")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
@@ -100,6 +110,8 @@ public class Robot {
 			// lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
+			ultrasonic = new UltrasonicSensor(SensorPort.S4);
+			ultrasonic.continuous();
 		} else if (name.equals("JPNXT")) {
 			// defaults for Jeremy
 			wheelDiameter = 4.96;
@@ -110,6 +122,8 @@ public class Robot {
 			lightLeft = new LightSensor(SensorPort.S1);
 			lightRight = new LightSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
+			ultrasonic = new UltrasonicSensor(SensorPort.S4);
+			ultrasonic.continuous();
 
 		} else {
 			// Unknown robot
@@ -128,8 +142,7 @@ public class Robot {
 		// touch = new TouchSensor(SensorPort.S3);
 		// compass = new CompassHTSensor(SensorPort.S3);
 
-		ultrasonic = new UltrasonicSensor(SensorPort.S4);
-		ultrasonic.continuous();
+		
 
 		current_state = StateStart.getInstance();
 		stepMode = false;

@@ -236,8 +236,33 @@ public class StateCommand extends State {
 			robot.changeState(StateFindCan.getInstance());
 		} else if (command.equalsIgnoreCase("locate")) {
 			robot.findCanCoarse();
-		} else if (command.equalsIgnoreCase("david")) {
-			robot.changeState(StateLineFollow.getInstance());
+		} else if (command.equalsIgnoreCase("liftCompass")) {
+			if (args.length > 0) {
+				int degrees = parseInt(arg0);
+				robot.servoDriver.servoCompass.setAngle(degrees);
+				return;
+			} else {
+				debugln(""+robot.servoDriver.servoCompass.getAngle());
+				return;
+			}
+		} else if (command.equalsIgnoreCase("gripClaw")) {
+			if (args.length > 0) {
+				int degrees = parseInt(arg0);
+				robot.servoDriver.servoClawGrip.setAngle(degrees);
+				return;
+			} else {
+				debugln(""+robot.servoDriver.servoClawGrip.getAngle());
+				return;
+			}
+		} else if (command.equalsIgnoreCase("liftClaw")) {
+			if (args.length > 0) {
+				int degrees = parseInt(arg0);
+				robot.servoDriver.servoClawLift.setAngle(degrees);
+				return;
+			} else {
+				debugln(""+robot.servoDriver.servoClawLift.getAngle());
+				return;
+			}
 		} else if (command.equalsIgnoreCase("getAngle")) {
 			double angle = robot.getAngle();
 			debug("" + angle);
