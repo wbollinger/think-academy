@@ -845,7 +845,9 @@ public int sonicAverage (){
 	
 	public void findCanCoarse() {
 		setBaseMotorPower(20);
-		robot.left(55);
+		motRegRight.setSpeed(500);
+		motRegLeft.setSpeed(500);
+		robot.correctLeft(75);
 		int storage;
 
 		int currentValue = 40;
@@ -856,9 +858,7 @@ public int sonicAverage (){
 		int difference = 0;
 
 		while (true) {
-			right(2);
-			stop();
-			sleep(50);
+			right(3);
 			if (lastValue - currentValue > thresh) {
 				break;
 			}
@@ -878,7 +878,7 @@ public int sonicAverage (){
 		double headL = getHeading();
 		if (headL > 180)
 		{headL = headL - 360;}
-		correctRight(55);
+		correctRight(90);
 		currentValue = 40;
 		if (sonicAverage () < 40) {
 			currentValue = sonicAverage ();
@@ -886,9 +886,7 @@ public int sonicAverage (){
 		lastValue = currentValue;
 
 		while (true) {
-			left(2);
-			stop();
-			sleep(50);
+			left(3);
 			if (lastValue - currentValue > thresh) {
 				break;
 			}
