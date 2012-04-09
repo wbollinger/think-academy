@@ -58,6 +58,9 @@ void Init_NXTIIC(void);
 void DigitalInput_Monitor(void);
 void Diagnostics_Handler(void);
 
+// Functions in NXTRCInput
+void Init_RCInputCh(void);
+
 // Functions in NXTServoOutput
 void Init_ServoOutput(void);
 
@@ -75,7 +78,7 @@ static void Save_Settings(void);
 void setup()
 {
 	Init_ArduNXT(); // Initialize application...
-	Init_Diagnostics(); // Initialise diagnostics output
+	Init_Diagnostics(); // Initialize diagnostics output
 }
 
 // Main loop executed as fast as possible
@@ -92,10 +95,12 @@ void loop()
 	//Multiplexer_Handler();
 
 	// Support for development diagnostics and debugging information output
-	if (g_DiagnosticsFlags.bDigitalInput)
+	if (g_DiagnosticsFlags.bDigitalInput) {
 		DigitalInput_Monitor();
-	if (g_DiagnosticsFlags.bPerformance)
+	}
+	if (g_DiagnosticsFlags.bPerformance) {
 		Diagnostics_Handler();
+	}
 }
 
 /*****************************************
@@ -106,7 +111,7 @@ void Init_ArduNXT(void)
 	// based on functionality of Ardupilot PCB
 	// PD0 = RS232 Serial Data input
 	// PD1 = RS232 Serial Data output
-	// Assignments which are commented out are initialised in the appropriate module...
+	// Assignments which are commented out are initialized in the appropriate module...
 	//  pinMode(2,INPUT);      // RC Input pin 0
 	//  pinMode(3,INPUT);      // RC Input pin 1
 	//  pinMode(4,INPUT);      // MUX output
@@ -120,11 +125,11 @@ void Init_ArduNXT(void)
 	//  pinMode(12,OUTPUT);    // Blue LED output pin
 	//  pinMode(13,OUTPUT);    // Yellow LED output pin
 
-	// Initialise basic variables
+	// Initialize basic variables
 	g_DiagnosticsFlags.u8Value = 0U;
 	g_MiscFlags.u8Value = 0U;
 
-	// Initialise Serial Port
+	// Initialize Serial Port
 	Serial.begin(SERIAL_BAUD);
 
 	// Title Header
@@ -138,13 +143,14 @@ void Init_ArduNXT(void)
 	g_DiagnosticsFlags.bRCInput = TRUE;
 	g_ConfigurationFlags.bDSM2Enable = TRUE;
 
-	// Initialise all modules
+	// Initialize all modules
 	Save_Settings();
 	// Init_Multiplexer();
+	Init_RCInputCh();
 	Init_ServoOutput();
 	Init_NXTIIC();
 
-	// Everything initialised - enable interrupts
+	// Everything initialized - enable interrupts
 	sei();
 }
 
