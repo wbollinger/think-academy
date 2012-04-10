@@ -153,9 +153,9 @@ static union {
 
 		// Extension fields
 
-		// Remote Control Inputs
-		UINT_16 u16RadioControl[NUM_RCI_CH]; // 0x62 - 0x6F Remote Control Input (Raw value in uS)
-		INT_8 i8RadioControl[NUM_RCI_CH]; // 0x70 - 0x76 Signed Remote Control Input (Signed shift from centre)
+		// Analog Measurement Inputs
+		UINT_16 u16AnalogValue[NUM_ANALOG_CH]; // 0x62 - 0x6F Analog Input (Raw value from 0 to 1023)
+		INT_8 i8AnalogValue[NUM_ANALOG_CH]; // 0x70 - 0x76 Signed Analog Input (8 bit scaled value)
 		byte u8MuxMode; // 0x77 Multiplexer Mode (0 = Radio Control, 1 = NXT Control)
 		byte u8Dummy;
 
@@ -207,15 +207,17 @@ static void NXTDiagnostics(void);
 // Global Functions
 //---------------------------------------------------------------------
 
-// Initialisation - call once when starting up 
+//---------------------------------------------------------------------
+// Initialization - call once when starting up
+//---------------------------------------------------------------------
 void Init_NXTIIC(void)
 {
 	int i;
 
-	// Initialise the Wire Library (this is the I2C (TWI/SMBus) library
+	// Initialize the Wire Library (this is the I2C (TWI/SMBus) library
 	Serial.println("Init_NXTIIC");
 
-	// Initialise NXT status LED output pin
+	// Initialize NXT status LED output pin
 #if defined(NXT_LED_PIN)
 	pinMode(NXT_LED_PIN, OUTPUT); // LED pin configured as an output
 #endif
@@ -226,7 +228,7 @@ void Init_NXTIIC(void)
 	twi4nxt_attachSlaveRxEvent(NXTOnReceive); // Register function to be called we receive data from the NXT
 	twi4nxt_init();
 
-	// Initialise variables
+	// Initialize variables
 	m_u8NXTNumReceived = 0U;
 	m_u8NXTNumRequests = 0U;
 	m_u8NXTAddress = 0U;
@@ -234,12 +236,12 @@ void Init_NXTIIC(void)
 	m_bNXTAlive = false;
 	m_bNXTActivity = false;
 	m_u8IllegalAddress = 0U;
-	// Initialise NXT shared data to 0
+	// Initialize NXT shared data to 0
 	for (i = 0; i < NXT_SHARED_DATA_SIZE; i++) {
 		m_NXTInterfaceData.au8Raw[i] = 0U;
 	}
 
-	// Initialise NXT Servo Control - speed and current position
+	// Initialize NXT Servo Control - speed and current position
 	for (i = 0; i < NUM_SERVOS; i++) {
 		m_u16ServoPosition[i] = 0U;
 		m_NXTInterfaceData.Fields.u8ServoSpeed[i] = DFLT_SERVO_SPEED;
@@ -250,7 +252,9 @@ void Init_NXTIIC(void)
 
 }
 
+//---------------------------------------------------------------------
 // Callback function for when NXT requests a byte from us
+//---------------------------------------------------------------------
 void NXTOnRequest(void)
 {
 	if (!m_bNXTAlive) {
@@ -309,9 +313,11 @@ void NXTOnRequest(void)
 	m_u8NXTNumRequests++; // Increment count of the number of valid bytes requested from us
 }
 
+//---------------------------------------------------------------------
 // Callback function for when we receive one or more bytes from NXT
 // All bytes received up to the IIC "stop" signal are received here in one go
 // hence we do not need bData to be static retained across multiple calls.
+//---------------------------------------------------------------------
 void NXTOnReceive(byte *u8Received, uint8_t NumBytesReceived)
 {
 	bool bData = false;
@@ -356,7 +362,9 @@ void NXTOnReceive(byte *u8Received, uint8_t NumBytesReceived)
 	}
 }
 
-// Handler to synchronise data between NXT shared memory and other parts of the system
+//---------------------------------------------------------------------
+// Handler to synchronize data between NXT shared memory and other parts of the system
+//---------------------------------------------------------------------
 void NXT_Handler(void)
 {
 	if (m_bNXTAlive) {
@@ -387,13 +395,12 @@ void NXT_Handler(void)
 
 			// Decode and handle COMMANDS from NXT
 			switch (m_NXTInterfaceData.Fields.u8Command) {
-			case 1: // Set RCInput Centre values to current stick positions
+			case 1: // Set RCInput Center values to current stick positions
 				//RCInput_SetCentre();
 				break;
 
 			case 2:
-//			  Serial.println("Rq DSM2 Binding");
-//			  g_DSM2MsgFlags.bBindRq = TRUE;
+//			  Serial.println("Rq Command 2");
 				break;
 
 			default:
@@ -435,8 +442,10 @@ void NXT_Handler(void)
 	}
 }
 
+//---------------------------------------------------------------------
 // Servo Speed Control
 // Each time a frame of Servo pulses have been output we update the position according to the defined speed
+//---------------------------------------------------------------------
 void NXTOnServoUpdate(void)
 {
 	UINT_16 u16TargetServoPosition;
@@ -481,28 +490,32 @@ void NXTOnServoUpdate(void)
 	}
 }
 
+//---------------------------------------------------------------------
 // Function to update fields in the NXT shared memory area
+//---------------------------------------------------------------------
 static void NXTUpdateValues(void)
 {
 	// Examples
 	// ========
 	m_NXTInterfaceData.Fields.u8MuxMode = 1; // NXT control - was Multiplexer_State();
 
-	for (byte i = 0; i < NUM_RCI_CH; i++) {
-		if (g_RCIFlags[i].bUpdate) {
-			// RCInput values (may) have been updated
-			int i16RCI = 0; // RCInput_Ch(i) / 4;                           // Scale so that typical RC stick position will fit in a byte
-			i16RCI = constrain(i16RCI, -128, 127); // constrain value to fit in a single signed byte
-			m_NXTInterfaceData.Fields.i8RadioControl[i] = (INT_8) i16RCI; // 8 bit version of Signed Radio Control input (units of 4uS)
+	for (byte i = 0; i < NUM_ANALOG_CH; i++) {
+		if (g_AnalogFlags[i].bUpdate) {
+			// Analog value (may) have been updated
+			int i16AnalogScaled = (int) Analog_getChannel(i) / 4;  // Will scale this value
+			i16AnalogScaled = constrain(i16AnalogScaled, -128, 127);        // constrain value to fit in a single signed byte
+			m_NXTInterfaceData.Fields.i8AnalogValue[i] = (INT_8) i16AnalogScaled; // 8 bit version of Signed Radio Control input (units of 4uS)
 
-			m_NXTInterfaceData.Fields.u16RadioControl[i] = 0; // RCInput_RawCh(i);     // Read Value in uS
+			m_NXTInterfaceData.Fields.u16AnalogValue[i] = Analog_getChannel(i);     // Read raw Analog Value
 
-			g_RCIFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
+			g_AnalogFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
 		}
 	}
 }
 
+//---------------------------------------------------------------------
 // Low level NXT I2C Diagnostics
+//---------------------------------------------------------------------
 static void NXTDiagnostics(void)
 {
 	if (m_u8NXTNumReceived) {

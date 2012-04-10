@@ -21,12 +21,12 @@
 #define SERIAL_BAUD		(115200)		   // Baud Rate used for DSM2 satellite receiver (and diagnostics)
 //#define SERIAL_BAUD     (38400)          // Baud Rate used for GPS and Diagnostics
 
-#define NUM_RCI_CH			(7U)		   // Number of RCInput Channels (e.g. direct from DSM2 satellite receiver)
+#define NUM_ANALOG_CH		(4U)		   // Number of Analog Input Channels
 #define NUM_SERVO_CH		(4U)		   // total number of servo output channels
 //#define ATTINY_IN_USE                    // If you do not hold the ATTiny in reset, on the Ardupilot prototype,
-// then it is in contrl of the multiplexer
+                                           // then it is in contrl of the multiplexer
 #define MINDSENSORS_NXT_SERVO_COMPATIBLE   // If you want FULL compatibility with Mindsensors NXT Servo Sensor (I2C address and Servo Position Readback)
-// Some of the code has been migrated from a previous project which uses the following type definitions:
+                                           // Some of the code has been migrated from a previous project which uses the following type definitions:
 typedef signed char INT_8;
 typedef unsigned char UINT_8;
 typedef signed int INT_16;
@@ -45,7 +45,7 @@ typedef unsigned long UINT_32;
 // Flags to control which Diagnostics outputs we want to see on the serial port
 typedef union {
 	struct {
-		unsigned bRCInput :1; // RC Input
+		unsigned bAnalogInput :1; // Analog Input
 		unsigned bServoOutput :1; // Servo Output
 		unsigned bNXTInterface :1; // I2C NXT interface
 		unsigned bMultiplexer :1; // Multiplexer state
@@ -61,7 +61,7 @@ typedef union {
 // Flags to configure ArduNXT
 typedef union {
 	struct {
-		unsigned bDSM2Enable :1; // Serial Port used for DSM2 satellite receiver
+		//unsigned bDSM2Enable :1; // Serial Port used for DSM2 satellite receiver
 	};
 	struct {
 		UINT_8 u8Value;
@@ -84,18 +84,11 @@ typedef union {
 		// High level
 		unsigned bValid :1; // Flag to indicate that the channel is being received
 		unsigned bUpdate :1; // Flag to indicate that data has been updated
-
-		// Low level
-		unsigned bRise :1; // We have recorded a timestamp for rising edge
-		unsigned bFall :1; // We have recorded a timestamp for a falling edge
-		unsigned bLost :1; // We have lost a pulse measurements as the handler was not called frequently enough
-		unsigned bTimerWrap :1;
-		unsigned bWrap :1; // Flag that we need to add PWM_PERIOD to fall time
 	};
 	struct {
 		UINT_8 u8Value;
 	};
-} RCInputFlags;
+} AnalogInputFlags;
 
 /*************************************************************************
  *
@@ -108,12 +101,12 @@ typedef union {
 /***************************************************************************
  * General variables
  **************************************************************************/
-extern volatile RCInputFlags g_RCIFlags[NUM_RCI_CH]; // RCInput channel flags
+extern volatile AnalogInputFlags g_AnalogFlags[NUM_ANALOG_CH]; // Analog Input channel flags
 extern DiagnosticsFlags g_DiagnosticsFlags;
 extern ConfigurationFlags g_ConfigurationFlags;
 extern volatile MiscFlags g_MiscFlags;
-extern unsigned int g_u16Pulse[NUM_RCI_CH]; // RCInput pulse widths
-extern unsigned int g_analog0;
+
+unsigned Analog_getChannel(unsigned char u8Ch);
 
 //end of add your includes here
 #ifdef __cplusplus
@@ -124,8 +117,6 @@ void setup();
 #ifdef __cplusplus
 } // extern "C"
 #endif
-
-//add your function definitions for the project ardurcj here
 
 //Do not add code below this line
 #endif /* ardurcj_H_ */

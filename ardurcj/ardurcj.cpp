@@ -34,12 +34,10 @@
 /***************************************************************************
  * General variables
  **************************************************************************/
-volatile RCInputFlags g_RCIFlags[NUM_RCI_CH]; // RCInput channel flags
+volatile AnalogInputFlags g_AnalogFlags[NUM_ANALOG_CH]; // Analog Input channel flags
 DiagnosticsFlags g_DiagnosticsFlags;
 ConfigurationFlags g_ConfigurationFlags;
 volatile MiscFlags g_MiscFlags;
-unsigned int g_u16Pulse[NUM_RCI_CH]; // RCInput pulse widths
-unsigned int g_analog0;
 
 // Functions in Diagnostics
 void Init_Diagnostics(void);
@@ -57,9 +55,6 @@ void Init_NXTIIC(void);
 // Functions in Diagnostics
 void DigitalInput_Monitor(void);
 void Diagnostics_Handler(void);
-
-// Functions in NXTRCInput
-void Init_RCInputCh(void);
 
 // Functions in NXTServoOutput
 void Init_ServoOutput(void);
@@ -140,13 +135,13 @@ void Init_ArduNXT(void)
 	Load_Settings(); //Loading saved settings
 
 	// Override saved settings
-	g_DiagnosticsFlags.bRCInput = TRUE;
-	g_ConfigurationFlags.bDSM2Enable = TRUE;
+	g_DiagnosticsFlags.bAnalogInput = TRUE;
+	//g_ConfigurationFlags.bDSM2Enable = TRUE;
 
 	// Initialize all modules
 	Save_Settings();
 	// Init_Multiplexer();
-	Init_RCInputCh();
+	// Init_RCInputCh();
 	Init_ServoOutput();
 	Init_NXTIIC();
 
