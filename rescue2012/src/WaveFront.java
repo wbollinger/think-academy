@@ -94,20 +94,10 @@ public class WaveFront {
 	public String makePath () {
 		int n;
 		StringBuilder path = new StringBuilder();
-		
-		for(x = 1; x < Map2D.COLS-1; x++) {
-			
-			for(y = 1; y < Map2D.ROWS-1; y++) {
-				if(overlay.grid[x][y]==Map2D.ROBOT) {
-					finished = true;
-					break;
-				}
-			}
-			if(finished) {
-				break;
-			}
-		}
-		finished = false;	
+		int[] robotPos;
+		robotPos = overlay.findCoordinates(Map2D.ROBOT);
+		x = robotPos[0];
+		y = robotPos[1];
 		
 		n = 5;
 		while (!finished) {
@@ -247,9 +237,7 @@ public class WaveFront {
 		
 	}
 	
-	public boolean isInCenter(int goal) {
-		return false;
-	}
+	
 
 //	public static void main(String[] args) {
 //		Map2D test = new Map2D();

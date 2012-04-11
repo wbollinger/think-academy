@@ -263,6 +263,14 @@ public class StateCommand extends State {
 				debugln(""+robot.servoDriver.servoClawLift.getAngle());
 				return;
 			}
+		} else if (command.equalsIgnoreCase("compassUp")) {
+			robot.liftCompass();
+		} else if (command.equalsIgnoreCase("compassDown")) {
+			robot.dropCompass();
+		} else if (command.equalsIgnoreCase("clawUp")) {
+			robot.liftCan();
+		} else if (command.equalsIgnoreCase("clawDown")) {
+			robot.dropCan();
 		} else if (command.equalsIgnoreCase("getAngle")) {
 			double angle = robot.getAngle();
 			debug("" + angle);
@@ -275,6 +283,9 @@ public class StateCommand extends State {
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("lightRight")) {
 			int val = robot.getLightRight();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("readLightArduino")) {
+			int val = robot.servoDriver.readAddressValues((byte)parseInt(arg0));
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("tachoLeft")) {
 			int val = robot.motLeft.getTachoCount();

@@ -74,11 +74,22 @@ public class ArduRCJ extends I2CSensor {
 	 * 
 	 * @return the battery voltage in millivolts
 	 */
-//	public int getBattery() {
-//		byte[] bufReadResponse = new byte[1];
-//		getData(ArduRCJ_VBATT, bufReadResponse, 1);
-//
-//		// 37 is calculated from 4700 mv /128
-//		return (37 * (0xFF & bufReadResponse[0]));
-//	}
+	public int getBattery() {
+		byte[] bufReadResponse = new byte[1];
+		getData(ArduRCJ_VBATT, bufReadResponse, 1);
+
+		// 37 is calculated from 4700 mv /128
+		return (37 * (0xFF & bufReadResponse[0]));
+	}
+	
+	public int readAddressValues(byte startByte) {
+		byte[] bufReadResponse = new byte[4];
+		getData(startByte, bufReadResponse, 4);
+		
+		int sensorOne = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
+		//int sensorTwo = (((0xFF&bufReadResponse[3])<<8)|((0xFF&bufReadResponse[2])));
+
+		
+		return (sensorOne);
+	}
 }
