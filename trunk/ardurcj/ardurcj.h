@@ -82,7 +82,7 @@ typedef union {
 typedef union {
 	struct {
 		// High level
-		unsigned bValid :1; // Flag to indicate that the channel is being received
+		unsigned bValid :1; // Flag to indicate that the channel is being used
 		unsigned bUpdate :1; // Flag to indicate that data has been updated
 	};
 	struct {

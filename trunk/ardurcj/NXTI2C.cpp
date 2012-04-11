@@ -156,7 +156,7 @@ static union {
 		// Analog Measurement Inputs
 		UINT_16 u16AnalogValue[NUM_ANALOG_CH]; // 0x62 - 0x6F Analog Input (Raw value from 0 to 1023)
 		INT_8 i8AnalogValue[NUM_ANALOG_CH]; // 0x70 - 0x76 Signed Analog Input (8 bit scaled value)
-		byte u8MuxMode; // 0x77 Multiplexer Mode (0 = Radio Control, 1 = NXT Control)
+		//byte u8MuxMode; // 0x77 Multiplexer Mode (0 = Radio Control, 1 = NXT Control)
 		byte u8Dummy;
 
 		// GPS 
@@ -497,13 +497,12 @@ static void NXTUpdateValues(void)
 {
 	// Examples
 	// ========
-	m_NXTInterfaceData.Fields.u8MuxMode = 1; // NXT control - was Multiplexer_State();
+	//m_NXTInterfaceData.Fields.u8MuxMode = 1; // NXT control - was Multiplexer_State();
 
 	for (byte i = 0; i < NUM_ANALOG_CH; i++) {
 		if (g_AnalogFlags[i].bUpdate) {
 			// Analog value (may) have been updated
 			int i16AnalogScaled = (int) Analog_getChannel(i) / 4;  // Will scale this value
-			i16AnalogScaled = constrain(i16AnalogScaled, -128, 127);        // constrain value to fit in a single signed byte
 			m_NXTInterfaceData.Fields.i8AnalogValue[i] = (INT_8) i16AnalogScaled; // 8 bit version of Signed Radio Control input (units of 4uS)
 
 			m_NXTInterfaceData.Fields.u16AnalogValue[i] = Analog_getChannel(i);     // Read raw Analog Value
@@ -524,7 +523,7 @@ static void NXTDiagnostics(void)
 		Serial.println((int) m_u8NXTNumReceived);
 		m_u8NXTNumReceived = 0;
 	}
-#ifdef VERBOSE
+#if 1
 	if (m_u8NXTNumRequests)
 	{
 		// Number of bytes requested by the NXT in monitoring period
