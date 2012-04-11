@@ -1,6 +1,7 @@
 // Do not remove the include below
 #include "ardurcj.h"
 
+// Array of Analog sensor readings - value from 0 to 1023
 unsigned int g_u16Analog[NUM_ANALOG_CH];
 
 //---------------------------------------------------------------------
@@ -9,8 +10,13 @@ unsigned int g_u16Analog[NUM_ANALOG_CH];
 void Init_Analog(void)
 {
 	for (unsigned int i = 0; i < NUM_ANALOG_CH; i++) {
+		// init analog values to zero, clear update flags
+		g_u16Analog[i] = 0;
 
+		g_AnalogFlags[i].bUpdate = FALSE;
 	}
+
+	// To do?  Enable monitoring of Analog ports of interest
 }
 
 //---------------------------------------------------------------------
