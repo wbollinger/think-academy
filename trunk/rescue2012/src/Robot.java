@@ -72,7 +72,11 @@ public class Robot {
 			wheelDiameter = 5.6; // both in cm
 			robotDiameter = 13.6;
 			angleError = (360.0 / 305.0);
-			lightLeft = new LightSensor(SensorPort.S1);
+			servoDriver = new ArduRCJ(SensorPort.S1);
+			NXTMotor arduPower = new NXTMotor(MotorPort.A); //power arduino
+			arduPower.setPower(100);
+			arduPower.forward();
+			//lightLeft = new LightSensor(SensorPort.S1);
 			lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
@@ -90,7 +94,7 @@ public class Robot {
 			// sensorMux = new RCJSensorMux(SensorPort.S3);
 			// sensorMux.configurate();
 			servoDriver = new ArduRCJ(SensorPort.S4);
-			NXTMotor arduPower = new NXTMotor(MotorPort.A);
+			NXTMotor arduPower = new NXTMotor(MotorPort.A); //power arduino
 			arduPower.setPower(100);
 			arduPower.forward();
 
@@ -1214,36 +1218,44 @@ public int sonicAverage (){
 	}
 
 	public void liftCan() {
-		// TODO write code after claw completed
-		Sound.playTone(440, 100);
-		sleep(100);
-		Sound.playTone(880, 100);
+	
+		servoDriver.servoClawGrip.setAngle(180); // close claw
+		sleep(1000);
+		servoDriver.servoClawLift.setAngle(95); // lift claw
+		// TODO add code to check for microswitch close to stop claw lift
+		sleep(7000);
+		servoDriver.servoClawLift.setAngle(86);
 		sleep(100);
 	}
 
 	public void dropCan() {
-		// TODO write code after claw completed
-		Sound.playTone(440, 100);
-		sleep(100);
-		Sound.playTone(220, 100);
+		servoDriver.servoClawLift.setAngle(80); // lower claw
+		sleep(500); // wait for can to rest on platform
+		servoDriver.servoClawLift.setAngle(86);
+		servoDriver.servoClawGrip.setAngle(0);
 		sleep(100);
 	}
 
+	public void liftCompass() {
+		servoDriver.servoCompass.setAngle(180);
+	}
+	
+	public void dropCompass() {
+		servoDriver.servoCompass.setAngle(0);
+	}
 	public void faceTarget(int target) {
 		char dir = nav.dirTo(target);
 
-		if (nav.isInCenter(target)) { //TODO: if can is in the middle, don't drive there
-			
+		if (map.isInCenter(target)) { 
 		} else if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q'){
-			faceDir(nav.dirTo(target));
 		} else {
-			if (getX() <= 2) {
+			if (map.findCoordinates(target)[0] <= 2) {
 				goTo(2, 2);
 			} else {
 				goTo(3, 2);
 			}
-			faceDir(nav.dirTo(target));
 		}
+		faceDir(nav.dirTo(target));
 	}
 
 	public boolean getUseCommands() {

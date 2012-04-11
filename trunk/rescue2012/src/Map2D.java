@@ -28,6 +28,38 @@ public class Map2D {
 		
 	}
 	
+	public boolean isInCenter(int goal) {
+		int[] coordinates = findCoordinates(goal);
+		int x = coordinates[0];
+		int y = coordinates[1];
+		if(((x == 2)||(x == 3)) && (y == 2)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public int[] findCoordinates(int goal) {
+		boolean finished = false;
+		int[] coordinates = new int[2];
+		int y = 1;
+		int x = 1;
+		for(x = 1; x < Map2D.COLS-1; x++) {
+			for(y = 1; y < Map2D.ROWS-1; y++) {
+				if(grid[x][y]==goal) {
+					finished = true;
+					break;
+				}
+			}
+			if(finished) {
+				break;
+			}
+		}
+		coordinates[0] = x;
+		coordinates[1] = y;
+		return coordinates;
+		
+	}
+	
 	public void reset() {
 		for(int i = 0; i < COLS; i++) {
 			for(int j = 0; j < ROWS; j++) {
