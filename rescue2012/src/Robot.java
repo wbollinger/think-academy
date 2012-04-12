@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import lejos.nxt.*;
-import lejos.nxt.addon.CompassHTSensor;
-import lejos.nxt.addon.EOPD;
+import lejos.nxt.addon.*;
 import lejos.nxt.comm.BTConnection;
 //import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.RConsole;
@@ -46,6 +45,7 @@ public class Robot {
 	ColorSensor colorsensor;
 	UltrasonicSensor ultrasonic;
 	boolean useUltrasonicObstacleDetect = true;
+	AccelHTSensor accel;
 	CompassHTSensor compass;
 	EOPD eopd;
 	RCJSensorMux sensorMux;
@@ -76,9 +76,8 @@ public class Robot {
 			NXTMotor arduPower = new NXTMotor(MotorPort.A); //power arduino
 			arduPower.setPower(100);
 			arduPower.forward();
-			//lightLeft = new LightSensor(SensorPort.S1);
-			lightRight = new LightSensor(SensorPort.S2);
-			// touch = new TouchSensor(SensorPort.S3);
+			
+			accel = new AccelHTSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
 			ultrasonic = new UltrasonicSensor(SensorPort.S4);
 			ultrasonic.continuous();
@@ -260,11 +259,11 @@ public class Robot {
 	}
 
 	public int getLightLeft() {
-		return (lightLeft.getLightValue());
+		return (servoDriver.readAddressValues((byte)0x62)[1]);
 	}
 
 	public int getLightRight() {
-		return (lightRight.getLightValue());
+		return (servoDriver.readAddressValues((byte)0x62)[0]);
 	}
 
 	public static Robot getRobot() {
