@@ -24,8 +24,14 @@ void Init_Analog(void)
 //---------------------------------------------------------------------
 void Analog_Handler(void)
 { 
-	g_u16Analog[0] = analogRead(A0);
-	g_AnalogFlags[0].bUpdate = TRUE;
+
+		g_u16Analog[0] = analogRead(A0);
+		g_AnalogFlags[0].bUpdate = TRUE;
+		g_u16Analog[1] = analogRead(A1);
+		g_AnalogFlags[1].bUpdate = TRUE;
+		g_u16Analog[2] = analogRead(A2);
+		g_AnalogFlags[2].bUpdate = TRUE;
+
 }
 
 //---------------------------------------------------------------------
