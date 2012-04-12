@@ -31,6 +31,9 @@ public class ArduRCJ extends I2CSensor {
 
 	// I2C
 	private SensorPort portConnected;
+	
+	byte[] bufReadResponse;
+	int[] sensors;
 
 	/**
 	 * 
@@ -55,6 +58,9 @@ public class ArduRCJ extends I2CSensor {
 		arrServo[1] = servoClawGrip;
 		arrServo[2] = servoClawLift;
 		arrServo[3] = servo4;
+		
+		bufReadResponse = new byte[6];
+		sensors = new int[3];
 	}
 
 	/**
@@ -82,14 +88,19 @@ public class ArduRCJ extends I2CSensor {
 		return (37 * (0xFF & bufReadResponse[0]));
 	}
 	
-	public int readAddressValues(byte startByte) {
-		byte[] bufReadResponse = new byte[4];
-		getData(startByte, bufReadResponse, 4);
+	public int[] readAddressValues(byte startByte) {
+		
+		getData(startByte, bufReadResponse, 6);
 		
 		int sensorOne = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
-		//int sensorTwo = (((0xFF&bufReadResponse[3])<<8)|((0xFF&bufReadResponse[2])));
-
+		int sensorTwo = (((0xFF&bufReadResponse[3])<<8)|((0xFF&bufReadResponse[2])));
+		int sensorThree = (((0xFF&bufReadResponse[5])<<8)|((0xFF&bufReadResponse[4])));
 		
-		return (sensorOne);
+		
+		sensors[0] = sensorOne;
+		sensors[1] = sensorTwo;
+		sensors[2] = sensorThree;
+		
+		return (sensors);
 	}
 }

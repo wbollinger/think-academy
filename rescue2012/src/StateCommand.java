@@ -285,8 +285,8 @@ public class StateCommand extends State {
 			int val = robot.getLightRight();
 			debugln("" + val);
 		} else if (command.equalsIgnoreCase("readLightArduino")) {
-			int val = robot.servoDriver.readAddressValues((byte)parseInt(arg0));
-			debugln("" + val);
+			int[] val = robot.servoDriver.readAddressValues((byte)parseInt(arg0));
+			debugln("" + val[0] + " " + val[1] + " " + val[2]);
 		} else if (command.equalsIgnoreCase("tachoLeft")) {
 			int val = robot.motLeft.getTachoCount();
 			debugln("" + val);
