@@ -278,6 +278,15 @@ public class StateCommand extends State {
 				|| command.equalsIgnoreCase("US")) {
 			int dist = robot.ultrasonic.getDistance();
 			debugln("" + dist);
+		} else if (command.equalsIgnoreCase("accelX")) {
+			int val = robot.accel.getXAccel();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("accelY")) {
+			int val = robot.accel.getYAccel();
+			debugln("" + val);
+		} else if (command.equalsIgnoreCase("accelZ")) {
+			int val = robot.accel.getZAccel();
+			debugln("" + val);
 		} else if (command.equalsIgnoreCase("lightLeft")) {
 			int val = robot.getLightLeft();
 			debugln("" + val);
