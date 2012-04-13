@@ -31,6 +31,7 @@ public class StateFindLine extends State {
 	}
 
 	public void exit(Robot robot) {
+		robot.dropCompass();
 		robot.debug("Line Straddled\n");
 	}
 }
