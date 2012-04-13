@@ -124,7 +124,15 @@ public class StateCommand extends State {
 		}
 
 		// Select from list:
-		if (command.equalsIgnoreCase("stop")) {
+		if (command.equalsIgnoreCase("step")) {
+			if (args.length > 0) {
+				int mode = parseInt(arg0);
+				robot.setStepMode(mode);
+			}
+			else {
+				debugln("" + robot.getStepMode());
+			}
+		} else if (command.equalsIgnoreCase("stop")) {
 			robot.stop();
 		} else if (command.equalsIgnoreCase("right")) {
 			double degrees = parseDouble(arg0);
