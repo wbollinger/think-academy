@@ -108,7 +108,7 @@ public class Robot {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
 			angleError = 1.0;
-			eopd = new EOPD(SensorPort.S3, true /* longRange */);
+			eopd = new EOPD(SensorPort.S2, true /* longRange */);
 			// lightLeft = new LightSensor(SensorPort.S1);
 			// lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
@@ -856,11 +856,17 @@ public int sonicAverage (){
 	int average = 0;
 	int count = 5;
 	while ( count > 0){
-		average= average + ultrasonic.getDistance();
+		average= average + eopd.readRawValue();
 		count = count -1;
 	}
 	average = average / 5;
 	return average;
+}
+
+public void eopdPoll() {
+	while (true){
+		debugln("" + eopd.readRawValue());
+	}
 }
 	
 public void findCanCoarse() {
