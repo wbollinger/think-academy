@@ -5,9 +5,9 @@ public class StateLineFollow extends State {
 	private static StateLineFollow instance = new StateLineFollow();
 
 	// Kc = 4 Pc = .25 dT = .0028
-	public double Kp = 10.00; // 6.00
-	public double Ki = 0.70; // 0.25 
-	public double Kd = 6.00; // 0.00 
+	public double Kp = 10.00; // 10.00
+	public double Ki = 0.70; // 0.70 
+	public double Kd = 6.00; // 6.00 
 
 	private StateLineFollow() {
 	}
@@ -16,9 +16,9 @@ public class StateLineFollow extends State {
 		return instance;
 	}
 
-	private int calcError(LightSensor left, LightSensor right) {
+	private int calcError(int left, int right) {
 		// 40 is white, 20 is black
-		int error = (right.getLightValue() - left.getLightValue());
+		int error = (right - left);
 		if (Math.abs(error) <= 3) {
 			error = 0;
 		} else {
@@ -53,8 +53,19 @@ public class StateLineFollow extends State {
 		robot.motLeft.forward();
 
 		while (!Button.ESCAPE.isDown()) {
+			
+			if(robot.accel.getXAccel()>50){
+				if(robot.getBaseMotorPower() != 100) {
+					robot.setBaseMotorPower(100);
+				}
+				
+			}else{
+				if(robot.getBaseMotorPower() != 65) {
+					robot.setBaseMotorPower(65);
+				}
+			}
 
-			error = calcError(robot.lightLeft, robot.lightRight);
+			error = calcError(robot.getLightLeft(), robot.getLightRight());
 			if (error == 0) {
 				integral = 0;
 				derivative = 0;
@@ -81,15 +92,15 @@ public class StateLineFollow extends State {
 			lastError = error;
 			
 			if (robot.ultrasonic.getDistance() < 10) {
-				robot.changeState(StateAvoidObstacle.getInstance());
-				return;
-			}
-			if (robot.lightLeft.getLightValue() > 60||robot.lightRight.getLightValue()>60) {
-				Sound.playTone(440, 100);
-				robot.stop();
 				robot.changeState(StateCommand.getInstance());
 				return;
 			}
+//			if ((robot.getLightLeft() > 60)||(robot.getLightRight() > 60)) {
+//				Sound.playTone(440, 100);
+//				robot.stop();
+//				robot.changeState(StateCommand.getInstance());
+//				return;
+//			}
 			if(Button.ENTER.isDown()) {
 				robot.changeState(StateCommand.getInstance());
 				return;
