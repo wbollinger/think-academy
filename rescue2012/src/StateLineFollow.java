@@ -6,8 +6,8 @@ public class StateLineFollow extends State {
 
 	// Kc = 4 Pc = .25 dT = .0028
 	public double Kp = 10.00; // 10.00
-	public double Ki = 0.70; // 0.70 
-	public double Kd = 6.00; // 6.00 
+	public double Ki = 0.70; // 0.70
+	public double Kd = 6.00; // 6.00
 
 	private StateLineFollow() {
 	}
@@ -53,14 +53,13 @@ public class StateLineFollow extends State {
 		robot.motLeft.forward();
 
 		while (!Button.ESCAPE.isDown()) {
-			
-			if(robot.accel.getXAccel()>50){
-				if(robot.getBaseMotorPower() != 100) {
+
+			if (robot.accel.getXAccel() > 50) {
+				if (robot.getBaseMotorPower() != 100) {
 					robot.setBaseMotorPower(100);
 				}
-				
-			}else{
-				if(robot.getBaseMotorPower() != 65) {
+			} else {
+				if (robot.getBaseMotorPower() != 65) {
 					robot.setBaseMotorPower(65);
 				}
 			}
@@ -74,39 +73,38 @@ public class StateLineFollow extends State {
 				derivative = error - lastError;
 			}
 			derivative = error - lastError;
-			//debugln("error: " + error + " integral: " + integral + " derivative: " + derivative);
-			turn = (int) Util.round(Kp * error + Ki * integral + Kd
-					* derivative);
-//			if(Turn == 0) {
-//				debugln("I'm driving straight");
-//				robot.forward(2);
-//			} else {
-			    //debugln(""+Turn);
-				powerRight = (int) Util.round(robot.getBaseMotorPower() + turn);
-				powerLeft = (int) Util.round(robot.getBaseMotorPower() - turn);
-				robot.motRight.setPower(powerRight);
-				robot.motLeft.setPower(powerLeft);
-//			}
-			
+			// debugln("error: " + error + " integral: " + integral +
+			// " derivative: " + derivative);
+			turn = (int) Util.round(Kp * error + Ki * integral + Kd * derivative);
+			// if(Turn == 0) {
+			// debugln("I'm driving straight");
+			// robot.forward(2);
+			// } else {
+			// debugln(""+Turn);
+			powerRight = (int) Util.round(robot.getBaseMotorPower() + turn);
+			powerLeft = (int) Util.round(robot.getBaseMotorPower() - turn);
+			robot.motRight.setPower(powerRight);
+			robot.motLeft.setPower(powerLeft);
+			// }
 
 			lastError = error;
-			
+
 			if (robot.ultrasonic.getDistance() < 10) {
 				robot.changeState(StateCommand.getInstance());
 				return;
 			}
-//			if ((robot.getLightLeft() > 60)||(robot.getLightRight() > 60)) {
-//				Sound.playTone(440, 100);
-//				robot.stop();
-//				robot.changeState(StateCommand.getInstance());
-//				return;
-//			}
-			if(Button.ENTER.isDown()) {
+			// if ((robot.getLightLeft() > 60)||(robot.getLightRight() > 60)) {
+			// Sound.playTone(440, 100);
+			// robot.stop();
+			// robot.changeState(StateCommand.getInstance());
+			// return;
+			// }
+			if (Button.ENTER.isDown()) {
 				robot.changeState(StateCommand.getInstance());
 				return;
 			}
 		}
-		
+
 	}
 
 	public void exit(Robot robot) {
