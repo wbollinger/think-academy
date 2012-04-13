@@ -134,7 +134,7 @@ public class Robot {
 
 		motRight = new NXTMotor(MotorPort.B);
 		motLeft = new NXTMotor(MotorPort.C);
-		setBaseMotorPower(70);
+		setBaseMotorPower(60);
 
 		motRegRight = new NXTRegulatedMotor(MotorPort.B);
 		motRegLeft = new NXTRegulatedMotor(MotorPort.C);
@@ -259,12 +259,13 @@ public class Robot {
 	}
 
 	public int getLightLeft() {
-		return (servoDriver.readAddressValues((byte)0x62)[1]);
+		double val = 1024-servoDriver.readAddressValues((byte)0x62)[1];
+		return (int)Util.round(val/10.24);
 	}
 
 	public int getLightRight() {
-		return (servoDriver.readAddressValues((byte)0x62)[0]);
-	}
+		double val = 1024-servoDriver.readAddressValues((byte)0x62)[0];
+		return (int)Util.round(val/10.24);	}
 
 	public static Robot getRobot() {
 		if (robot == null) {
