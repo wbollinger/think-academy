@@ -355,11 +355,17 @@ public class Robot {
 		}
 
 		float diff = (float) (angle - getHeading());
+		if (diff < -180) {
+			diff = diff + 360;
+		}
+		if (diff > 180) {
+			diff = diff - 360;
+		}
 		if (diff > 0) {
-			correctLeft(diff);
+			correctLeft(Math.abs(diff));
 		}
 		if (diff < 0) {
-			correctRight(diff);
+			correctRight(Math.abs(diff));
 		}
 	}
 
@@ -857,79 +863,81 @@ public int sonicAverage (){
 	return average;
 }
 	
-	public void findCanCoarse() {
-		setBaseMotorPower(20);
-		motRegRight.setSpeed(500);
-		motRegLeft.setSpeed(500);
-		robot.correctLeft(75);
-		int storage;
+public void findCanCoarse() {
+	setBaseMotorPower(20);
+	motRegRight.setSpeed(500);
+	motRegLeft.setSpeed(500);
+	robot.correctLeft(75);
+	int storage;
 
-		int currentValue = 40;
-		if (sonicAverage () < 40) {
-			currentValue = sonicAverage ();
-		}
-		int lastValue = currentValue;
-		int difference = 0;
+	int currentValue = 40;
+	if (sonicAverage() < 40) {
+		currentValue = sonicAverage();
+	}
+	int lastValue = currentValue;
+	int difference = 0;
 
-		while (true) {
-			right(3);
-			if (lastValue - currentValue > thresh) {
-				break;
-			}
-			lastValue = currentValue;
-			storage = sonicAverage ();
-			if (storage < 40) {
-				currentValue = storage;
-			}
-			difference = lastValue - currentValue;
-			debugln("Cur " + currentValue);
-			debugln("Last " + lastValue);
-			debugln("Dif " + difference);
-		}
-		robot.stop();
-		robot.sleep(1000);
-		debug("Head L " + getHeading());
-		double headL = getHeading();
-		if (headL > 180)
-		{headL = headL - 360;}
-		correctRight(90);
-		currentValue = 40;
-		if (sonicAverage () < 40) {
-			currentValue = sonicAverage ();
+	while (true) {
+		right(3);
+		if (lastValue - currentValue > thresh) {
+			break;
 		}
 		lastValue = currentValue;
-
-		while (true) {
-			left(3);
-			if (lastValue - currentValue > thresh) {
-				break;
-			}
-			lastValue = currentValue;
-			storage = sonicAverage ();
-			if (storage < 40) {
-				currentValue = storage;
-			}
-			difference = lastValue - currentValue;
-			debugln("Cur " + currentValue);
-			debugln("Last " + lastValue);
-			debugln("Dif " + difference);
+		storage = sonicAverage();
+		if (storage < 40) {
+			currentValue = storage;
 		}
-		robot.stop();
-		robot.sleep(1000);
-		debugln("headR " + getHeading());
-		double headR = getHeading();
-		if (headR > 180)
-		{headR = headR - 360;}
-		double headC;
-
-		headC = Math.round((headR + headL) / 2);
-
-		
-		
-		debugln("Head C " + headC);
-		goToHeading(Math.round(headC)); // findCanFine();
-		stop();
+		difference = lastValue - currentValue;
+		debugln("Cur " + currentValue);
+		debugln("Last " + lastValue);
+		debugln("Dif " + difference);
 	}
+	robot.stop();
+	robot.sleep(1000);
+	debug("Head L " + getHeading());
+	double headL = getHeading();
+	// if (headL > 180)
+	// {headL = headL - 360;}
+	correctRight(90);
+	currentValue = 40;
+	if (sonicAverage() < 40) {
+		currentValue = sonicAverage();
+	}
+	lastValue = currentValue;
+
+	while (true) {
+		left(3);
+		if (lastValue - currentValue > thresh) {
+			break;
+		}
+		lastValue = currentValue;
+		storage = sonicAverage();
+		if (storage < 40) {
+			currentValue = storage;
+		}
+		difference = lastValue - currentValue;
+		debugln("Cur " + currentValue);
+		debugln("Last " + lastValue);
+		debugln("Dif " + difference);
+	}
+	robot.stop();
+	robot.sleep(1000);
+	debugln("headR " + getHeading());
+	double headR = getHeading();
+	// if (headR > 180)
+	// {headR = headR - 360;}
+	double headC;
+
+	if (headL < headR) {
+		headC = Math.round((headR + headL) / 2 - 180);
+	} else {
+		headC = Math.round((headR + headL) / 2);
+	}
+
+	debugln("Head C " + headC);
+	goToHeading(Math.round(headC)); // findCanFine();
+	stop();
+}
 
 	public void findCanFine() {
 		int dist = ultrasonic.getDistance();
