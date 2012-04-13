@@ -76,6 +76,8 @@ public class Robot {
 			NXTMotor arduPower = new NXTMotor(MotorPort.A); //power arduino
 			arduPower.setPower(100);
 			arduPower.forward();
+			sleep(1000);
+			servoDriver.servoCompass.setAngle(0);
 			
 			accel = new AccelHTSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
@@ -1251,7 +1253,7 @@ public void findCanCoarse() {
 	}
 
 	public void liftCompass() {
-		servoDriver.servoCompass.setAngle(180);
+		servoDriver.servoCompass.setAngle(130);
 	}
 	
 	public void dropCompass() {

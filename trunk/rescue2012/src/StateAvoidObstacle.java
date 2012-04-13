@@ -16,6 +16,7 @@ public class StateAvoidObstacle extends State {
 	public void enter(Robot robot) {
 		robot.leftBlack = false;
 		robot.rightBlack = false;
+		robot.liftCompass();
 		debugln("OBENT");
 		robot.stop();
 
