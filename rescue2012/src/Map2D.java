@@ -71,6 +71,22 @@ public class Map2D {
 			}
 		}
 	}
+	
+	public void seed() {
+		for(int i = 0; i < COLS; i++) {
+			for(int j = 0; j < ROWS; j++) {
+				if(i == 0 || i == (COLS-1) || j == 0 || j == (ROWS-1)) {
+					grid[i][j] = WALL;
+				} else {
+					grid[i][j] = 9;
+				}
+			}
+		}
+		grid[3][3] = CAN;
+		grid[1][3] = PLATFORM;
+		grid[2][3] = ROBOT;
+	}
+	
 	public void run() {
 		for(int j = ROWS-1; j >= 0; j--) {
 			for(int i = 0; i < COLS; i++) {
