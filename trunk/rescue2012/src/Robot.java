@@ -1280,6 +1280,15 @@ public void findCanCoarse() {
 		return stepMode;
 	}
 
+	public void setStepMode(int mode) {
+		if (mode != 0) {
+			stepMode = true;
+		}
+		else {
+			stepMode = false;
+		}
+	}
+
 	public void setUseCommands() {
 		// TODO - add boolean variable
 		// useCommands = true;

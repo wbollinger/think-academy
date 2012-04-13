@@ -48,7 +48,10 @@ public class ArduRCJ extends I2CSensor {
 
 		portConnected = port;
 
-		servoCompass = new MServo(portConnected, 1);
+		// Arduino pin  9 == Servo 1
+		//         pin 10 == Servo 2
+		//         pin  8 == Servo 3
+		servoCompass  = new MServo(portConnected, 1);
 		servoClawGrip = new MServo(portConnected, 2);
 		servoClawLift = new MServo(portConnected, 3);
 		servo4 = new MServo(portConnected, 4);
