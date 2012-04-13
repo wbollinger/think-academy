@@ -230,6 +230,9 @@ public class StateCommand extends State {
 			robot.changeState(StateGridRun.getInstance());
 		} else if (command.equalsIgnoreCase("resetGrid")) {
 			robot.resetGrid();
+		} else if (command.equalsIgnoreCase("seedGrid")) {
+			robot.map.seed();
+			robot.printMap();
 		} else if (command.equalsIgnoreCase("map")) {
 			robot.printMap();
 		} else if (command.equalsIgnoreCase("goTo")) {
