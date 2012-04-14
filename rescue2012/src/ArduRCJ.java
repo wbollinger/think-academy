@@ -106,4 +106,22 @@ public class ArduRCJ extends I2CSensor {
 		
 		return (sensors);
 	}
+	
+	public int readLightLeft() {
+		
+		getData((byte)0x64, bufReadResponse, 2);
+		
+		int sensorLeft = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
+		
+		return (sensorLeft);
+	}
+	
+	public int readLightRight() {
+		
+		getData((byte)0x62, bufReadResponse, 2);
+		
+		int sensorRight = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
+		
+		return (sensorRight);
+	}
 }

@@ -261,12 +261,12 @@ public class Robot {
 	}
 
 	public int getLightLeft() {
-		double val = 1024-servoDriver.readAddressValues((byte)0x62)[1];
+		double val = 1024-servoDriver.readLightLeft();
 		return (int)Util.round(val/10.24);
 	}
 
 	public int getLightRight() {
-		double val = 1024-servoDriver.readAddressValues((byte)0x62)[0];
+		double val = 1024-servoDriver.readLightRight();
 		return (int)Util.round(val/10.24);	}
 
 	public static Robot getRobot() {
