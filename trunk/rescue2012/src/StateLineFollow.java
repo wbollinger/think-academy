@@ -48,16 +48,19 @@ public class StateLineFollow extends State {
 		double turn = 0;
 		int powerRight = 0;
 		int powerLeft = 0;
+		
+		int n = 0;
 
 		robot.motRight.forward();
 		robot.motLeft.forward();
 
 		while (!Button.ESCAPE.isDown()) {
 
-			if (robot.accel.getXAccel() > 50) {
+			if ((robot.accel.getXAccel() > 50)&&(n > 5)) {
 				if (robot.getBaseMotorPower() != 100) {
 					robot.setBaseMotorPower(100);
 				}
+			n = 0;
 			} else {
 				if (robot.getBaseMotorPower() != 65) {
 					robot.setBaseMotorPower(65);
@@ -103,6 +106,7 @@ public class StateLineFollow extends State {
 				robot.changeState(StateCommand.getInstance());
 				return;
 			}
+			n++;
 		}
 
 	}
