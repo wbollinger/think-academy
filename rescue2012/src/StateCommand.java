@@ -347,11 +347,13 @@ public class StateCommand extends State {
 			}
 			debugln("wheel diam = " + robot.getWheelDiameter());
 		} else if (command.equalsIgnoreCase("dir")) {
+			if (args.length > 1) {
 			int newdir = parseInt(arg0);
 			if (newdir >= 0) {
 				robot.setDir(newdir);
 			}
-			debugln("dir = " + robot.getDir());
+			}
+			debugln("" + robot.getDir());
 		} else if (command.equalsIgnoreCase("eopd")) {
 			debugln("" + robot.getEOPD());
 		} else if (command.equalsIgnoreCase("thresh")) {
