@@ -1,5 +1,23 @@
+package example.code;
 import lejos.nxt.I2CPort;
 import lejos.nxt.addon.SensorMux;
+
+/*
+ * To use this code:
+ * 
+ * sensorMux = new RCJSensorMux(SensorPort.S3);
+ * sensorMux.configurate();
+ *
+ * return sensorMux.readEOPD(3);
+
+ public void status() {
+ 	if (sensorMux != null) {
+ 		debugln("SMUX: " + sensorMux.getProductID() + " " + sensorMux.getVersion());
+ 		debugln("Type: " + sensorMux.getType());
+ 		debugln("Bat: " + sensorMux.isBatteryLow());
+ 	}
+ }
+ */
 
 public class RCJSensorMux extends SensorMux {
 
