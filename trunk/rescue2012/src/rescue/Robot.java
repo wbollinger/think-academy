@@ -28,7 +28,8 @@ public class Robot {
 	boolean rightBlack = false;
 	boolean avoidedLeft = true;
 	float newNorth = 0.0f;
-
+	double kScale = 78.36;
+	double kError = 5.7;
 	NXTMotor motRight;
 	NXTMotor motLeft;
 	NXTMotor arduPower;
@@ -886,24 +887,37 @@ public class Robot {
 	public double eopdAverage() {
 		int average = 0;
 		int count = 5;
-		double kScale = 1;
-		double kError = 0;
+
 		while (count > 0) {
 			if (useEOPD == false) {
 				// Ultrasonic
 				average = average + ultrasonic.getDistance();
 			} else {
-				average = average + eopd.readRawValue();
+				average = average + (int)getEopdDistance();
 			}
 			count = count - 1;
 		}
 		average = average / 5;
 		
-		double distance = Math.round(kScale/Math.sqrt(average)-kError); 
+		
+		
+		return average;
+	}
+
+	public double getEopdDistance() {
+		
+
+		double distance = Math.round(kScale/Math.sqrt(getEopdVal())-kError); 
 		
 		return distance;
 	}
-
+	public double getEopdVal() {
+		int processedVal = eopd.processedValue();
+		
+		return processedVal;
+	}
+	
+	
 	public int sonicAverage() {
 		int average = 0;
 		int count = 5;
@@ -922,9 +936,14 @@ public class Robot {
 	
 	public void eopdPoll() {
 	
-			debugln("" + eopd.readRawValue());
+			debugln("" + getEopdVal());
 		
 	}
+	public void eopdCal() {
+		
+		debugln("" + getEopdDistance());
+	
+}
 
 	public void findCanCoarse() {
 		setBaseMotorPower(20);

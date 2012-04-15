@@ -1,4 +1,5 @@
 package rescue;
+
 //------------------------------------------------------------------------
 //  robot Command state - accept a text command and call robot methods
 //------------------------------------------------------------------------
@@ -129,8 +130,7 @@ public class StateCommand extends State {
 			if (args.length > 0) {
 				int mode = parseInt(arg0);
 				robot.setStepMode(mode);
-			}
-			else {
+			} else {
 				debugln("" + robot.getStepMode());
 			}
 		} else if (command.equalsIgnoreCase("motorA")) {
@@ -244,6 +244,8 @@ public class StateCommand extends State {
 			robot.changeState(StateFindLine.getInstance());
 		} else if (command.equalsIgnoreCase("eopd")) {
 			robot.eopdPoll();
+		} else if (command.equalsIgnoreCase("eopdcal")) {
+			robot.eopdCal();
 		} else if (command.equalsIgnoreCase("grid")) {
 			robot.changeState(StateGridRun.getInstance());
 		} else if (command.equalsIgnoreCase("resetGrid")) {
@@ -361,10 +363,10 @@ public class StateCommand extends State {
 			debugln("wheel diam = " + robot.getWheelDiameter());
 		} else if (command.equalsIgnoreCase("dir")) {
 			if (args.length > 1) {
-			int newdir = parseInt(arg0);
-			if (newdir >= 0) {
-				robot.setDir(newdir);
-			}
+				int newdir = parseInt(arg0);
+				if (newdir >= 0) {
+					robot.setDir(newdir);
+				}
 			}
 			debugln("" + robot.getDir());
 		} else if (command.equalsIgnoreCase("eopd")) {
