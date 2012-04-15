@@ -263,30 +263,26 @@ public class StateCommand extends State {
 			if (args.length > 0) {
 				int degrees = parseInt(arg0);
 				robot.servoDriver.servoCompass.setAngle(degrees);
-				return;
-			} else {
-				debugln("" + robot.servoDriver.servoCompass.getAngle());
-				return;
 			}
+			debugln("" + robot.servoDriver.servoCompass.getAngle());
 		} else if (command.equalsIgnoreCase("gripClaw")) {
 			if (args.length > 0) {
 				int degrees = parseInt(arg0);
 				robot.servoDriver.servoClawGrip.setAngle(degrees);
-				return;
-			} else {
-				debugln("" + robot.servoDriver.servoClawGrip.getAngle());
-				return;
 			}
+			debugln("" + robot.servoDriver.servoClawGrip.getAngle());
 		} else if (command.equalsIgnoreCase("liftClaw")) {
 			if (args.length > 0) {
 				int degrees = parseInt(arg0);
 				robot.servoDriver.servoClawLift.setAngle(degrees);
-				return;
-			} else {
-				debugln("" + robot.servoDriver.servoClawLift.getAngle());
-				return;
 			}
-
+			debugln("" + robot.servoDriver.servoClawLift.getAngle());
+		} else if (command.equalsIgnoreCase("servo1")) {
+			if (args.length > 0) {
+				int degrees = parseInt(arg0);
+				robot.servoDriver.servo1.setAngle(degrees);
+			}
+			debugln("" + robot.servoDriver.servo1.getAngle());
 		} else if (command.equalsIgnoreCase("compassUp")) {
 			robot.liftCompass();
 		} else if (command.equalsIgnoreCase("compassDown")) {

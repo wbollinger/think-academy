@@ -76,8 +76,6 @@ public class Robot {
 			angleError = (360.0 / 305.0);
 			servoDriver = new ArduRCJ(SensorPort.S1);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			arduPower.setPower(100);
-			arduPower.forward();
 			sleep(1000);
 			servoDriver.servoCompass.setAngle(0);
 
@@ -96,9 +94,6 @@ public class Robot {
 			// eopdSensor = new EOPD(SensorPort.S3, true /*longRange*/);
 			servoDriver = new ArduRCJ(SensorPort.S4);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			arduPower.setPower(100);
-			arduPower.forward();
-
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
@@ -160,6 +155,11 @@ public class Robot {
 		btc = null;
 		inStream = null;
 		outStream = null;
+		
+		// Power up Roboduino
+		setArduinoPoweredUp(true);
+		sleep(2000);
+		
 	}
 
 	/**
@@ -178,6 +178,7 @@ public class Robot {
 		if (arduPower != null) {
 			if (powerOn == true) {
 				arduPower.setPower(100);
+				arduPower.forward();
 			} else {
 				arduPower.setPower(0);
 				arduPower.flt();
