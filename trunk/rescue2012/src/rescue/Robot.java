@@ -1,4 +1,5 @@
 package rescue;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -156,11 +157,11 @@ public class Robot {
 		btc = null;
 		inStream = null;
 		outStream = null;
-		
+
 		// Power up Roboduino
 		setArduinoPoweredUp(true);
 		sleep(2000);
-		
+
 	}
 
 	/**
@@ -548,7 +549,8 @@ public class Robot {
 			isRegulated = true;
 		}
 		int angle;
-		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI) * 360);
+		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI)
+				* 360);
 
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -574,7 +576,8 @@ public class Robot {
 			isRegulated = true;
 		}
 		int angle;
-		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI) * 360);
+		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI)
+				* 360);
 
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -647,7 +650,8 @@ public class Robot {
 			isRegulated = true;
 		}
 		int angle;
-		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI) * 360);
+		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI)
+				* 360);
 
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -893,31 +897,28 @@ public class Robot {
 				// Ultrasonic
 				average = average + ultrasonic.getDistance();
 			} else {
-				average = average + (int)getEopdDistance();
+				average = average + (int) getEopdDistance();
 			}
 			count = count - 1;
 		}
 		average = average / 5;
-		
-		
-		
+
 		return average;
 	}
 
 	public double getEopdDistance() {
-		
 
-		double distance = Math.round(kScale/Math.sqrt(getEopdVal())-kError); 
-		
+		double distance = Math.round(kScale / Math.sqrt((double)eopd.processedValue()) - kError);
+
 		return distance;
 	}
+
 	public double getEopdVal() {
 		int processedVal = eopd.processedValue();
-		
+
 		return processedVal;
 	}
-	
-	
+
 	public int sonicAverage() {
 		int average = 0;
 		int count = 5;
@@ -933,17 +934,26 @@ public class Robot {
 		average = average / 5;
 		return average;
 	}
-	
+
 	public void eopdPoll() {
-	
-			debugln("" + getEopdVal());
-		
+
+		debugln("" + eopd.processedValue());
+
 	}
-	public void eopdCal() {
+
+	public void eopdContPoll() {
 		
+		while(true){
 		debugln("" + getEopdDistance());
-	
+		sleep(20);
+		}
 }
+
+	public void eopdCal() {
+
+		debugln("" + getEopdDistance());
+
+	}
 
 	public void findCanCoarse() {
 		setBaseMotorPower(20);
@@ -1386,7 +1396,8 @@ public class Robot {
 		debugln(" dir = " + robot.getDir());
 		debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
 		debugln("dist = " + robot.ultrasonic.getDistance());
-		debugln("comp = " + robot.getHeading() + " (North=" + robot.newNorth + ")");
+		debugln("comp = " + robot.getHeading() + " (North=" + robot.newNorth
+				+ ")");
 
 	}
 }
