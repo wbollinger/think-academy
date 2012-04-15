@@ -883,6 +883,27 @@ public class Robot {
 		debugln("stop findline");
 	}
 
+	public double eopdAverage() {
+		int average = 0;
+		int count = 5;
+		double kScale = 1;
+		double kError = 0;
+		while (count > 0) {
+			if (useEOPD == false) {
+				// Ultrasonic
+				average = average + ultrasonic.getDistance();
+			} else {
+				average = average + eopd.readRawValue();
+			}
+			count = count - 1;
+		}
+		average = average / 5;
+		
+		double distance = Math.round(kScale/Math.sqrt(average)-kError); 
+		
+		return distance;
+	}
+
 	public int sonicAverage() {
 		int average = 0;
 		int count = 5;
@@ -898,11 +919,11 @@ public class Robot {
 		average = average / 5;
 		return average;
 	}
-
+	
 	public void eopdPoll() {
-		while (true) {
+	
 			debugln("" + eopd.readRawValue());
-		}
+		
 	}
 
 	public void findCanCoarse() {
