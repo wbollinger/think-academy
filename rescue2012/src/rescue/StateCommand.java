@@ -246,6 +246,9 @@ public class StateCommand extends State {
 			robot.eopdPoll();
 		} else if (command.equalsIgnoreCase("eopdcal")) {
 			robot.eopdCal();
+
+		} else if (command.equalsIgnoreCase("eopdcont")) {
+			robot.eopdContPoll();
 		} else if (command.equalsIgnoreCase("grid")) {
 			robot.changeState(StateGridRun.getInstance());
 		} else if (command.equalsIgnoreCase("resetGrid")) {
