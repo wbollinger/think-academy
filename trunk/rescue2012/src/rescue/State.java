@@ -1,3 +1,4 @@
+package rescue;
 /**
  * abstract base class to define an interface for a state
  */

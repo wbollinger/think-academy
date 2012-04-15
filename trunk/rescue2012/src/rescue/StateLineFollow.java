@@ -1,3 +1,4 @@
+package rescue;
 import lejos.nxt.*;
 
 public class StateLineFollow extends State {

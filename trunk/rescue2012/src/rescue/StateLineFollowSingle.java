@@ -1,3 +1,4 @@
+package rescue;
 public class StateLineFollowSingle extends State{
 
 	static private StateLineFollowSingle instance = new StateLineFollowSingle();

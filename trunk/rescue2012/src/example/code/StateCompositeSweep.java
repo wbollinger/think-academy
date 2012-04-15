@@ -1,3 +1,9 @@
+package example.code;
+
+import rescue.Robot;
+import rescue.State;
+import rescue.StateExit;
+
 //------------------------------------------------------------------------
 //  robot starting state - decides what to do when robot is turned on
 //------------------------------------------------------------------------
@@ -31,12 +37,12 @@ public class StateCompositeSweep extends State {
 		int n = 0;
 		
 		robot.resetAngle();
-		robot.motLeft.forward();
-		robot.motRight.backward();
+		//robot.motLeft.forward();
+		//robot.motRight.backward();
 		
 		while(Math.abs(robot.getAngle()) < 360.0) {
 			//debug(""+robot.getAngle());
-			dist = robot.ultrasonic.getDistance();
+			dist = 0; //robot.ultrasonic.getDistance();
 			angle = robot.getAngle();
 			x = (int) (dist*Math.cos(angle*(Math.PI/180.0)));
 			y = (int) (dist*Math.sin(angle*(Math.PI/180.0)));
