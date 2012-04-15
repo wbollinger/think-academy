@@ -656,13 +656,13 @@ public class Robot {
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
 
 			if (leftBlack != true) {
-				if (lightLeft.getLightValue() < 45) {
+				if (getLightLeft() < 50) {
 					leftBlack = true;
 				}
 			}
 
 			if (rightBlack != true) {
-				if (lightRight.getLightValue() < 45) {
+				if (getLightRight() < 50) {
 					rightBlack = true;
 				}
 			}
@@ -784,7 +784,7 @@ public class Robot {
 		motRegRight.rotate(angle, true);
 		motRegLeft.rotate(-angle, true);
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
-			if (lightLeft.getLightValue() < 45) {
+			if (getLightLeft() < 50) {
 				leftBlack = true;
 				stop();
 				return true;
@@ -838,7 +838,7 @@ public class Robot {
 			// leftBlack = true;
 			// }
 			// }
-			if (lightRight.getLightValue() < 45) {
+			if (getLightRight() < 50) {
 				rightBlack = true;
 				stop();
 				return true;
@@ -1326,7 +1326,7 @@ public class Robot {
 	}
 
 	public void liftCompass() {
-		servoDriver.servoCompass.setAngle(130);
+		servoDriver.servoCompass.setAngle(97);
 	}
 
 	public void dropCompass() {
