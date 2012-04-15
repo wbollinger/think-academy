@@ -1,3 +1,4 @@
+package rescue;
 /**
  * This corrects bugs in Lejos floor and round methods. Can remove this and
  * return to Math. versions when we move the next Lejos release after 0.9.1

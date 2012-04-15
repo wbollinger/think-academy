@@ -1,3 +1,4 @@
+package rescue;
 public class Obstacle {
 	private double xLength;
 	private double yLength;

@@ -1,3 +1,4 @@
+package rescue;
 public class StateFindPlatform extends State {
 
 	private static StateFindPlatform instance = new StateFindPlatform();

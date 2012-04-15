@@ -1,3 +1,4 @@
+package rescue;
 public class StateFindCan extends State {
 
 	private static StateFindCan instance = new StateFindCan();

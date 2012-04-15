@@ -1,3 +1,8 @@
+package example.code;
+import rescue.Robot;
+import rescue.State;
+import rescue.StateExit;
+
 
 public class StateTurnTest extends State{
 	static private StateTurnTest instance = new StateTurnTest();

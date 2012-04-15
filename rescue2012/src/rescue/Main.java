@@ -1,3 +1,4 @@
+package rescue;
 
 public class Main {
 

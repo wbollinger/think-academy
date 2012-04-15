@@ -1,3 +1,4 @@
+package rescue;
 import lejos.nxt.*;
 import lejos.nxt.addon.MServo;
 

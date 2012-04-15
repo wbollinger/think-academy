@@ -1,3 +1,4 @@
+package rescue;
 import lejos.nxt.Sound;
 import lejos.nxt.comm.RConsole;
 
