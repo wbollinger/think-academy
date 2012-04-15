@@ -23,10 +23,10 @@ public class ArduRCJ extends I2CSensor {
 	/**
 	 * Servos at locations 1 through 4
 	 */
-	public MServo servoCompass;
+	public MServo servo1;
 	public MServo servoClawGrip;
 	public MServo servoClawLift;
-	public MServo servo4;
+	public MServo servoCompass;
 
 	private MServo[] arrServo; // ServoController manages up to 4 RC Servos
 
@@ -52,16 +52,16 @@ public class ArduRCJ extends I2CSensor {
 		// Arduino pin  9 == Servo 1
 		//         pin 10 == Servo 2
 		//         pin  8 == Servo 3
-		servoCompass  = new MServo(portConnected, 1);
+		servo1  = new MServo(portConnected, 1);
 		servoClawGrip = new MServo(portConnected, 2);
 		servoClawLift = new MServo(portConnected, 3);
-		servo4 = new MServo(portConnected, 4);
+		servoCompass = new MServo(portConnected, 4);
 
 		arrServo = new MServo[4];
-		arrServo[0] = servoCompass;
+		arrServo[0] = servo1;
 		arrServo[1] = servoClawGrip;
 		arrServo[2] = servoClawLift;
-		arrServo[3] = servo4;
+		arrServo[3] = servoCompass;
 		
 		bufReadResponse = new byte[6];
 		sensors = new int[3];
