@@ -132,6 +132,8 @@ public class StateCommand extends State {
 			else {
 				debugln("" + robot.getStepMode());
 			}
+		} else if (command.equalsIgnoreCase("motorA")) {
+			//if (robot.mo)
 		} else if (command.equalsIgnoreCase("stop")) {
 			robot.stop();
 		} else if (command.equalsIgnoreCase("right")) {
@@ -307,6 +309,13 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("lightRight")) {
 			int val = robot.getLightRight();
 			debugln("" + val);
+		} else if (command.equalsIgnoreCase("lightLoop")) {
+			while (!Button.ENTER.isDown()) {
+				int val = robot.getLightLeft();
+				int val2 = robot.getLightRight();
+				int val3 = robot.getLightThird();
+				debugln("" + val + " " + val2 + " " + val3);
+			}
 		} else if (command.equalsIgnoreCase("readLightArduino")) {
 			int[] val = robot.servoDriver
 					.readAddressValues((byte) parseInt(arg0));
