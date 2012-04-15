@@ -58,6 +58,7 @@ void Diagnostics_Handler(void);
 
 // Functions in NXTServoOutput
 void Init_ServoOutput(void);
+void pulse_servo_0(unsigned int u16PulseWidth);
 
 //---------------------------------------------------------------------
 // Local Functions
