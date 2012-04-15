@@ -247,6 +247,14 @@ void Init_NXTIIC(void)
 		m_NXTInterfaceData.Fields.u8ServoSpeed[i] = DFLT_SERVO_SPEED;
 	}
 
+	// Set initial servo positions for servos that jitter without a pulse
+	// Arduino pin  9 == Servo 0 --> Compass
+	//         pin 10 == Servo 1 -->
+	//         pin  8 == Servo 2 -->
+	// RCJ: Override compass lift servo to prevent jitter
+	//m_u16ServoPosition[0] = 1100U;
+	//m_NXTInterfaceData.Fields.u8ServoSpeed[0] = DFLT_SERVO_SPEED / 2;
+
 	// Initial state of configuration flags
 	m_NXTInterfaceData.Fields.u8Configuration = g_ConfigurationFlags.u8Value;
 
