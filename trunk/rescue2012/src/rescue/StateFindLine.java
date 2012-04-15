@@ -18,7 +18,7 @@ public class StateFindLine extends State {
 		debugln("FindLine enter");
 		robot.stop();
 		robot.sleep(70);
-		robot.forward(6);
+		//robot.forward(6);
 
 	}
 

@@ -6,7 +6,7 @@ public class StateLineFollow extends State {
 	private static StateLineFollow instance = new StateLineFollow();
 
 	// Kc = 4 Pc = .25 dT = .0028
-	public double Kp = 10.00; // 10.00
+	public double Kp = 8.00; // 10.00
 	public double Ki = 0.70; // 0.70
 	public double Kd = 6.00; // 6.00
 
@@ -55,17 +55,19 @@ public class StateLineFollow extends State {
 		robot.motLeft.forward();
 
 		while (!Button.ESCAPE.isDown()) {
-
-			if ((robot.accel.getXAccel() > 50) && (n > 5)) {
-				if (robot.getBaseMotorPower() != 100) {
-					robot.setBaseMotorPower(100);
+			if(n < 5) {
+				if (robot.accel.getXAccel() > 50) {
+					if (robot.getBaseMotorPower() != 90) {
+						robot.setBaseMotorPower(90);
+					}
+				} else {
+					if (robot.getBaseMotorPower() != 40) {
+						robot.setBaseMotorPower(40);
+					}
 				}
 				n = 0;
-			} else {
-				if (robot.getBaseMotorPower() != 65) {
-					robot.setBaseMotorPower(65);
-				}
 			}
+			
 
 			error = calcError(robot.getLightLeft(), robot.getLightRight());
 			if (error == 0) {
@@ -93,15 +95,15 @@ public class StateLineFollow extends State {
 			lastError = error;
 
 			if (robot.ultrasonic.getDistance() < 10) {
-				robot.changeState(StateCommand.getInstance());
+				robot.changeState(StateAvoidObstacle.getInstance());
 				return;
 			}
-			// if ((robot.getLightLeft() > 60)||(robot.getLightRight() > 60)) {
-			// Sound.playTone(440, 100);
-			// robot.stop();
-			// robot.changeState(StateCommand.getInstance());
-			// return;
-			// }
+			 if ((robot.getLightLeft() > 65)||(robot.getLightRight() > 65)) {
+			 Sound.playTone(440, 100);
+			 robot.stop();
+			 robot.changeState(StateCommand.getInstance());
+			 return;
+			 }
 			if (Button.ENTER.isDown()) {
 				robot.changeState(StateCommand.getInstance());
 				return;

@@ -25,7 +25,7 @@ public class StateAvoidObstacle extends State {
 
 	public void execute(Robot robot) {
 		// Some code to find obstacle size?
-		Obstacle obstacle = new Obstacle(20 , 10);
+		Obstacle obstacle = new Obstacle(30 , 10);
 
 		double ff;
 		ff = 3 + robot.robotDiameter / 2;
