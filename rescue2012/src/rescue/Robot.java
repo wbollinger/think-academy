@@ -162,15 +162,27 @@ public class Robot {
 		outStream = null;
 	}
 
-	public boolean getArduPower() {
+	/**
+	 * @return true if Arduino is On (powered up), false if it's Off
+	 */
+	public boolean getArduinoPoweredUp() {
 		if (arduPower != null) {
-			return true;
+			if (arduPower.getPower() == 100) {
+				return true;
+			}
 		}
 		return false;
 	}
 
-	public void setArduPower(boolean flag) {
-
+	public void setArduinoPoweredUp(boolean powerOn) {
+		if (arduPower != null) {
+			if (powerOn == true) {
+				arduPower.setPower(100);
+			} else {
+				arduPower.setPower(0);
+				arduPower.flt();
+			}
+		}
 	}
 
 	public int getX() {

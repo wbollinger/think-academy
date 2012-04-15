@@ -134,7 +134,14 @@ public class StateCommand extends State {
 				debugln("" + robot.getStepMode());
 			}
 		} else if (command.equalsIgnoreCase("motorA")) {
-			//if (robot.mo)
+			if (args.length > 0) {
+				if (arg0.equalsIgnoreCase("off")) {
+					robot.setArduinoPoweredUp(false);
+				} else {
+					robot.setArduinoPoweredUp(true);
+				}
+			}
+			debugln("" + robot.getArduinoPoweredUp());
 		} else if (command.equalsIgnoreCase("stop")) {
 			robot.stop();
 		} else if (command.equalsIgnoreCase("right")) {
