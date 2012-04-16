@@ -28,7 +28,11 @@ public class Robot {
 	boolean leftBlack = false;
 	boolean rightBlack = false;
 	boolean avoidedLeft = true;
+	boolean isOnRamp = false;
+	int threshSilver = 68;
+	int threshBlack = 50;
 	float newNorth = 0.0f;
+	double doorHeading = 0.0; //measured heading of room entrance
 	double kScale = 78.36;
 	double kError = 5.7;
 	NXTMotor motRight;
@@ -611,25 +615,14 @@ public class Robot {
 		correctRight(90);
 		sleep(1000);
 
-		int n = 5;
-		int rightDist = 0;
-		int aveRightDist = 0;
-		for (int i = 0; i < n; i++) {
-			rightDist = rightDist + ultrasonic.getDistance();
-			debugln("" + ultrasonic.getDistance());
-		}
-		aveRightDist = rightDist / n;
+		int aveRightDist;
+		aveRightDist = sonicAverage();
 
 		correctLeft(180);
 		sleep(500);
 
-		int leftDist = 0;
-		int aveLeftDist = 0;
-		for (int i = 0; i < n; i++) {
-			leftDist = leftDist + ultrasonic.getDistance();
-			debugln("" + ultrasonic.getDistance());
-		}
-		aveLeftDist = leftDist / n;
+		int aveLeftDist;
+		aveLeftDist = sonicAverage();
 		debugln("right: " + aveRightDist + ". Left: " + aveLeftDist);
 		if (aveLeftDist > aveRightDist) {
 			return true;
@@ -660,13 +653,13 @@ public class Robot {
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
 
 			if (leftBlack != true) {
-				if (getLightLeft() < 50) {
+				if (getLightLeft() < threshBlack) {
 					leftBlack = true;
 				}
 			}
 
 			if (rightBlack != true) {
-				if (getLightRight() < 50) {
+				if (getLightRight() < threshBlack) {
 					rightBlack = true;
 				}
 			}
@@ -788,7 +781,7 @@ public class Robot {
 		motRegRight.rotate(angle, true);
 		motRegLeft.rotate(-angle, true);
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
-			if (getLightLeft() < 50) {
+			if (getLightLeft() < threshBlack) {
 				leftBlack = true;
 				stop();
 				return true;
@@ -842,7 +835,7 @@ public class Robot {
 			// leftBlack = true;
 			// }
 			// }
-			if (getLightRight() < 50) {
+			if (getLightRight() < threshBlack) {
 				rightBlack = true;
 				stop();
 				return true;
@@ -1152,6 +1145,13 @@ public class Robot {
 			map.grid[nextX][nextY] = Map2D.CAN;
 			return false;
 		}
+	}
+	
+	public boolean checkForPlatform() {
+		if(sonicAverage() < 37) {
+			return true;
+		}
+		return false;
 	}
 
 	public int goLeft() {
