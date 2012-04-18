@@ -9,6 +9,8 @@ public class StateGridRunNew extends State {
 	static private StateGridRunNew instance = new StateGridRunNew();
 
 	int objectFound = 0;
+	boolean canFound = false;
+	boolean platformFound = false;
 
 	int up;
 	int upRight;
@@ -49,13 +51,22 @@ public class StateGridRunNew extends State {
 
 			robot.goUpRight();
 			robot.faceDir(270);
-			robot.isCanInSquare();
+			if(robot.isCanInSquare()&&(!canFound)) {
+				canFound = true;
+			}
+			
 			robot.faceDir(180);
-			robot.isCanInSquare();
+			if(robot.isCanInSquare()&&(!canFound)) {
+				canFound = true;
+			}
 			robot.faceDir(135);
-			robot.checkForPlatform();
+			if(robot.checkForPlatform()&&(!platformFound)) {
+				platformFound = true;
+			}
 			robot.faceDir(90);
-			robot.isCanInSquare();
+			if(robot.isCanInSquare()&&(!canFound)) {
+				canFound = true;
+			}
 			robot.goRight();
 			
 			up = robot.map.grid[robot.getX()][robot.getY() + 1];
@@ -68,15 +79,25 @@ public class StateGridRunNew extends State {
 			upLeft = robot.map.grid[robot.getX() - 1][robot.getY() + 1];
 			
 			robot.faceDir(270);
-			robot.isCanInSquare();
+			if(robot.isCanInSquare()&&(!canFound)) {
+				canFound = true;
+			}
 			robot.faceDir(315);
-			robot.checkForPlatform();
+			if(robot.checkForPlatform()&&(!platformFound)) {
+				platformFound = true;
+			}
 			robot.faceDir(0);
-			robot.isCanInSquare();
+			if(robot.isCanInSquare()&&(!canFound)) {
+				canFound = true;
+			}
 			robot.faceDir(45);
-			robot.checkForPlatform();
+			if(robot.checkForPlatform()&&(!platformFound)) {
+				platformFound = true;
+			}
 			robot.faceDir(90);
-			robot.isCanInSquare();
+			if(robot.isCanInSquare()&&(!canFound)) {
+				canFound = true;
+			}
 
 			// debug(robot.getX() + "	" + robot.getY()+"\n");
 			robot.printMap();
