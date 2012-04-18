@@ -32,7 +32,7 @@ public class Robot {
 	int threshSilver = 68;
 	int threshBlack = 50;
 	float newNorth = 0.0f;
-	double doorHeading = 0.0; //measured heading of room entrance
+	double doorHeading = 0.0; // measured heading of room entrance
 	double kScale = 78.36;
 	double kError = 5.7;
 	NXTMotor motRight;
@@ -100,6 +100,9 @@ public class Robot {
 			// eopdSensor = new EOPD(SensorPort.S3, true /*longRange*/);
 			servoDriver = new ArduRCJ(SensorPort.S4);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
+			eopd = new EOPD(SensorPort.S1, true /* longRange */);
+			ultrasonic = new UltrasonicSensor(SensorPort.S2);
+			ultrasonic.continuous();
 		} else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
@@ -886,12 +889,7 @@ public class Robot {
 		int count = 5;
 
 		while (count > 0) {
-			if (useEOPD == false) {
-				// Ultrasonic
-				average = average + ultrasonic.getDistance();
-			} else {
-				average = average + (int) getEopdDistance();
-			}
+			average = average + (int) getEopdDistance();
 			count = count - 1;
 		}
 		average = average / 5;
@@ -901,7 +899,8 @@ public class Robot {
 
 	public double getEopdDistance() {
 
-		double distance = Math.round(kScale / Math.sqrt((double)eopd.processedValue()) - kError);
+		double distance = Math.round(kScale
+				/ Math.sqrt((double) eopd.processedValue()) - kError);
 
 		return distance;
 	}
@@ -916,12 +915,9 @@ public class Robot {
 		int average = 0;
 		int count = 5;
 		while (count > 0) {
-			if (useEOPD == false) {
-				// Ultrasonic
-				average = average + ultrasonic.getDistance();
-			} else {
-				average = average + eopd.readRawValue();
-			}
+
+			average = average + ultrasonic.getDistance();
+
 			count = count - 1;
 		}
 		average = average / 5;
@@ -935,12 +931,12 @@ public class Robot {
 	}
 
 	public void eopdContPoll() {
-		
-		while(true){
-		debugln("" + getEopdDistance());
-		sleep(20);
+
+		while (true) {
+			debugln("" + getEopdDistance());
+			sleep(20);
 		}
-}
+	}
 
 	public void eopdCal() {
 
@@ -949,6 +945,89 @@ public class Robot {
 	}
 
 	public void findCanCoarse() {
+		setBaseMotorPower(35);
+		motRegRight.setSpeed(500);
+		motRegLeft.setSpeed(500);
+		robot.correctLeft(75);
+		int storage;
+
+		int currentValue = 40;
+		if ((int) eopdAverage() < 40 && (int) eopdAverage() > 0) {
+			currentValue = (int) eopdAverage();
+		}
+		int lastValue = currentValue;
+		int difference = 0;
+
+		motLeft.forward();
+		motRight.backward();
+
+		while (true) {
+
+			if (lastValue - currentValue > thresh) {
+				break;
+			}
+			lastValue = currentValue;
+			storage = (int) eopdAverage();
+			if (storage < 40 && storage > 0) {
+				currentValue = storage;
+			}
+			difference = lastValue - currentValue;
+			debugln("Cur " + currentValue);
+			debugln("Last " + lastValue);
+			debugln("Dif " + difference);
+			sleep(10);
+			// Delete this sweep when done
+		}
+		robot.stop();
+		robot.sleep(1000);
+		debug("Head L " + getHeading());
+		double headL = getHeading();
+		// if (headL > 180)
+		// {headL = headL - 360;}
+		correctRight(90);
+		currentValue = 40;
+		if ((int) eopdAverage() < 40 && (int) eopdAverage() > 0) {
+			currentValue = (int) eopdAverage();
+		}
+		lastValue = currentValue;
+
+		motLeft.backward();
+		motRight.forward();
+		while (true) {
+
+			if (lastValue - currentValue > thresh) {
+				break;
+			}
+			lastValue = currentValue;
+			storage = (int) eopdAverage();
+			if (storage < 40 && storage > 0) {
+				currentValue = storage;
+			}
+			difference = lastValue - currentValue;
+			debugln("Cur " + currentValue);
+			debugln("Last " + lastValue);
+			debugln("Dif " + difference);
+		}
+		robot.stop();
+		robot.sleep(1000);
+		debugln("headR " + getHeading());
+		double headR = getHeading();
+		// if (headR > 180)
+		// {headR = headR - 360;}
+		double headC;
+
+		if (headL < headR) {
+			headC = Math.round((headR + headL) / 2 - 180);
+		} else {
+			headC = Math.round((headR + headL) / 2);
+		}
+
+		debugln("Head C " + headC);
+		goToHeading(Math.round(headC)); // findCanFine();
+		stop();
+	}
+
+	public void findCanCoarseSonic() {
 		setBaseMotorPower(20);
 		motRegRight.setSpeed(500);
 		motRegLeft.setSpeed(500);
@@ -956,7 +1035,7 @@ public class Robot {
 		int storage;
 
 		int currentValue = 40;
-		if (sonicAverage() < 40) {
+		if ((sonicAverage() < 40)) {
 			currentValue = sonicAverage();
 		}
 		int lastValue = currentValue;
@@ -1022,6 +1101,87 @@ public class Robot {
 		debugln("Head C " + headC);
 		goToHeading(Math.round(headC)); // findCanFine();
 		stop();
+	}
+	
+	public boolean isCanInSquare() {
+		boolean foundCan = false;
+		int degrees=0;
+		setBaseMotorPower(20);
+		motRegRight.setSpeed(500);
+		motRegLeft.setSpeed(500);
+		robot.correctLeft(45);
+		int storage;
+
+		int currentValue = 40;
+		if ((sonicAverage() < 40)) {
+			currentValue = sonicAverage();
+		}
+		int lastValue = currentValue;
+		int difference = 0;
+
+		while (degrees < 90) {
+			right(3);
+			if (lastValue - currentValue > thresh) {
+				foundCan= true;
+			}
+			lastValue = currentValue;
+			storage = sonicAverage();
+			if (storage < 40) {
+				currentValue = storage;
+			}
+			difference = lastValue - currentValue;
+			debugln("Cur " + currentValue);
+			debugln("Last " + lastValue);
+			debugln("Dif " + difference);
+			degrees = degrees +3;
+		}
+		robot.stop();
+		debugln("" + foundCan);
+		return foundCan;
+		
+//		debug("Head L " + getHeading());
+//		double headL = getHeading();
+//		// if (headL > 180)
+//		// {headL = headL - 360;}
+//		correctRight(90);
+//		currentValue = 40;
+//		if (sonicAverage() < 40) {
+//			currentValue = sonicAverage();
+//		}
+//		lastValue = currentValue;
+//
+//		while (true) {
+//			left(3);
+//			if (lastValue - currentValue > thresh) {
+//				break;
+//			}
+//			lastValue = currentValue;
+//			storage = sonicAverage();
+//			if (storage < 40) {
+//				currentValue = storage;
+//			}
+//			difference = lastValue - currentValue;
+//			debugln("Cur " + currentValue);
+//			debugln("Last " + lastValue);
+//			debugln("Dif " + difference);
+//		}
+//		robot.stop();
+//		robot.sleep(1000);
+//		debugln("headR " + getHeading());
+//		double headR = getHeading();
+//		// if (headR > 180)
+//		// {headR = headR - 360;}
+//		double headC;
+//
+//		if (headL < headR) {
+//			headC = Math.round((headR + headL) / 2 - 180);
+//		} else {
+//			headC = Math.round((headR + headL) / 2);
+//		}
+//
+//		debugln("Head C " + headC);
+//		goToHeading(Math.round(headC)); // findCanFine();
+//		stop();
 	}
 
 	public void findCanFine() {
@@ -1146,9 +1306,9 @@ public class Robot {
 			return false;
 		}
 	}
-	
+
 	public boolean checkForPlatform() {
-		if(sonicAverage() < 37) {
+		if (sonicAverage() < 37) {
 			return true;
 		}
 		return false;

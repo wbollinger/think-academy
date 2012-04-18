@@ -47,9 +47,36 @@ public class StateGridRunNew extends State {
 			// + " " + downLeft + " " + left + " " + upLeft);
 			
 
-			robot.goTo(2,2);
+			robot.goUpRight();
+			robot.faceDir(270);
+			robot.isCanInSquare();
+			robot.faceDir(180);
+			robot.isCanInSquare();
 			robot.faceDir(135);
 			robot.checkForPlatform();
+			robot.faceDir(90);
+			robot.isCanInSquare();
+			robot.goRight();
+			
+			up = robot.map.grid[robot.getX()][robot.getY() + 1];
+			upRight = robot.map.grid[robot.getX() + 1][robot.getY() + 1];
+			right = robot.map.grid[robot.getX() + 1][robot.getY()];
+			downRight = robot.map.grid[robot.getX() + 1][robot.getY() - 1];
+			down = robot.map.grid[robot.getX()][robot.getY() - 1];
+			downLeft = robot.map.grid[robot.getX() - 1][robot.getY() - 1];
+			left = robot.map.grid[robot.getX() - 1][robot.getY()];
+			upLeft = robot.map.grid[robot.getX() - 1][robot.getY() + 1];
+			
+			robot.faceDir(270);
+			robot.isCanInSquare();
+			robot.faceDir(315);
+			robot.checkForPlatform();
+			robot.faceDir(0);
+			robot.isCanInSquare();
+			robot.faceDir(45);
+			robot.checkForPlatform();
+			robot.faceDir(90);
+			robot.isCanInSquare();
 
 			// debug(robot.getX() + "	" + robot.getY()+"\n");
 			robot.printMap();
