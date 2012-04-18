@@ -137,7 +137,9 @@ public class StateLineFollow extends State {
 				Sound.playTone(440, 100);
 				robot.stop();
 				robot.backward(2);
-				robot.liftCompass();
+				robot.goToHeading(robot.doorHeading);
+				robot.dropCompass();
+				robot.forward(30);
 				robot.changeState(StateCommand.getInstance());
 				return;
 			}

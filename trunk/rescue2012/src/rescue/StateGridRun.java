@@ -28,7 +28,7 @@ public class StateGridRun extends State {
 	}
 
 	public void enter(Robot robot) {
-		robot.setNewNorth();
+		
 	}
 
 	public void execute(Robot robot) {
