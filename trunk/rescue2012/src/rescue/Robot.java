@@ -444,7 +444,7 @@ public class Robot {
 				left(expectedVal - val);
 			}
 
-			sleep(100);
+			sleep(500);
 			val = getHeading();
 			// debugln("" + expectedVal);
 		}
@@ -488,7 +488,7 @@ public class Robot {
 				left(expectedVal - val);
 			}
 
-			sleep(100);
+			sleep(500);
 			val = getHeading();
 			// debugln("" + expectedVal);
 		}
