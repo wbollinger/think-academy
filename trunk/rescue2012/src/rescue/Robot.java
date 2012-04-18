@@ -1114,7 +1114,7 @@ public class Robot {
 		int difference = 0;
 
 		while (degrees < 90) {
-			right(3);
+			right(8);
 			if (lastValue - currentValue > thresh) {
 				foundCan= true;
 			}
@@ -1127,7 +1127,7 @@ public class Robot {
 			debugln("Cur " + currentValue);
 			debugln("Last " + lastValue);
 			debugln("Dif " + difference);
-			degrees = degrees +3;
+			degrees = degrees + 8;
 		}
 		robot.stop();
 		debugln("" + foundCan);
