@@ -262,8 +262,12 @@ public class StateCommand extends State {
 			robot.goTo(Integer.parseInt(arg0), Integer.parseInt(arg1));
 		} else if (command.equalsIgnoreCase("findCan")) {
 			robot.changeState(StateFindCan.getInstance());
-		} else if (command.equalsIgnoreCase("locate")) {
+		} else if (command.equalsIgnoreCase("locF")) {
 			robot.findCanCoarse();
+		} else if (command.equalsIgnoreCase("ICIS")) {
+			robot.isCanInSquare();
+		} else if (command.equalsIgnoreCase("locC")) {
+			robot.findCanCoarseSonic();
 		} else if (command.equalsIgnoreCase("liftCompass")) {
 			if (args.length > 0) {
 				int degrees = parseInt(arg0);
