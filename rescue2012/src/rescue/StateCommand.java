@@ -250,7 +250,7 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("eopdcont")) {
 			robot.eopdContPoll();
 		} else if (command.equalsIgnoreCase("grid")) {
-			robot.changeState(StateGridRun.getInstance());
+			robot.changeState(StateGridRunNew.getInstance());
 		} else if (command.equalsIgnoreCase("resetGrid")) {
 			robot.resetGrid();
 		} else if (command.equalsIgnoreCase("seedGrid")) {
@@ -339,12 +339,14 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("comp")) {
 			float deg = robot.getHeading();
 			debugln("" + deg);
-		} else if (command.equalsIgnoreCase("compdeg")) {
-			float deg = robot.getDegrees();
+		} else if (command.equalsIgnoreCase("compOffset")) {
+			float deg = robot.getCompOffset();
 			debugln("" + deg);
-		} else if (command.equalsIgnoreCase("newNorth")) {
-			robot.setNewNorth();
-			debugln("New north set to " + robot.newNorth);
+		} else if (command.equalsIgnoreCase("getdir")) {
+			int val = robot.getDir();
+			debugln(""+val);
+		} else if (command.equalsIgnoreCase("setDir")) {
+			robot.setDir(parseInt(arg0));
 		} else if (command.equalsIgnoreCase("correctLeftLine")) {
 			double degrees = parseDouble(arg0);
 			robot.correctLeftLine((float) (degrees));
@@ -368,14 +370,6 @@ public class StateCommand extends State {
 				robot.setWheelDiameter(diam);
 			}
 			debugln("wheel diam = " + robot.getWheelDiameter());
-		} else if (command.equalsIgnoreCase("dir")) {
-			if (args.length > 1) {
-				int newdir = parseInt(arg0);
-				if (newdir >= 0) {
-					robot.setDir(newdir);
-				}
-			}
-			debugln("" + robot.getDir());
 		} else if (command.equalsIgnoreCase("eopd")) {
 			debugln("" + robot.getEOPD());
 		} else if (command.equalsIgnoreCase("thresh")) {

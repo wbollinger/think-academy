@@ -31,8 +31,8 @@ public class Robot {
 	boolean isOnRamp = false;
 	int threshSilver = 68;
 	int threshBlack = 50;
-	float newNorth = 0.0f;
-	double doorHeading = 0.0; // measured heading of room entrance
+	float compOffset = 0.0f;
+	double doorHeading = 173.0; //measured heading of room entrance
 	double kScale = 78.36;
 	double kError = 5.7;
 	NXTMotor motRight;
@@ -65,7 +65,6 @@ public class Robot {
 	WaveFront nav;
 	private int x;
 	private int y;
-	private int dir;
 	boolean gridDone;
 
 	BTConnection btc;
@@ -248,48 +247,49 @@ public class Robot {
 	}
 
 	public int getDir() {
-		return dir;
+		return (int)getHeading();
+	}
+	
+	public float getCompOffset(){
+		return compOffset;
 	}
 
 	public void setDir(int direction) {
-		// debugln("setDir(" + direction + ")");
+		compOffset = 0.0f;
+		double compHeading;
 		while (direction < 0) {
 			direction += 360;
 		}
 		while (direction > 360) {
 			direction -= 360;
 		}
-		this.dir = direction;
-	}
-
-	public float getDegrees() {
-		if (compass != null) {
-			return compass.getDegrees();
-		}
-		return 0.0f;
-	}
-
-	public void setNewNorth() {
-		newNorth = getHeading();
-		debugln("New North:" + newNorth);
+		compHeading = getHeading();
+		compOffset = (int)(Util.round(compHeading - direction));
+		debugln("compOffset:" + compOffset);
 	}
 
 	public float getHeading() {
 		float cReading = 0.0f;
-		float fixedCReading = 0.0f;
+		float correctedCReading = 0.0f;
 
 		if (compass != null) {
+			if(!isCompassUp()) {
+				liftCompass();
+				sleep(1000);
+			}
 			cReading = compass.getDegrees();
 		}
-		fixedCReading = 360 - cReading + 90;
-		if (fixedCReading >= 360) {
-			fixedCReading = fixedCReading - 360;
+		correctedCReading = 360 - cReading + 90;
+		debugln("Old Heading: " + correctedCReading);
+		if (correctedCReading >= 360) {
+			correctedCReading = correctedCReading - 360;
 		}
-		fixedCReading = fixedCReading - newNorth;
-		if (fixedCReading < 0) {
-			fixedCReading = fixedCReading + 360;
+		correctedCReading = correctedCReading - compOffset;
+		debugln("New Heading: " + correctedCReading);
+		if (correctedCReading < 0) {
+			correctedCReading = correctedCReading + 360;
 		}
-		return fixedCReading;
+		return correctedCReading;
 	}
 
 	public int getLightLeft() {
@@ -317,7 +317,7 @@ public class Robot {
 	public void resetGrid() {
 		setX(1);
 		setY(1);
-		setDir(90);
+		//setDir(90);
 		map.reset();
 		map.grid[x][y] = Map2D.ROBOT;
 	}
@@ -450,7 +450,6 @@ public class Robot {
 		}
 
 		sleep(100);
-		setDir((int) (firstDir - degrees));
 		debugln("Original Heading: " + firstDir);
 		debugln("Current Heading: " + getDir());
 	}
@@ -495,7 +494,6 @@ public class Robot {
 		}
 
 		sleep(100);
-		setDir((int) (firstDir + degrees));
 		debugln("Original Heading: " + firstDir);
 		debugln("Current Heading: " + getDir());
 	}
@@ -516,7 +514,6 @@ public class Robot {
 			sleep(10);
 		}
 		stop();
-		setDir((int) (getDir() - degrees));
 		// debugln("comp " + getHeading());
 	}
 
@@ -535,7 +532,6 @@ public class Robot {
 			sleep(10);
 		}
 		stop();
-		setDir((int) (getDir() + degrees));
 		// debugln("comp " + getHeading());
 	}
 
@@ -813,7 +809,6 @@ public class Robot {
 		// }
 
 		stop();
-		setDir((int) (getDir() + degrees));
 		return false;
 	}
 
@@ -851,7 +846,6 @@ public class Robot {
 		}
 
 		stop();
-		setDir((int) (getDir() + degrees));
 		return false;
 
 	}
@@ -1440,8 +1434,9 @@ public class Robot {
 
 	public void goTo(int x, int y) {
 		String route = nav.pathTo(x, y);
+		debugln("Pathing complete to: "+x+ ", "+y);
 		char dir;
-		for (int n = 0; n < route.length() - 1; n++) {
+		for (int n = 0; n < route.length(); n++) {
 			dir = route.charAt(n);
 
 			if ((dir == 'w')) {
@@ -1472,6 +1467,7 @@ public class Robot {
 				Sound.playTone(440, 100);
 				sleep(100);
 			}
+			debugln("Routing complete to: "+x+ ", "+y);
 		}
 
 	}
@@ -1497,6 +1493,13 @@ public class Robot {
 
 	public void liftCompass() {
 		servoDriver.servoCompass.setAngle(97);
+	}
+	
+	public boolean isCompassUp() {
+		if(servoDriver.servoCompass.getAngle() == 97) {
+			return true;
+		}
+		return false;
 	}
 
 	public void dropCompass() {
@@ -1556,7 +1559,7 @@ public class Robot {
 		debugln(" dir = " + robot.getDir());
 		debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
 		debugln("dist = " + robot.ultrasonic.getDistance());
-		debugln("comp = " + robot.getHeading() + " (North=" + robot.newNorth
+		debugln("comp = " + robot.getHeading() + " (North=" + robot.compOffset
 				+ ")");
 
 	}
