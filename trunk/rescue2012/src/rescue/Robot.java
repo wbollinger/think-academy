@@ -1263,13 +1263,19 @@ public class Robot {
 	}
 
 	public boolean checkForPlatform() {
+		forward(30);
+		stop();
 		int val = sonicAverage();
 		debugln("Sonic reading: "+val);
-		if (val < 37) {
+		if (val < 20) {
 			debugln("Platform found");
+			backward(30);
+			stop();
 			return true;
 		}
 		debugln("NO platform");
+		backward(30);
+		stop();
 		return false;
 	}
 
