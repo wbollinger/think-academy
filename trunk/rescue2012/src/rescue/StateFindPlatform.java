@@ -25,6 +25,7 @@ public class StateFindPlatform extends State {
 		debugln("StFindPlatform execute");
 		
 		if(robot.map.findCoordinates(Map2D.PLATFORM)[0] <= 2) {
+			debugln("Coordinates found");
 			robot.goTo(2, 2);
 		} else {
 			robot.goTo(3, 2);
@@ -36,7 +37,7 @@ public class StateFindPlatform extends State {
 		debugln("facing platform");
 	
 		robot.correctLeft(180);
-		while(robot.getEOPDScaled()>10) {
+		while(robot.) {
 			robot.backward();
 		}
 		robot.dropCan();

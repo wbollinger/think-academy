@@ -238,7 +238,7 @@ public class StateCommand extends State {
 				robot.changeState(StateGridRunNew.getInstance());
 			} else if (command.equalsIgnoreCase("resetGrid")) {
 				robot.resetGrid();
-			} else if (command.equalsIgnoreCase("Grid")) {
+			} else if (command.equalsIgnoreCase("seedgrid")) {
 				robot.map.seed();
 				robot.printMap();
 				robot.setGridDone(true);
@@ -248,6 +248,8 @@ public class StateCommand extends State {
 				robot.goTo(Integer.parseInt(arg0), Integer.parseInt(arg1));
 			} else if (command.equalsIgnoreCase("findCan")) {
 				robot.changeState(StateFindCan.getInstance());
+			} else if (command.equalsIgnoreCase("checkForPlatform")) {
+				robot.checkForPlatform();
 			} else if (command.equalsIgnoreCase("locF")) {
 				robot.findCanCoarse();
 			} else if (command.equalsIgnoreCase("ICIS")) {
@@ -293,9 +295,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("dropCan")) {
 				robot.dropCan();
 			}else if (command.equalsIgnoreCase("approachCan")) {
-				
 				robot.canSequence();
-				
 			} else if (command.equalsIgnoreCase("getAngle")) {
 				double angle = robot.getAngle();
 				debug("" + angle);

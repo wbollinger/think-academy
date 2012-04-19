@@ -28,18 +28,11 @@ public class StateFindCan extends State {
 		robot.debugln("Can Path Followed");
 		debugln("Facing can");
 		robot.findCanCoarseSonic();
-		robot.debugln("Can Swept");
 		robot.correctRight(180);
-		debugln("Turned to lift can");
-		while(robot.getEOPDProcessedValue() > 65.0) {
-			robot.backward();
-		}
-		robot.stop();
-		debugln("ready to lift can");
-		robot.sleep(100);
-		Robot.playTone(440, 500);
-		robot.sleep(500);
-		robot.liftCan();
+		robot.backward(9);
+		robot.findCanCoarse();
+		robot.debugln("Can Swept");
+		robot.canSequence();
 		robot.debugln("Can Lifted");
 		robot.sleep(100);
 		robot.forward(10);
