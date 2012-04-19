@@ -67,7 +67,7 @@ public class StateLineFollow extends State {
 				accelAverage += robot.accel.getXAccel();
 				accelAverage /= 2;
 				//debugln(""+accelAverage);
-				if (accelAverage > 40) {
+				if (accelAverage > 38) {
 					if(rampCount < 5) {
 						rampCount++;
 					}
@@ -128,7 +128,7 @@ public class StateLineFollow extends State {
 
 			lastError = error;
 
-			if (robot.ultrasonic.getDistance() < 10) {
+			if (robot.ultrasonic.getDistance() < 7) {
 				robot.changeState(StateAvoidObstacle.getInstance());
 				//robot.changeState(StateCommand.getInstance());
 				return;
@@ -140,7 +140,8 @@ public class StateLineFollow extends State {
 				robot.goToHeading(robot.doorHeading);
 				robot.dropCompass();
 				robot.forward(30);
-				robot.changeState(StateCommand.getInstance());
+				robot.goToHeading(robot.doorHeading);
+				robot.changeState(StateGridRunNew.getInstance());
 				return;
 			}
 			if (Button.ENTER.isDown()) {

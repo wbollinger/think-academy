@@ -85,7 +85,8 @@ public class Map2D {
 		}
 		grid[3][3] = CAN;
 		grid[1][3] = PLATFORM;
-		grid[2][3] = ROBOT;
+		grid[3][2] = ROBOT;
+		
 	}
 	
 	public void run() {

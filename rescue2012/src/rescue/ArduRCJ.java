@@ -130,9 +130,9 @@ public class ArduRCJ extends I2CSensor {
 		
 		getData((byte)0x66, bufReadResponse, 2);
 		
-		int sensorRight = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
+		int sensorEOPD = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
 		
-		return (sensorRight);
+		return (sensorEOPD);
 	}
 
 }

@@ -1,4 +1,5 @@
 package rescue;
+
 //------------------------------------------------------------------------
 //  robot Grid Run state - search Room 3
 //------------------------------------------------------------------------
@@ -9,8 +10,6 @@ public class StateGridRunNew extends State {
 	static private StateGridRunNew instance = new StateGridRunNew();
 
 	int objectFound = 0;
-	boolean canFound = false;
-	boolean platformFound = false;
 
 	int up;
 	int upRight;
@@ -31,97 +30,177 @@ public class StateGridRunNew extends State {
 
 	public void enter(Robot robot) {
 		robot.setDir(90);
+		robot.resetGrid();
 	}
 
 	public void execute(Robot robot) {
 		// *
 		{
-			up = robot.map.grid[robot.getX()][robot.getY() + 1];
-			upRight = robot.map.grid[robot.getX() + 1][robot.getY() + 1];
-			right = robot.map.grid[robot.getX() + 1][robot.getY()];
-			downRight = robot.map.grid[robot.getX() + 1][robot.getY() - 1];
-			down = robot.map.grid[robot.getX()][robot.getY() - 1];
-			downLeft = robot.map.grid[robot.getX() - 1][robot.getY() - 1];
-			left = robot.map.grid[robot.getX() - 1][robot.getY()];
-			upLeft = robot.map.grid[robot.getX() - 1][robot.getY() + 1];
 
-			//debugln("" + up + " " + upRight + " " + right + " " + downRight + " " + 
+			// debugln("" + up + " " + upRight + " " + right + " " + downRight +
+			// " " +
 			// + " " + downLeft + " " + left + " " + upLeft);
-			
 
-			robot.goUpRight();
-			robot.faceDir(270);
-			if(robot.isCanInSquare()&&(!canFound)) {
-				canFound = true;
+			
+//			robot.goUpRight();
+			robot.goTo(2,2);
+			updateSquares(robot);
+
+			
+			if (!robot.canFound) {
+				robot.faceDir(270);
+				if (robot.isCanInSquare()) {
+					robot.canFound = true;
+					robot.map.grid[robot.getX()][robot.getY() - 1] = 2;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
+			}
+
+			
+			if (!robot.canFound) {
+				robot.faceDir(180);
+				if (robot.isCanInSquare()) {
+					robot.canFound = true;
+					robot.map.grid[robot.getX() - 1][robot.getY()] = 2;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
 			}
 			
-			robot.faceDir(180);
-			if(robot.isCanInSquare()&&(!canFound)) {
-				canFound = true;
+			if (!robot.platformFound) {
+				robot.faceDir(135);
+				if (robot.checkForPlatform()) {
+					robot.platformFound = true;
+					robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
 			}
-			robot.faceDir(135);
-			if(robot.checkForPlatform()&&(!platformFound)) {
-				platformFound = true;
-			}
-			robot.faceDir(90);
-			if(robot.isCanInSquare()&&(!canFound)) {
-				canFound = true;
-			}
-			robot.goRight();
 			
-			up = robot.map.grid[robot.getX()][robot.getY() + 1];
-			upRight = robot.map.grid[robot.getX() + 1][robot.getY() + 1];
-			right = robot.map.grid[robot.getX() + 1][robot.getY()];
-			downRight = robot.map.grid[robot.getX() + 1][robot.getY() - 1];
-			down = robot.map.grid[robot.getX()][robot.getY() - 1];
-			downLeft = robot.map.grid[robot.getX() - 1][robot.getY() - 1];
-			left = robot.map.grid[robot.getX() - 1][robot.getY()];
-			upLeft = robot.map.grid[robot.getX() - 1][robot.getY() + 1];
+			if (!robot.canFound) {
+				robot.faceDir(90);
+				if (robot.isCanInSquare()) {
+					robot.canFound = true;
+					robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
+			}
+
 			
-			robot.faceDir(270);
-			if(robot.isCanInSquare()&&(!canFound)) {
-				canFound = true;
+//			robot.goRight();
+			if(!robot.canFound||!robot.platformFound){
+				robot.goTo(3,2);
+				updateSquares(robot);
 			}
-			robot.faceDir(315);
-			if(robot.checkForPlatform()&&(!platformFound)) {
-				platformFound = true;
+
+			
+			if (!robot.canFound) {
+				robot.faceDir(90);
+				if (robot.isCanInSquare()) {
+					robot.canFound = true;
+					robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
 			}
-			robot.faceDir(0);
-			if(robot.isCanInSquare()&&(!canFound)) {
-				canFound = true;
+			
+			
+			if (!robot.platformFound) {
+				robot.faceDir(45);
+				if (robot.checkForPlatform()) {
+					robot.platformFound = true;
+					robot.map.grid[robot.getX() + 1][robot.getY() + 1] = 3;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
 			}
-			robot.faceDir(45);
-			if(robot.checkForPlatform()&&(!platformFound)) {
-				platformFound = true;
+			
+			
+			if (!robot.canFound) {
+				robot.faceDir(0);
+				if (robot.isCanInSquare()) {
+					robot.canFound = true;
+					robot.map.grid[robot.getX() + 1][robot.getY()] = 2;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
 			}
-			robot.faceDir(90);
-			if(robot.isCanInSquare()&&(!canFound)) {
-				canFound = true;
+			
+			
+			if (!robot.platformFound) {
+				robot.faceDir(315);
+				if (robot.checkForPlatform()) {
+					robot.platformFound = true;
+					robot.map.grid[robot.getX() + 1][robot.getY() - 1] = 3;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
+			}
+
+			
+			if (!robot.canFound) {
+				robot.faceDir(270);
+				if (robot.isCanInSquare()) {
+					robot.canFound = true;
+					robot.map.grid[robot.getX()][robot.getY() - 1] = 2;
+					robot.printMap();
+					Sound.playTone(880, 100);
+					robot.sleep(100);
+				}
 			}
 
 			// debug(robot.getX() + "	" + robot.getY()+"\n");
 			robot.printMap();
 		}
-		
-		if (robot.map.grid[1][1] == Map2D.CAN){
-			robot.map.grid[1][1] = Map2D.PLATFORM;
-		} else if (robot.map.grid[1][Map2D.ROWS-2] == Map2D.CAN) {
-			robot.map.grid[1][Map2D.ROWS-2] = Map2D.PLATFORM;
-		} else if (robot.map.grid[Map2D.COLS-1][Map2D.ROWS-2] == Map2D.CAN) {
-			robot.map.grid[Map2D.COLS-2][Map2D.ROWS-2] = Map2D.PLATFORM;
-		} else if (robot.map.grid[Map2D.COLS-2][1] == Map2D.CAN) {
-			robot.map.grid[Map2D.COLS-2][1] = Map2D.PLATFORM;
-		}
-		
+
+		// if (robot.map.grid[1][1] == Map2D.CAN){
+		// robot.map.grid[1][1] = Map2D.PLATFORM;
+		// } else if (robot.map.grid[1][Map2D.ROWS-2] == Map2D.CAN) {
+		// robot.map.grid[1][Map2D.ROWS-2] = Map2D.PLATFORM;
+		// } else if (robot.map.grid[Map2D.COLS-1][Map2D.ROWS-2] == Map2D.CAN) {
+		// robot.map.grid[Map2D.COLS-2][Map2D.ROWS-2] = Map2D.PLATFORM;
+		// } else if (robot.map.grid[Map2D.COLS-2][1] == Map2D.CAN) {
+		// robot.map.grid[Map2D.COLS-2][1] = Map2D.PLATFORM;
+		// }
+
 		if (robot.getStepMode() == true || Button.ENTER.isDown()) {
-			// go back to command loop after each search step or if enter is pressed
+			// go back to command loop after each search step or if enter is
+			// pressed
 			robot.changeState(StateCommand.getInstance());
-		} 
-		else if (objectFound == 2) {
-			robot.gridDone = true;
-			robot.changeState(StateFindCan.getInstance());
 		}
 
+		if (robot.canFound && robot.platformFound) {
+			robot.gridDone = true;
+			robot.changeState(StateFindCan.getInstance());
+		} else {
+			Sound.playTone(440, 100);
+			robot.sleep(100);
+			Sound.playTone(220, 200);
+			robot.sleep(200);
+			robot.changeState(StateCommand.getInstance());
+		}
+
+	}
+
+	private void updateSquares(Robot robot) {
+		up = robot.map.grid[robot.getX()][robot.getY() + 1];
+		upRight = robot.map.grid[robot.getX() + 1][robot.getY() + 1];
+		right = robot.map.grid[robot.getX() + 1][robot.getY()];
+		downRight = robot.map.grid[robot.getX() + 1][robot.getY() - 1];
+		down = robot.map.grid[robot.getX()][robot.getY() - 1];
+		downLeft = robot.map.grid[robot.getX() - 1][robot.getY() - 1];
+		left = robot.map.grid[robot.getX() - 1][robot.getY()];
+		upLeft = robot.map.grid[robot.getX() - 1][robot.getY() + 1];
 	}
 
 	public void exit(Robot robot) {
