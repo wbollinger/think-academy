@@ -33,7 +33,7 @@ public class StateFindCan extends State {
 		robot.debugln("Can Swept");
 		robot.correctRight(180);
 		debugln("Turned to lift can");
-		while(robot.getEOPD() > 10.0) {
+		while(robot.getEOPDScaled() > 10.0) {
 			robot.backward();
 		}
 		robot.stop();

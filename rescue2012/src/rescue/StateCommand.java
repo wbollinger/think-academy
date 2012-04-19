@@ -307,7 +307,7 @@ public class StateCommand extends State {
 			while (!Button.ENTER.isDown()) {
 				int val = robot.getLightLeft();
 				int val2 = robot.getLightRight();
-				int val3 = robot.getEOPD();
+				int val3 = robot.getEOPDScaled();
 				int val4 = robot.getEOPDRaw();
 				debugln("" + val + " " + val2 + " " + val3 + " " + val4);
 				robot.sleep(50);
