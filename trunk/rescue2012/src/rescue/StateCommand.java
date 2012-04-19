@@ -345,8 +345,8 @@ public class StateCommand extends State {
 				robot.setDir(parseInt(arg0));
 			} else if (command.equalsIgnoreCase("faceDir")) {
 				robot.faceDir(parseInt(arg0));
-			} else if (command.equalsIgnoreCase("calibrateCompass")) {
-				robot.compassCardinalCalibrate();
+//			} else if (command.equalsIgnoreCase("calibrateCompass")) {
+//				robot.compassCardinalCalibrate();
 			} else if (command.equalsIgnoreCase("correctLeftLine")) {
 				double degrees = parseDouble(arg0);
 				robot.correctLeftLine((float) (degrees));
