@@ -354,7 +354,8 @@ public class StateCommand extends State {
 			}
 			debugln("wheel diam = " + robot.getWheelDiameter());
 		} else if (command.equalsIgnoreCase("eopd")) {
-			debugln("" + robot.eopdAverage());
+			debugln("Average: " + robot.eopdAverage());
+			debugln("Raw Value: " + robot.getEOPDRaw());
 		} else if (command.equalsIgnoreCase("thresh")) {
 			int newthresh = parseInt(arg0);
 			if (newthresh >= 0) {
