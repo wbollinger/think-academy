@@ -37,7 +37,7 @@ public class StateFindPlatform extends State {
 		debugln("facing platform");
 	
 		robot.correctLeft(180);
-		while(robot.) {
+		while(robot.getEOPDProcessedValue() > 70) {
 			robot.backward();
 		}
 		robot.dropCan();
