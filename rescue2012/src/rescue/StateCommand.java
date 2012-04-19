@@ -46,7 +46,7 @@ public class StateCommand extends State {
 			} catch (Exception e) { // survive a parse error
 			}
 		}
-		Robot.playTone(880, 200); // error beep
+		Sound.playTone(880, 200); // error beep
 		return value;
 	}
 
@@ -59,7 +59,7 @@ public class StateCommand extends State {
 			} catch (Exception e) { // survive a parse error
 			}
 		}
-		Robot.playTone(880, 200); // error beep
+		Sound.playTone(880, 200); // error beep
 		return value;
 	}
 
@@ -67,7 +67,7 @@ public class StateCommand extends State {
 	public void execute(Robot robot) {
 		if (robot.btc == null) {
 			// no connection: warning beeps and bail
-			Robot.playTone(440, 200);
+			Sound.playTone(440, 200);
 			robot.sleep(200);
 			if (warningBeep++ > 9) {
 				// clear flag so that exit will really exit
@@ -98,7 +98,7 @@ public class StateCommand extends State {
 			inputString = robot.inStream.readUTF();
 		} catch (IOException e) {
 			LCD.drawString("Cmd IO Err", 0, 1);
-			Robot.playTone(880, 200);
+			Sound.playTone(880, 200);
 			System.exit(0);
 		}
 
@@ -413,7 +413,9 @@ public class StateCommand extends State {
 			if (args.length > 1) {
 				time = parseInt(arg1);
 			}
-			Robot.playTone(freq, time);
+			Sound.playTone(freq, time);
+		} else if (command.equalsIgnoreCase("beep")) {
+			robot.toggleBeeps();
 		} else if (command.equalsIgnoreCase("prop")) {
 			Properties props = Settings.getProperties();
 			if (args.length > 0) {
@@ -458,10 +460,10 @@ public class StateCommand extends State {
 
 		if (buttons == Button.ID_ENTER) {
 			if (robot.btc == null) {
-				Robot.playTone(440, 100);
+				Sound.playTone(440, 100);
 				LCD.drawString("BT command...", 0, 1);
 				robot.btc = Bluetooth.waitForConnection();
-				Robot.playTone(660, 100);
+				Sound.playTone(660, 100);
 				robot.inStream = robot.btc.openDataInputStream();
 				robot.outStream = robot.btc.openDataOutputStream();
 

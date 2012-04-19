@@ -339,6 +339,10 @@ public class Robot {
 		}
 	}
 
+	public void toggleBeeps() {
+		enableTurnBeeps = !enableTurnBeeps;
+	}
+	
 	public void resetGrid() {
 		setX(1);
 		setY(1);
