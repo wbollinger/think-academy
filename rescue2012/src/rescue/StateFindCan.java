@@ -13,7 +13,7 @@ public class StateFindCan extends State {
 
 	public void enter(Robot robot) {
 		debugln("StFindCan enter");
-		if(!robot.gridDone) {
+		if(!robot.isGridDone()) {
 			debugln("ERROR: LACKING NECESSARY DATA");
 			debugln("BREAKING TO COMMAND STATE");
 			robot.changeState(StateCommand.getInstance());

@@ -13,7 +13,7 @@ public class StateFindPlatform extends State {
 
 	public void enter(Robot robot) {
 		debugln("StFindPlatform enter");
-		if(!robot.gridDone) {
+		if(!robot.isGridDone()) {
 			debugln("ERROR: LACKING NECESSARY DATA");
 			debugln("BREAKING TO COMMAND STATE");
 			robot.changeState(StateCommand.getInstance());
