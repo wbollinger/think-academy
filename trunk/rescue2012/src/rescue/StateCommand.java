@@ -308,7 +308,9 @@ public class StateCommand extends State {
 				int val = robot.getLightLeft();
 				int val2 = robot.getLightRight();
 				int val3 = robot.getEOPD();
-				debugln("" + val + " " + val2 + " " + val3);
+				int val4 = robot.getEOPDRaw();
+				debugln("" + val + " " + val2 + " " + val3 + " " + val4);
+				robot.sleep(50);
 			}
 		} else if (command.equalsIgnoreCase("readLightArduino")) {
 			int[] val = robot.servoDriver

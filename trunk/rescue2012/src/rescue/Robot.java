@@ -313,6 +313,11 @@ public class Robot {
 		return (val / 10);
 	}
 
+	public int getEOPDRaw() {
+		int val = servoDriver.readEOPD();
+		return val;
+	}
+
 	public static Robot getRobot() {
 		if (robot == null) {
 			robot = new Robot();
@@ -895,7 +900,7 @@ public class Robot {
 
 	public double getEopdDistance() {
 
-		double distance = Math.round(kScale/Math.sqrt((double) getEOPD()) - kError);
+		double distance = Util.round(kScale/Math.sqrt((double) getEOPD()) - kError);
 
 		return distance;
 	}
@@ -1006,13 +1011,13 @@ public class Robot {
 		double headC;
 
 		if (headL < headR) {
-			headC = Math.round((headR + headL) / 2 - 180);
+			headC = Util.round((headR + headL) / 2 - 180);
 		} else {
-			headC = Math.round((headR + headL) / 2);
+			headC = Util.round((headR + headL) / 2);
 		}
 
 		debugln("Head C " + headC);
-		goToHeading(Math.round(headC)); // findCanFine();
+		goToHeading(Util.round(headC)); // findCanFine();
 		stop();
 	}
 
@@ -1082,13 +1087,13 @@ public class Robot {
 		double headC;
 
 		if (headL < headR) {
-			headC = Math.round((headR + headL) / 2 - 180);
+			headC = Util.round((headR + headL) / 2 - 180);
 		} else {
-			headC = Math.round((headR + headL) / 2);
+			headC = Util.round((headR + headL) / 2);
 		}
 
 		debugln("Head C " + headC);
-		goToHeading(Math.round(headC)); // findCanFine();
+		goToHeading(Util.round(headC)); // findCanFine();
 		stop();
 	}
 	
