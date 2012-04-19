@@ -29,7 +29,8 @@ public class StateGridRunNew extends State {
 	}
 
 	public void enter(Robot robot) {
-		robot.setDir(90);
+		debugln("State GridRunNew enter");
+		//robot.setDir(90);
 		robot.resetGrid();
 	}
 
@@ -40,11 +41,16 @@ public class StateGridRunNew extends State {
 			// debugln("" + up + " " + upRight + " " + right + " " + downRight +
 			// " " +
 			// + " " + downLeft + " " + left + " " + upLeft);
-
-			
+			robot.dropClaw();
+			robot.servoDriver.servoClawLift.setAngle(95); // lift claw
+			robot.sleep(7000);
+			robot.servoDriver.servoClawLift.setAngle(86); // stop claw
 //			robot.goUpRight();
 			robot.goTo(2,2);
+			robot.printMap();
+			debugln("Updating squares");
 			updateSquares(robot);
+			debugln("Squares updated");
 
 			
 			if (!robot.canFound) {
@@ -79,6 +85,7 @@ public class StateGridRunNew extends State {
 					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
+				debugln("Platform Not Found");
 			}
 			
 			if (!robot.canFound) {
@@ -94,7 +101,7 @@ public class StateGridRunNew extends State {
 
 			
 //			robot.goRight();
-			if(!robot.canFound||!robot.platformFound){
+			if((!robot.canFound)||(!robot.platformFound)) {
 				robot.goTo(3,2);
 				updateSquares(robot);
 			}
@@ -205,6 +212,6 @@ public class StateGridRunNew extends State {
 
 	public void exit(Robot robot) {
 		robot.printMap();
-		debugln("State GridRun exit");
+		debugln("State GridRunNew exit");
 	}
 }
