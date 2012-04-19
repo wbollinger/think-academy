@@ -48,7 +48,7 @@ public class StateGridRunNew extends State {
 
 			
 			if (!robot.canFound) {
-				robot.faceDir(270);
+				robot.faceDown();
 				if (robot.isCanInSquare()) {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() - 1] = 2;
@@ -60,7 +60,7 @@ public class StateGridRunNew extends State {
 
 			
 			if (!robot.canFound) {
-				robot.faceDir(180);
+				robot.faceLeft();
 				if (robot.isCanInSquare()) {
 					robot.canFound = true;
 					robot.map.grid[robot.getX() - 1][robot.getY()] = 2;
@@ -71,7 +71,7 @@ public class StateGridRunNew extends State {
 			}
 			
 			if (!robot.platformFound) {
-				robot.faceDir(135);
+				robot.faceUpLeft();
 				if (robot.checkForPlatform()) {
 					robot.platformFound = true;
 					robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
@@ -82,7 +82,7 @@ public class StateGridRunNew extends State {
 			}
 			
 			if (!robot.canFound) {
-				robot.faceDir(90);
+				robot.faceUp();
 				if (robot.isCanInSquare()) {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
@@ -101,7 +101,7 @@ public class StateGridRunNew extends State {
 
 			
 			if (!robot.canFound) {
-				robot.faceDir(90);
+				robot.faceUp();
 				if (robot.isCanInSquare()) {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
@@ -113,7 +113,7 @@ public class StateGridRunNew extends State {
 			
 			
 			if (!robot.platformFound) {
-				robot.faceDir(45);
+				robot.faceUpRight();
 				if (robot.checkForPlatform()) {
 					robot.platformFound = true;
 					robot.map.grid[robot.getX() + 1][robot.getY() + 1] = 3;
@@ -125,7 +125,7 @@ public class StateGridRunNew extends State {
 			
 			
 			if (!robot.canFound) {
-				robot.faceDir(0);
+				robot.faceRight();
 				if (robot.isCanInSquare()) {
 					robot.canFound = true;
 					robot.map.grid[robot.getX() + 1][robot.getY()] = 2;
@@ -137,7 +137,7 @@ public class StateGridRunNew extends State {
 			
 			
 			if (!robot.platformFound) {
-				robot.faceDir(315);
+				robot.faceDownRight();
 				if (robot.checkForPlatform()) {
 					robot.platformFound = true;
 					robot.map.grid[robot.getX() + 1][robot.getY() - 1] = 3;
@@ -149,7 +149,7 @@ public class StateGridRunNew extends State {
 
 			
 			if (!robot.canFound) {
-				robot.faceDir(270);
+				robot.faceDown();
 				if (robot.isCanInSquare()) {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() - 1] = 2;
