@@ -1,7 +1,5 @@
 package rescue;
 
-import lejos.nxt.Sound;
-
 public class StateFindCan extends State {
 
 	private static StateFindCan instance = new StateFindCan();
