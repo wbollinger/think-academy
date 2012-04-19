@@ -228,7 +228,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("eopd")) {
 				debugln("Distance: " + robot.getEopdDistance());
 				debugln("Average: " + robot.eopdAverage());
-				debugln("Raw Value: " + robot.getEOPDRaw());
+				debugln("Raw Value: " + robot.getEOPDRawValue());
 			} else if (command.equalsIgnoreCase("eopdcont")) {
 				while (!Button.ENTER.isDown()) {
 					debugln("" + robot.getEopdDistance());
@@ -319,9 +319,10 @@ public class StateCommand extends State {
 						&& robot.inStream.available() == 0) {
 					int val = robot.getLightLeft();
 					int val2 = robot.getLightRight();
-					int scale = robot.getEOPDScaled();
-					int raw = robot.getEOPDRaw();
-					debugln("" + val + " " + val2 + " " + scale + " " + raw);
+					int raw = robot.getEOPDRawValue();
+					int processed = robot.getEOPDProcessedValue();
+					int scaled = robot.getEOPDScaled();
+					debugln("" + val + " " + val2 + " " + raw + " " + processed + " " + scaled);
 					robot.sleep(50);
 				}
 			} else if (command.equalsIgnoreCase("readLightArduino")) {

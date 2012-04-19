@@ -963,11 +963,11 @@ public class Robot {
 
 	//------------------------------------------------------------------------
 	public int getEOPDScaled() {
-		int val = 1024 - getEOPDRaw();
+		int val = 1023 - getEOPDRawValue();
 		return (val / 10);
 	}
 
-	public int getEOPDRaw() {
+	public int getEOPDRawValue() {
 		int val;
 		if (eopdSensor != null) {
 			// sensor is directly connected to NXT
@@ -977,6 +977,15 @@ public class Robot {
 			val = servoDriver.readEOPD();
 		}
 		return val;
+	}
+
+	/**
+	 * This mimics the HiTechnic programming block.
+	 * 
+	 * @return A value between 0 and 100.
+	 */
+	public int getEOPDProcessedValue() {
+		return (int) Math.sqrt((1023 - getEOPDRawValue()) * 10);
 	}
 
 	public double eopdAverage() {
@@ -993,7 +1002,7 @@ public class Robot {
 	}
 
 	public double getEopdDistance() {
-		double distance = Util.round(kScale/Math.sqrt((double) getEOPDRaw()) - kError);
+		double distance = Util.round(kScale/Math.sqrt((double) getEOPDRawValue()) - kError);
 		//debugln("" + distance + " (" + kScale/Math.sqrt((double) getEOPDRaw()) + ")");
 		return distance;
 	}
