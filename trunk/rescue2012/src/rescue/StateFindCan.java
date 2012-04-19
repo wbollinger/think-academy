@@ -39,7 +39,7 @@ public class StateFindCan extends State {
 		robot.stop();
 		debugln("ready to lift can");
 		robot.sleep(100);
-		Sound.playTone(440, 500);
+		Robot.playTone(440, 500);
 		robot.sleep(500);
 		robot.liftCan();
 		robot.debugln("Can Lifted");

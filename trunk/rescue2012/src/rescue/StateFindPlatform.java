@@ -25,20 +25,24 @@ public class StateFindPlatform extends State {
 
 	public void execute(Robot robot) {
 		debugln("StFindPlatform execute");
-		robot.followPath(Map2D.PLATFORM);
-		debugln("ajacent to platform");
-		robot.faceTarget(Map2D.PLATFORM);
 		
-		while(robot.ultrasonic.getDistance()>10) {
-			robot.forward();
+		if(robot.map.findCoordinates(Map2D.PLATFORM)[0] <= 2) {
+			robot.goTo(2, 2);
+		} else {
+			robot.goTo(3, 2);
 		}
-		robot.stop();
-		robot.backward(10);
-		robot.stop();
+		debugln("adjacent to platform");
+		
+		robot.faceDir(robot.nav.dirTo(Map2D.PLATFORM));
+		
+		debugln("facing platform");
+	
 		robot.correctLeft(180);
-		robot.backward(20);
+		while(robot.getEOPDScaled()>10) {
+			robot.backward();
+		}
 		robot.dropCan();
-		Sound.playTone(440, 1000);
+		Robot.playTone(440, 1000);
 		robot.sleep(1000);
 		robot.forward(50);
 		robot.changeState(StateCommand.getInstance());

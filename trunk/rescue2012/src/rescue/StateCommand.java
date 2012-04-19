@@ -46,7 +46,7 @@ public class StateCommand extends State {
 			} catch (Exception e) { // survive a parse error
 			}
 		}
-		Sound.playTone(880, 200); // error beep
+		Robot.playTone(880, 200); // error beep
 		return value;
 	}
 
@@ -59,7 +59,7 @@ public class StateCommand extends State {
 			} catch (Exception e) { // survive a parse error
 			}
 		}
-		Sound.playTone(880, 200); // error beep
+		Robot.playTone(880, 200); // error beep
 		return value;
 	}
 
@@ -67,7 +67,7 @@ public class StateCommand extends State {
 	public void execute(Robot robot) {
 		if (robot.btc == null) {
 			// no connection: warning beeps and bail
-			Sound.playTone(440, 200);
+			Robot.playTone(440, 200);
 			robot.sleep(200);
 			if (warningBeep++ > 9) {
 				// clear flag so that exit will really exit
@@ -98,7 +98,7 @@ public class StateCommand extends State {
 			inputString = robot.inStream.readUTF();
 		} catch (IOException e) {
 			LCD.drawString("Cmd IO Err", 0, 1);
-			Sound.playTone(880, 200);
+			Robot.playTone(880, 200);
 			System.exit(0);
 		}
 
@@ -227,7 +227,7 @@ public class StateCommand extends State {
 			robot.changeState(StateGridRunNew.getInstance());
 		} else if (command.equalsIgnoreCase("resetGrid")) {
 			robot.resetGrid();
-		} else if (command.equalsIgnoreCase("seedGrid")) {
+		} else if (command.equalsIgnoreCase("Grid")) {
 			robot.map.seed();
 			robot.printMap();
 			robot.gridDone = true;
@@ -330,6 +330,10 @@ public class StateCommand extends State {
 			debugln(""+val);
 		} else if (command.equalsIgnoreCase("setDir")) {
 			robot.setDir(parseInt(arg0));
+		} else if (command.equalsIgnoreCase("faceDir")) {
+			robot.faceDir(parseInt(arg0));
+		} else if (command.equalsIgnoreCase("calibrateCompass")) {
+			robot.compassCardinalCalibrate();
 		} else if (command.equalsIgnoreCase("correctLeftLine")) {
 			double degrees = parseDouble(arg0);
 			robot.correctLeftLine((float) (degrees));
@@ -409,7 +413,7 @@ public class StateCommand extends State {
 			if (args.length > 1) {
 				time = parseInt(arg1);
 			}
-			Sound.playTone(freq, time);
+			Robot.playTone(freq, time);
 		} else if (command.equalsIgnoreCase("prop")) {
 			Properties props = Settings.getProperties();
 			if (args.length > 0) {
@@ -454,10 +458,10 @@ public class StateCommand extends State {
 
 		if (buttons == Button.ID_ENTER) {
 			if (robot.btc == null) {
-				Sound.playTone(440, 100);
+				Robot.playTone(440, 100);
 				LCD.drawString("BT command...", 0, 1);
 				robot.btc = Bluetooth.waitForConnection();
-				Sound.playTone(660, 100);
+				Robot.playTone(660, 100);
 				robot.inStream = robot.btc.openDataInputStream();
 				robot.outStream = robot.btc.openDataOutputStream();
 
