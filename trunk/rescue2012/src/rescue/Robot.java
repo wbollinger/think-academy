@@ -34,7 +34,7 @@ public class Robot {
 	float compOffset = 0.0f;
 	double doorHeading = 176.0; //measured heading of room entrance
 	double kScale = 78.36;
-	double kError = 5.7;
+	double kError = 4.7;  // orig value 5.7 returning -1 values
 	NXTMotor motRight;
 	NXTMotor motLeft;
 	NXTMotor arduPower;
@@ -299,8 +299,8 @@ public class Robot {
 	}
 
 	public int getLightLeft() {
-		double val = 1024 - servoDriver.readLightLeft();
-		return (int) Util.round(val / 10.24);
+		int val = 1024 - servoDriver.readLightLeft();
+		return (val / 10);
 	}
 
 	public int getLightRight() {
@@ -308,7 +308,7 @@ public class Robot {
 		return (val / 10);
 	}
 
-	public int getEOPD() {
+	public int getEOPDScaled() {
 		int val = 1024 - servoDriver.readEOPD();
 		return (val / 10);
 	}
@@ -900,8 +900,8 @@ public class Robot {
 
 	public double getEopdDistance() {
 
-		double distance = Util.round(kScale/Math.sqrt((double) getEOPD()) - kError);
-
+		double distance = Util.round(kScale/Math.sqrt((double) getEOPDRaw()) - kError);
+		debugln("" + distance + " (" + kScale/Math.sqrt((double) getEOPDRaw()) + ")");
 		return distance;
 	}
 
