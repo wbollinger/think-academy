@@ -12,7 +12,7 @@ public class Map2D {
 	public static final int PLATFORM = 3;	// Platform
 	public static final int ROBOT = 4;		// Robot
 	
-	int[][] grid = new int[COLS][ROWS];
+	public int[][] grid = new int[COLS][ROWS];
 	
 	public Map2D() {
 		

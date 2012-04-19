@@ -69,13 +69,13 @@ public class Robot {
 	boolean stepMode;
 	boolean enableTurnBeeps;
 
-	Map2D map;
+	public Map2D map;
 	WaveFront nav;
 	private int x;
 	private int y;
 	boolean canFound;
 	boolean platformFound;
-	boolean gridDone;
+	private boolean gridDone;
 
 	BTConnection btc;
 	DataInputStream inStream;
@@ -92,8 +92,8 @@ public class Robot {
 			angleError = (360.0 / 305.0);
 			servoDriver = new ArduRCJ(SensorPort.S1);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			sleep(1000);
-			servoDriver.servoCompass.setAngle(0);
+			//sleep(1000);
+			//servoDriver.servoCompass.setAngle(0);
 
 			accel = new AccelHTSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
@@ -168,7 +168,7 @@ public class Robot {
 		map = new Map2D();
 		resetGrid();
 		nav = new WaveFront(map);
-		gridDone = false;
+		setGridDone(false);
 
 		// actual BT connection is done in StateCommand
 		btc = null;
@@ -198,7 +198,8 @@ public class Robot {
 				// Turn on Arduino power; lower compass
 				arduPower.setPower(100);
 				arduPower.forward();
-				sleep(3000);
+				sleep(6000);
+				Sound.beep();
 				dropCompass();
 			} else {
 				// Turn off Arduino
@@ -258,6 +259,14 @@ public class Robot {
 		this.baseMotorPower = baseMotorPower;
 		motRight.setPower(baseMotorPower);
 		motLeft.setPower(baseMotorPower);
+	}
+
+	public void setGridDone(boolean gridDone) {
+		this.gridDone = gridDone;
+	}
+
+	public boolean isGridDone() {
+		return gridDone;
 	}
 
 	public int getDir() {
@@ -343,7 +352,7 @@ public class Robot {
 		setY(1);
 		canFound = false;
 		platformFound = false;
-		gridDone = false;
+		setGridDone(false);
 		
 		//setDir(90);
 		map.reset();

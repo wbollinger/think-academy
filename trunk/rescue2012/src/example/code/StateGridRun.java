@@ -1,7 +1,12 @@
-package rescue;
+package example.code;
 //------------------------------------------------------------------------
 //  robot Grid Run state - search Room 3
 //------------------------------------------------------------------------
+import rescue.Map2D;
+import rescue.Robot;
+import rescue.State;
+import rescue.StateCommand;
+import rescue.StateFindCan;
 import lejos.nxt.*;
 
 public class StateGridRun extends State {
@@ -91,7 +96,7 @@ public class StateGridRun extends State {
 			robot.changeState(StateCommand.getInstance());
 		} 
 		else if (objectFound == 2) {
-			robot.gridDone = true;
+			robot.setGridDone(true);
 			robot.changeState(StateFindCan.getInstance());
 		}
 

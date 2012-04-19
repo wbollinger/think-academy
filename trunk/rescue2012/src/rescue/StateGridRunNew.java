@@ -180,7 +180,7 @@ public class StateGridRunNew extends State {
 		}
 
 		if (robot.canFound && robot.platformFound) {
-			robot.gridDone = true;
+			robot.setGridDone(true);
 			robot.changeState(StateFindCan.getInstance());
 		} else {
 			Robot.playTone(440, 100);

@@ -241,7 +241,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("Grid")) {
 				robot.map.seed();
 				robot.printMap();
-				robot.gridDone = true;
+				robot.setGridDone(true);
 			} else if (command.equalsIgnoreCase("map")) {
 				robot.printMap();
 			} else if (command.equalsIgnoreCase("goTo")) {
