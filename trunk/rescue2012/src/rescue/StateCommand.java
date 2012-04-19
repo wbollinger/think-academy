@@ -205,29 +205,6 @@ public class StateCommand extends State {
 			} else {
 				debugln("" + StateLineFollow.getInstance().Kd);
 			}
-		} else if (command.equalsIgnoreCase("lineReg")) {
-			robot.changeState(StateLineFollowRegulated.getInstance());
-		} else if (command.equalsIgnoreCase("KpReg")) {
-			if (args.length > 0) {
-				StateLineFollowRegulated.getInstance().Kp = Double
-						.parseDouble(arg0);
-			} else {
-				debugln("" + StateLineFollowRegulated.getInstance().Kp);
-			}
-		} else if (command.equalsIgnoreCase("KiReg")) {
-			if (args.length > 0) {
-				StateLineFollowRegulated.getInstance().Ki = Double
-						.parseDouble(arg0);
-			} else {
-				debugln("" + StateLineFollowRegulated.getInstance().Ki);
-			}
-		} else if (command.equalsIgnoreCase("KdReg")) {
-			if (args.length > 0) {
-				StateLineFollowRegulated.getInstance().Kd = Double
-						.parseDouble(arg0);
-			} else {
-				debugln("" + StateLineFollowRegulated.getInstance().Kd);
-			}
 		} else if (command.equalsIgnoreCase("avoid")) {
 			robot.changeState(StateAvoidObstacle.getInstance());
 		} else if (command.equalsIgnoreCase("leftLook")) {
@@ -242,11 +219,8 @@ public class StateCommand extends State {
 			}
 		} else if (command.equalsIgnoreCase("findLine")) {
 			robot.changeState(StateFindLine.getInstance());
-		} else if (command.equalsIgnoreCase("eopd")) {
-			robot.eopdPoll();
 		} else if (command.equalsIgnoreCase("eopdcal")) {
 			robot.eopdCal();
-
 		} else if (command.equalsIgnoreCase("eopdcont")) {
 			robot.eopdContPoll();
 		} else if (command.equalsIgnoreCase("grid")) {
@@ -256,6 +230,7 @@ public class StateCommand extends State {
 		} else if (command.equalsIgnoreCase("seedGrid")) {
 			robot.map.seed();
 			robot.printMap();
+			robot.gridDone = true;
 		} else if (command.equalsIgnoreCase("map")) {
 			robot.printMap();
 		} else if (command.equalsIgnoreCase("goTo")) {
@@ -280,6 +255,10 @@ public class StateCommand extends State {
 				robot.servoDriver.servoClawGrip.setAngle(degrees);
 			}
 			debugln("" + robot.servoDriver.servoClawGrip.getAngle());
+		} else if (command.equalsIgnoreCase("openClaw")) {
+			robot.servoDriver.servoClawGrip.setAngle(0);
+		} else if (command.equalsIgnoreCase("closeClaw")) {
+			robot.servoDriver.servoClawGrip.setAngle(180);
 		} else if (command.equalsIgnoreCase("liftClaw")) {
 			if (args.length > 0) {
 				int degrees = parseInt(arg0);
@@ -296,9 +275,11 @@ public class StateCommand extends State {
 			robot.liftCompass();
 		} else if (command.equalsIgnoreCase("compassDown")) {
 			robot.dropCompass();
-		} else if (command.equalsIgnoreCase("clawUp")) {
+		} else if (command.equalsIgnoreCase("liftCan")) {
 			robot.liftCan();
-		} else if (command.equalsIgnoreCase("clawDown")) {
+		} else if (command.equalsIgnoreCase("dropClaw")) {
+			robot.dropClaw();
+		} else if (command.equalsIgnoreCase("dropCan")) {
 			robot.dropCan();
 		} else if (command.equalsIgnoreCase("getAngle")) {
 			double angle = robot.getAngle();
@@ -326,7 +307,7 @@ public class StateCommand extends State {
 			while (!Button.ENTER.isDown()) {
 				int val = robot.getLightLeft();
 				int val2 = robot.getLightRight();
-				int val3 = robot.getLightThird();
+				int val3 = robot.getEOPD();
 				debugln("" + val + " " + val2 + " " + val3);
 			}
 		} else if (command.equalsIgnoreCase("readLightArduino")) {
@@ -371,7 +352,7 @@ public class StateCommand extends State {
 			}
 			debugln("wheel diam = " + robot.getWheelDiameter());
 		} else if (command.equalsIgnoreCase("eopd")) {
-			debugln("" + robot.getEOPD());
+			debugln("" + robot.eopdAverage());
 		} else if (command.equalsIgnoreCase("thresh")) {
 			int newthresh = parseInt(arg0);
 			if (newthresh >= 0) {

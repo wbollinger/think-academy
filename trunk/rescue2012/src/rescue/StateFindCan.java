@@ -1,4 +1,7 @@
 package rescue;
+
+import lejos.nxt.Sound;
+
 public class StateFindCan extends State {
 
 	private static StateFindCan instance = new StateFindCan();
@@ -24,18 +27,25 @@ public class StateFindCan extends State {
 		debugln("StFindCan execute");
 		
 		robot.followPath(Map2D.CAN);
-		robot.faceTarget(Map2D.CAN);
 		robot.debugln("Can Path Followed");
-		robot.findCanCoarse();
+		debugln("Facing can");
+		robot.findCanCoarseSonic();
 		robot.debugln("Can Swept");
 		robot.correctRight(180);
-		robot.backward(5);
+		debugln("Turned to lift can");
+		while(robot.getEOPD() > 10.0) {
+			robot.backward();
+		}
+		robot.stop();
+		debugln("ready to lift can");
 		robot.sleep(100);
+		Sound.playTone(440, 500);
+		robot.sleep(500);
 		robot.liftCan();
 		robot.debugln("Can Lifted");
 		robot.sleep(100);
 		robot.forward(10);
-		robot.changeState(StateCommand.getInstance());
+		robot.changeState(StateFindPlatform.getInstance());
 	}
 
 	public void exit(Robot robot) {
