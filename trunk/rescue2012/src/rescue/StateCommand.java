@@ -169,7 +169,7 @@ public class StateCommand extends State {
 					return;
 				}
 				robot.forward();
-			} else if (command.equalsIgnoreCase("reverse")) {
+			} else if (command.equalsIgnoreCase("reverse")||command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
 					robot.backward(distance);
@@ -292,6 +292,10 @@ public class StateCommand extends State {
 				robot.dropClaw();
 			} else if (command.equalsIgnoreCase("dropCan")) {
 				robot.dropCan();
+			}else if (command.equalsIgnoreCase("approachCan")) {
+				
+				robot.canSequence();
+				
 			} else if (command.equalsIgnoreCase("getAngle")) {
 				double angle = robot.getAngle();
 				debug("" + angle);

@@ -342,6 +342,14 @@ public class Robot {
 			Sound.playTone(freq, duration);
 		}
 	}
+	
+	public void canSequence(){
+		while(robot.getEOPDProcessedValue() > 75){
+			robot.backward();
+		}
+		robot.stop();
+		liftCan();
+	}
 
 	public void toggleBeeps() {
 		enableTurnBeeps = !enableTurnBeeps;
