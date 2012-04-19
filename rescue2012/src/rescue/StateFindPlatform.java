@@ -1,7 +1,5 @@
 package rescue;
 
-import lejos.nxt.Sound;
-
 public class StateFindPlatform extends State {
 
 	private static StateFindPlatform instance = new StateFindPlatform();
