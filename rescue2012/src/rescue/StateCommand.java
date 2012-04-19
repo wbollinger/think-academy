@@ -219,10 +219,15 @@ public class StateCommand extends State {
 			}
 		} else if (command.equalsIgnoreCase("findLine")) {
 			robot.changeState(StateFindLine.getInstance());
-		} else if (command.equalsIgnoreCase("eopdcal")) {
-			robot.eopdCal();
+		} else if (command.equalsIgnoreCase("eopd")) {
+			debugln("Distance: " + robot.getEopdDistance());
+			debugln("Average: " + robot.eopdAverage());
+			debugln("Raw Value: " + robot.getEOPDRaw());
 		} else if (command.equalsIgnoreCase("eopdcont")) {
-			robot.eopdContPoll();
+			while (!Button.ENTER.isDown()) {
+				debugln("" + robot.getEopdDistance());
+				robot.sleep(50);
+			}
 		} else if (command.equalsIgnoreCase("grid")) {
 			robot.changeState(StateGridRunNew.getInstance());
 		} else if (command.equalsIgnoreCase("resetGrid")) {
@@ -357,9 +362,6 @@ public class StateCommand extends State {
 				robot.setWheelDiameter(diam);
 			}
 			debugln("wheel diam = " + robot.getWheelDiameter());
-		} else if (command.equalsIgnoreCase("eopd")) {
-			debugln("Average: " + robot.eopdAverage());
-			debugln("Raw Value: " + robot.getEOPDRaw());
 		} else if (command.equalsIgnoreCase("thresh")) {
 			int newthresh = parseInt(arg0);
 			if (newthresh >= 0) {

@@ -63,7 +63,7 @@ public class Robot {
 	boolean useUltrasonicObstacleDetect = true;
 	AccelHTSensor accel;
 	CompassHTSensor compass;
-	EOPD eopd;
+	EOPD eopdSensor;
 
 	State current_state;
 	boolean stepMode;
@@ -81,6 +81,7 @@ public class Robot {
 	DataInputStream inStream;
 	DataOutputStream outStream;
 
+	//------------------------------------------------------------------------
 	private Robot() {
 		// check which robot this and set diameters, sensors
 		Properties props = Settings.getProperties();
@@ -98,6 +99,7 @@ public class Robot {
 			compass = new CompassHTSensor(SensorPort.S3);
 			ultrasonic = new UltrasonicSensor(SensorPort.S4);
 			ultrasonic.continuous();
+			eopdSensor = null;
 		} else if (name.equals("ebay")) {
 			wheelDiameter = 5.6; // both in cm
 			robotDiameter = 13.6;
@@ -106,10 +108,9 @@ public class Robot {
 			lightLeft = new LightSensor(SensorPort.S1);
 			lightRight = new LightSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
-			// eopdSensor = new EOPD(SensorPort.S3, true /*longRange*/);
 			servoDriver = new ArduRCJ(SensorPort.S4);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			eopd = new EOPD(SensorPort.S1, true /* longRange */);
+			eopdSensor = new EOPD(SensorPort.S1, true /* longRange */);
 			ultrasonic = new UltrasonicSensor(SensorPort.S2);
 			ultrasonic.continuous();
 		} else if (name.equals("LineBacker")) {
@@ -123,7 +124,7 @@ public class Robot {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
 			angleError = 1.0;
-			eopd = new EOPD(SensorPort.S2, true /* longRange */);
+			eopdSensor = new EOPD(SensorPort.S2, true /* longRange */);
 			// lightLeft = new LightSensor(SensorPort.S1);
 			// lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
@@ -176,8 +177,6 @@ public class Robot {
 
 		// Power up Roboduino
 		setArduinoPoweredUp(true);
-		sleep(2000);
-
 	}
 
 	/**
@@ -192,12 +191,17 @@ public class Robot {
 		return false;
 	}
 
+	//------------------------------------------------------------------------
 	public void setArduinoPoweredUp(boolean powerOn) {
 		if (arduPower != null) {
 			if (powerOn == true) {
+				// Turn on Arduino power; lower compass
 				arduPower.setPower(100);
 				arduPower.forward();
+				sleep(3000);
+				dropCompass();
 			} else {
+				// Turn off Arduino
 				arduPower.setPower(0);
 				arduPower.flt();
 			}
@@ -282,6 +286,7 @@ public class Robot {
 		debugln("compOffset:" + compOffset);
 	}
 
+	//------------------------------------------------------------------------
 	public float getHeading() {
 		float cReading = 0.0f;
 		float correctedCReading = 0.0f;
@@ -314,16 +319,6 @@ public class Robot {
 	public int getLightRight() {
 		int val = 1024 - servoDriver.readLightRight();
 		return (val / 10);
-	}
-
-	public int getEOPDScaled() {
-		int val = 1024 - servoDriver.readEOPD();
-		return (val / 10);
-	}
-
-	public int getEOPDRaw() {
-		int val = servoDriver.readEOPD();
-		return val;
 	}
 
 	public static Robot getRobot() {
@@ -420,6 +415,7 @@ public class Robot {
 		}
 	}
 	
+	//------------------------------------------------------------------------
 	public void compassCardinalCalibrate(){
 		while(Button.ENTER.isUp()){
 		}
@@ -471,6 +467,7 @@ public class Robot {
 		}	
 	}
 
+	//------------------------------------------------------------------------
 	public void goToHeading(double angle) {
 		if (angle < 0) {
 			angle += 360;
@@ -494,6 +491,7 @@ public class Robot {
 		}
 	}
 
+	//------------------------------------------------------------------------
 	public void correctRight(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
@@ -535,6 +533,7 @@ public class Robot {
 		//debugln("Current Heading: " + getDir());
 	}
 
+	//------------------------------------------------------------------------
 	public void correctLeft(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
@@ -649,6 +648,7 @@ public class Robot {
 		motRegLeft.backward();
 	}
 
+	//------------------------------------------------------------------------
 	public void backward(double distance) {
 		// Makes the robot go backward for the given distance
 		if (!isRegulated) {
@@ -668,6 +668,7 @@ public class Robot {
 		stop();
 	}
 
+	//------------------------------------------------------------------------
 	public void stop() {
 		// Stops both wheel motors
 		if (isRegulated) {
@@ -683,6 +684,7 @@ public class Robot {
 		}
 	}
 
+	//------------------------------------------------------------------------
 	public boolean obstacleSideCheck() {
 		// Checks to see whether distance to left is longer than distance to
 		// right. Returns true is left is longer.
@@ -707,6 +709,7 @@ public class Robot {
 		}
 	}
 
+	//------------------------------------------------------------------------
 	public boolean forwardLookForLine(double distance) {
 		// Makes the robot go forward for the given distance, and stop if it
 		// sees a line
@@ -761,6 +764,7 @@ public class Robot {
 		return false;
 	}
 
+	//------------------------------------------------------------------------
 	public boolean correctLeftLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
@@ -801,6 +805,7 @@ public class Robot {
 		return line;
 	}
 
+	//------------------------------------------------------------------------
 	public boolean correctRightLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
@@ -888,6 +893,7 @@ public class Robot {
 		return false;
 	}
 
+	//------------------------------------------------------------------------
 	public boolean turnRightLookForLine(double degrees) {
 		// Makes the robot turn right for the given degrees, and stop if it
 		// sees a line
@@ -926,6 +932,7 @@ public class Robot {
 
 	}
 
+	//------------------------------------------------------------------------
 	public void findLineRight() {
 		// makes the robot turn right, looking to reposition itself so as to
 		// resume
@@ -954,6 +961,24 @@ public class Robot {
 		debugln("stop findline");
 	}
 
+	//------------------------------------------------------------------------
+	public int getEOPDScaled() {
+		int val = 1024 - getEOPDRaw();
+		return (val / 10);
+	}
+
+	public int getEOPDRaw() {
+		int val;
+		if (eopdSensor != null) {
+			// sensor is directly connected to NXT
+			val = eopdSensor.readRawValue();
+		} else {
+			// arduino
+			val = servoDriver.readEOPD();
+		}
+		return val;
+	}
+
 	public double eopdAverage() {
 		int average = 0;
 		int count = 5;
@@ -968,23 +993,15 @@ public class Robot {
 	}
 
 	public double getEopdDistance() {
-
 		double distance = Util.round(kScale/Math.sqrt((double) getEOPDRaw()) - kError);
-		debugln("" + distance + " (" + kScale/Math.sqrt((double) getEOPDRaw()) + ")");
+		//debugln("" + distance + " (" + kScale/Math.sqrt((double) getEOPDRaw()) + ")");
 		return distance;
-	}
-
-	public double getEopdVal() {
-		int processedVal = eopd.processedValue();
-
-		return processedVal;
 	}
 
 	public int sonicAverage() {
 		int average = 0;
 		int count = 0;
 		while (count < 5) {
-
 			average += ultrasonic.getDistance();
 
 			count++;
@@ -993,20 +1010,7 @@ public class Robot {
 		return average;
 	}
 
-	public void eopdContPoll() {
-
-		while (true) {
-			debugln("" + getEopdDistance());
-			sleep(20);
-		}
-	}
-
-	public void eopdCal() {
-
-		debugln("" + getEopdDistance());
-
-	}
-
+	//------------------------------------------------------------------------
 	public void findCanCoarse() {
 		setBaseMotorPower(35);
 		motRegRight.setSpeed(500);
@@ -1090,6 +1094,7 @@ public class Robot {
 		stop();
 	}
 
+	//------------------------------------------------------------------------
 	public void findCanCoarseSonic() {
 		setBaseMotorPower(20);
 		motRegRight.setSpeed(500);
@@ -1166,6 +1171,7 @@ public class Robot {
 		stop();
 	}
 	
+	//------------------------------------------------------------------------
 	public boolean isCanInSquare() {
 		boolean foundCan = false;
 		int sweepResolution = 5;
@@ -1208,6 +1214,7 @@ public class Robot {
 		return foundCan;
 	}
 
+	//------------------------------------------------------------------------
 	public void findCanFine() {
 		int dist = ultrasonic.getDistance();
 		motLeft.backward();
