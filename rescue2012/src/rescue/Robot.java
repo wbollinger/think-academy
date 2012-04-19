@@ -32,15 +32,23 @@ public class Robot {
 	int threshSilver = 65;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
-//	double cardinal0 = 94.0;
-//	double cardinal45 = 132.0;
-//	double cardinal90 = 174.0;
-//	double cardinal135 = 218.0;
-//	double cardinal180 = 270.0;
-//	double cardinal225 = 318.0;
-//	double cardinal270 = 358.0;
-//	double cardinal315 = 45.0;
-	double doorHeading = 178.0; //measured heading of room entrance
+	double cardinal0 = 94.0;
+	double cardinal45 = 132.0;
+	double cardinal90 = 174.0;
+	double cardinal135 = 218.0;
+	double cardinal180 = 270.0;
+	double cardinal225 = 318.0;
+	double cardinal270 = 358.0;
+	double cardinal315 = 45.0;
+	double headingNorth = 178.0; //measured heading of room north
+	double headingNorthEast = 0.0; //measured heading of room northeast
+	double headingEast = 0.0; //measured heading of room east
+	double headingSouthEast = 0.0; //measured heading of room southeast
+	double headingSouth = 0.0; //measured heading of room south
+	double headingSouthWest = 0.0; //measured heading of room southwest
+	double headingWest = 0.0; //measured heading of room west
+	double headingNorthWest = 0.0; //measured heading of room northwest
+
 	double kScale = 78.36;
 	double kError = 4.7;  // orig value 5.7 returning -1 values
 	NXTMotor motRight;
@@ -201,6 +209,7 @@ public class Robot {
 				sleep(6000);
 				Sound.beep();
 				dropCompass();
+				dropClaw();
 			} else {
 				// Turn off Arduino
 				arduPower.setPower(0);
@@ -1407,9 +1416,42 @@ public class Robot {
 		stop();
 		return false;
 	}
+	
+	public void faceUp() {
+		goToHeading(headingNorth);
+	}
+	
+	public void faceUpRight() {
+		goToHeading(headingNorthEast);
+	}
+	
+	public void faceRight() {
+		goToHeading(headingWest);
+	}
+	
+	public void faceDownRight() {
+		goToHeading(headingSouthEast);
+	}
+	
+	public void faceDown() {
+		goToHeading(headingSouth);
+	}
+	
+	public void faceDownLeft() {
+		goToHeading(headingSouthWest);
+	}
+	
+	public void faceLeft() {
+		goToHeading(headingWest);
+	}
+	
+	public void faceUpLeft() {
+		goToHeading(headingNorthWest);
+	}
 
 	public int goLeft() {
-		faceDir(180);
+		faceLeft();
+		//faceDir(180);
 		if (goForward()) {
 			return 0;
 		} else {
@@ -1418,7 +1460,8 @@ public class Robot {
 	}
 
 	public int goRight() {
-		faceDir(0);
+		faceRight();
+		//faceDir(0);
 		if (goForward()) {
 			faceDir(0);
 			return 0;
@@ -1428,7 +1471,8 @@ public class Robot {
 	}
 
 	public int goUp() {
-		faceDir(90);
+		faceUp();
+		//faceDir(90);
 		if (goForward()) {
 			return 0;
 		} else {
@@ -1437,7 +1481,8 @@ public class Robot {
 	}
 
 	public int goDown() {
-		faceDir(270);
+		faceDown();
+		//faceDir(270);
 		if (goForward()) {
 			return 0;
 		} else {
@@ -1446,7 +1491,8 @@ public class Robot {
 	}
 
 	public int goUpRight() {
-		faceDir(45);
+		faceUpRight();
+		//faceDir(45);
 		if (goForward()) {
 			faceDir(45);
 			return 0;
@@ -1456,7 +1502,8 @@ public class Robot {
 	}
 
 	public int goUpLeft() {
-		faceDir(135);
+		faceUpLeft();
+		//faceDir(135);
 		if (goForward()) {
 			return 0;
 		} else {
@@ -1465,7 +1512,8 @@ public class Robot {
 	}
 
 	public int goDownLeft() {
-		faceDir(225);
+		faceDownLeft();
+		//faceDir(225);
 		if (goForward()) {
 			return 0;
 		} else {
@@ -1474,7 +1522,8 @@ public class Robot {
 	}
 
 	public int goDownRight() {
-		faceDir(315);
+		faceDownRight();
+		//faceDir(315);
 		if (goForward()) {
 			return 0;
 		} else {
