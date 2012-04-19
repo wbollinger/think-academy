@@ -28,7 +28,7 @@ public class StateStart extends State {
 		} else if (robot.getUseRConsole()) {
 			RConsole.openBluetooth(120000);
 			RConsole.println("Connected!");
-			Sound.playTone(440, 200);
+			Robot.playTone(440, 200);
 		} else {
 			// jump straight into line follower
 			robot.changeState(StateLineFollow.getInstance());

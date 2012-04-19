@@ -32,7 +32,15 @@ public class Robot {
 	int threshSilver = 65;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
-	double doorHeading = 176.0; //measured heading of room entrance
+	double cardinal0 = 94.0;
+	double cardinal45 = 132.0;
+	double cardinal90 = 174.0;
+	double cardinal135 = 218.0;
+	double cardinal180 = 270.0;
+	double cardinal225 = 318.0;
+	double cardinal270 = 358.0;
+	double cardinal315 = 45.0;
+	double doorHeading = 0.0; //measured heading of room entrance
 	double kScale = 78.36;
 	double kError = 4.7;  // orig value 5.7 returning -1 values
 	NXTMotor motRight;
@@ -59,7 +67,7 @@ public class Robot {
 
 	State current_state;
 	boolean stepMode;
-	boolean useEOPD;
+	boolean enableTurnBeeps;
 
 	Map2D map;
 	WaveFront nav;
@@ -154,7 +162,7 @@ public class Robot {
 
 		current_state = StateStart.getInstance();
 		stepMode = false;
-		useEOPD = false;
+		enableTurnBeeps = false;
 
 		map = new Map2D();
 		resetGrid();
@@ -325,6 +333,12 @@ public class Robot {
 		return robot;
 	}
 
+	public static void playTone(int freq, int duration) {
+		if (robot.enableTurnBeeps == true) {
+			Sound.playTone(freq, duration);
+		}
+	}
+
 	public void resetGrid() {
 		setX(1);
 		setY(1);
@@ -400,6 +414,57 @@ public class Robot {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void compassCardinalCalibrate(){
+		while(Button.ENTER.isUp()){
+		}
+		cardinal0 = getHeading() + compOffset;
+		debugln("cardinal0 = "+cardinal0);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal45 = getHeading() + compOffset;
+		debugln("cardinal45 = "+cardinal45);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal90 = getHeading() + compOffset;
+		debugln("cardinal90 = "+cardinal90);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal135 = getHeading() + compOffset;
+		debugln("cardinal135 = "+cardinal135);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal180 = getHeading() + compOffset;
+		debugln("cardinal180 = "+cardinal180);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal225 = getHeading() + compOffset;
+		debugln("cardinal225 = "+cardinal225);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal270 = getHeading() + compOffset;
+		debugln("cardinal270 = "+cardinal270);
+		while(Button.ENTER.isDown()){
+		}
+		while(Button.ENTER.isUp()){
+		}
+		cardinal315 = getHeading() + compOffset;
+		debugln("cardinal315 = "+cardinal315);
+		while(Button.ENTER.isDown()){
+		}	
 	}
 
 	public void goToHeading(double angle) {
@@ -604,7 +669,7 @@ public class Robot {
 		if (isRegulated) {
 			motRegLeft.stop(true);
 			motRegRight.stop(true);
-			Sound.playTone(440, 10);
+			Robot.playTone(440, 10);
 			sleep(100);
 			motRegLeft.suspendRegulation();
 			motRegRight.suspendRegulation();
@@ -1181,22 +1246,47 @@ public class Robot {
 	 * @return
 	 */
 	public void faceDir(int n) {
-		int diff = n - getDir();
-		debugln("faceDir: diff = " + diff);
-		if (diff == 0) {
-			return;
+		
+		double i = 0;
+		
+		if (n == 0){
+			i = cardinal0;
+		} else if(n == 45){
+			i = cardinal45;
+		} else if(n == 90){
+			i = cardinal90;
+		} else if(n == 135){
+			i = cardinal135;
+		} else if(n == 180){
+			i = cardinal180;
+		} else if(n == 225){
+			i = cardinal225;
+		} else if(n == 270){
+			i = cardinal270;
+		} else if(n == 315){
+			i = cardinal315;
 		} else {
-			if (diff > 180) {
-				correctRight(Math.abs(360 - diff));
-			} else if (diff > 0) {
-				correctLeft(Math.abs(diff));
-			} else if (diff < -180) {
-				correctLeft(Math.abs(360 + diff));
-			} else {
-				correctRight(Math.abs(diff));
-			}
+			i = n;
 		}
-		// setDir(n);
+		
+		goToHeading(i);
+		
+//		int diff = n - getDir();
+//		//debugln("faceDir: diff = " + diff);
+//		if (diff == 0) {
+//			return;
+//		} else {
+//			if (diff > 180) {
+//				correctRight(Math.abs(360 - diff));
+//			} else if (diff > 0) {
+//				correctLeft(Math.abs(diff));
+//			} else if (diff < -180) {
+//				correctLeft(Math.abs(360 + diff));
+//			} else {
+//				correctRight(Math.abs(diff));
+//			}
+//		}
+//		// setDir(n);
 	}
 
 	public void faceDir(char c) {
@@ -1226,7 +1316,7 @@ public class Robot {
 			faceDir(135);
 
 		} else {
-			Sound.playTone(440, 100);
+			Robot.playTone(440, 100);
 			sleep(100);
 		}
 
@@ -1397,7 +1487,7 @@ public class Robot {
 				goUpLeft();
 
 			} else {
-				Sound.playTone(440, 100);
+				Robot.playTone(440, 100);
 				sleep(100);
 			}
 		}
@@ -1438,7 +1528,7 @@ public class Robot {
 				goUpLeft();
 
 			} else {
-				Sound.playTone(440, 100);
+				Robot.playTone(440, 100);
 				sleep(100);
 			}
 			debugln("Routing complete to: "+x+ ", "+y);
@@ -1450,7 +1540,7 @@ public class Robot {
 		servoDriver.servoClawGrip.setAngle(0); // open claw
 		sleep(100);
 		dropClaw();
-		Sound.playTone(400, 100);
+		Robot.playTone(400, 100);
 		sleep(100);
 		servoDriver.servoClawGrip.setAngle(180); // close claw
 		sleep(1000);

@@ -53,7 +53,7 @@ public class StateGridRunNew extends State {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() - 1] = 2;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -65,7 +65,7 @@ public class StateGridRunNew extends State {
 					robot.canFound = true;
 					robot.map.grid[robot.getX() - 1][robot.getY()] = 2;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -76,7 +76,7 @@ public class StateGridRunNew extends State {
 					robot.platformFound = true;
 					robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -87,7 +87,7 @@ public class StateGridRunNew extends State {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -106,7 +106,7 @@ public class StateGridRunNew extends State {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -118,7 +118,7 @@ public class StateGridRunNew extends State {
 					robot.platformFound = true;
 					robot.map.grid[robot.getX() + 1][robot.getY() + 1] = 3;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -130,7 +130,7 @@ public class StateGridRunNew extends State {
 					robot.canFound = true;
 					robot.map.grid[robot.getX() + 1][robot.getY()] = 2;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -142,7 +142,7 @@ public class StateGridRunNew extends State {
 					robot.platformFound = true;
 					robot.map.grid[robot.getX() + 1][robot.getY() - 1] = 3;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -154,7 +154,7 @@ public class StateGridRunNew extends State {
 					robot.canFound = true;
 					robot.map.grid[robot.getX()][robot.getY() - 1] = 2;
 					robot.printMap();
-					Sound.playTone(880, 100);
+					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
 			}
@@ -183,9 +183,9 @@ public class StateGridRunNew extends State {
 			robot.gridDone = true;
 			robot.changeState(StateFindCan.getInstance());
 		} else {
-			Sound.playTone(440, 100);
+			Robot.playTone(440, 100);
 			robot.sleep(100);
-			Sound.playTone(220, 200);
+			Robot.playTone(220, 200);
 			robot.sleep(200);
 			robot.changeState(StateCommand.getInstance());
 		}
