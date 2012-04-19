@@ -32,15 +32,15 @@ public class Robot {
 	int threshSilver = 65;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
-	double cardinal0 = 94.0;
-	double cardinal45 = 132.0;
-	double cardinal90 = 174.0;
-	double cardinal135 = 218.0;
-	double cardinal180 = 270.0;
-	double cardinal225 = 318.0;
-	double cardinal270 = 358.0;
-	double cardinal315 = 45.0;
-	double doorHeading = 0.0; //measured heading of room entrance
+//	double cardinal0 = 94.0;
+//	double cardinal45 = 132.0;
+//	double cardinal90 = 174.0;
+//	double cardinal135 = 218.0;
+//	double cardinal180 = 270.0;
+//	double cardinal225 = 318.0;
+//	double cardinal270 = 358.0;
+//	double cardinal315 = 45.0;
+	double doorHeading = 178.0; //measured heading of room entrance
 	double kScale = 78.36;
 	double kError = 4.7;  // orig value 5.7 returning -1 values
 	NXTMotor motRight;
@@ -416,56 +416,56 @@ public class Robot {
 	}
 	
 	//------------------------------------------------------------------------
-	public void compassCardinalCalibrate(){
-		while(Button.ENTER.isUp()){
-		}
-		cardinal0 = getHeading() + compOffset;
-		debugln("cardinal0 = "+cardinal0);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal45 = getHeading() + compOffset;
-		debugln("cardinal45 = "+cardinal45);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal90 = getHeading() + compOffset;
-		debugln("cardinal90 = "+cardinal90);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal135 = getHeading() + compOffset;
-		debugln("cardinal135 = "+cardinal135);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal180 = getHeading() + compOffset;
-		debugln("cardinal180 = "+cardinal180);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal225 = getHeading() + compOffset;
-		debugln("cardinal225 = "+cardinal225);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal270 = getHeading() + compOffset;
-		debugln("cardinal270 = "+cardinal270);
-		while(Button.ENTER.isDown()){
-		}
-		while(Button.ENTER.isUp()){
-		}
-		cardinal315 = getHeading() + compOffset;
-		debugln("cardinal315 = "+cardinal315);
-		while(Button.ENTER.isDown()){
-		}	
-	}
+//	public void compassCardinalCalibrate(){
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal0 = getHeading() + compOffset;
+//		debugln("cardinal0 = "+cardinal0);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal45 = getHeading() + compOffset;
+//		debugln("cardinal45 = "+cardinal45);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal90 = getHeading() + compOffset;
+//		debugln("cardinal90 = "+cardinal90);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal135 = getHeading() + compOffset;
+//		debugln("cardinal135 = "+cardinal135);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal180 = getHeading() + compOffset;
+//		debugln("cardinal180 = "+cardinal180);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal225 = getHeading() + compOffset;
+//		debugln("cardinal225 = "+cardinal225);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal270 = getHeading() + compOffset;
+//		debugln("cardinal270 = "+cardinal270);
+//		while(Button.ENTER.isDown()){
+//		}
+//		while(Button.ENTER.isUp()){
+//		}
+//		cardinal315 = getHeading() + compOffset;
+//		debugln("cardinal315 = "+cardinal315);
+//		while(Button.ENTER.isDown()){
+//		}	
+//	}
 
 	//------------------------------------------------------------------------
 	public void goToHeading(double angle) {
@@ -985,7 +985,7 @@ public class Robot {
 	 * @return A value between 0 and 100.
 	 */
 	public int getEOPDProcessedValue() {
-		return (int) Math.sqrt((1023 - getEOPDRawValue()) * 10);
+		return 100-(int)(Math.sqrt((1023 - getEOPDRawValue()) * 10));
 	}
 
 	public double eopdAverage() {
@@ -993,7 +993,7 @@ public class Robot {
 		int count = 5;
 
 		while (count > 0) {
-			average = average + (int) getEopdDistance();
+			average = average + (int) getEOPDProcessedValue();
 			count = count - 1;
 		}
 		average = average / 5;
@@ -1267,29 +1267,31 @@ public class Robot {
 	 */
 	public void faceDir(int n) {
 		
-		double i = 0;
+		goToHeading(n);
 		
-		if (n == 0){
-			i = cardinal0;
-		} else if(n == 45){
-			i = cardinal45;
-		} else if(n == 90){
-			i = cardinal90;
-		} else if(n == 135){
-			i = cardinal135;
-		} else if(n == 180){
-			i = cardinal180;
-		} else if(n == 225){
-			i = cardinal225;
-		} else if(n == 270){
-			i = cardinal270;
-		} else if(n == 315){
-			i = cardinal315;
-		} else {
-			i = n;
-		}
-		
-		goToHeading(i);
+//		double i = 0;
+//		
+//		if (n == 0){
+//			i = cardinal0;
+//		} else if(n == 45){
+//			i = cardinal45;
+//		} else if(n == 90){
+//			i = cardinal90;
+//		} else if(n == 135){
+//			i = cardinal135;
+//		} else if(n == 180){
+//			i = cardinal180;
+//		} else if(n == 225){
+//			i = cardinal225;
+//		} else if(n == 270){
+//			i = cardinal270;
+//		} else if(n == 315){
+//			i = cardinal315;
+//		} else {
+//			i = n;
+//		}
+//		
+//		goToHeading(i);
 		
 //		int diff = n - getDir();
 //		//debugln("faceDir: diff = " + diff);
@@ -1512,7 +1514,8 @@ public class Robot {
 			}
 		}
 		debugln("adjacent to object");
-		faceDir(route.charAt(route.length()));
+		faceDir(route.charAt(route.length()-1));
+		debugln("facing object");
 
 	}
 
@@ -1560,8 +1563,6 @@ public class Robot {
 		servoDriver.servoClawGrip.setAngle(0); // open claw
 		sleep(100);
 		dropClaw();
-		Robot.playTone(400, 100);
-		sleep(100);
 		servoDriver.servoClawGrip.setAngle(180); // close claw
 		sleep(1000);
 		servoDriver.servoClawLift.setAngle(95); // lift claw

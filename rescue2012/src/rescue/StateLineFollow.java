@@ -39,6 +39,7 @@ public class StateLineFollow extends State {
 	public void enter(Robot robot) {
 		//debugln("StLineFollow enter");
 		robot.dropCompass();
+		robot.dropClaw();
 	}
 
 	public void execute(Robot robot) {
@@ -79,7 +80,7 @@ public class StateLineFollow extends State {
 				
 				if (rampCount >= 2){
 					robot.isOnRamp = true;
-				} else if (rampCount <= 0) {
+				} else if (rampCount <= 1) {
 					robot.isOnRamp = false;
 				}
 
@@ -88,8 +89,8 @@ public class StateLineFollow extends State {
 						robot.setBaseMotorPower(70);	
 					}
 					KpLocal = 5.00; // 10.00
-					KiLocal = 0.00; // 0.70
-					KdLocal = 0.00; // 6.00
+					KiLocal = 0.01; // 0.70
+					KdLocal = 1.00; // 6.00
 				} else {
 					if (robot.getBaseMotorPower() != 45) {
 						robot.setBaseMotorPower(45);
@@ -137,7 +138,7 @@ public class StateLineFollow extends State {
 				Robot.playTone(440, 100);
 				robot.stop();
 				robot.backward(2);
-				robot.faceDir(90);
+				robot.goToHeading(robot.doorHeading);
 				robot.dropCompass();
 				robot.forward(30);
 				robot.goToHeading(robot.doorHeading);
