@@ -13,12 +13,12 @@ public class StateFindPlatform extends State {
 
 	public void enter(Robot robot) {
 		debugln("StFindPlatform enter");
-		if(!robot.isGridDone()) {
-			debugln("ERROR: LACKING NECESSARY DATA");
-			debugln("BREAKING TO COMMAND STATE");
-			robot.changeState(StateCommand.getInstance());
-			return;
-		}
+//		if(!robot.isGridDone()) {
+//			debugln("ERROR: LACKING NECESSARY DATA");
+//			debugln("BREAKING TO COMMAND STATE");
+//			robot.changeState(StateCommand.getInstance());
+//			return;
+//		}
 	}
 
 	public void execute(Robot robot) {
@@ -41,7 +41,7 @@ public class StateFindPlatform extends State {
 		robot.faceAway(a);
 		debugln("facing platform");
 		robot.setBaseMotorSpeed(100);
-		while(robot.getEOPDProcessedValue() > 90) {
+		while((robot.getEOPDProcessedValue() > 88)||((!robot.motRegRight.isStalled())&&(!robot.motRegLeft.isStalled()))) {
 			debugln("EOPD Val = "+robot.getEOPDProcessedValue());
 			robot.backward();
 		}
@@ -50,7 +50,9 @@ public class StateFindPlatform extends State {
 		robot.dropCan();
 		Robot.playTone(440, 1000);
 		robot.sleep(1000);
-		robot.forward(50);
+		robot.forward(30);
+		robot.stop();
+		robot.victorySong();
 		robot.changeState(StateCommand.getInstance());
 	}
 
