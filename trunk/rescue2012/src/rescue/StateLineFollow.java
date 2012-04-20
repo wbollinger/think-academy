@@ -58,11 +58,12 @@ public class StateLineFollow extends State {
 		int rampCount = 0;
 		
 		int accelAverage = 0;
-
+		
 		robot.motRight.forward();
 		robot.motLeft.forward();
 
 		while (!Button.ESCAPE.isDown()) {
+			int usReading = robot.ultrasonic.getDistance();
 			if(n < 7) {
 				accelAverage += robot.accel.getXAccel();
 				accelAverage /= 2;
@@ -90,6 +91,11 @@ public class StateLineFollow extends State {
 					KpLocal = 5.00; // 10.00
 					KiLocal = 0.01; // 0.70
 					KdLocal = 1.00; // 6.00
+					if (usReading < 20){
+						if(robot.getBaseMotorPower() != 45){
+							robot.setBaseMotorPower(45);
+						}
+					}
 				} else {
 					if (robot.getBaseMotorPower() != 45) {
 						robot.setBaseMotorPower(45);
@@ -128,12 +134,12 @@ public class StateLineFollow extends State {
 
 			lastError = error;
 
-			if (robot.ultrasonic.getDistance() < 7) {
+			if (usReading < 7) {
 				robot.changeState(StateAvoidObstacle.getInstance());
 				//robot.changeState(StateCommand.getInstance());
 				return;
 			}
-			if ((robot.getLightLeft() > robot.threshSilver)||(robot.getLightRight() > robot.threshSilver)) {
+			if ((robot.getLightLeft() > robot.threshSilver)&&(robot.getLightRight() > robot.threshSilver)) {
 				Robot.playTone(440, 100);
 				robot.stop();
 				robot.backward(2);

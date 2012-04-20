@@ -190,7 +190,22 @@ public class StateCommand extends State {
 					robot.goToHeading(angle);
 					return;
 				}
-
+			} else if (command.equalsIgnoreCase("north")) {
+				robot.faceUp();
+			} else if (command.equalsIgnoreCase("northeast")) {
+				robot.faceUpRight();
+			} else if (command.equalsIgnoreCase("east")) {
+				robot.faceRight();
+			} else if (command.equalsIgnoreCase("southeast")) {
+				robot.faceDownRight();
+			} else if (command.equalsIgnoreCase("south")) {
+				robot.faceDown();
+			} else if (command.equalsIgnoreCase("southwest")) {
+				robot.faceDownLeft();
+			} else if (command.equalsIgnoreCase("west")) {
+				robot.faceLeft();
+			} else if (command.equalsIgnoreCase("northwest")) {
+				robot.faceUpLeft();
 			} else if (command.equalsIgnoreCase("line")) {
 				robot.changeState(StateLineFollow.getInstance());
 			} else if (command.equalsIgnoreCase("kP")) {
@@ -255,7 +270,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("checkForPlatform")) {
 				robot.checkForPlatform();
 			} else if (command.equalsIgnoreCase("locF")) {
-				robot.findCanCoarse();
+				robot.findCanCoarseEOPD();
 			} else if (command.equalsIgnoreCase("ICIS")) {
 				robot.isCanInSquare();
 			} else if (command.equalsIgnoreCase("locC")) {
@@ -353,8 +368,15 @@ public class StateCommand extends State {
 				robot.setDir(parseInt(arg0));
 			} else if (command.equalsIgnoreCase("faceDir")) {
 				robot.faceDir(parseInt(arg0));
-//			} else if (command.equalsIgnoreCase("calibrateCompass")) {
-//				robot.compassCardinalCalibrate();
+			} else if (command.equalsIgnoreCase("calibrateCompass")) {
+				//robot.compassCardinalCalibrate();
+				LCD.drawString("Calibrate:", 0, 0);
+				robot.compass.startCalibration();
+				while (!Button.ENTER.isDown()) {
+				}
+				while (Button.ENTER.isDown()) {
+				}
+				robot.compass.stopCalibration();
 			} else if (command.equalsIgnoreCase("correctLeftLine")) {
 				double degrees = parseDouble(arg0);
 				robot.correctLeftLine((float) (degrees));
