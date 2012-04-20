@@ -42,6 +42,8 @@ public class StateGridRunNew extends State {
 			// " " +
 			// + " " + downLeft + " " + left + " " + upLeft);
 			robot.dropClaw();
+			robot.closeClaw();
+			robot.openClaw();
 			robot.servoDriver.servoClawLift.setAngle(95); // lift claw
 			robot.sleep(7000);
 			robot.servoDriver.servoClawLift.setAngle(86); // stop claw
@@ -63,18 +65,6 @@ public class StateGridRunNew extends State {
 					robot.sleep(100);
 				}
 			}
-
-			if (!robot.platformFound) {
-				robot.faceUpRight();
-				if (robot.checkForPlatform()) {
-					robot.platformFound = true;
-					robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
-					robot.printMap();
-					Robot.playTone(880, 100);
-					robot.sleep(100);
-				}
-				debugln("Platform Not Found");
-			}
 			
 			if (!robot.canFound) {
 				robot.faceLeft();
@@ -85,6 +75,18 @@ public class StateGridRunNew extends State {
 					Robot.playTone(880, 100);
 					robot.sleep(100);
 				}
+			}
+			
+			if (!robot.platformFound) {
+				robot.faceDownRight();
+				if (robot.checkForPlatform()) {
+					robot.platformFound = true;
+					robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
+					robot.printMap();
+					Robot.playTone(880, 100);
+					robot.sleep(100);
+				}
+				debugln("Platform Not Found");
 			}
 			
 			if (!robot.canFound) {

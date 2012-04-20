@@ -34,16 +34,16 @@ public class Robot {
 	int threshBlack = 50;
 	float compOffset = 0.0f;
 	double headingNorth = 176.0; //measured heading of room north
-	double headingNorthEast = 137.0; //measured heading of room northeast
-	double headingEast = 98.0; //measured heading of room east
+	double headingNorthEast = 139.0; //measured heading of room northeast
+	double headingEast = 95.0; //measured heading of room east
 	double headingSouthEast = 50.0; //measured heading of room southeast
-	double headingSouth = 2.0; //measured heading of room south
-	double headingSouthWest = 313.0; //measured heading of room southwest
-	double headingWest = 264.0; //measured heading of room west
+	double headingSouth = 4.0; //measured heading of room south
+	double headingSouthWest = 317.0; //measured heading of room southwest
+	double headingWest = 266.0; //measured heading of room west
 	double headingNorthWest = 215.0; //measured heading of room northwest
 
 	double kScale = 78.36;
-	double kError = 4.7;  // orig value 5.7 returning -1 values
+	double kError = 4.7;  // original value 5.7 returning -1 values
 	NXTMotor motRight;
 	NXTMotor motLeft;
 	NXTMotor arduPower;
@@ -355,10 +355,6 @@ public class Robot {
 	}
 	
 	public void canSequence(){
-		dropClaw();
-		servoDriver.servoClawLift.setAngle(90);
-		sleep(7000);
-		servoDriver.servoClawLift.setAngle(86);
 		setBaseMotorSpeed(50);
 		while(robot.getEOPDProcessedValue() > 70){
 			robot.backward();
@@ -374,7 +370,7 @@ public class Robot {
 	
 	public void resetGrid() {
 		setX(1);
-		setY(3);
+		setY(1);
 		canFound = false;
 		platformFound = false;
 		setGridDone(false);
@@ -1399,19 +1395,19 @@ public class Robot {
 	}
 
 	public boolean checkForPlatform() {
-		backward(25);
+		backward(29);
 		stop();
 		sleep(1000);
 		int val = getEOPDProcessedValue();
 		debugln("EOPD reading: "+val);
-		if (val > 95) {
+		if (val < 90) {
 			debugln("Platform found");
-			forward(30);
+			forward(29);
 			stop();
 			return true;
 		}
 		debugln("NO platform");
-		forward(25);
+		forward(29);
 		stop();
 		return false;
 	}
@@ -1669,9 +1665,7 @@ public class Robot {
 		backward(2);
 		servoDriver.servoClawGrip.setAngle(180); // close claw
 		sleep(1000);
-		servoDriver.servoClawLift.setAngle(95); // lift claw
-		// TODO add code to check for microswitch close to stop claw lift
-		sleep(7000);
+		liftClaw();
 		servoDriver.servoClawLift.setAngle(86);
 		sleep(100);
 	}
@@ -1690,6 +1684,14 @@ public class Robot {
 			sleep(10);
 			debugln("eopd reading " + eopdAverage());
 		}
+		sleep(200);
+		servoDriver.servoClawLift.setAngle(86);
+		sleep(100);
+	}
+	
+	public void liftClaw() {
+		servoDriver.servoClawLift.setAngle(95); // raise claw
+		sleep(8000);
 		servoDriver.servoClawLift.setAngle(86);
 		sleep(100);
 	}
