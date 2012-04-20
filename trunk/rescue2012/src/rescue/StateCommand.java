@@ -293,7 +293,6 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("forhit")) {
 				robot.forwardTillHit();
 
-				robot.forward();
 			} else if (command.equalsIgnoreCase("fordist")) {
 				if (args.length > 0) {
 					int distance = parseInt(arg0);

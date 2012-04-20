@@ -1089,7 +1089,7 @@ public class Robot {
 		int difference = 0;
 
 		while (true) {
-			right(3);
+			right(2);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
 				break;
@@ -1108,7 +1108,7 @@ public class Robot {
 		lastValue = currentValue;
 
 		while (true) {
-			left(3);
+			left(2);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
 				break;
@@ -1149,7 +1149,7 @@ public class Robot {
 		int difference = 0;
 
 		while (true) {
-			right(3);
+			right(2);
 			if (lastValue - currentValue > threshUS) {
 				break;
 			}
@@ -1177,7 +1177,7 @@ public class Robot {
 		lastValue = currentValue;
 
 		while (true) {
-			left(3);
+			left(2);
 			if (lastValue - currentValue > threshUS) {
 				break;
 			}
@@ -1447,27 +1447,26 @@ public class Robot {
 	}
 
 	public void forwardTillHit() {
-		backward();
+		forward();
 		int current = 0;
-		if (eopdSensor.processedValue() < 93) {
-			current = eopdSensor.processedValue();
-		}
-		int last;
+		int last = 1 ;
 		int ticks = 0;
 		while (ticks < 20) {
-			if (eopdSensor.processedValue() < 93) {
+			if (sonicAverage() < 40) {
 				last = current;
-				current = eopdSensor.processedValue();
+				current = sonicAverage();
 			} else {
 				last = 1;
 				current = 0;
+				ticks = 0;
 			}
 			if (last==current){
 				ticks=ticks+1;
 			}
-			debugln("l" + last);
-			debugln("t" + ticks);
-			debugln("c" + current);
+			sleep(20);
+			debugln("L" + last);
+			debugln("T" + ticks);
+			debugln("C" + current);
 
 		}
 		robot.stop();
