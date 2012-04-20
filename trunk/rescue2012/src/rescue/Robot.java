@@ -744,12 +744,21 @@ public class Robot {
 
 		int aveRightDist;
 		aveRightDist = sonicAverage();
+		
+		if(aveRightDist < 15){
+			backward(5);
+			stop();
+		}
 
 		correctLeft(180);
 		sleep(500);
 
 		int aveLeftDist;
 		aveLeftDist = sonicAverage();
+		if(aveLeftDist < 15){
+			backward(5);
+			stop();
+		}
 		debugln("right: " + aveRightDist + ". Left: " + aveLeftDist);
 		if (aveLeftDist > aveRightDist) {
 			return true;
@@ -1086,7 +1095,7 @@ public class Robot {
 				break;
 			}
 			difference = lastValue - currentValue;
-			debugln("Cur " + currentValue + " | Dif " + difference);
+//			debugln("Cur " + currentValue + " | Dif " + difference);
 			sleep(10);
 			lastValue = currentValue;
 		}
@@ -1105,7 +1114,7 @@ public class Robot {
 				break;
 			}
 			difference = lastValue - currentValue;
-			debugln("Cur " + currentValue + " | Dif " + difference);
+//			debugln("Cur " + currentValue + " | Dif " + difference);
 			sleep(10);
 			lastValue = currentValue;
 		}
@@ -1150,9 +1159,9 @@ public class Robot {
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
-			debugln("Cur " + currentValue);
-			debugln("Last " + lastValue);
-			debugln("Dif " + difference);
+//			debugln("Cur " + currentValue);
+//			debugln("Last " + lastValue);
+//			debugln("Dif " + difference);
 		}
 		stop();
 		sleep(1000);
@@ -1178,9 +1187,9 @@ public class Robot {
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
-			debugln("Cur " + currentValue);
-			debugln("Last " + lastValue);
-			debugln("Dif " + difference);
+//			debugln("Cur " + currentValue);
+//			debugln("Last " + lastValue);
+//			debugln("Dif " + difference);
 		}
 		stop();
 		sleep(1000);
