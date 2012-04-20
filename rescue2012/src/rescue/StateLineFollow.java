@@ -94,6 +94,8 @@ public class StateLineFollow extends State {
 					if (usReading < 20){
 						if(robot.getBaseMotorPower() != 45){
 							robot.setBaseMotorPower(45);
+							robot.isOnRamp = false;
+							rampCount = 0;
 						}
 					}
 				} else {
