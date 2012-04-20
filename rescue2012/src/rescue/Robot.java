@@ -1188,9 +1188,9 @@ public class Robot {
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
-//			debugln("Cur " + currentValue);
-//			debugln("Last " + lastValue);
-//			debugln("Dif " + difference);
+			debug("Cur " + currentValue);
+			debug(" | Last " + lastValue);
+			debugln(" | Dif " + difference);
 		}
 		stop();
 		sleep(1000);
@@ -1216,9 +1216,9 @@ public class Robot {
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
-//			debugln("Cur " + currentValue);
-//			debugln("Last " + lastValue);
-//			debugln("Dif " + difference);
+			debug("Cur " + currentValue);
+			debug(" | Last " + lastValue);
+			debugln(" | Dif " + difference);
 		}
 		stop();
 		sleep(1000);

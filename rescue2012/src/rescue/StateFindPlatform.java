@@ -35,16 +35,18 @@ public class StateFindPlatform extends State {
 		debugln("adjacent to platform");
 		
 		//robot.faceDir(robot.nav.dirTo(Map2D.PLATFORM));
-		
+		int sonic = robot.sonicAverage()+5;
+		debugln("Sonic = "+sonic);
 		char a = robot.map.dirTo(Map2D.PLATFORM);
 		debugln(""+a);
 		robot.faceAway(a);
 		debugln("facing platform");
 		robot.setBaseMotorSpeed(100);
-		while((robot.getEOPDProcessedValue() > 88)||((!robot.motRegRight.isStalled())&&(!robot.motRegLeft.isStalled()))) {
-			debugln("EOPD Val = "+robot.getEOPDProcessedValue());
-			robot.backward();
-		}
+//		while((robot.getEOPDProcessedValue() > 88)||((!robot.motRegRight.isStalled())&&(!robot.motRegLeft.isStalled()))) {
+//			debugln("EOPD Val = "+robot.getEOPDProcessedValue());
+//			robot.backward();
+//		}
+		robot.backward(sonic);
 		robot.stop();
 		robot.setBaseMotorSpeed(500);
 		robot.dropCan();
