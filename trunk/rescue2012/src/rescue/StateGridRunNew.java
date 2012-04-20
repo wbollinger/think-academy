@@ -49,12 +49,15 @@ public class StateGridRunNew extends State {
 
 		if (!robot.canFound) {
 			robot.faceUpRight();
+			robot.forward(8);
 			if (robot.isCanInSquare()) {
 				robot.canFound = true;
 				robot.map.grid[robot.getX() + 1][robot.getY() + 1] = 2;
 				robot.printMap();
 				Robot.playTone(880, 100);
 				robot.sleep(100);
+				robot.goRight();
+				robot.faceUp();
 				robot.changeState(StateFindCan.getInstance());
 				return;
 			}
@@ -93,8 +96,8 @@ public class StateGridRunNew extends State {
 		}
 
 		if (!robot.platformFound) {
-			robot.faceDownRight();
-			if (robot.checkForPlatform()) {
+			robot.faceUpLeft();
+			if (robot.checkForPlatformUS()) {
 				robot.platformFound = true;
 				robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
 				robot.printMap();
@@ -154,8 +157,8 @@ public class StateGridRunNew extends State {
 		}
 
 		if (!robot.platformFound) {
-			robot.faceDownLeft();
-			if (robot.checkForPlatform()) {
+			robot.faceUpRight();
+			if (robot.checkForPlatformUS()) {
 				robot.platformFound = true;
 				robot.map.grid[robot.getX() + 1][robot.getY() + 1] = 3;
 				robot.printMap();
@@ -184,8 +187,8 @@ public class StateGridRunNew extends State {
 		}
 
 		if (!robot.platformFound) {
-			robot.faceUpLeft();
-			if (robot.checkForPlatform()) {
+			robot.faceDownRight();
+			if (robot.checkForPlatformUS()) {
 				robot.platformFound = true;
 				robot.map.grid[robot.getX() + 1][robot.getY() - 1] = 3;
 				robot.printMap();
