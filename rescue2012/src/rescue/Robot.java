@@ -1421,6 +1421,58 @@ public class Robot {
 		return false;
 	}
 	
+	public boolean checkForPlatformUS() {
+		forward(25);
+		stop();
+		sleep(1000);
+		int val = sonicAverage();
+		debugln("US: " + val);
+		if (val < 24) {
+			debugln("Platform found");
+			backward(25);
+			stop();
+			return true;
+		}
+		debugln("NO platform");
+		backward(25);
+		stop();
+		return false;
+	}
+
+	public void forwardCheckForDist(int dist) {
+		forward();
+		while (ultrasonic.getDistance() > dist) {
+		}
+		robot.stop();
+	}
+
+	public void forwardTillHit() {
+		backward();
+		int current = 0;
+		if (eopdSensor.processedValue() < 93) {
+			current = eopdSensor.processedValue();
+		}
+		int last;
+		int ticks = 0;
+		while (ticks < 20) {
+			if (eopdSensor.processedValue() < 93) {
+				last = current;
+				current = eopdSensor.processedValue();
+			} else {
+				last = 1;
+				current = 0;
+			}
+			if (last==current){
+				ticks=ticks+1;
+			}
+			debugln("l" + last);
+			debugln("t" + ticks);
+			debugln("c" + current);
+
+		}
+		robot.stop();
+	}
+	
 	public void faceUp() {
 		goToHeading(headingNorth);
 	}
