@@ -30,7 +30,7 @@ public class StateFindCan extends State {
 		robot.findCanCoarseSonic();
 		robot.correctRight(180);
 		robot.backward(9);
-		robot.findCanCoarse();
+		robot.findCanCoarseEOPD();
 		robot.debugln("Can Swept");
 		robot.canSequence();
 		robot.debugln("Can Lifted");

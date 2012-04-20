@@ -94,9 +94,6 @@ public class Robot {
 			angleError = (360.0 / 305.0);
 			servoDriver = new ArduRCJ(SensorPort.S1);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			//sleep(1000);
-			//servoDriver.servoCompass.setAngle(0);
-
 			accel = new AccelHTSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
 			ultrasonic = new UltrasonicSensor(SensorPort.S4);
@@ -107,15 +104,16 @@ public class Robot {
 			robotDiameter = 13.6;
 			angleError = 1; // (360.0/276.0)
 
-			lightLeft = new LightSensor(SensorPort.S1);
-			lightRight = new LightSensor(SensorPort.S2);
+			//lightLeft = new LightSensor(SensorPort.S1);
+			//lightRight = new LightSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
 			servoDriver = new ArduRCJ(SensorPort.S4);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			eopdSensor = new EOPD(SensorPort.S1, true /* longRange */);
+			//For direct connect: eopdSensor = new EOPD(SensorPort.S1, true /* longRange */);
+			eopdSensor = null;
 			ultrasonic = new UltrasonicSensor(SensorPort.S2);
 			ultrasonic.continuous();
-		} else if (name.equals("LineBacker")) {
+		} /*else if (name.equals("LineBacker")) {
 			wheelDiameter = 5.6;
 			robotDiameter = 17.0;
 			angleError = 1.0;
@@ -126,14 +124,14 @@ public class Robot {
 			wheelDiameter = 5.6;
 			robotDiameter = 15.9;
 			angleError = 1.0;
-			eopdSensor = new EOPD(SensorPort.S2, true /* longRange */);
+			eopdSensor = new EOPD(SensorPort.S2, true);  // longRange
 			// lightLeft = new LightSensor(SensorPort.S1);
 			// lightRight = new LightSensor(SensorPort.S2);
 			// touch = new TouchSensor(SensorPort.S3);
 			compass = new CompassHTSensor(SensorPort.S3);
 			ultrasonic = new UltrasonicSensor(SensorPort.S4);
 			ultrasonic.continuous();
-		} else if (name.equals("JPNXT")) {
+		} */ else if (name.equals("JPNXT")) {
 			// defaults for Jeremy
 			wheelDiameter = 4.96;
 			robotDiameter = 13.5;
@@ -159,10 +157,6 @@ public class Robot {
 		setBaseMotorAcceleration(1500);
 		setBaseMotorSpeed(500);
 		stop();
-
-		// Touch and Compass sensor are different depending on robot name
-		// touch = new TouchSensor(SensorPort.S3);
-		// compass = new CompassHTSensor(SensorPort.S3);
 
 		current_state = StateStart.getInstance();
 		stepMode = false;
@@ -380,7 +374,7 @@ public class Robot {
 	
 	public void resetGrid() {
 		setX(1);
-		setY(1);
+		setY(3);
 		canFound = false;
 		platformFound = false;
 		setGridDone(false);
@@ -1080,7 +1074,7 @@ public class Robot {
 	}
 
 	//------------------------------------------------------------------------
-	public void findCanCoarse() {
+	public void findCanCoarseEOPD() {
 		setBaseMotorPower(35);
 		setBaseMotorSpeed(500);
 		correctLeft(50);
@@ -1405,18 +1399,20 @@ public class Robot {
 	}
 
 	public boolean checkForPlatform() {
-		correctRight(180);
 		backward(25);
+		stop();
 		sleep(1000);
 		int val = getEOPDProcessedValue();
 		debugln("EOPD reading: "+val);
-		if (val < 85) {
+		if (val > 95) {
 			debugln("Platform found");
 			forward(30);
+			stop();
 			return true;
 		}
 		debugln("NO platform");
 		forward(25);
+		stop();
 		return false;
 	}
 	
@@ -1621,6 +1617,9 @@ public class Robot {
 	}
 
 	public void goTo(int x, int y) {
+		if ((map.findCoordinates(Map2D.ROBOT)[0] == x)&&(map.findCoordinates(Map2D.ROBOT)[1] == y)){
+			return;
+		}
 		String route = nav.pathTo(x, y);
 		debugln("Pathing complete to: "+x+ ", "+y);
 		char dir;
