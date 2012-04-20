@@ -560,14 +560,14 @@ public class Robot {
 			if (val > expectedVal) {
 				setBaseMotorAcceleration(1800);
 				if (val - expectedVal < 3){
-					right(3);
+					right(2);
 				}
 				right(val - expectedVal);
 				setBaseMotorAcceleration(1500);
 			} else {
 				setBaseMotorAcceleration(1800);
 				if (val - expectedVal < 3){
-					left(3);
+					left(2);
 				}
 				left(expectedVal - val);
 				setBaseMotorAcceleration(1500);
@@ -611,14 +611,14 @@ public class Robot {
 			if (val > expectedVal) {
 				setBaseMotorAcceleration(1800);
 				if (val - expectedVal < 3){
-					right(3);
+					right(2);
 				}
 				right(val - expectedVal);
 				setBaseMotorAcceleration(1500);
 			} else {
 				setBaseMotorAcceleration(1800);
 				if (val - expectedVal < 3){
-					left(3);
+					left(2);
 				}
 				left(expectedVal - val);
 				setBaseMotorAcceleration(1500);
@@ -1451,7 +1451,38 @@ public class Robot {
 	public void faceUpLeft() {
 		goToHeading(headingNorthWest);
 	}
+	
+	public void faceAway(char c) {
+		if ((c == 'w')) {
+			faceDown();
 
+		} else if (c == 'e') {
+			faceDownLeft();
+
+		} else if (c == 'd') {
+			faceLeft();
+
+		} else if (c == 'c') {
+			faceUpLeft();
+
+		} else if (c == 'x') {
+			faceUp();
+
+		} else if (c == 'z') {
+			faceUpRight();
+
+		} else if (c == 'a') {
+			faceRight();
+
+		} else if (c == 'q') {
+			faceDownRight();
+
+		} else {
+			Robot.playTone(440, 100);
+			sleep(100);
+		}
+	}
+	
 	public int goLeft() {
 		faceLeft();
 		//faceDir(180);
@@ -1687,20 +1718,20 @@ public class Robot {
 		servoDriver.servoCompass.setAngle(0);
 	}
 
-	public void faceTarget(int target) {
-		char dir = nav.dirTo(target);
-
-		if (map.isInCenter(target)) {
-		} else if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
-		} else {
-			if (map.findCoordinates(target)[0] <= 2) {
-				goTo(2, 2);
-			} else {
-				goTo(3, 2);
-			}
-		}
-		faceDir(nav.dirTo(target));
-	}
+//	public void faceTarget(int target) {
+//		char dir = nav.dirTo(target);
+//
+//		if (map.isInCenter(target)) {
+//		} else if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
+//		} else {
+//			if (map.findCoordinates(target)[0] <= 2) {
+//				goTo(2, 2);
+//			} else {
+//				goTo(3, 2);
+//			}
+//		}
+//		faceDir(nav.dirTo(target));
+//	}
 
 	public boolean getUseCommands() {
 		return true;

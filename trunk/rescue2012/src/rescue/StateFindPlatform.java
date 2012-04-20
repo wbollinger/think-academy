@@ -27,19 +27,26 @@ public class StateFindPlatform extends State {
 		if(robot.map.findCoordinates(Map2D.PLATFORM)[0] <= 2) {
 			debugln("Coordinates found");
 			robot.goTo(2, 2);
+			robot.printMap();
 		} else {
 			robot.goTo(3, 2);
+			robot.printMap();
 		}
 		debugln("adjacent to platform");
 		
-		robot.faceDir(robot.nav.dirTo(Map2D.PLATFORM));
+		//robot.faceDir(robot.nav.dirTo(Map2D.PLATFORM));
 		
+		char a = robot.map.dirTo(Map2D.PLATFORM);
+		debugln(""+a);
+		robot.faceAway(a);
 		debugln("facing platform");
-	
-		robot.correctLeft(180);
-		while(robot.getEOPDProcessedValue() > 70) {
+		robot.setBaseMotorSpeed(100);
+		while(robot.getEOPDProcessedValue() > 96) {
+			debugln("EOPD Val = "+robot.getEOPDProcessedValue());
 			robot.backward();
 		}
+		robot.stop();
+		robot.setBaseMotorSpeed(500);
 		robot.dropCan();
 		Robot.playTone(440, 1000);
 		robot.sleep(1000);

@@ -240,6 +240,8 @@ public class StateCommand extends State {
 				robot.resetGrid();
 			} else if (command.equalsIgnoreCase("seedgrid")) {
 				robot.map.seed();
+				robot.setX(3);
+				robot.setY(2);
 				robot.printMap();
 				robot.setGridDone(true);
 			} else if (command.equalsIgnoreCase("map")) {
@@ -248,6 +250,8 @@ public class StateCommand extends State {
 				robot.goTo(Integer.parseInt(arg0), Integer.parseInt(arg1));
 			} else if (command.equalsIgnoreCase("findCan")) {
 				robot.changeState(StateFindCan.getInstance());
+			} else if (command.equalsIgnoreCase("findPlatform")) {
+				robot.changeState(StateFindPlatform.getInstance());
 			} else if (command.equalsIgnoreCase("checkForPlatform")) {
 				robot.checkForPlatform();
 			} else if (command.equalsIgnoreCase("locF")) {
