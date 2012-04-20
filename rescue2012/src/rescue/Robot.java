@@ -30,7 +30,7 @@ public class Robot {
 	boolean rightBlack = false;
 	boolean avoidedLeft = true;
 	boolean isOnRamp = false;
-	int threshSilver = 65;
+	int threshSilver = 60;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
 	double headingNorth = 176.0; //measured heading of room north
@@ -41,6 +41,7 @@ public class Robot {
 	double headingSouthWest = 317.0; //measured heading of room southwest
 	double headingWest = 266.0; //measured heading of room west
 	double headingNorthWest = 215.0; //measured heading of room northwest
+	int finalCanDist = 0;
 
 	double kScale = 78.36;
 	double kError = 4.7;  // original value 5.7 returning -1 values
@@ -77,6 +78,7 @@ public class Robot {
 	private int y;
 	boolean canFound;
 	boolean platformFound;
+	boolean canHeld;
 	private boolean gridDone;
 
 	BTConnection btc;
@@ -160,7 +162,7 @@ public class Robot {
 
 		current_state = StateStart.getInstance();
 		stepMode = false;
-		enableTurnBeeps = false;
+		enableTurnBeeps = true;
 
 		map = new Map2D();
 		resetGrid();
@@ -368,11 +370,27 @@ public class Robot {
 		enableTurnBeeps = !enableTurnBeeps;
 	}
 	
+	public void victorySong(){
+		playTone(440, 100);
+		sleep(100);
+		playTone(220, 100);
+		sleep(100);
+		playTone(880, 100);
+		sleep(100);
+		playTone(220, 100);
+		sleep(100);
+		playTone(440, 100);
+		sleep(100);
+		playTone(880, 100);
+		sleep(100);
+	}
+	
 	public void resetGrid() {
 		setX(1);
 		setY(1);
 		canFound = false;
 		platformFound = false;
+		canHeld = false;
 		setGridDone(false);
 		
 		//setDir(90);
@@ -671,7 +689,7 @@ public class Robot {
 		motRegLeft.forward();
 	}
 
-	public void forward(double distance) {
+	public boolean forward(double distance) {
 		// Makes the robot go forward for the given distance
 		if (!isRegulated) {
 			isRegulated = true;
@@ -685,8 +703,12 @@ public class Robot {
 		motRegRight.rotate(angle, true);
 		motRegLeft.rotate(angle, true);
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			if(motRegRight.isStalled()&&motRegLeft.isStalled()) {
+				return false;
+			}
 			sleep(10);
 		}
+		return true;
 	}
 
 	public void backward() {
@@ -699,7 +721,7 @@ public class Robot {
 	}
 
 	//------------------------------------------------------------------------
-	public void backward(double distance) {
+	public boolean backward(double distance) {
 		// Makes the robot go backward for the given distance
 		if (!isRegulated) {
 			isRegulated = true;
@@ -713,9 +735,13 @@ public class Robot {
 		motRegRight.rotate(-angle, true);
 		motRegLeft.rotate(-angle, true);
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
+			if(motRegRight.isStalled()&&motRegLeft.isStalled()) {
+				return false;
+			}
 			sleep(10);
 		}
 		stop();
+		return true;
 	}
 
 	//------------------------------------------------------------------------
@@ -1089,13 +1115,13 @@ public class Robot {
 		int difference = 0;
 
 		while (true) {
-			right(2);
+			right(4);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
 				break;
 			}
 			difference = lastValue - currentValue;
-//			debugln("Cur " + currentValue + " | Dif " + difference);
+			debugln("Dif " + difference);
 			sleep(10);
 			lastValue = currentValue;
 		}
@@ -1108,13 +1134,13 @@ public class Robot {
 		lastValue = currentValue;
 
 		while (true) {
-			left(2);
+			left(4);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
 				break;
 			}
 			difference = lastValue - currentValue;
-//			debugln("Cur " + currentValue + " | Dif " + difference);
+			debugln("Dif " + difference);
 			sleep(10);
 			lastValue = currentValue;
 		}
@@ -1133,6 +1159,9 @@ public class Robot {
 		debugln("Head C " + headC);
 		goToHeading(Util.round(headC)); // findCanFine();
 		stop();
+		finalCanDist = sonicAverage();
+		sleep(100);
+		stop();
 	}
 
 	//------------------------------------------------------------------------
@@ -1149,7 +1178,7 @@ public class Robot {
 		int difference = 0;
 
 		while (true) {
-			right(2);
+			right(4);
 			if (lastValue - currentValue > threshUS) {
 				break;
 			}
@@ -1177,7 +1206,7 @@ public class Robot {
 		lastValue = currentValue;
 
 		while (true) {
-			left(2);
+			left(4);
 			if (lastValue - currentValue > threshUS) {
 				break;
 			}
@@ -1208,6 +1237,9 @@ public class Robot {
 		debugln("Head C " + headC);
 		goToHeading(Util.round(headC)); // findCanFine();
 		stop();
+		finalCanDist = sonicAverage();
+		sleep(100);
+		stop();
 	}
 	
 	//------------------------------------------------------------------------
@@ -1236,7 +1268,7 @@ public class Robot {
 //			if (Math.abs(lastValue - currentValue) > thresh) {
 //				foundCan = true;
 //			}
-			if (currentValue < 30){
+			if (currentValue < 33){
 				counter++;
 			}
 			if (counter>3){
@@ -1404,7 +1436,8 @@ public class Robot {
 	}
 
 	public boolean checkForPlatform() {
-		backward(29);
+		setBaseMotorSpeed(150);
+		backward(35);
 		stop();
 		sleep(1000);
 		int val = getEOPDProcessedValue();
@@ -1413,11 +1446,13 @@ public class Robot {
 			debugln("Platform found");
 			forward(29);
 			stop();
+			setBaseMotorSpeed(500);
 			return true;
 		}
 		debugln("NO platform");
 		forward(29);
 		stop();
+		setBaseMotorSpeed(500);
 		return false;
 	}
 	

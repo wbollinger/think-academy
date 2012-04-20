@@ -61,6 +61,24 @@ public class Map2D {
 		
 	}
 	
+	public void removeObject(int goal) {
+		boolean finished = false;
+		int y = 1;
+		int x = 1;
+		for(x = 1; x < Map2D.COLS-1; x++) {
+			for(y = 1; y < Map2D.ROWS-1; y++) {
+				if(grid[x][y]==goal) {
+					finished = true;
+					break;
+				}
+			}
+			if(finished) {
+				break;
+			}
+		}
+		grid[x][y] = 0;
+	}
+	
 	public void reset() {
 		for(int i = 0; i < COLS; i++) {
 			for(int j = 0; j < ROWS; j++) {
