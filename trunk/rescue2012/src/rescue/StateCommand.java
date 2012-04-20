@@ -85,7 +85,9 @@ public class StateCommand extends State {
 				robot.outStream.writeUTF(robot.name + " battery: " + volts
 						+ "\n");
 				if (volts < 6.3f) {
-					Sound.beep(); Sound.beep(); Sound.beep();
+					Sound.beep();
+					Sound.beep();
+					Sound.beep();
 					debugln("LOW VOLTAGE!!!");
 				}
 				firstTime = false;
@@ -169,7 +171,8 @@ public class StateCommand extends State {
 					return;
 				}
 				robot.forward();
-			} else if (command.equalsIgnoreCase("reverse")||command.equalsIgnoreCase("backward")) {
+			} else if (command.equalsIgnoreCase("reverse")
+					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
 					robot.backward(distance);
@@ -287,6 +290,20 @@ public class StateCommand extends State {
 					robot.servoDriver.servoClawGrip.setAngle(degrees);
 				}
 				debugln("" + robot.servoDriver.servoClawGrip.getAngle());
+			} else if (command.equalsIgnoreCase("forhit")) {
+				robot.forwardTillHit();
+
+				robot.forward();
+			} else if (command.equalsIgnoreCase("fordist")) {
+				if (args.length > 0) {
+					int distance = parseInt(arg0);
+					robot.forwardCheckForDist(distance);
+					return;
+				}
+			}
+
+			else if (command.equalsIgnoreCase("FPUS")) {
+				debugln("" + robot.checkForPlatformUS());
 			} else if (command.equalsIgnoreCase("openClaw")) {
 				robot.servoDriver.servoClawGrip.setAngle(0);
 			} else if (command.equalsIgnoreCase("closeClaw")) {
@@ -313,7 +330,7 @@ public class StateCommand extends State {
 				robot.dropClaw();
 			} else if (command.equalsIgnoreCase("dropCan")) {
 				robot.dropCan();
-			}else if (command.equalsIgnoreCase("approachCan")) {
+			} else if (command.equalsIgnoreCase("approachCan")) {
 				robot.canSequence();
 			} else if (command.equalsIgnoreCase("getAngle")) {
 				double angle = robot.getAngle();
@@ -345,7 +362,8 @@ public class StateCommand extends State {
 					int raw = robot.getEOPDRawValue();
 					int processed = robot.getEOPDProcessedValue();
 					int scaled = robot.getEOPDScaled();
-					debugln("" + val + " " + val2 + " " + raw + " " + processed + " " + scaled);
+					debugln("" + val + " " + val2 + " " + raw + " " + processed
+							+ " " + scaled);
 					robot.sleep(50);
 				}
 			} else if (command.equalsIgnoreCase("readLightArduino")) {
@@ -369,7 +387,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("faceDir")) {
 				robot.faceDir(parseInt(arg0));
 			} else if (command.equalsIgnoreCase("calibrateCompass")) {
-				//robot.compassCardinalCalibrate();
+				// robot.compassCardinalCalibrate();
 				LCD.drawString("Calibrate:", 0, 0);
 				robot.compass.startCalibration();
 				while (!Button.ENTER.isDown()) {
