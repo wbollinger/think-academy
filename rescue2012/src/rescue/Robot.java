@@ -1427,7 +1427,7 @@ public class Robot {
 		sleep(1000);
 		int val = sonicAverage();
 		debugln("US: " + val);
-		if (val < 24) {
+		if (val < 22) {
 			debugln("Platform found");
 			backward(25);
 			stop();
@@ -1451,7 +1451,10 @@ public class Robot {
 		int current = 0;
 		int last = 1 ;
 		int ticks = 0;
-		while (ticks < 20) {
+		while (ticks < 3) {
+			if (last==current){
+				ticks=ticks+1;
+			}
 			if (sonicAverage() < 40) {
 				last = current;
 				current = sonicAverage();
@@ -1460,10 +1463,7 @@ public class Robot {
 				current = 0;
 				ticks = 0;
 			}
-			if (last==current){
-				ticks=ticks+1;
-			}
-			sleep(20);
+			sleep(10);
 			debugln("L" + last);
 			debugln("T" + ticks);
 			debugln("C" + current);
