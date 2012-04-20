@@ -125,7 +125,7 @@ public class Map2D {
 		} else if (grid[coord[0]+1][coord[1]] == val) {
 			return 'd';
 			
-		} else if (grid[coord[0+1]][coord[1]-1] == val) {
+		} else if (grid[coord[0]+1][coord[1]-1] == val) {
 			return 'c';
 			
 		} else if (grid[coord[0]][coord[1]-1] == val) {

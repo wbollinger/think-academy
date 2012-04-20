@@ -41,7 +41,7 @@ public class StateFindPlatform extends State {
 		robot.faceAway(a);
 		debugln("facing platform");
 		robot.setBaseMotorSpeed(100);
-		while(robot.getEOPDProcessedValue() > 96) {
+		while(robot.getEOPDProcessedValue() > 90) {
 			debugln("EOPD Val = "+robot.getEOPDProcessedValue());
 			robot.backward();
 		}
