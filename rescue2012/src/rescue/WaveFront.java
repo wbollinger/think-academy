@@ -113,7 +113,7 @@ public class WaveFront {
 			upLeft = overlay.grid[x - 1][y + 1];
 			
 			if(isCenterAjacentTo(goal)) {
-				path.append(dirTo(goal));
+				path.append(scanMap.dirTo(goal));
 				finished = true;
 				
 			} else if ((up == n)) {
@@ -204,38 +204,6 @@ public class WaveFront {
 		} else {
 			return false;
 		}
-	}
-	
-	public char dirTo(int val) {
-		
-		if ((up == val)) {
-			return 'w';
-			
-		} else if (upRight == val) {
-			return 'e';
-			
-		} else if (right == val) {
-			return 'd';
-			
-		} else if (downRight == val) {
-			return 'c';
-			
-		} else if (down == val) {
-			return 'x';
-			
-		} else if (downLeft == val) {
-			return 'z';
-			
-		} else if (left == val) {
-			return 'a';
-			
-		} else if (upLeft == val) {
-			return 'q';
-			
-		} else {
-			return 's';
-		}
-		
 	}
 	
 	

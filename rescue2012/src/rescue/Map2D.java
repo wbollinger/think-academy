@@ -112,6 +112,39 @@ public class Map2D {
 	    count += num1;
 	    return(count);    
 	} 
+	
+	public char dirTo(int val) {
+		int[] coord = findCoordinates(ROBOT);
+		
+		if (grid[coord[0]][coord[1]+1] == val) {
+			return 'w';
+			
+		} else if (grid[coord[0]+1][coord[1]+1] == val) {
+			return 'e';
+			
+		} else if (grid[coord[0]+1][coord[1]] == val) {
+			return 'd';
+			
+		} else if (grid[coord[0+1]][coord[1]-1] == val) {
+			return 'c';
+			
+		} else if (grid[coord[0]][coord[1]-1] == val) {
+			return 'x';
+			
+		} else if (grid[coord[0]-1][coord[1]-1] == val) {
+			return 'z';
+			
+		} else if (grid[coord[0]-1][coord[1]] == val) {
+			return 'a';
+			
+		} else if (grid[coord[0]-1][coord[1]+1] == val) {
+			return 'q';
+			
+		} else {
+			return 's';
+		}
+		
+	}
 	  
 	public static void test_main(String[] args) {
 		Map2D array = new Map2D();
