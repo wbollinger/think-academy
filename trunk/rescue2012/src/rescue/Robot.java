@@ -33,18 +33,18 @@ public class Robot {
 	int threshSilver = 60;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
-	double headingNorth = 176.0; //measured heading of room north
-	double headingNorthEast = 139.0; //measured heading of room northeast
-	double headingEast = 95.0; //measured heading of room east
-	double headingSouthEast = 50.0; //measured heading of room southeast
-	double headingSouth = 4.0; //measured heading of room south
-	double headingSouthWest = 317.0; //measured heading of room southwest
-	double headingWest = 266.0; //measured heading of room west
-	double headingNorthWest = 215.0; //measured heading of room northwest
+	double headingNorth = 176.0; // measured heading of room north
+	double headingNorthEast = 139.0; // measured heading of room northeast
+	double headingEast = 95.0; // measured heading of room east
+	double headingSouthEast = 50.0; // measured heading of room southeast
+	double headingSouth = 4.0; // measured heading of room south
+	double headingSouthWest = 317.0; // measured heading of room southwest
+	double headingWest = 266.0; // measured heading of room west
+	double headingNorthWest = 215.0; // measured heading of room northwest
 	int finalCanDist = 0;
 
 	double kScale = 78.36;
-	double kError = 4.7;  // original value 5.7 returning -1 values
+	double kError = 4.7; // original value 5.7 returning -1 values
 	NXTMotor motRight;
 	NXTMotor motLeft;
 	NXTMotor arduPower;
@@ -85,7 +85,7 @@ public class Robot {
 	DataInputStream inStream;
 	DataOutputStream outStream;
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	private Robot() {
 		// check which robot this and set diameters, sensors
 		Properties props = Settings.getProperties();
@@ -106,34 +106,29 @@ public class Robot {
 			robotDiameter = 13.6;
 			angleError = 1; // (360.0/276.0)
 
-			//lightLeft = new LightSensor(SensorPort.S1);
-			//lightRight = new LightSensor(SensorPort.S2);
+			// lightLeft = new LightSensor(SensorPort.S1);
+			// lightRight = new LightSensor(SensorPort.S2);
 			compass = new CompassHTSensor(SensorPort.S3);
 			servoDriver = new ArduRCJ(SensorPort.S4);
 			arduPower = new NXTMotor(MotorPort.A); // power arduino
-			//For direct connect: eopdSensor = new EOPD(SensorPort.S1, true /* longRange */);
+			// For direct connect: eopdSensor = new EOPD(SensorPort.S1, true /*
+			// longRange */);
 			eopdSensor = null;
 			ultrasonic = new UltrasonicSensor(SensorPort.S2);
 			ultrasonic.continuous();
-		} /*else if (name.equals("LineBacker")) {
-			wheelDiameter = 5.6;
-			robotDiameter = 17.0;
-			angleError = 1.0;
-			lightLeft = new LightSensor(SensorPort.S1);
-			ultrasonic = new UltrasonicSensor(SensorPort.S4);
-			ultrasonic.continuous();
-		} else if (name.equals("Dr_Lakata")) {
-			wheelDiameter = 5.6;
-			robotDiameter = 15.9;
-			angleError = 1.0;
-			eopdSensor = new EOPD(SensorPort.S2, true);  // longRange
-			// lightLeft = new LightSensor(SensorPort.S1);
-			// lightRight = new LightSensor(SensorPort.S2);
-			// touch = new TouchSensor(SensorPort.S3);
-			compass = new CompassHTSensor(SensorPort.S3);
-			ultrasonic = new UltrasonicSensor(SensorPort.S4);
-			ultrasonic.continuous();
-		} */ else if (name.equals("JPNXT")) {
+		} /*
+		 * else if (name.equals("LineBacker")) { wheelDiameter = 5.6;
+		 * robotDiameter = 17.0; angleError = 1.0; lightLeft = new
+		 * LightSensor(SensorPort.S1); ultrasonic = new
+		 * UltrasonicSensor(SensorPort.S4); ultrasonic.continuous(); } else if
+		 * (name.equals("Dr_Lakata")) { wheelDiameter = 5.6; robotDiameter =
+		 * 15.9; angleError = 1.0; eopdSensor = new EOPD(SensorPort.S2, true);
+		 * // longRange // lightLeft = new LightSensor(SensorPort.S1); //
+		 * lightRight = new LightSensor(SensorPort.S2); // touch = new
+		 * TouchSensor(SensorPort.S3); compass = new
+		 * CompassHTSensor(SensorPort.S3); ultrasonic = new
+		 * UltrasonicSensor(SensorPort.S4); ultrasonic.continuous(); }
+		 */else if (name.equals("JPNXT")) {
 			// defaults for Jeremy
 			wheelDiameter = 4.96;
 			robotDiameter = 13.5;
@@ -190,7 +185,7 @@ public class Robot {
 		return false;
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void setArduinoPoweredUp(boolean powerOn) {
 		if (arduPower != null) {
 			if (powerOn == true) {
@@ -202,7 +197,7 @@ public class Robot {
 				dropCompass();
 				openClaw();
 				dropClaw();
-				
+
 			} else {
 				// Turn off Arduino
 				arduPower.setPower(0);
@@ -252,7 +247,7 @@ public class Robot {
 		motRegRight.setSpeed(baseMotorSpeed);
 		motRegLeft.setSpeed(baseMotorSpeed);
 	}
-	
+
 	public int getBaseMotorAcceleration() {
 		return baseMotorAcceleration;
 	}
@@ -282,15 +277,15 @@ public class Robot {
 	}
 
 	public int getDir() {
-		
-		return (int)getHeading();
+
+		return (int) getHeading();
 	}
-	
-	public float getCompOffset(){
+
+	public float getCompOffset() {
 		return compOffset;
 	}
-	
-	public void setCompOffset(float val){
+
+	public void setCompOffset(float val) {
 		compOffset = val;
 	}
 
@@ -304,29 +299,29 @@ public class Robot {
 			direction -= 360;
 		}
 		compHeading = getHeading();
-		compOffset = (int)(Util.round(compHeading - direction));
+		compOffset = (int) (Util.round(compHeading - direction));
 		debugln("compOffset:" + compOffset);
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public float getHeading() {
 		float cReading = 0.0f;
 		float correctedCReading = 0.0f;
 
 		if (compass != null) {
-			if(!isCompassUp()) {
+			if (!isCompassUp()) {
 				liftCompass();
 				sleep(1000);
 			}
 			cReading = compass.getDegrees();
 		}
 		correctedCReading = 360 - cReading + 90;
-		//debugln("Old Heading: " + correctedCReading);
+		// debugln("Old Heading: " + correctedCReading);
 		if (correctedCReading >= 360) {
 			correctedCReading = correctedCReading - 360;
 		}
 		correctedCReading = correctedCReading - compOffset;
-		//debugln("New Heading: " + correctedCReading);
+		// debugln("New Heading: " + correctedCReading);
 		if (correctedCReading < 0) {
 			correctedCReading = correctedCReading + 360;
 		}
@@ -355,10 +350,10 @@ public class Robot {
 			Sound.playTone(freq, duration);
 		}
 	}
-	
-	public void canSequence(){
+
+	public void canSequence() {
 		setBaseMotorSpeed(50);
-		while(robot.getEOPDProcessedValue() > 70){
+		while (robot.getEOPDProcessedValue() > 70) {
 			robot.backward();
 		}
 		robot.stop();
@@ -369,8 +364,8 @@ public class Robot {
 	public void toggleBeeps() {
 		enableTurnBeeps = !enableTurnBeeps;
 	}
-	
-	public void victorySong(){
+
+	public void victorySong() {
 		playTone(440, 100);
 		sleep(100);
 		playTone(220, 100);
@@ -384,7 +379,7 @@ public class Robot {
 		playTone(880, 100);
 		sleep(100);
 	}
-	
+
 	public void resetGrid() {
 		setX(1);
 		setY(1);
@@ -393,8 +388,8 @@ public class Robot {
 		canHeld = false;
 		StateGridRunNew.getInstance().enterGrid = true;
 		setGridDone(false);
-		
-		//setDir(90);
+
+		// setDir(90);
 		map.reset();
 		map.grid[x][y] = Map2D.ROBOT;
 	}
@@ -463,60 +458,60 @@ public class Robot {
 			e.printStackTrace();
 		}
 	}
-	
-	//------------------------------------------------------------------------
-//	public void compassCardinalCalibrate(){
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal0 = getHeading() + compOffset;
-//		debugln("cardinal0 = "+cardinal0);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal45 = getHeading() + compOffset;
-//		debugln("cardinal45 = "+cardinal45);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal90 = getHeading() + compOffset;
-//		debugln("cardinal90 = "+cardinal90);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal135 = getHeading() + compOffset;
-//		debugln("cardinal135 = "+cardinal135);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal180 = getHeading() + compOffset;
-//		debugln("cardinal180 = "+cardinal180);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal225 = getHeading() + compOffset;
-//		debugln("cardinal225 = "+cardinal225);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal270 = getHeading() + compOffset;
-//		debugln("cardinal270 = "+cardinal270);
-//		while(Button.ENTER.isDown()){
-//		}
-//		while(Button.ENTER.isUp()){
-//		}
-//		cardinal315 = getHeading() + compOffset;
-//		debugln("cardinal315 = "+cardinal315);
-//		while(Button.ENTER.isDown()){
-//		}	
-//	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// public void compassCardinalCalibrate(){
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal0 = getHeading() + compOffset;
+	// debugln("cardinal0 = "+cardinal0);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal45 = getHeading() + compOffset;
+	// debugln("cardinal45 = "+cardinal45);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal90 = getHeading() + compOffset;
+	// debugln("cardinal90 = "+cardinal90);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal135 = getHeading() + compOffset;
+	// debugln("cardinal135 = "+cardinal135);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal180 = getHeading() + compOffset;
+	// debugln("cardinal180 = "+cardinal180);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal225 = getHeading() + compOffset;
+	// debugln("cardinal225 = "+cardinal225);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal270 = getHeading() + compOffset;
+	// debugln("cardinal270 = "+cardinal270);
+	// while(Button.ENTER.isDown()){
+	// }
+	// while(Button.ENTER.isUp()){
+	// }
+	// cardinal315 = getHeading() + compOffset;
+	// debugln("cardinal315 = "+cardinal315);
+	// while(Button.ENTER.isDown()){
+	// }
+	// }
+
+	// ------------------------------------------------------------------------
 	public void goToHeading(double angle) {
 		if (angle < 0) {
 			angle += 360;
@@ -540,7 +535,7 @@ public class Robot {
 		}
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void correctRight(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin - degrees;
@@ -568,14 +563,14 @@ public class Robot {
 			}
 			if (val > expectedVal) {
 				setBaseMotorAcceleration(1800);
-				if (val - expectedVal < 3){
+				if (val - expectedVal < 3) {
 					right(2);
 				}
 				right(val - expectedVal);
 				setBaseMotorAcceleration(1500);
 			} else {
 				setBaseMotorAcceleration(1800);
-				if (val - expectedVal < 3){
+				if (val - expectedVal < 3) {
 					left(2);
 				}
 				left(expectedVal - val);
@@ -588,11 +583,11 @@ public class Robot {
 		}
 
 		sleep(100);
-		//debugln("Original Heading: " + firstDir);
-		//debugln("Current Heading: " + getDir());
+		// debugln("Original Heading: " + firstDir);
+		// debugln("Current Heading: " + getDir());
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void correctLeft(float degrees) {
 		float origin = getHeading();
 		float expectedVal = origin + degrees;
@@ -619,14 +614,14 @@ public class Robot {
 			}
 			if (val > expectedVal) {
 				setBaseMotorAcceleration(1800);
-				if (val - expectedVal < 3){
+				if (val - expectedVal < 3) {
 					right(2);
 				}
 				right(val - expectedVal);
 				setBaseMotorAcceleration(1500);
 			} else {
 				setBaseMotorAcceleration(1800);
-				if (val - expectedVal < 3){
+				if (val - expectedVal < 3) {
 					left(2);
 				}
 				left(expectedVal - val);
@@ -638,8 +633,8 @@ public class Robot {
 		}
 
 		sleep(100);
-		//debugln("Original Heading: " + firstDir);
-		//debugln("Current Heading: " + getDir());
+		// debugln("Original Heading: " + firstDir);
+		// debugln("Current Heading: " + getDir());
 	}
 
 	// ---------- begin new Right/Left -----------
@@ -704,7 +699,7 @@ public class Robot {
 		motRegRight.rotate(angle, true);
 		motRegLeft.rotate(angle, true);
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
-			if(motRegRight.isStalled()&&motRegLeft.isStalled()) {
+			if (motRegRight.isStalled() && motRegLeft.isStalled()) {
 				return false;
 			}
 			sleep(10);
@@ -721,7 +716,7 @@ public class Robot {
 		motRegLeft.backward();
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public boolean backward(double distance) {
 		// Makes the robot go backward for the given distance
 		if (!isRegulated) {
@@ -736,7 +731,7 @@ public class Robot {
 		motRegRight.rotate(-angle, true);
 		motRegLeft.rotate(-angle, true);
 		while (motRegRight.isMoving() || motRegLeft.isMoving()) {
-			if(motRegRight.isStalled()&&motRegLeft.isStalled()) {
+			if (motRegRight.isStalled() && motRegLeft.isStalled()) {
 				return false;
 			}
 			sleep(10);
@@ -745,7 +740,7 @@ public class Robot {
 		return true;
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void stop() {
 		// Stops both wheel motors
 		if (isRegulated) {
@@ -761,7 +756,7 @@ public class Robot {
 		}
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public boolean obstacleSideCheck() {
 		// Checks to see whether distance to left is longer than distance to
 		// right. Returns true is left is longer.
@@ -771,8 +766,8 @@ public class Robot {
 
 		int aveRightDist;
 		aveRightDist = sonicAverage();
-		
-		if(aveRightDist < 15){
+
+		if (aveRightDist < 15) {
 			backward(5);
 			stop();
 		}
@@ -782,7 +777,7 @@ public class Robot {
 
 		int aveLeftDist;
 		aveLeftDist = sonicAverage();
-		if(aveLeftDist < 15){
+		if (aveLeftDist < 15) {
 			backward(5);
 			stop();
 		}
@@ -795,7 +790,7 @@ public class Robot {
 		}
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public boolean forwardLookForLine(double distance) {
 		// Makes the robot go forward for the given distance, and stop if it
 		// sees a line
@@ -850,7 +845,7 @@ public class Robot {
 		return false;
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public boolean correctLeftLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
@@ -891,7 +886,7 @@ public class Robot {
 		return line;
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public boolean correctRightLine(float degrees) {
 		boolean line = false;
 		float origin = getHeading();
@@ -979,7 +974,7 @@ public class Robot {
 		return false;
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public boolean turnRightLookForLine(double degrees) {
 		// Makes the robot turn right for the given degrees, and stop if it
 		// sees a line
@@ -1018,7 +1013,7 @@ public class Robot {
 
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void findLineRight() {
 		// makes the robot turn right, looking to reposition itself so as to
 		// resume
@@ -1047,7 +1042,7 @@ public class Robot {
 		debugln("stop findline");
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public int getEOPDScaled() {
 		int val = 1023 - getEOPDRawValue();
 		return (val / 10);
@@ -1071,7 +1066,7 @@ public class Robot {
 	 * @return A value between 0 and 100.
 	 */
 	public int getEOPDProcessedValue() {
-		return 100-(int)(Math.sqrt((1023 - getEOPDRawValue()) * 10));
+		return 100 - (int) (Math.sqrt((1023 - getEOPDRawValue()) * 10));
 	}
 
 	public double eopdAverage() {
@@ -1088,8 +1083,10 @@ public class Robot {
 	}
 
 	public double getEopdDistance() {
-		double distance = Util.round(kScale/Math.sqrt((double) getEOPDRawValue()) - kError);
-		//debugln("" + distance + " (" + kScale/Math.sqrt((double) getEOPDRaw()) + ")");
+		double distance = Util.round(kScale
+				/ Math.sqrt((double) getEOPDRawValue()) - kError);
+		// debugln("" + distance + " (" + kScale/Math.sqrt((double)
+		// getEOPDRaw()) + ")");
 		return distance;
 	}
 
@@ -1105,7 +1102,7 @@ public class Robot {
 		return average;
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void findCanCoarseEOPD() {
 		setBaseMotorPower(35);
 		setBaseMotorSpeed(500);
@@ -1119,7 +1116,7 @@ public class Robot {
 			right(4);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
-				debugln("Final EOPD Dif: "+(lastValue - currentValue));
+				debugln("Final EOPD Dif: " + (lastValue - currentValue));
 				break;
 			}
 			difference = lastValue - currentValue;
@@ -1139,7 +1136,7 @@ public class Robot {
 			left(4);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
-				debugln("Final EOPD Dif: "+(lastValue - currentValue));
+				debugln("Final EOPD Dif: " + (lastValue - currentValue));
 				break;
 			}
 			difference = lastValue - currentValue;
@@ -1153,7 +1150,7 @@ public class Robot {
 		double headR = getHeading();
 		double headC;
 
-		if (Math.abs(headL - headR)>180) {
+		if (Math.abs(headL - headR) > 180) {
 			headC = Util.round((headR + headL) / 2 - 180);
 		} else {
 			headC = Util.round((headR + headL) / 2);
@@ -1167,11 +1164,14 @@ public class Robot {
 		stop();
 	}
 
-	//------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public void findCanCoarseSonic() {
 		setBaseMotorSpeed(500);
 		correctLeft(75);
 		int storage;
+		int degreesL = 0;
+		int degreesR = 0;
+		int headS = (int)getHeading();
 
 		int currentValue = 40;
 		if ((sonicAverage() < 40)) {
@@ -1180,7 +1180,7 @@ public class Robot {
 		int lastValue = currentValue;
 		int difference = 0;
 
-		while (true) {
+		while (degreesL < 400) {
 			right(4);
 			if (lastValue - currentValue > threshUS) {
 				break;
@@ -1194,7 +1194,12 @@ public class Robot {
 			debug("Cur " + currentValue);
 			debug(" | Last " + lastValue);
 			debugln(" | Dif " + difference);
+			degreesL = degreesL + 4;
 		}
+		if (degreesL >= 399){
+			goToHeading(headS);
+		}
+
 		stop();
 		sleep(1000);
 		debug("Head L " + getHeading());
@@ -1208,7 +1213,7 @@ public class Robot {
 		}
 		lastValue = currentValue;
 
-		while (true) {
+		while (degreesR < 400) {
 			left(4);
 			if (lastValue - currentValue > threshUS) {
 				break;
@@ -1222,6 +1227,10 @@ public class Robot {
 			debug("Cur " + currentValue);
 			debug(" | Last " + lastValue);
 			debugln(" | Dif " + difference);
+			degreesR = degreesR + 4;
+		}
+		if (degreesR >= 399){
+			goToHeading(headL);
 		}
 		stop();
 		sleep(1000);
@@ -1230,12 +1239,14 @@ public class Robot {
 		// if (headR > 180)
 		// {headR = headR - 360;}
 		double headC;
-
-		if (Math.abs(headL - headR)>180) {
+if (degreesL<399){
+		if (Math.abs(headL - headR) > 180) {
 			headC = Util.round((headR + headL) / 2 - 180);
 		} else {
 			headC = Util.round((headR + headL) / 2);
 		}
+}
+else headC=headR;
 
 		debugln("Head C " + headC);
 		goToHeading(Util.round(headC)); // findCanFine();
@@ -1244,14 +1255,14 @@ public class Robot {
 		sleep(100);
 		stop();
 	}
-	
-	//------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
 	public boolean isCanInSquare() {
 		boolean foundCan = false;
 		int sweepResolution = 5;
-		int degrees=0;
+		int degrees = 0;
 		int storage;
-		
+
 		setBaseMotorPower(20);
 		setBaseMotorSpeed(500);
 		robot.correctLeft(20);
@@ -1268,26 +1279,73 @@ public class Robot {
 			if (storage < 45) {
 				currentValue = storage;
 			}
-//			if (Math.abs(lastValue - currentValue) > thresh) {
-//				foundCan = true;
-//			}
-			if (currentValue < 31){
+			// if (Math.abs(lastValue - currentValue) > thresh) {
+			// foundCan = true;
+			// }
+			if (currentValue < 31) {
 				counter++;
 			}
-			if (counter>3){
+			if (counter > 3) {
 				foundCan = true;
 			}
-			debugln("Cur " + currentValue + " | Dif " + (lastValue - currentValue));
+			debugln("Cur " + currentValue + " | Dif "
+					+ (lastValue - currentValue));
 			degrees += sweepResolution;
 			lastValue = currentValue;
 		}
-		
+
 		robot.stop();
+		robot.left(20);
 		debugln("Can: " + foundCan);
 		return foundCan;
 	}
 
-	//------------------------------------------------------------------------
+	public boolean isCanInSquareCorners() {
+		boolean foundCan = false;
+		int sweepResolution = 5;
+		int degrees = 0;
+		int storage;
+		int difference;
+		int lowVal = 100;
+
+		setBaseMotorPower(20);
+		setBaseMotorSpeed(500);
+		robot.correctLeft(45);
+
+		int currentValue = 45;
+		if ((sonicAverage() < 45)) {
+			currentValue = sonicAverage();
+		}
+		int lastValue = currentValue;
+
+		while (degrees < 90) {
+			right(4);
+			if (lastValue - currentValue > threshUS) {
+				foundCan = true;
+			}
+			lastValue = currentValue;
+			storage = sonicAverage();
+			if (storage < 40) {
+				currentValue = storage;
+			}
+			difference = lastValue - currentValue;
+			if(currentValue < lowVal) {
+				lowVal = difference;
+			}
+			debug("Cur " + currentValue);
+			debug(" | Last " + lastValue);
+			debugln(" | Dif " + difference);
+			degrees=degrees + 4;
+		}
+		lowVal = Math.abs(lowVal);
+		robot.stop();
+		robot.left(45);
+		robot.forward(lowVal-3);
+		debugln("Can: " + foundCan);
+		return foundCan;
+	}
+
+	// ------------------------------------------------------------------------
 	public void findCanFine() {
 		int dist = ultrasonic.getDistance();
 		motLeft.backward();
@@ -1330,49 +1388,49 @@ public class Robot {
 	 * @return
 	 */
 	public void faceDir(int n) {
-		
+
 		goToHeading(n);
-		
-//		double i = 0;
-//		
-//		if (n == 0){
-//			i = cardinal0;
-//		} else if(n == 45){
-//			i = cardinal45;
-//		} else if(n == 90){
-//			i = cardinal90;
-//		} else if(n == 135){
-//			i = cardinal135;
-//		} else if(n == 180){
-//			i = cardinal180;
-//		} else if(n == 225){
-//			i = cardinal225;
-//		} else if(n == 270){
-//			i = cardinal270;
-//		} else if(n == 315){
-//			i = cardinal315;
-//		} else {
-//			i = n;
-//		}
-//		
-//		goToHeading(i);
-		
-//		int diff = n - getDir();
-//		//debugln("faceDir: diff = " + diff);
-//		if (diff == 0) {
-//			return;
-//		} else {
-//			if (diff > 180) {
-//				correctRight(Math.abs(360 - diff));
-//			} else if (diff > 0) {
-//				correctLeft(Math.abs(diff));
-//			} else if (diff < -180) {
-//				correctLeft(Math.abs(360 + diff));
-//			} else {
-//				correctRight(Math.abs(diff));
-//			}
-//		}
-//		// setDir(n);
+
+		// double i = 0;
+		//
+		// if (n == 0){
+		// i = cardinal0;
+		// } else if(n == 45){
+		// i = cardinal45;
+		// } else if(n == 90){
+		// i = cardinal90;
+		// } else if(n == 135){
+		// i = cardinal135;
+		// } else if(n == 180){
+		// i = cardinal180;
+		// } else if(n == 225){
+		// i = cardinal225;
+		// } else if(n == 270){
+		// i = cardinal270;
+		// } else if(n == 315){
+		// i = cardinal315;
+		// } else {
+		// i = n;
+		// }
+		//
+		// goToHeading(i);
+
+		// int diff = n - getDir();
+		// //debugln("faceDir: diff = " + diff);
+		// if (diff == 0) {
+		// return;
+		// } else {
+		// if (diff > 180) {
+		// correctRight(Math.abs(360 - diff));
+		// } else if (diff > 0) {
+		// correctLeft(Math.abs(diff));
+		// } else if (diff < -180) {
+		// correctLeft(Math.abs(360 + diff));
+		// } else {
+		// correctRight(Math.abs(diff));
+		// }
+		// }
+		// // setDir(n);
 	}
 
 	public void faceDir(char c) {
@@ -1417,8 +1475,8 @@ public class Robot {
 		if (diffX != Math.rint(diffX)) {
 			factor = Math.abs(1 / diffX);
 		}
-		int nextX = getX() + (int)Util.round(factor * diffX);
-		int nextY = getY() + (int)Util.round(factor * diffY);
+		int nextX = getX() + (int) Util.round(factor * diffX);
+		int nextY = getY() + (int) Util.round(factor * diffY);
 
 		debugln("(" + nextX + ", " + nextY + ") dir=" + getDir());
 		debugln("" + factor);
@@ -1444,7 +1502,7 @@ public class Robot {
 		stop();
 		sleep(1000);
 		int val = getEOPDProcessedValue();
-		debugln("EOPD reading: "+val);
+		debugln("EOPD reading: " + val);
 		if (val < 90) {
 			debugln("Platform found");
 			forward(29);
@@ -1458,7 +1516,7 @@ public class Robot {
 		setBaseMotorSpeed(500);
 		return false;
 	}
-	
+
 	public boolean checkForPlatformUS() {
 		forward(25);
 		stop();
@@ -1487,11 +1545,11 @@ public class Robot {
 	public void forwardTillHit() {
 		forward();
 		int current = 0;
-		int last = 1 ;
+		int last = 1;
 		int ticks = 0;
 		while (ticks < 3) {
-			if (last==current){
-				ticks=ticks+1;
+			if (last == current) {
+				ticks = ticks + 1;
 			}
 			if (sonicAverage() < 40) {
 				last = current;
@@ -1509,39 +1567,39 @@ public class Robot {
 		}
 		robot.stop();
 	}
-	
+
 	public void faceUp() {
 		goToHeading(headingNorth);
 	}
-	
+
 	public void faceUpRight() {
 		goToHeading(headingNorthEast);
 	}
-	
+
 	public void faceRight() {
 		goToHeading(headingEast);
 	}
-	
+
 	public void faceDownRight() {
 		goToHeading(headingSouthEast);
 	}
-	
+
 	public void faceDown() {
 		goToHeading(headingSouth);
 	}
-	
+
 	public void faceDownLeft() {
 		goToHeading(headingSouthWest);
 	}
-	
+
 	public void faceLeft() {
 		goToHeading(headingWest);
 	}
-	
+
 	public void faceUpLeft() {
 		goToHeading(headingNorthWest);
 	}
-	
+
 	public void faceAway(char c) {
 		if ((c == 'w')) {
 			faceDown();
@@ -1572,10 +1630,10 @@ public class Robot {
 			sleep(100);
 		}
 	}
-	
+
 	public int goLeft() {
 		faceLeft();
-		//faceDir(180);
+		// faceDir(180);
 		if (goForward(180)) {
 			return 0;
 		} else {
@@ -1585,9 +1643,9 @@ public class Robot {
 
 	public int goRight() {
 		faceRight();
-		//faceDir(0);
+		// faceDir(0);
 		if (goForward(0)) {
-			//faceDir(0);
+			// faceDir(0);
 			return 0;
 		} else {
 			return 1;
@@ -1596,7 +1654,7 @@ public class Robot {
 
 	public int goUp() {
 		faceUp();
-		//faceDir(90);
+		// faceDir(90);
 		if (goForward(90)) {
 			return 0;
 		} else {
@@ -1606,7 +1664,7 @@ public class Robot {
 
 	public int goDown() {
 		faceDown();
-		//faceDir(270);
+		// faceDir(270);
 		if (goForward(270)) {
 			return 0;
 		} else {
@@ -1616,9 +1674,9 @@ public class Robot {
 
 	public int goUpRight() {
 		faceUpRight();
-		//faceDir(45);
+		// faceDir(45);
 		if (goForward(45)) {
-			//faceDir(45);
+			// faceDir(45);
 			return 0;
 		} else {
 			return 1;
@@ -1627,7 +1685,7 @@ public class Robot {
 
 	public int goUpLeft() {
 		faceUpLeft();
-		//faceDir(135);
+		// faceDir(135);
 		if (goForward(135)) {
 			return 0;
 		} else {
@@ -1637,7 +1695,7 @@ public class Robot {
 
 	public int goDownLeft() {
 		faceDownLeft();
-		//faceDir(225);
+		// faceDir(225);
 		if (goForward(225)) {
 			return 0;
 		} else {
@@ -1647,7 +1705,7 @@ public class Robot {
 
 	public int goDownRight() {
 		faceDownRight();
-		//faceDir(315);
+		// faceDir(315);
 		if (goForward(315)) {
 			return 0;
 		} else {
@@ -1705,17 +1763,18 @@ public class Robot {
 			}
 		}
 		debugln("adjacent to object");
-		faceDir(route.charAt(route.length()-1));
+		faceDir(route.charAt(route.length() - 1));
 		debugln("facing object");
 
 	}
 
 	public void goTo(int x, int y) {
-		if ((map.findCoordinates(Map2D.ROBOT)[0] == x)&&(map.findCoordinates(Map2D.ROBOT)[1] == y)){
+		if ((map.findCoordinates(Map2D.ROBOT)[0] == x)
+				&& (map.findCoordinates(Map2D.ROBOT)[1] == y)) {
 			return;
 		}
 		String route = nav.pathTo(x, y);
-		debugln("Pathing complete to: "+x+ ", "+y);
+		debugln("Pathing complete to: " + x + ", " + y);
 		char dir;
 		for (int n = 0; n < route.length(); n++) {
 			dir = route.charAt(n);
@@ -1749,8 +1808,8 @@ public class Robot {
 				sleep(100);
 			}
 		}
-		
-		debugln("Routing complete to: "+x+ ", "+y);
+
+		debugln("Routing complete to: " + x + ", " + y);
 		robot.setX(x);
 		robot.setY(y);
 
@@ -1775,10 +1834,10 @@ public class Robot {
 		servoDriver.servoClawGrip.setAngle(0);
 		sleep(100);
 	}
-	
+
 	public void dropClaw() {
 		servoDriver.servoClawLift.setAngle(80); // lower claw
-		while(eopdAverage() > 3) {
+		while (eopdAverage() > 3) {
 			sleep(10);
 			debugln("eopd reading " + eopdAverage());
 		}
@@ -1786,18 +1845,18 @@ public class Robot {
 		servoDriver.servoClawLift.setAngle(86);
 		sleep(100);
 	}
-	
+
 	public void liftClaw() {
 		servoDriver.servoClawLift.setAngle(95); // raise claw
 		sleep(8000);
 		servoDriver.servoClawLift.setAngle(86);
 		sleep(100);
 	}
-	
+
 	public void openClaw() {
 		servoDriver.servoClawGrip.setAngle(80);
 	}
-	
+
 	public void closeClaw() {
 		servoDriver.servoClawGrip.setAngle(80);
 	}
@@ -1805,9 +1864,9 @@ public class Robot {
 	public void liftCompass() {
 		servoDriver.servoCompass.setAngle(97);
 	}
-	
+
 	public boolean isCompassUp() {
-		if(servoDriver.servoCompass.getAngle() == 97) {
+		if (servoDriver.servoCompass.getAngle() == 97) {
 			return true;
 		}
 		return false;
@@ -1817,20 +1876,20 @@ public class Robot {
 		servoDriver.servoCompass.setAngle(0);
 	}
 
-//	public void faceTarget(int target) {
-//		char dir = nav.dirTo(target);
-//
-//		if (map.isInCenter(target)) {
-//		} else if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
-//		} else {
-//			if (map.findCoordinates(target)[0] <= 2) {
-//				goTo(2, 2);
-//			} else {
-//				goTo(3, 2);
-//			}
-//		}
-//		faceDir(nav.dirTo(target));
-//	}
+	// public void faceTarget(int target) {
+	// char dir = nav.dirTo(target);
+	//
+	// if (map.isInCenter(target)) {
+	// } else if (dir == 'e' || dir == 'c' || dir == 'z' || dir == 'q') {
+	// } else {
+	// if (map.findCoordinates(target)[0] <= 2) {
+	// goTo(2, 2);
+	// } else {
+	// goTo(3, 2);
+	// }
+	// }
+	// faceDir(nav.dirTo(target));
+	// }
 
 	public boolean getUseCommands() {
 		return true;
@@ -1858,13 +1917,13 @@ public class Robot {
 		return false;
 	}
 
-//	public int getEOPD() {
-//		if (eopd != null) {
-//			// Return values between 4 and 100
-//			return (eopd.readRawValue() * 100) / 1023;
-//		}
-//		return -1;
-//	}
+	// public int getEOPD() {
+	// if (eopd != null) {
+	// // Return values between 4 and 100
+	// return (eopd.readRawValue() * 100) / 1023;
+	// }
+	// return -1;
+	// }
 
 	public void status() {
 		debugln(" dir = " + robot.getDir());
