@@ -90,13 +90,14 @@ public class StateLineFollow extends State {
 					}
 					KpLocal = 5.00; // 10.00
 					KiLocal = 0.01; // 0.70
-					KdLocal = 1.00; // 6.00
-					if (usReading < 20){
+					KdLocal = 6.00; // 6.00
+					if (usReading < 25){
+						debugln("wall seen: slowing down");
 						if(robot.getBaseMotorPower() != 45){
 							robot.setBaseMotorPower(45);
-							robot.isOnRamp = false;
-							rampCount = 0;
 						}
+						robot.isOnRamp = false;
+						rampCount = 0;
 					}
 				} else {
 					if (robot.getBaseMotorPower() != 45) {
@@ -145,7 +146,7 @@ public class StateLineFollow extends State {
 				Robot.playTone(440, 100);
 				robot.stop();
 				robot.backward(2);
-				robot.faceRight();
+				robot.faceUp();
 				robot.dropCompass();
 				robot.forward(25);
 				robot.faceUp();
