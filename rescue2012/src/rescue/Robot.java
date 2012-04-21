@@ -1153,7 +1153,7 @@ public class Robot {
 		double headR = getHeading();
 		double headC;
 
-		if (headL < headR) {
+		if (Math.abs(headL - headR)>180) {
 			headC = Util.round((headR + headL) / 2 - 180);
 		} else {
 			headC = Util.round((headR + headL) / 2);
@@ -1231,7 +1231,7 @@ public class Robot {
 		// {headR = headR - 360;}
 		double headC;
 
-		if (headL < headR) {
+		if (Math.abs(headL - headR)>180) {
 			headC = Util.round((headR + headL) / 2 - 180);
 		} else {
 			headC = Util.round((headR + headL) / 2);
