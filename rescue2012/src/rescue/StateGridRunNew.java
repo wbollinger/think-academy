@@ -35,10 +35,13 @@ public class StateGridRunNew extends State {
 		// robot.setDir(90);
 		if (enterGrid) {
 			robot.resetGrid();
-			robot.dropClaw();
-			robot.closeClaw();
 			robot.sleep(1000);
+			robot.dropClaw();
+			robot.sleep(1000);
+			robot.closeClaw();
+			robot.sleep(2000);
 			robot.openClaw();
+			robot.sleep(2000);
 			robot.liftClaw();
 			debugln("Entergrid success");
 			enterGrid = false;
@@ -250,12 +253,16 @@ public class StateGridRunNew extends State {
 				return;
 			}
 			
-		} else {
+		} else if(robot.canFound&&!robot.platformFound){
 			Robot.playTone(440, 100);
 			robot.sleep(100);
 			Robot.playTone(220, 200);
 			robot.sleep(200);
-			robot.changeState(StateCommand.getInstance());
+			robot.changeState(StateGridRunNew.getInstance());
+			return;
+		} else if(!robot.canFound){
+			robot.changeState(StateGridRunCornersNew.getInstance());
+			return;
 		}
 	}
 

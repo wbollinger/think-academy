@@ -270,13 +270,18 @@ public class StateCommand extends State {
 				robot.changeState(StateFindCan.getInstance());
 			} else if (command.equalsIgnoreCase("findPlatform")) {
 				robot.changeState(StateFindPlatform.getInstance());
+			} else if (command.equalsIgnoreCase("findCornerCan")) {
+				robot.changeState(StateGridRunCornersNew.getInstance());
 			} else if (command.equalsIgnoreCase("checkForPlatform")) {
 				robot.checkForPlatform();
 			} else if (command.equalsIgnoreCase("locF")) {
 				robot.findCanCoarseEOPD();
 			} else if (command.equalsIgnoreCase("ICIS")) {
 				robot.isCanInSquare();
-			} else if (command.equalsIgnoreCase("locC")) {
+			} 
+			else if (command.equalsIgnoreCase("ICISC")) {
+				robot.isCanInSquareCorners();
+			}else if (command.equalsIgnoreCase("locC")) {
 				robot.findCanCoarseSonic();
 			} else if (command.equalsIgnoreCase("liftCompass")) {
 				if (args.length > 0) {
