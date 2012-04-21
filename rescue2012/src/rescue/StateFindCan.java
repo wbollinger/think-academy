@@ -31,11 +31,13 @@ public class StateFindCan extends State {
 		robot.correctRight(180);
 		int diff = robot.finalCanDist - 15;
 		debugln("Diff: "+diff);
+		robot.setBaseMotorSpeed(50);
 		if(diff > 0){
 			robot.backward(diff);
 		} else {
 			robot.forward(diff);
 		}
+		robot.setBaseMotorSpeed(500);
 //		robot.backward(9);
 		robot.findCanCoarseEOPD();
 		robot.debugln("Can Swept");

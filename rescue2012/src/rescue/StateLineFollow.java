@@ -145,7 +145,7 @@ public class StateLineFollow extends State {
 				Robot.playTone(440, 100);
 				robot.stop();
 				robot.backward(2);
-				robot.faceUp();
+				robot.faceRight();
 				robot.dropCompass();
 				robot.forward(25);
 				robot.faceUp();

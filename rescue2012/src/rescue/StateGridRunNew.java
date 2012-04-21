@@ -40,6 +40,7 @@ public class StateGridRunNew extends State {
 			robot.sleep(1000);
 			robot.openClaw();
 			robot.liftClaw();
+			debugln("Entergrid success");
 			enterGrid = false;
 		}
 
