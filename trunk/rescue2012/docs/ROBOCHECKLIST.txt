@@ -1,0 +1,5 @@
+Checklist
+
+Check ultrasonic sensor to make sure it is pointing straight
+Check geartrain for alignment.
+Check light shields are down.
