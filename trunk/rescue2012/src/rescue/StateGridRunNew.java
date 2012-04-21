@@ -57,10 +57,13 @@ public class StateGridRunNew extends State {
 				Robot.playTone(880, 100);
 				robot.sleep(100);
 				robot.goRight();
-				robot.faceUp();
+				robot.goRight();
+				robot.goUp();
+				robot.faceLeft();
 				robot.changeState(StateFindCan.getInstance());
 				return;
 			}
+			robot.backward(8);
 		}
 
 		robot.goTo(2, 2);

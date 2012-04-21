@@ -391,6 +391,7 @@ public class Robot {
 		canFound = false;
 		platformFound = false;
 		canHeld = false;
+		StateGridRunNew.getInstance().enterGrid = true;
 		setGridDone(false);
 		
 		//setDir(90);
@@ -1118,6 +1119,7 @@ public class Robot {
 			right(4);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
+				debugln("Final EOPD Dif: "+(lastValue - currentValue));
 				break;
 			}
 			difference = lastValue - currentValue;
@@ -1137,6 +1139,7 @@ public class Robot {
 			left(4);
 			currentValue = (int) eopdAverage();
 			if (lastValue - currentValue >= threshEOPD) {
+				debugln("Final EOPD Dif: "+(lastValue - currentValue));
 				break;
 			}
 			difference = lastValue - currentValue;
@@ -1268,7 +1271,7 @@ public class Robot {
 //			if (Math.abs(lastValue - currentValue) > thresh) {
 //				foundCan = true;
 //			}
-			if (currentValue < 33){
+			if (currentValue < 31){
 				counter++;
 			}
 			if (counter>3){
@@ -1462,7 +1465,7 @@ public class Robot {
 		sleep(1000);
 		int val = sonicAverage();
 		debugln("US: " + val);
-		if (val < 22) {
+		if (val < 21) {
 			debugln("Platform found");
 			backward(25);
 			stop();
