@@ -521,7 +521,7 @@ public class StateCommand extends State {
 		// Note: debug support is not yet running at this point
 
 		int buttons = Button.ID_ENTER;
-		int checkPress;
+		/*
 		int i = 0;
 		while ((checkPress = Button.readButtons()) == 0) {
 			if (i % 10 == 0) {
@@ -533,7 +533,8 @@ public class StateCommand extends State {
 				break;
 			}
 		}
-
+		*/
+		
 		if (buttons == Button.ID_ENTER) {
 			if (robot.btc == null) {
 				Sound.playTone(440, 100);
