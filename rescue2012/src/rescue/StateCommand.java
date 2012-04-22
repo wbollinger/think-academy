@@ -521,17 +521,18 @@ public class StateCommand extends State {
 		// Note: debug support is not yet running at this point
 
 		int buttons = Button.ID_ENTER;
-		// int i = 0;
-		// while ((buttons = Button.readButtons()) == 0) {
-		// if (i % 10 == 0) {
-		// Sound.playTone(330, 100);
-		// } else {
-		// robot.sleep(100);
-		// }
-		// if (i++ > 50) {
-		// break;
-		// }
-		// }
+		int checkPress;
+		int i = 0;
+		while ((checkPress = Button.readButtons()) == 0) {
+			if (i % 10 == 0) {
+				Sound.playTone(330, 100);
+			} else {
+				robot.sleep(100);
+			}
+			if (i++ > 50) {
+				break;
+			}
+		}
 
 		if (buttons == Button.ID_ENTER) {
 			if (robot.btc == null) {

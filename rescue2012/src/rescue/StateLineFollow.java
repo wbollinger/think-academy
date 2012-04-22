@@ -154,7 +154,12 @@ public class StateLineFollow extends State {
 				return;
 			}
 			if (Button.ENTER.isDown()) {
-				robot.changeState(StateCommand.getInstance());
+				if (StateCommand.getInstance().getCommandLoopRunning() == true) {
+					// Command loop is running; get the next command
+					robot.changeState(StateCommand.getInstance());
+				} else {
+					robot.changeState(StateExit.getInstance());
+				}
 				return;
 			}
 			n++;
