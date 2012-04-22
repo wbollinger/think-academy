@@ -13,18 +13,18 @@ public class StateFindPlatform extends State {
 
 	public void enter(Robot robot) {
 		debugln("StFindPlatform enter");
-//		if(!robot.isGridDone()) {
-//			debugln("ERROR: LACKING NECESSARY DATA");
-//			debugln("BREAKING TO COMMAND STATE");
-//			robot.changeState(StateCommand.getInstance());
-//			return;
-//		}
+		// if(!robot.isGridDone()) {
+		// debugln("ERROR: LACKING NECESSARY DATA");
+		// debugln("BREAKING TO COMMAND STATE");
+		// robot.changeState(StateCommand.getInstance());
+		// return;
+		// }
 	}
 
 	public void execute(Robot robot) {
 		debugln("StFindPlatform execute");
-		
-		if(robot.map.findCoordinates(Map2D.PLATFORM)[0] <= 2) {
+
+		if (robot.map.findCoordinates(Map2D.PLATFORM)[0] <= 2) {
 			debugln("Coordinates found");
 			robot.goTo(2, 2);
 			robot.printMap();
@@ -33,19 +33,21 @@ public class StateFindPlatform extends State {
 			robot.printMap();
 		}
 		debugln("adjacent to platform");
-		
-		//robot.faceDir(robot.nav.dirTo(Map2D.PLATFORM));
-		int sonic = robot.sonicAverage()+5;
-		debugln("Sonic = "+sonic);
+
+		// robot.faceDir(robot.nav.dirTo(Map2D.PLATFORM));
+		int sonic = robot.sonicAverage() + 5;
+		debugln("Sonic = " + sonic);
 		char a = robot.map.dirTo(Map2D.PLATFORM);
-		debugln(""+a);
+		debugln("" + a);
 		robot.faceAway(a);
 		debugln("facing platform");
 		robot.setBaseMotorSpeed(100);
-//		while((robot.getEOPDProcessedValue() > 88)||((!robot.motRegRight.isStalled())&&(!robot.motRegLeft.isStalled()))) {
-//			debugln("EOPD Val = "+robot.getEOPDProcessedValue());
-//			robot.backward();
-//		}
+		// while((robot.getEOPDProcessedValue() >
+		// 88)||((!robot.motRegRight.isStalled())&&(!robot.motRegLeft.isStalled())))
+		// {
+		// debugln("EOPD Val = "+robot.getEOPDProcessedValue());
+		// robot.backward();
+		// }
 		robot.backward(sonic);
 		robot.stop();
 		robot.setBaseMotorSpeed(500);
@@ -55,11 +57,18 @@ public class StateFindPlatform extends State {
 		robot.forward(30);
 		robot.stop();
 		robot.victorySong();
-		robot.changeState(StateCommand.getInstance());
+
+		if (StateCommand.getInstance().getCommandLoopRunning() == true) {
+			// Command loop is running; get the next command
+			robot.changeState(StateCommand.getInstance());
+			return;
+		} else {
+			robot.changeState(StateExit.getInstance());
+		}
 	}
 
 	public void exit(Robot robot) {
-		//debugln("StFindPlatform exit");
+		// debugln("StFindPlatform exit");
 	}
 
 }

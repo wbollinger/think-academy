@@ -137,7 +137,13 @@ public class StateGridRunCornersNew extends State {
 			robot.sleep(100);
 			Robot.playTone(220, 200);
 			robot.sleep(200);
-			robot.changeState(StateCommand.getInstance());
+			if (StateCommand.getInstance().getCommandLoopRunning() == true) {
+				// Command loop is running; get the next command
+				robot.changeState(StateCommand.getInstance());
+				return;
+			} else {
+				robot.changeState(StateExit.getInstance());
+			}
 		}
 	}
 

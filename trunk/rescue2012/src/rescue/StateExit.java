@@ -1,4 +1,5 @@
 package rescue;
+
 import java.io.IOException;
 
 import lejos.nxt.LCD;
@@ -10,7 +11,7 @@ import lejos.nxt.LCD;
 public class StateExit extends State {
 
 	static private StateExit instance = new StateExit();
-	
+
 	private StateExit() {
 	}
 
@@ -25,20 +26,20 @@ public class StateExit extends State {
 	public void execute(Robot robot) {
 		robot.motLeft.stop();
 		robot.motRight.stop();
-		
+
 		if (StateCommand.getInstance().getCommandLoopRunning() == true) {
 			// Command loop is running; get the next command
 			robot.changeState(StateCommand.getInstance());
 			return;
 		}
-		
-		// really exit!
-		//debug("StExit exec\n");
 
-		if (( robot.inStream != null) && (robot.outStream != null)) {
+		// really exit!
+		// debug("StExit exec\n");
+
+		if ((robot.inStream != null) && (robot.outStream != null)) {
 			try {
-			robot.inStream.close();
-			robot.outStream.close();
+				robot.inStream.close();
+				robot.outStream.close();
 			} catch (IOException e) {
 				LCD.drawString("Exit IO Excep", 0, 0);
 			}

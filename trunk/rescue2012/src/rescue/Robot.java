@@ -45,7 +45,7 @@ public class Robot {
 
 	double kScale = 78.36;
 	double kError = 4.7; // original value 5.7 returning -1 values
-	NXTMotor motRight;
+	public NXTMotor motRight;
 	NXTMotor motLeft;
 	NXTMotor arduPower;
 	private int baseMotorPower;
@@ -407,13 +407,17 @@ public class Robot {
 			} catch (IOException e) {
 				LCD.drawString("Rbt IO Err", 0, 1);
 			}
-		} else {
-			// System.out.println(msg);
-			RConsole.print(msg);
 		}
+		// else {
+		// For competition, do nothing here
+		// System.out.println(msg);
+		// RConsole.print(msg);
+		// }
 	}
 
 	public void debugln(String msg) {
+		if (btc == null)
+			return;
 		debug(msg + "\n");
 	}
 
@@ -691,8 +695,7 @@ public class Robot {
 			isRegulated = true;
 		}
 		int angle;
-		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI)
-				* 360);
+		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI) * 360);
 
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -723,8 +726,7 @@ public class Robot {
 			isRegulated = true;
 		}
 		int angle;
-		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI)
-				* 360);
+		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI) * 360);
 
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -802,8 +804,7 @@ public class Robot {
 			isRegulated = true;
 		}
 		int angle;
-		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI)
-				* 360);
+		angle = (int) Util.round(distance / (getWheelDiameter() * Math.PI) * 360);
 
 		motRegRight.resetTachoCount();
 		motRegLeft.resetTachoCount();
@@ -1089,8 +1090,7 @@ public class Robot {
 	}
 
 	public double getEopdDistance() {
-		double distance = Util.round(kScale
-				/ Math.sqrt((double) getEOPDRawValue()) - kError);
+		double distance = Util.round(kScale / Math.sqrt((double) getEOPDRawValue()) - kError);
 		// debugln("" + distance + " (" + kScale/Math.sqrt((double)
 		// getEOPDRaw()) + ")");
 		return distance;
@@ -1177,7 +1177,7 @@ public class Robot {
 		int storage;
 		int degreesL = 0;
 		int degreesR = 0;
-		int headS = (int)getHeading();
+		int headS = (int) getHeading();
 
 		int currentValue = 40;
 		if ((sonicAverage() < 40)) {
@@ -1202,7 +1202,7 @@ public class Robot {
 			debugln(" | Dif " + difference);
 			degreesL = degreesL + 4;
 		}
-		if (degreesL >= 399){
+		if (degreesL >= 399) {
 			goToHeading(headS);
 		}
 
@@ -1235,7 +1235,7 @@ public class Robot {
 			debugln(" | Dif " + difference);
 			degreesR = degreesR + 4;
 		}
-		if (degreesR >= 399){
+		if (degreesR >= 399) {
 			goToHeading(headL);
 		}
 		stop();
@@ -1245,14 +1245,14 @@ public class Robot {
 		// if (headR > 180)
 		// {headR = headR - 360;}
 		double headC;
-if (degreesL<399){
-		if (Math.abs(headL - headR) > 180) {
-			headC = Util.round((headR + headL) / 2 - 180);
-		} else {
-			headC = Util.round((headR + headL) / 2);
-		}
-}
-else headC=headR;
+		if (degreesL < 399) {
+			if (Math.abs(headL - headR) > 180) {
+				headC = Util.round((headR + headL) / 2 - 180);
+			} else {
+				headC = Util.round((headR + headL) / 2);
+			}
+		} else
+			headC = headR;
 
 		debugln("Head C " + headC);
 		goToHeading(Util.round(headC)); // findCanFine();
@@ -1294,8 +1294,7 @@ else headC=headR;
 			if (counter > 3) {
 				foundCan = true;
 			}
-			debugln("Cur " + currentValue + " | Dif "
-					+ (lastValue - currentValue));
+			debugln("Cur " + currentValue + " | Dif " + (lastValue - currentValue));
 			degrees += sweepResolution;
 			lastValue = currentValue;
 		}
@@ -1335,18 +1334,18 @@ else headC=headR;
 				currentValue = storage;
 			}
 			difference = lastValue - currentValue;
-			if(currentValue < lowVal) {
+			if (currentValue < lowVal) {
 				lowVal = difference;
 			}
 			debug("Cur " + currentValue);
 			debug(" | Last " + lastValue);
 			debugln(" | Dif " + difference);
-			degrees=degrees + 4;
+			degrees = degrees + 4;
 		}
 		lowVal = Math.abs(lowVal);
 		robot.stop();
 		robot.left(45);
-		robot.forward(lowVal-3);
+		robot.forward(lowVal - 3);
 		debugln("Can: " + foundCan);
 		return foundCan;
 	}
@@ -1775,8 +1774,7 @@ else headC=headR;
 	}
 
 	public void goTo(int x, int y) {
-		if ((map.findCoordinates(Map2D.ROBOT)[0] == x)
-				&& (map.findCoordinates(Map2D.ROBOT)[1] == y)) {
+		if ((map.findCoordinates(Map2D.ROBOT)[0] == x) && (map.findCoordinates(Map2D.ROBOT)[1] == y)) {
 			return;
 		}
 		String route = nav.pathTo(x, y);
@@ -1935,8 +1933,7 @@ else headC=headR;
 		debugln(" dir = " + robot.getDir());
 		debugln(" X/Y = " + robot.getX() + ", " + robot.getY());
 		debugln("dist = " + robot.ultrasonic.getDistance());
-		debugln("comp = " + robot.getHeading() + " (North=" + robot.compOffset
-				+ ")");
+		debugln("comp = " + robot.getHeading() + " (North=" + robot.compOffset + ")");
 
 	}
 }
