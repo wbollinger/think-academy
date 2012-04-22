@@ -370,6 +370,16 @@ public class StateCommand extends State {
 							+ " " + scaled);
 					robot.sleep(50);
 				}
+			} else if (command.equalsIgnoreCase("touchLoop")) {
+				while (!Button.ENTER.isDown()
+						&& robot.inStream.available() == 0) {
+					int val = robot.getTouchPressed();
+//					int val2 = robot.servoDriver.readAddress((byte) 0x6C);
+//					int val3 = robot.servoDriver.readAddress((byte) 0x6E);
+//					int val4 = robot.servoDriver.readAddress((byte) 0x70);
+					debugln("" + val); // + " " + val2 + " " + val3 + " " + val4);
+					robot.sleep(50);
+				}
 			} else if (command.equalsIgnoreCase("readLightArduino")) {
 				int[] val = robot.servoDriver
 						.readAddressValues((byte) parseInt(arg0));
