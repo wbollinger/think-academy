@@ -32,14 +32,14 @@ public class Robot {
 	int threshSilver = 60;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
-	double headingNorth = 176.0; // measured heading of room north
-	double headingNorthEast = 139.0; // measured heading of room northeast
-	double headingEast = 95.0; // measured heading of room east
-	double headingSouthEast = 50.0; // measured heading of room southeast
-	double headingSouth = 4.0; // measured heading of room south
-	double headingSouthWest = 317.0; // measured heading of room southwest
-	double headingWest = 266.0; // measured heading of room west
-	double headingNorthWest = 215.0; // measured heading of room northwest
+	double headingNorth = 321.0; // measured heading of room north
+	double headingNorthEast = 267.0; // measured heading of room northeast
+	double headingEast = 217.0; // measured heading of room east
+	double headingSouthEast = 170; // measured heading of room southeast
+	double headingSouth = 138; // measured heading of room south
+	double headingSouthWest = 104.0; // measured heading of room southwest
+	double headingWest = 67; // measured heading of room west
+	double headingNorthWest = 20.0; // measured heading of room northwest
 	int finalCanDist = 0;
 
 	double kScale = 78.36;
@@ -385,7 +385,7 @@ public class Robot {
 
 	public void resetGrid() {
 		setX(1);
-		setY(1);
+		setY(3);
 		canFound = false;
 		platformFound = false;
 		canHeld = false;
