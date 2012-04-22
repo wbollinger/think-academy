@@ -24,6 +24,7 @@ public class StateExit extends State {
 	}
 
 	public void execute(Robot robot) {
+		System.out.println("StateExit");
 		robot.motLeft.stop();
 		robot.motRight.stop();
 

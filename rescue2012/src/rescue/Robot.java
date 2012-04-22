@@ -9,7 +9,6 @@ import lejos.nxt.*;
 import lejos.nxt.addon.*;
 import lejos.nxt.comm.BTConnection;
 //import lejos.nxt.comm.Bluetooth;
-import lejos.nxt.comm.RConsole;
 
 public class Robot {
 
@@ -70,6 +69,8 @@ public class Robot {
 
 	State current_state;
 	boolean stepMode;
+	boolean useCommands;
+	boolean useDebug;
 	boolean enableTurnBeeps;
 
 	public Map2D map;
@@ -157,6 +158,8 @@ public class Robot {
 
 		current_state = StateStart.getInstance();
 		stepMode = false;
+		useCommands = false;
+		useDebug = false;
 		enableTurnBeeps = true;
 
 		map = new Map2D();
@@ -400,6 +403,8 @@ public class Robot {
 	 * @param msg
 	 */
 	public void debug(String msg) {
+		if (useDebug == false)
+			return;
 		if ((btc != null) && (outStream != null)) {
 			try {
 				outStream.writeUTF(msg);
@@ -416,7 +421,7 @@ public class Robot {
 	}
 
 	public void debugln(String msg) {
-		if (btc == null)
+		if (useDebug == false)
 			return;
 		debug(msg + "\n");
 	}
@@ -1896,7 +1901,19 @@ public class Robot {
 	// }
 
 	public boolean getUseCommands() {
-		return true;
+		return useCommands;
+	}
+
+	public void setUseCommands(boolean flag) {
+		useCommands = flag;
+	}
+
+	public boolean getUseDebug() {
+		return useDebug;
+	}
+
+	public void setUseDebug(boolean flag) {
+		useDebug = flag;
 	}
 
 	public boolean getStepMode() {
@@ -1911,23 +1928,10 @@ public class Robot {
 		}
 	}
 
-	public void setUseCommands() {
-		// TODO - add boolean variable
-		// useCommands = true;
-	}
-
 	public boolean getUseRConsole() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	// public int getEOPD() {
-	// if (eopd != null) {
-	// // Return values between 4 and 100
-	// return (eopd.readRawValue() * 100) / 1023;
-	// }
-	// return -1;
-	// }
 
 	public void status() {
 		debugln(" dir = " + robot.getDir());
