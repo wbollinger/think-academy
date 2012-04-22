@@ -52,17 +52,17 @@ public class StateGridRunNew extends State {
 	public void execute(Robot robot) {
 
 		if (!robot.canFound) {
-			robot.faceUpRight();
+			robot.faceDownRight();
 			robot.forward(8);
 			if (robot.isCanInSquare()) {
 				robot.canFound = true;
-				robot.map.grid[robot.getX() + 1][robot.getY() + 1] = 2;
+				robot.map.grid[robot.getX() + 1][robot.getY() - 1] = 2;
 				robot.printMap();
 				Robot.playTone(880, 100);
 				robot.sleep(100);
 				robot.goRight();
 				robot.goRight();
-				robot.goUp();
+				robot.goDown();
 				robot.faceLeft();
 				robot.changeState(StateFindCan.getInstance());
 				return;
@@ -88,6 +88,23 @@ public class StateGridRunNew extends State {
 				return;
 			}
 		}
+		
+		if (!robot.platformFound) {
+			robot.faceDownLeft();
+			if (robot.checkForPlatformUS()) {
+				robot.platformFound = true;
+				robot.map.grid[robot.getX() - 1][robot.getY() - 1] = 3;
+				robot.printMap();
+				Robot.playTone(880, 100);
+				robot.sleep(100);
+				if(robot.canHeld){
+					robot.changeState(StateFindPlatform.getInstance());
+					return;
+				}
+			} else {
+				debugln("Platform Not Found");
+			}
+		}
 
 		if (!robot.canFound) {
 			robot.faceLeft();
@@ -99,23 +116,6 @@ public class StateGridRunNew extends State {
 				robot.sleep(100);
 				robot.changeState(StateFindCan.getInstance());
 				return;
-			}
-		}
-
-		if (!robot.platformFound) {
-			robot.faceUpLeft();
-			if (robot.checkForPlatformUS()) {
-				robot.platformFound = true;
-				robot.map.grid[robot.getX() - 1][robot.getY() + 1] = 3;
-				robot.printMap();
-				Robot.playTone(880, 100);
-				robot.sleep(100);
-				if(robot.canHeld){
-					robot.changeState(StateFindPlatform.getInstance());
-					return;
-				}
-			} else {
-				debugln("Platform Not Found");
 			}
 		}
 
@@ -136,7 +136,7 @@ public class StateGridRunNew extends State {
 			robot.faceRight();
 			if (robot.isCanInSquare()) {
 				robot.canFound = true;
-				robot.map.grid[robot.getX()][robot.getY() + 1] = 2;
+				robot.map.grid[robot.getX() + 1][robot.getY()] = 2;
 				robot.printMap();
 				Robot.playTone(880, 100);
 				robot.sleep(100);

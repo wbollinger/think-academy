@@ -38,6 +38,7 @@ public class StateLineFollow extends State {
 
 	public void enter(Robot robot) {
 		//debugln("StLineFollow enter");
+		robot.setBaseMotorPower(20);
 		
 	}
 
@@ -85,23 +86,23 @@ public class StateLineFollow extends State {
 				}
 
 				if (robot.isOnRamp){
-					if (robot.getBaseMotorPower() != 60) {
-						robot.setBaseMotorPower(60);	
+					if (robot.getBaseMotorPower() != 73) {
+						robot.setBaseMotorPower(73);	
 					}
 					KpLocal = 5.00; // 10.00
 					KiLocal = 0.01; // 0.70
 					KdLocal = 6.00; // 6.00
 					if (usReading < 25){
 						debugln("wall seen: slowing down");
-						if(robot.getBaseMotorPower() != 45){
-							robot.setBaseMotorPower(45);
+						if(robot.getBaseMotorPower() != 25){
+							robot.setBaseMotorPower(25);
 						}
 						robot.isOnRamp = false;
 						rampCount = 0;
 					}
 				} else {
-					if (robot.getBaseMotorPower() != 45) {
-						robot.setBaseMotorPower(45);
+					if (robot.getBaseMotorPower() != 40) {
+						robot.setBaseMotorPower(40);
 					}
 					KpLocal = Kp; // 10.00
 					KiLocal = Ki; // 0.70
@@ -145,11 +146,11 @@ public class StateLineFollow extends State {
 			if ((robot.getLightLeft() > robot.threshSilver)&&(robot.getLightRight() > robot.threshSilver)) {
 				Robot.playTone(440, 100);
 				robot.stop();
-				robot.backward(2);
-				robot.faceUp();
+				robot.backward(5);
+				robot.faceRight();
 				robot.dropCompass();
-				robot.forward(25);
-				robot.faceUp();
+				robot.forward(27);
+				robot.faceRight();
 				robot.changeState(StateGridRunNew.getInstance());
 				return;
 			}
