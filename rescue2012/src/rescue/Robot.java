@@ -1043,6 +1043,12 @@ public class Robot {
 	}
 
 	// ------------------------------------------------------------------------
+	public int getTouchPressed() {
+		int val = servoDriver.readTouch();
+		return val;
+	}
+
+	// ------------------------------------------------------------------------
 	public int getEOPDScaled() {
 		int val = 1023 - getEOPDRawValue();
 		return (val / 10);

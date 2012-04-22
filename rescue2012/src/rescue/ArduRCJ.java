@@ -135,4 +135,22 @@ public class ArduRCJ extends I2CSensor {
 		return (sensorEOPD);
 	}
 
+	public int readTouch() {
+		
+		getData((byte)0x6C, bufReadResponse, 2);
+		
+		int sensorTouch = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
+		
+		return (sensorTouch);
+	}
+
+	public int readAddress(byte addr) {
+		
+		getData((byte)addr, bufReadResponse, 2);
+		
+		int value = (((0xFF&bufReadResponse[1])<<8)|((0xFF&bufReadResponse[0])));
+		
+		return (value);
+	}
+
 }

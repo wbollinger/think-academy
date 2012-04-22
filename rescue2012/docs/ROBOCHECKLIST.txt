@@ -1,5 +1,19 @@
 Checklist
 
-Check ultrasonic sensor to make sure it is pointing straight
-Check geartrain for alignment.
-Check light shields are down.
+- Check ultrasonic sensor to make sure it is pointing straight
+
+- Check gear train for alignment.
+
+- Check light shields are down.
+
+- Check rails for claw lift
+
+- Push compass sensor down against tape
+
+- Check cables
+
+
+Practice setup
+---------------
+- Calibrate compass
+- Light thresholds
