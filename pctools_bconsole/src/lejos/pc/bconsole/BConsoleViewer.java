@@ -1,6 +1,7 @@
 package lejos.pc.bconsole;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -35,6 +36,8 @@ import lejos.pc.tools.ConsoleViewComms;
 import lejos.pc.tools.ConsoleViewerSwingUI;
 import lejos.pc.tools.ConsoleViewerUI;
 import lejos.pc.tools.LCDDisplay;
+
+import com.centralnexus.input.*;
 
 /**
  * Downloads data over a BlueTooth connection to a NXT.<br>
@@ -76,6 +79,9 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 	private JConsole theConsole;
 	// private JTextArea theCmd;
 	private LCDDisplay lcd;
+	
+	Joystick joy;
+	JoystickPoller poll;
 
 	/**
 	 * Constructor builds GUI
@@ -98,6 +104,8 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 
 		cmdConn = new NXTConnector();
 		rconComm = new ConsoleViewComms(ui, debug, true);
+		joy = Joystick.createInstance();
+		
 	}
 
 	public void buildGui() {
@@ -202,11 +210,19 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 						rc = cmdConn.connectTo("btspp://" + name);
 
 						if (rc == true) {
-							btOut = new DataOutputStream(cmdConn.getOutputStream());
+							btOut = new DataOutputStream(
+									cmdConn.getOutputStream());
 							btIn = new DataInputStream(cmdConn.getInputStream());
 							//
 							theConsole = new JConsole(btIn, btOut);
 							theScrollPane.setViewportView(theConsole);
+							if (useJoystick) {
+								try {
+									poll = new JoystickPoller(joy, btOut);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
 						} else {
 							btOut = null;
 							btIn = null;
