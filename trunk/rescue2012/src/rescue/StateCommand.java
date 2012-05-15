@@ -97,7 +97,7 @@ public class StateCommand extends State {
 				if (robot.inStream.available() > 0) {
 					robot.outStream.writeUTF("+");
 				} else {
-					robot.outStream.writeUTF(">>>");
+					robot.outStream.writeUTF(">>> ");
 				}
 				robot.outStream.flush();
 			}
@@ -499,6 +499,11 @@ public class StateCommand extends State {
 						debugln(key + " = " + props.getProperty(key));
 					}
 				}
+			} else if (command.equalsIgnoreCase("joydata")) {
+				debugln("joystick command detected");
+				double x = Double.parseDouble(args[0]);
+				double y = Double.parseDouble(args[1]);
+				robot.joystickControl(x, y);
 			} else {
 				debug("?\n");
 				// // 4.5 Check if it is a filename:
