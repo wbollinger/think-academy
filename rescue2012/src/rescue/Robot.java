@@ -287,6 +287,39 @@ public class Robot {
 	public float getCompOffset() {
 		return compOffset;
 	}
+	
+	public void joyUp() {
+		motLeft.setPower(50);
+		motRight.setPower(50);
+		motLeft.forward();
+		motRight.forward();
+	}
+	
+	public void joyRight() {
+		motLeft.setPower(50);
+		motRight.setPower(20);
+		motLeft.forward();
+		motRight.forward();
+	}
+
+	public void joyDown() {
+		motLeft.setPower(-50);
+		motRight.setPower(-50);
+		motLeft.forward();
+		motRight.forward();
+	}
+
+	public void joyLeft() {
+		motLeft.setPower(20);
+		motRight.setPower(50);
+		motLeft.forward();
+		motRight.forward();
+	}
+	
+	public void joyStop() {
+		motLeft.setPower(0);
+		motRight.setPower(0);
+	}
 
 	public void setCompOffset(float val) {
 		compOffset = val;
