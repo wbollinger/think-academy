@@ -347,6 +347,24 @@ public class Robot {
 		}
 		return robot;
 	}
+	
+	public void joystickControl(double x, double y) {
+		variableTurn((int)(50.0*x), (int)(-50.0*y));
+	}
+	
+	public void variableTurn(int turnCurve, int turnPower) {
+		
+		if(turnPower == 0) {
+			motRegLeft.stop();
+			motRegRight.stop();
+		} else if(turnPower > 0) {
+			motRegLeft.forward();
+			motRegRight.forward();
+		} else {
+			motRegLeft.backward();
+			motRegRight.backward();
+		}
+	}
 
 	public static void playTone(int freq, int duration) {
 		if (robot.enableTurnBeeps == true) {
