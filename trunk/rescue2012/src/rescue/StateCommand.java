@@ -158,7 +158,19 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("right")) {
 				double degrees = parseDouble(arg0);
 				robot.right(degrees);
-			} else if (command.equalsIgnoreCase("left")) {
+			}
+			/**/else if (command.equalsIgnoreCase("joyup")) {
+				robot.joyUp();
+			}else if (command.equalsIgnoreCase("joyright")) {
+				robot.joyRight();
+			}else if (command.equalsIgnoreCase("joydown")) {
+				robot.joyDown();
+			}else if (command.equalsIgnoreCase("joyleft")) {
+				robot.joyLeft();
+			}else if (command.equalsIgnoreCase("joystop")) {
+				robot.joyStop();
+			}
+			/**/else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.left(degrees);
 			} else if (command.equalsIgnoreCase("correctRight")) {
