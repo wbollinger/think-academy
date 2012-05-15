@@ -36,31 +36,18 @@ public class JoystickPoller extends Thread {
 	Joystick joy;
 
 	/** polling interval for this joystick */
-	private int interval = 50;
+	private int interval = 550;
 
 	DataOutputStream out;
-
-	JoystickPoller() throws IOException {
-
-		joy = Joystick.createInstance();
-
-	}
 
 	JoystickPoller(Joystick joystick, DataOutputStream dataOut)
 			throws IOException {
 
 		joy = joystick;
 		out = dataOut;
-
-		setPollInterval(50);
-
-		startPolling();
-
-	}
-
-	JoystickPoller(int joystickID) throws IOException {
-
-		joy = Joystick.createInstance(joystickID);
+		
+		joy.setDeadZone(0.25);
+		setPollInterval(interval);
 
 	}
 
@@ -78,8 +65,10 @@ public class JoystickPoller extends Thread {
 
 			try {
 				out.writeUTF(msg + '\n');
+				out.flush();
 			} catch (IOException e) {
 				System.err.println("ERROR WRITING JOYSTICK TO OUTPUT:" + e);
+				break;
 			}
 
 			try {
