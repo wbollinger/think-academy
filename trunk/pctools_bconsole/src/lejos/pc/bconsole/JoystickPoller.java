@@ -36,7 +36,7 @@ public class JoystickPoller extends Thread {
 	Joystick joy;
 
 	/** polling interval for this joystick */
-	private int interval = 550;
+	private int interval = 200;
 
 	DataOutputStream out;
 
@@ -60,7 +60,8 @@ public class JoystickPoller extends Thread {
 		String msg = "";
 		for (;;) {
 			joy.poll();
-			msg = "joydata " + joy.getX() + " " + joy.getY();
+			
+			msg = "joydata " + joy.getX() + " " + joy.getY() + " " + joy.getButtons();
 			System.out.println(msg);
 
 			try {

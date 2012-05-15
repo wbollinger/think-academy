@@ -58,7 +58,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 	private JButton connectButton = new JButton(S_CONNECT);
 	private JRadioButton rconsoleButton = new JRadioButton("RConsole");
 	private JRadioButton btButton = new JRadioButton("Command BT");
-	private JCheckBox doJoystick = new JCheckBox("Use Joystick control", false);
+	private JCheckBox doJoystick = new JCheckBox("Use Joystick control", true);
 
 	private JLabel statusField = new JLabel();
 
