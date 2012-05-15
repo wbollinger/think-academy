@@ -214,7 +214,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 									cmdConn.getOutputStream());
 							btIn = new DataInputStream(cmdConn.getInputStream());
 							//
-							theConsole = new JConsole(btIn, btOut);
+							theConsole = new JConsole(btIn, btOut); 
 							theScrollPane.setViewportView(theConsole);
 							if (useJoystick) {
 								try {
@@ -222,6 +222,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
+								poll.startPolling();
 							}
 						} else {
 							btOut = null;
