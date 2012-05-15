@@ -348,21 +348,50 @@ public class Robot {
 		return robot;
 	}
 	
-	public void joystickControl(double x, double y) {
-		variableTurn((int)(50.0*x), (int)(-50.0*y));
+	public void joystickControl(double x, double y, int button) {
+		variableTurn((int)(75.0*x), (int)(-100.0*y));
+		if(button == 128) {
+			servoDriver.servoClawLift.setAngle(95);
+		} else if(button == 64){
+			servoDriver.servoClawLift.setAngle(75);
+		} else {
+			servoDriver.servoClawLift.setAngle(86);
+		}
+		if(button == 16) {
+			closeClaw();
+		} else if(button == 32) {
+			openClaw();
+		}
+		if(button == 4096) {
+			liftCompass();
+		} else if(button == 16384) {
+			dropCompass();
+		}
+		if(button == 1) {
+			Sound.playTone(220, 100);
+		} else if(button == 2) {
+			Sound.playTone(330, 100);
+		} else if(button == 4) {
+			Sound.playTone(440, 100);
+		} else if(button == 8) {
+			Sound.playTone(550, 100);
+		}
 	}
 	
 	public void variableTurn(int turnCurve, int turnPower) {
 		
-		if(turnPower == 0) {
-			motRegLeft.stop();
-			motRegRight.stop();
-		} else if(turnPower > 0) {
-			motRegLeft.forward();
-			motRegRight.forward();
+		if(turnPower == 0 && turnCurve == 0) {
+			motLeft.stop();
+			motRight.stop();
+		} else if(turnPower == 0) {
+			setBaseMotorPower(-turnCurve);
+			motLeft.backward();
+			motRight.forward();	
 		} else {
-			motRegLeft.backward();
-			motRegRight.backward();
+			motLeft.setPower(turnPower+turnCurve);
+			motRight.setPower(turnPower-turnCurve);
+			motLeft.forward();
+			motRight.forward();
 		}
 	}
 
@@ -1881,11 +1910,11 @@ public class Robot {
 	}
 
 	public void openClaw() {
-		servoDriver.servoClawGrip.setAngle(80);
+		servoDriver.servoClawGrip.setAngle(180);
 	}
 
 	public void closeClaw() {
-		servoDriver.servoClawGrip.setAngle(80);
+		servoDriver.servoClawGrip.setAngle(0);
 	}
 
 	public void liftCompass() {
