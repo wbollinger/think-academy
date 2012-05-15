@@ -118,7 +118,7 @@ public class StateCommand extends State {
 		String command = st.nextToken();
 
 		// Check for command line arguments; support simple access to arg0
-		String arg0 = null, arg1 = null; // , arg2 = null;
+		String arg0 = null, arg1 = null, arg2 = null;
 		String[] args = new String[st.countTokens()];
 		for (i = 0; i < args.length; i++) {
 			args[i] = st.nextToken();
@@ -129,7 +129,10 @@ public class StateCommand extends State {
 			case 1:
 				arg1 = args[1];
 				break;
+			case 2:
+				arg2 = args[2];
 			}
+			
 		}
 
 		try {
@@ -500,12 +503,14 @@ public class StateCommand extends State {
 					}
 				}
 			} else if (command.equalsIgnoreCase("joydata")) {
-				debugln("joystick command detected");
+				showPrompt = false;
+				//debugln("joystick command detected");
 				double x = Double.parseDouble(args[0]);
 				double y = Double.parseDouble(args[1]);
-				robot.joystickControl(x, y);
+				int button = Integer.parseInt(args[2]);
+				robot.joystickControl(x, y, button);
 			} else {
-				debug("?\n");
+				debugln("?");
 				// // 4.5 Check if it is a filename:
 				// File f = new File(command);
 				// if (f.exists()) {
