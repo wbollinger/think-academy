@@ -1,0 +1,32 @@
+#summary Details on the player class.
+
+= Player =
+
+This is your character. You control his movement and actions.
+
+
+= Movement =
+  * Controls.
+    ||W is the up key.||
+    ||A is the left key.||
+    ||S is the down key.||
+    ||D is the right key.||
+    ||Shift is the sprint key.||
+  * Movement directions.
+    * Up(W)
+    * Up-Right(W+D)
+    * Right(D)
+    * Down-Right(S+D)
+    * Down(S)
+    * Down-Left(S+A)
+    * Left(A)
+    * Up-Left(W+A)
+
+  * Sprinting.
+    How fast you move is based on a variable _baseSpeed_ which is 2 pixels per update. However, your character does not move at that speed by default, instead he moves at _baseSpeed_/3 pixels per update. When Shift is held down, your characters speed will no longer be divided by three and will move at _baseSpeed_.
+
+  * Diagonal movement.
+    There is one problem with how our movement works though. If you move diagonal, you are in fact moving up or down one pixel and over one pixel which results in your character moving about 1.4 pixels per update making you move faster diagonally than horizontally or vertically. To solve this, we made it so that when you move diagonally, your speed gets cut by doing this math. _baseSpeed_/sqrt(2). This corrects the problem and makes movement smoother.
+
+= Actions =
+  * None yet.
