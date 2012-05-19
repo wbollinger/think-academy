@@ -5,8 +5,10 @@
 This is a 2d game programmed in java by Chris Bollinger and Jeremy Walton.
 
 
-= Details =
+= Pages =
 
-Add your content here.  Format your content with:
+[Player].
+
+= Details =
   * Date started: 5/18/12
   * People currently involved: Chris Bollinger, Jeremy Walton.
