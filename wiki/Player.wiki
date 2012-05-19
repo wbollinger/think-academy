@@ -1,5 +1,5 @@
 #summary Details on the player class.
-
+Back to [GameProject].
 = Player =
 
 This is your character. You control his movement and actions.
