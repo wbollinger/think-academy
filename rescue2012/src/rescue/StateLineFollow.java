@@ -143,11 +143,11 @@ public class StateLineFollow extends State {
 				//robot.changeState(StateCommand.getInstance());
 				return;
 			}
-			if ((robot.getLightLeft() > robot.threshSilver)&&(robot.getLightRight() > robot.threshSilver)) {
+			if ((robot.getLightLeft() > robot.threshSilver)||(robot.getLightRight() > robot.threshSilver)) {
 				Robot.playTone(440, 100);
 				robot.stop();
 				robot.backward(5);
-				robot.faceRight();
+				robot.faceUp();
 				robot.dropCompass();
 				robot.forward(27);
 				robot.faceRight();
