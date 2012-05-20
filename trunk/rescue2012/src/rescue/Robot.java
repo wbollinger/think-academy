@@ -29,17 +29,17 @@ public class Robot {
 	boolean rightBlack = false;
 	boolean avoidedLeft = true;
 	boolean isOnRamp = false;
-	int threshSilver = 60;
+	int threshSilver = 58;
 	int threshBlack = 50;
 	float compOffset = 0.0f;
-	double headingNorth = 321.0; // measured heading of room north
-	double headingNorthEast = 267.0; // measured heading of room northeast
-	double headingEast = 217.0; // measured heading of room east
-	double headingSouthEast = 170; // measured heading of room southeast
-	double headingSouth = 138; // measured heading of room south
-	double headingSouthWest = 104.0; // measured heading of room southwest
-	double headingWest = 67; // measured heading of room west
-	double headingNorthWest = 20.0; // measured heading of room northwest
+	double headingNorth = 223.0; // measured heading of room north
+	double headingNorthEast = 180.0; // measured heading of room northeast
+	double headingEast = 133.0; // measured heading of room east
+	double headingSouthEast = 92.0; // measured heading of room southeast
+	double headingSouth = 44.0; // measured heading of room south
+	double headingSouthWest = 358.0; // measured heading of room southwest
+	double headingWest = 316.0; // measured heading of room west
+	double headingNorthWest = 269.0; // measured heading of room northwest
 	int finalCanDist = 0;
 
 	double kScale = 78.36;
@@ -864,10 +864,6 @@ public class Robot {
 
 		int aveLeftDist;
 		aveLeftDist = sonicAverage();
-		if (aveLeftDist < 15) {
-			backward(5);
-			stop();
-		}
 		debugln("right: " + aveRightDist + ". Left: " + aveLeftDist);
 		if (aveLeftDist > aveRightDist) {
 			return true;
