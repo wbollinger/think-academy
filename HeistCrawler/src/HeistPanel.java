@@ -3,11 +3,11 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-public class HeistPanel extends JPanel implements KeyListener,
-		MouseMotionListener {
+public class HeistPanel extends JPanel {
 
 	public static HeistPanel mainPanel;
 
+	InputManager input;
 	Graphics dbg;
 	Image dbi;
 	Image invImage;
@@ -36,8 +36,9 @@ public class HeistPanel extends JPanel implements KeyListener,
 
 	public HeistPanel() {
 		mainPanel = this;
-		addKeyListener(this);
-		addMouseMotionListener(this);
+		input = new InputManager();
+		addKeyListener(input);
+		addMouseMotionListener(input);
 		setFocusable(true);
 		requestFocus();
 		invImage = Toolkit.getDefaultToolkit().createImage(
@@ -49,6 +50,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 		prepareImage(invImage, this);
 		prepareImage(backgroundImage, this);
 		prepareImage(invSelect, this);
+
 		keys = new ArrayList<Integer>();
 		walls = new ArrayList<Wall>();
 		doors = new ArrayList<Door>();
@@ -155,29 +157,29 @@ public class HeistPanel extends JPanel implements KeyListener,
 
 	public void update() {
 
-		if (keys.contains(KeyEvent.VK_1)) {
+		if (input.isKeyPressed(KeyEvent.VK_1)) {
 			itemSelected = 1;
-		} else if (keys.contains(KeyEvent.VK_2)) {
+		} else if (input.isKeyPressed(KeyEvent.VK_2)) {
 			itemSelected = 2;
-		} else if (keys.contains(KeyEvent.VK_3)) {
+		} else if (input.isKeyPressed(KeyEvent.VK_3)) {
 			itemSelected = 3;
-		} else if (keys.contains(KeyEvent.VK_4)) {
+		} else if (input.isKeyPressed(KeyEvent.VK_4)) {
 			itemSelected = 4;
-		} else if (keys.contains(KeyEvent.VK_5)) {
+		} else if (input.isKeyPressed(KeyEvent.VK_5)) {
 			itemSelected = 5;
-		} else if (keys.contains(KeyEvent.VK_6)) {
+		} else if (input.isKeyPressed(KeyEvent.VK_6)) {
 			itemSelected = 6;
 		}
 
 		p1.setHeldItem(items.get(itemSelected - 1));
 
-		if (keys.contains(KeyEvent.VK_SHIFT)) {
+		if (input.isKeyPressed(KeyEvent.VK_SHIFT)) {
 			p1.setSneaking(false);
 		} else {
 			p1.setSneaking(true);
 		}
 
-		if (keys.contains(KeyEvent.VK_SPACE)) {
+		if (input.isKeyPressed(KeyEvent.VK_SPACE)) {
 
 			if (items.get(itemSelected - 1).getID() == 1) {
 				for (int i = 0; i < doors.size(); i++) {
@@ -201,7 +203,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 			triggerDown = false;
 		}
 
-		if (keys.contains(KeyEvent.VK_E)) {
+		if (input.isKeyPressed(KeyEvent.VK_E)) {
 			for (int i = 0; i < doors.size(); i++) {
 				if (!doorSet
 						&& findDistance((int) Math.round(p1.getX()),
@@ -218,8 +220,9 @@ public class HeistPanel extends JPanel implements KeyListener,
 			doorSet = false;
 		}
 
-		if (keys.contains(KeyEvent.VK_W) && keys.contains(KeyEvent.VK_D)
-				&& p1.getY() > 0 && (p1.getX() + 15) < HeistCore.width) {
+		if (input.isKeyPressed(KeyEvent.VK_W)
+				&& input.isKeyPressed(KeyEvent.VK_D) && p1.getY() > 0
+				&& (p1.getX() + 15) < HeistCore.width) {
 			p1.moveUpRight(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -231,7 +234,8 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveDownLeft(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_S) && keys.contains(KeyEvent.VK_D)
+		} else if (input.isKeyPressed(KeyEvent.VK_S)
+				&& input.isKeyPressed(KeyEvent.VK_D)
 				&& (p1.getY() + 15) < HeistCore.height
 				&& (p1.getX() + 15) < HeistCore.width) {
 			p1.moveDownRight(Player.baseSpeed);
@@ -245,7 +249,8 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveUpLeft(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_S) && keys.contains(KeyEvent.VK_A)
+		} else if (input.isKeyPressed(KeyEvent.VK_S)
+				&& input.isKeyPressed(KeyEvent.VK_A)
 				&& (p1.getY() + 15) < HeistCore.height && p1.getX() > 0) {
 			p1.moveDownLeft(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
@@ -258,8 +263,9 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveUpRight(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_W) && keys.contains(KeyEvent.VK_A)
-				&& p1.getY() > 0 && p1.getX() > 0) {
+		} else if (input.isKeyPressed(KeyEvent.VK_W)
+				&& input.isKeyPressed(KeyEvent.VK_A) && p1.getY() > 0
+				&& p1.getX() > 0) {
 			p1.moveUpLeft(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -271,7 +277,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveDownRight(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_W) && p1.getY() > 0) {
+		} else if (input.isKeyPressed(KeyEvent.VK_W) && p1.getY() > 0) {
 			p1.moveUp(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -283,7 +289,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveDown(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_S)
+		} else if (input.isKeyPressed(KeyEvent.VK_S)
 				&& (p1.getY() + 15) < HeistCore.height) {
 			p1.moveDown(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
@@ -296,7 +302,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveUp(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_A) && p1.getX() > 0) {
+		} else if (input.isKeyPressed(KeyEvent.VK_A) && p1.getX() > 0) {
 			p1.moveLeft(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -308,7 +314,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 					p1.moveRight(Player.baseSpeed);
 				}
 			}
-		} else if (keys.contains(KeyEvent.VK_D)
+		} else if (input.isKeyPressed(KeyEvent.VK_D)
 				&& (p1.getX() + 15) < HeistCore.width) {
 			p1.moveRight(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
@@ -345,40 +351,7 @@ public class HeistPanel extends JPanel implements KeyListener,
 
 		}
 
-		p1.movePlayer(mousex, mousey);
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (!keys.contains(e.getKeyCode())) {
-			keys.add(e.getKeyCode());
-		}
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		keys.remove(new Integer(e.getKeyCode()));
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		mouseMoved(e);
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		mousex = e.getX();
-		mousey = e.getY();
-
+		p1.movePlayer(input.getMouseX(), input.getMouseY());
 	}
 
 }

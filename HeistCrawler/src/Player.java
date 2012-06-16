@@ -162,8 +162,10 @@ public class Player {
 	}
 	
 	public Bullet shoot() {
+		double bulletX = x + 11.0;
+		double bulletY = y + 7.0;
 		if(heldItem.getID() == 2) {
-			return (new Bullet(x, y, heading, 3));
+			return (new Bullet(bulletX, bulletY, heading, 3));
 		} else {
 			return null;
 		}
