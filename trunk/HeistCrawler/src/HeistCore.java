@@ -23,8 +23,7 @@ public class HeistCore extends JFrame {
 		setTitle("THE HEIST!");
 		t = getToolkit();
 		s = t.getScreenSize();
-		setLocation(s.width / 2 - getWidth() / 2, s.height / 2 - getHeight()
-				/ 2 - 30);
+		setLocation(0, 0);
 		setVisible(true);
 	}
 

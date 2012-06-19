@@ -8,8 +8,6 @@ public class HeistPanel extends JPanel {
 	public static HeistPanel mainPanel;
 
 	InputManager input;
-	Graphics dbg;
-	Image dbi;
 	Image invImage;
 	Image backgroundImage;
 	Image invSelect;
@@ -21,8 +19,6 @@ public class HeistPanel extends JPanel {
 	boolean doorSet;
 	ArrayList<Item> items;
 
-	ArrayList<Integer> keys;
-
 	ArrayList<Bullet> bullets;
 	boolean triggerDown;
 
@@ -31,8 +27,6 @@ public class HeistPanel extends JPanel {
 			new Point(334, 641), new Point(400, 641) };
 
 	int itemSelected;
-
-	int mousex, mousey;
 
 	public HeistPanel() {
 		mainPanel = this;
@@ -51,7 +45,6 @@ public class HeistPanel extends JPanel {
 		prepareImage(backgroundImage, this);
 		prepareImage(invSelect, this);
 
-		keys = new ArrayList<Integer>();
 		walls = new ArrayList<Wall>();
 		doors = new ArrayList<Door>();
 		items = new ArrayList<Item>();
@@ -95,21 +88,7 @@ public class HeistPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		if (dbg == null) {
-			if (getWidth() != HeistCore.width
-					|| getHeight() != HeistCore.height) {
-				HeistCore.mainClass.setSize(HeistCore.width * 2 - getWidth(),
-						HeistCore.height * 2 - getHeight());
-			}
-			while (dbi == null) {
-				dbi = createImage(HeistCore.width, HeistCore.height);
-			}
-			while (dbg == null) {
-				dbg = dbi.getGraphics();
-			}
-		}
-		draw(dbg);
-		g.drawImage(dbi, 0, 0, this);
+		draw(g);
 		repaint();
 	}
 
