@@ -1,5 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.*;
 import javax.swing.*;
 
@@ -50,10 +55,52 @@ public class HeistPanel extends JPanel {
 		items = new ArrayList<Item>();
 		bullets = new ArrayList<Bullet>();
 		p1 = new Player(393, 560);
-		addWalls();
-		addDoors();
+		readFile(1);
+//		addWalls();
+//		addDoors();
 		addItems();
 		itemSelected = 1;
+	}
+	
+	public void readFile(int level) {
+		  try{
+		  // Open the file that is the first 
+		  // command line parameter
+			  File file = new File("Levels/Layout"+level+".txt");
+		//  FileInputStream fstream = new FileInputStream("Layout.txt");
+		  BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),Charset.forName("UTF-8")));
+		  
+		  int c;
+		  String strLine;
+		  strLine = reader.readLine();
+		  int xx = 10;
+		  int yy = 10;
+		  int ln = 0;
+		  int  lnlng = strLine.length();
+		  int size = 5;
+		  reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),Charset.forName("UTF-8")));
+		  while((c = reader.read()) != -1) {
+			  ln++;
+		    char character = (char) c;
+
+		    if(character == 'X'){
+		    	walls.add(new Wall(xx, yy, size, size));
+		    }
+		    if(ln == lnlng+2){
+		    	xx = 10;
+		    	yy = yy+size;
+		    	ln = 0;
+		    }
+		    if(ln == 0){
+		    }else{
+		    xx = xx + size;
+		    }
+		  }
+		  
+		    }catch (Exception e){//Catch exception if any
+		  System.err.println("Error: " + e.getMessage());
+		  }
+		  
 	}
 
 	public void addWalls() {
