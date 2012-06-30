@@ -11,6 +11,9 @@ import javax.swing.*;
 public class HeistPanel extends JPanel {
 
 	public static HeistPanel mainPanel;
+	
+	public static int width = 800;
+	public static int height = 800;
 
 	InputManager input;
 	Image invImage;
@@ -142,7 +145,6 @@ public class HeistPanel extends JPanel {
 	public void draw(Graphics g) {
 		update();
 		g.drawImage(backgroundImage, 0, 0, null);
-		p1.draw((Graphics2D) g);
 		drawInv(g);
 		for (int i = 0; i < walls.size(); i++) {
 			walls.get(i).draw(g);
@@ -153,6 +155,13 @@ public class HeistPanel extends JPanel {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).draw((Graphics2D) g);
 		}
+		Color view = new Color(255, 255, 255, 80);
+		Color unseen = new Color(0, 0, 0, 240);
+//		g.setColor(unseen);
+//		g.fillRect(0, 0, 400, 600);
+		g.setColor(view);
+		g.fillArc((int)(p1.getX()+11-200),(int)(p1.getY()+7-200),400,400,(int)(-p1.heading*180/Math.PI-45),90);
+		p1.draw((Graphics2D) g);
 
 	}
 
@@ -248,7 +257,7 @@ public class HeistPanel extends JPanel {
 
 		if (input.isKeyPressed(KeyEvent.VK_W)
 				&& input.isKeyPressed(KeyEvent.VK_D) && p1.getY() > 0
-				&& (p1.getX() + 15) < HeistCore.width) {
+				&& (p1.getX() + 15) < width) {
 			p1.moveUpRight(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -262,8 +271,8 @@ public class HeistPanel extends JPanel {
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_S)
 				&& input.isKeyPressed(KeyEvent.VK_D)
-				&& (p1.getY() + 15) < HeistCore.height
-				&& (p1.getX() + 15) < HeistCore.width) {
+				&& (p1.getY() + 15) < height
+				&& (p1.getX() + 15) < width) {
 			p1.moveDownRight(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -277,7 +286,7 @@ public class HeistPanel extends JPanel {
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_S)
 				&& input.isKeyPressed(KeyEvent.VK_A)
-				&& (p1.getY() + 15) < HeistCore.height && p1.getX() > 0) {
+				&& (p1.getY() + 15) < height && p1.getX() > 0) {
 			p1.moveDownLeft(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -316,7 +325,7 @@ public class HeistPanel extends JPanel {
 				}
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_S)
-				&& (p1.getY() + 15) < HeistCore.height) {
+				&& (p1.getY() + 15) < height) {
 			p1.moveDown(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
@@ -341,7 +350,7 @@ public class HeistPanel extends JPanel {
 				}
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_D)
-				&& (p1.getX() + 15) < HeistCore.width) {
+				&& (p1.getX() + 15) < width) {
 			p1.moveRight(Player.baseSpeed);
 			for (int i = 0; i < walls.size(); i++) {
 				if (p1.collisionCheck(walls.get(i))) {
