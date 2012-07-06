@@ -44,7 +44,7 @@ public class HeistPanel extends JPanel {
 		
 		lvlLoader = new LevelReader("Levels");
 		currentLevel =  1;
-		lvl = lvlLoader.readLevelFile(currentLevel);
+		lvl = lvlLoader.readLevel(currentLevel);
 		
 		input = new InputManager();
 		addKeyListener(input);
