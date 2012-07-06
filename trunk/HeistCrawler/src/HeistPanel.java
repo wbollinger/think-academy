@@ -89,6 +89,18 @@ public class HeistPanel extends JPanel {
 		    if(character == 'X'){
 		    	walls.add(new Wall(xx, yy, size, size));
 		    }
+		    if(character == '^'){
+		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_UP, true));
+		    }
+		    if(character == 'V'){
+		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_DOWN, true));
+		    }
+		    if(character == '<'){
+		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_LEFT, true));
+		    }
+		    if(character == '>'){
+		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_RIGHT, true));
+		    }
 		    if(ln == lnlng+2){
 		    	xx = 10;
 		    	yy = yy+size;
