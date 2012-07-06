@@ -16,14 +16,16 @@ public class HeistPanel extends JPanel {
 	public static int height = 800;
 
 	InputManager input;
+	
+	LevelReader lvlLoader;
+	Level lvl;
+	
 	Image invImage;
 	Image backgroundImage;
 	Image invSelect;
 
 	Player p1;
 
-	ArrayList<Wall> walls;
-	ArrayList<Door> doors;
 	boolean doorSet;
 	ArrayList<Item> items;
 
@@ -38,9 +40,14 @@ public class HeistPanel extends JPanel {
 
 	public HeistPanel() {
 		mainPanel = this;
+		
+		lvlLoader = new LevelReader("Levels");
+		lvl = lvlLoader.readLevelFile(1);
+		
 		input = new InputManager();
 		addKeyListener(input);
 		addMouseMotionListener(input);
+		
 		setFocusable(true);
 		requestFocus();
 		invImage = Toolkit.getDefaultToolkit().createImage(
@@ -53,92 +60,15 @@ public class HeistPanel extends JPanel {
 		prepareImage(backgroundImage, this);
 		prepareImage(invSelect, this);
 
-		walls = new ArrayList<Wall>();
-		doors = new ArrayList<Door>();
 		items = new ArrayList<Item>();
 		bullets = new ArrayList<Bullet>();
 		p1 = new Player(393, 560);
-		readFile(1);
-//		addWalls();
-//		addDoors();
+
 		addItems();
 		itemSelected = 1;
 	}
 	
-	public void readFile(int level) {
-		  try{
-		  // Open the file that is the first 
-		  // command line parameter
-			  File file = new File("Levels/Layout"+level+".txt");
-		//  FileInputStream fstream = new FileInputStream("Layout.txt");
-		  BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),Charset.forName("UTF-8")));
-		  
-		  int c;
-		  String strLine;
-		  strLine = reader.readLine();
-		  int xx = 10;
-		  int yy = 10;
-		  int ln = 0;
-		  int  lnlng = strLine.length();
-		  int size = 5;
-		  reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),Charset.forName("UTF-8")));
-		  while((c = reader.read()) != -1) {
-			  ln++;
-		    char character = (char) c;
 
-		    if(character == 'X'){
-		    	walls.add(new Wall(xx, yy, size, size));
-		    }
-		    if(character == '^'){
-		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_UP, true));
-		    }
-		    if(character == 'V'){
-		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_DOWN, true));
-		    }
-		    if(character == '<'){
-		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_LEFT, true));
-		    }
-		    if(character == '>'){
-		    	doors.add(new Door(xx, yy, Door.DoorTypes.OPENS_RIGHT, true));
-		    }
-		    if(ln == lnlng+2){
-		    	xx = 10;
-		    	yy = yy+size;
-		    	ln = 0;
-		    }
-		    if(ln == 0){
-		    }else{
-		    xx = xx + size;
-		    }
-		  }
-		  
-		    }catch (Exception e){//Catch exception if any
-		  System.err.println("Error: " + e.getMessage());
-		  }
-		  
-	}
-
-	public void addWalls() {
-		walls.add(new Wall(785, 10, 5, 580));// right
-		walls.add(new Wall(10, 10, 5, 580));// left
-		walls.add(new Wall(10, 10, 780, 5));// top
-		walls.add(new Wall(10, 585, 780, 5));// bottom
-		walls.add(new Wall(196, 10, 5, 580));
-		walls.add(new Wall(589, 10, 5, 580));
-		walls.add(new Wall(281, 365, 228, 5));
-	}
-
-	public void addDoors() {
-		doors.add(new Door(196, 365, Door.DoorTypes.OPENS_UP, true));
-		doors.add(new Door(281, 365 - Door.width + 5,
-				Door.DoorTypes.OPENS_LEFT, false));
-
-		doors.add(new Door(200, 100, Door.DoorTypes.OPENS_UP, true));
-		doors.add(new Door(300, 100, Door.DoorTypes.OPENS_DOWN, true));
-		doors.add(new Door(400, 100, Door.DoorTypes.OPENS_LEFT, true));
-		doors.add(new Door(500, 100, Door.DoorTypes.OPENS_RIGHT, true));
-
-	}
 
 	public void addItems() {
 		items.add(new ItemLockPick("Test"));
@@ -158,19 +88,11 @@ public class HeistPanel extends JPanel {
 		update();
 		g.drawImage(backgroundImage, 0, 0, null);
 		drawInv(g);
-		for (int i = 0; i < walls.size(); i++) {
-			walls.get(i).draw(g);
-		}
-		for (int i = 0; i < doors.size(); i++) {
-			doors.get(i).draw(g);
-		}
+		lvl.draw(g);
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).draw((Graphics2D) g);
 		}
 		Color view = new Color(255, 255, 255, 80);
-		Color unseen = new Color(0, 0, 0, 240);
-//		g.setColor(unseen);
-//		g.fillRect(0, 0, 400, 600);
 		g.setColor(view);
 		g.fillArc((int)(p1.getX()+11-200),(int)(p1.getY()+7-200),400,400,(int)(-p1.heading*180/Math.PI-45),90);
 		p1.draw((Graphics2D) g);
@@ -229,13 +151,13 @@ public class HeistPanel extends JPanel {
 		if (input.isKeyPressed(KeyEvent.VK_SPACE)) {
 
 			if (items.get(itemSelected - 1).getID() == 1) {
-				for (int i = 0; i < doors.size(); i++) {
+				for (int i = 0; i < lvl.doors.size(); i++) {
 					if (findDistance((int) Math.round(p1.getX()),
-							Math.round((int) p1.getY()), doors.get(i)
-									.getCurrentX(), doors.get(i).getCurrentY()) < 40) {
+							Math.round((int) p1.getY()), lvl.doors.get(i)
+									.getCurrentX(), lvl.doors.get(i).getCurrentY()) < 40) {
 						ItemLockPick temp = (ItemLockPick) items
 								.get(itemSelected - 1);
-						temp.unlockDoor(doors.get(i));
+						temp.unlockDoor(lvl.doors.get(i));
 
 					}
 				}
@@ -251,14 +173,14 @@ public class HeistPanel extends JPanel {
 		}
 
 		if (input.isKeyPressed(KeyEvent.VK_E)) {
-			for (int i = 0; i < doors.size(); i++) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
 				if (!doorSet
 						&& findDistance((int) Math.round(p1.getX()),
-								Math.round((int) p1.getY()), doors.get(i)
-										.getCurrentX(), doors.get(i)
+								Math.round((int) p1.getY()), lvl.doors.get(i)
+										.getCurrentX(), lvl.doors.get(i)
 										.getCurrentY()) < 40) {
-					if (!doors.get(i).isLocked()) {
-						doors.get(i).toggleDoor();
+					if (!lvl.doors.get(i).isLocked()) {
+						lvl.doors.get(i).toggleDoor();
 					}
 					doorSet = true;
 				}
@@ -271,13 +193,13 @@ public class HeistPanel extends JPanel {
 				&& input.isKeyPressed(KeyEvent.VK_D) && p1.getY() > 0
 				&& (p1.getX() + 15) < width) {
 			p1.moveUpRight(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveDownLeft(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveDownLeft(Player.baseSpeed);
 				}
 			}
@@ -286,13 +208,13 @@ public class HeistPanel extends JPanel {
 				&& (p1.getY() + 15) < height
 				&& (p1.getX() + 15) < width) {
 			p1.moveDownRight(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveUpLeft(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveUpLeft(Player.baseSpeed);
 				}
 			}
@@ -300,13 +222,13 @@ public class HeistPanel extends JPanel {
 				&& input.isKeyPressed(KeyEvent.VK_A)
 				&& (p1.getY() + 15) < height && p1.getX() > 0) {
 			p1.moveDownLeft(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveUpRight(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveUpRight(Player.baseSpeed);
 				}
 			}
@@ -314,63 +236,63 @@ public class HeistPanel extends JPanel {
 				&& input.isKeyPressed(KeyEvent.VK_A) && p1.getY() > 0
 				&& p1.getX() > 0) {
 			p1.moveUpLeft(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveDownRight(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveDownRight(Player.baseSpeed);
 				}
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_W) && p1.getY() > 0) {
 			p1.moveUp(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveDown(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveDown(Player.baseSpeed);
 				}
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_S)
 				&& (p1.getY() + 15) < height) {
 			p1.moveDown(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveUp(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveUp(Player.baseSpeed);
 				}
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_A) && p1.getX() > 0) {
 			p1.moveLeft(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveRight(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveRight(Player.baseSpeed);
 				}
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_D)
 				&& (p1.getX() + 15) < width) {
 			p1.moveRight(Player.baseSpeed);
-			for (int i = 0; i < walls.size(); i++) {
-				if (p1.collisionCheck(walls.get(i))) {
+			for (int i = 0; i < lvl.walls.size(); i++) {
+				if (p1.collisionCheck(lvl.walls.get(i))) {
 					p1.moveLeft(Player.baseSpeed);
 				}
 			}
-			for (int i = 0; i < doors.size(); i++) {
-				if (p1.collisionCheck(doors.get(i))) {
+			for (int i = 0; i < lvl.doors.size(); i++) {
+				if (p1.collisionCheck(lvl.doors.get(i))) {
 					p1.moveLeft(Player.baseSpeed);
 				}
 			}
@@ -380,8 +302,8 @@ public class HeistPanel extends JPanel {
 			bullets.get(i).update();
 		}
 		for (int i = 0; i < bullets.size(); i++) {
-			for (int j = 0; j < walls.size(); j++) {
-				if (bullets.get(i).collisionCheck(walls.get(j))) {
+			for (int j = 0; j < lvl.walls.size(); j++) {
+				if (bullets.get(i).collisionCheck(lvl.walls.get(j))) {
 					bullets.remove(i);
 					break;
 				}
@@ -389,8 +311,8 @@ public class HeistPanel extends JPanel {
 
 		}
 		for (int i = 0; i < bullets.size(); i++) {
-			for (int j = 0; j < doors.size(); j++) {
-				if (bullets.get(i).collisionCheck(doors.get(j))) {
+			for (int j = 0; j < lvl.doors.size(); j++) {
+				if (bullets.get(i).collisionCheck(lvl.doors.get(j))) {
 					bullets.remove(i);
 					break;
 				}
