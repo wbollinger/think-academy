@@ -5,7 +5,8 @@ public class HeistCore extends JFrame {
 
 	
 	public static HeistCore mainClass;
-	static HeistPanel heist;
+	public static HeistPanel heist;
+	public LevelReader loader;
 
 	public HeistCore() {
 
