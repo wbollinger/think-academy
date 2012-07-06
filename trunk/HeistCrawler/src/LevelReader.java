@@ -39,6 +39,7 @@ public class LevelReader {
 				if (character == 'X') {
 					level.walls.add(new Wall(xx, yy, size, size));
 				}
+				
 				if (ln == lnlng + 2) {
 					xx = 10;
 					yy = yy + size;
