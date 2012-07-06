@@ -14,6 +14,7 @@ public class HeistPanel extends JPanel {
 	
 	public static int width = 800;
 	public static int height = 800;
+	int currentLevel;
 
 	InputManager input;
 	
@@ -42,7 +43,8 @@ public class HeistPanel extends JPanel {
 		mainPanel = this;
 		
 		lvlLoader = new LevelReader("Levels");
-		lvl = lvlLoader.readLevelFile(1);
+		currentLevel =  1;
+		lvl = lvlLoader.readLevelFile(currentLevel);
 		
 		input = new InputManager();
 		addKeyListener(input);
@@ -78,7 +80,14 @@ public class HeistPanel extends JPanel {
 		items.add(new ItemLockPick("Test5"));
 		items.add(new ItemLockPick("Test6"));
 	}
-
+	
+	public void increaseLevel(){
+		currentLevel += 1;
+	}
+	
+	public void decreaseLevel(){
+		currentLevel -= 1;
+	}
 	public void paintComponent(Graphics g) {
 		draw(g);
 		repaint();

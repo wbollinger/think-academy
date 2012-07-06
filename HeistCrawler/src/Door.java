@@ -15,7 +15,8 @@ public class Door {
 	private boolean locked;
 
 	public enum DoorTypes {
-		OPENS_UP, OPENS_DOWN, OPENS_LEFT, OPENS_RIGHT
+		OPENS_UP_HINGE_RIGHT, OPENS_UP_HINGE_LEFT, OPENS_DOWN_HINGE_RIGHT, OPENS_DOWN_HINGE_LEFT,
+		OPENS_LEFT_HINGE_TOP, OPENS_LEFT_HINGE_BOTTOM, OPENS_RIGHT_HINGE_TOP, OPENS_RIGHT_HINGE_BOTTOM
 	};
 
 	public Door(int x, int y, DoorTypes door, boolean closed) {
@@ -65,22 +66,61 @@ public class Door {
 
 	public void setClosed(boolean closed) {
 		switch (door) {
-		case OPENS_UP:
-			setClosedUp(closed);
+		case OPENS_UP_HINGE_RIGHT:
+			setClosedUpRight(closed);
 			break;
-		case OPENS_DOWN:
-			setClosedDown(closed);
+		case OPENS_UP_HINGE_LEFT:
+			setClosedUpLeft(closed);
 			break;
-		case OPENS_LEFT:
-			setClosedLeft(closed);
+		case OPENS_DOWN_HINGE_RIGHT:
+			setClosedDownRight(closed);
 			break;
-		case OPENS_RIGHT:
-			setClosedRight(closed);
+		case OPENS_DOWN_HINGE_LEFT:
+			setClosedDownLeft(closed);
 			break;
+		case OPENS_LEFT_HINGE_TOP:
+			setClosedLeftTop(closed);
+			break;
+        case OPENS_LEFT_HINGE_BOTTOM:
+        	setClosedLeftBottom(closed);
+			break;
+        case OPENS_RIGHT_HINGE_TOP:
+        	setClosedRightTop(closed);
+        	break;
+        case OPENS_RIGHT_HINGE_BOTTOM:
+        	setClosedRightBottom(closed);
+        	break;
 		}
 	}
 
-	public void setClosedDown(boolean closed) {
+	public void setClosedUpRight(boolean closed) {
+		this.closed = closed;
+		if (closed) {
+			rect.setBounds(xPos+5, yPos, width, height);
+		} else {
+			rect.setBounds(xPos+width, yPos-width+5, height, width);
+		}
+	}
+	
+	public void setClosedUpLeft(boolean closed) {
+		this.closed = closed;
+		if (closed) {
+			rect.setBounds(xPos, yPos, width, height);
+		} else {
+			rect.setBounds(xPos, yPos- width + 5, height, width);
+		}
+	}
+
+	public void setClosedDownRight(boolean closed) {
+		this.closed = closed;
+		if (closed) {
+			rect.setBounds(xPos, yPos, width, height);
+		} else {
+			rect.setBounds(xPos+width, yPos, height, width);
+		}
+	}
+	
+	public void setClosedDownLeft(boolean closed) {
 		this.closed = closed;
 		if (closed) {
 			rect.setBounds(xPos, yPos, width, height);
@@ -88,31 +128,40 @@ public class Door {
 			rect.setBounds(xPos, yPos, height, width);
 		}
 	}
-
-	public void setClosedUp(boolean closed) {
+	
+	public void setClosedLeftTop(boolean closed) {
 		this.closed = closed;
 		if (closed) {
+			rect.setBounds(xPos, yPos, height, width);
+		} else {
+			rect.setBounds(xPos - width+5, yPos, width, height);
+		}
+	}
+	
+	public void setClosedLeftBottom(boolean closed) {
+		this.closed = closed;
+		if (closed) {
+			rect.setBounds(xPos, yPos, height, width);
+		} else {
+			rect.setBounds(xPos - width+5, yPos+width, width, height);
+		}
+	}
+	
+	public void setClosedRightTop(boolean closed) {
+		this.closed = closed;
+		if (closed) {
+			rect.setBounds(xPos, yPos, height, width);
+		} else {
 			rect.setBounds(xPos, yPos, width, height);
-		} else {
-			rect.setBounds(xPos, yPos - width + 5, height, width);
 		}
 	}
-
-	public void setClosedLeft(boolean closed) {
+	
+	public void setClosedRightBottom(boolean closed) {
 		this.closed = closed;
 		if (closed) {
 			rect.setBounds(xPos, yPos, height, width);
 		} else {
-			rect.setBounds(xPos - width + 5, yPos + width - 5, width, height);
-		}
-	}
-
-	public void setClosedRight(boolean closed) {
-		this.closed = closed;
-		if (closed) {
-			rect.setBounds(xPos, yPos, height, width);
-		} else {
-			rect.setBounds(xPos - width, yPos, width, height);
+			rect.setBounds(xPos, yPos+width, width, height);
 		}
 	}
 
@@ -128,7 +177,18 @@ public class Door {
 		Color temp = g.getColor();
 		g.setColor(doorColor);
 		switch (this.door) {
-		case OPENS_UP:
+		case OPENS_UP_HINGE_RIGHT:
+			if (closed) {
+				currentXPos = xPos+5;
+				currentYPos = yPos;
+				g.fillRect(currentXPos, currentYPos, width, height);
+			} else {
+				currentXPos = xPos+width;
+				currentYPos = yPos - width + 5;
+				g.fillRect(currentXPos, currentYPos, height, width);
+			}
+			break;
+		case OPENS_UP_HINGE_LEFT:
 			if (closed) {
 				currentXPos = xPos;
 				currentYPos = yPos;
@@ -139,7 +199,18 @@ public class Door {
 				g.fillRect(currentXPos, currentYPos, height, width);
 			}
 			break;
-		case OPENS_DOWN:
+		case OPENS_DOWN_HINGE_RIGHT:
+			if (closed) {
+				currentXPos = xPos;
+				currentYPos = yPos;
+				g.fillRect(currentXPos, currentYPos, width, height);
+			} else {
+				currentXPos = xPos+width;
+				currentYPos = yPos;
+				g.fillRect(currentXPos, currentYPos, height, width);
+			}
+			break;
+		case OPENS_DOWN_HINGE_LEFT:
 			if (closed) {
 				currentXPos = xPos;
 				currentYPos = yPos;
@@ -150,29 +221,50 @@ public class Door {
 				g.fillRect(currentXPos, currentYPos, height, width);
 			}
 			break;
-		case OPENS_LEFT:
+		case OPENS_LEFT_HINGE_TOP:
 			if (closed) {
+			currentXPos = xPos;
+			currentYPos = yPos;
+			g.fillRect(currentXPos, currentYPos, height, width);
+		} else {
+			currentXPos = xPos - width + 5;
+			currentYPos = yPos;
+			g.fillRect(currentXPos, currentYPos, width, height);
+		}
+			break;
+        case OPENS_LEFT_HINGE_BOTTOM:
+        	if (closed) {
+    			currentXPos = xPos;
+    			currentYPos = yPos;
+    			g.fillRect(currentXPos, currentYPos, height, width);
+    		} else {
+    			currentXPos = xPos - width + 5;
+    			currentYPos = yPos+width;
+    			g.fillRect(currentXPos, currentYPos, width, height);
+    		}
+			break;
+        case OPENS_RIGHT_HINGE_TOP:
+        	if (closed) {
 				currentXPos = xPos;
 				currentYPos = yPos;
 				g.fillRect(currentXPos, currentYPos, height, width);
 			} else {
-				currentXPos = xPos - width + 5;
-				currentYPos = yPos + width - 5;
+				currentXPos = xPos;
+				currentYPos = yPos;
 				g.fillRect(currentXPos, currentYPos, width, height);
 			}
-			break;
-		case OPENS_RIGHT:
-			if (closed) {
+        	break;
+        case OPENS_RIGHT_HINGE_BOTTOM:
+        	if (closed) {
 				currentXPos = xPos;
 				currentYPos = yPos;
 				g.fillRect(currentXPos, currentYPos, height, width);
 			} else {
 				currentXPos = xPos;
-				currentYPos = yPos;
-				g.fillRect(currentXPos - width, currentYPos, width, height);
+				currentYPos = yPos+width;
+				g.fillRect(currentXPos, currentYPos, width, height);
 			}
-			break;
-
+        	break;
 		}
 		g.setColor(temp);
 	}
