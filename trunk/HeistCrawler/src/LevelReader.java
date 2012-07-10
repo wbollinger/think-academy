@@ -11,7 +11,7 @@ public class LevelReader {
 		this.path = dir;
 	}
 
-	public Level readLevelFile(int levelnum) {
+	public Level readLevelFile(int levelnum) { //deprecated
 		Level level = new Level("Level_" + levelnum);
 		try {
 			// Open the file that is the first
@@ -39,7 +39,7 @@ public class LevelReader {
 				if (character == 'X') {
 					level.walls.add(new Wall(xx, yy, size, size));
 				}
-				
+
 				if (ln == lnlng + 2) {
 					xx = 10;
 					yy = yy + size;
@@ -70,63 +70,136 @@ public class LevelReader {
 			int lvlWidth;
 			int lvlHeight;
 			String strLine = reader.readLine();
-			lvlWidth = Integer.parseInt(strLine.substring(strLine.indexOf('<')+1,
-					strLine.indexOf(',')));
+			lvlWidth = Integer.parseInt(strLine.substring(
+					strLine.indexOf('<') + 1, strLine.indexOf(',')));
 			lvlHeight = Integer.parseInt(strLine.substring(
-					strLine.indexOf(',')+1, strLine.indexOf('>')));
-			
+					strLine.indexOf(',') + 1, strLine.indexOf('>')));
+
 			int xx = 10;
 			int yy = 10;
 			int size = 5;
-			
+
 			System.out.println("before Map Creation");
 			char[][] map = new char[lvlWidth][lvlHeight];
 			System.out.println("After Map Creation");
 			for (int y = 0; y < lvlHeight; y++) {
 				for (int x = 0; x < lvlWidth; x++) {
 					char c = (char) reader.read();
-					while(c == '\n') {
+					while (c == '\n') {
 						c = (char) reader.read();
 					}
-						map[x][y] = c;
+					map[x][y] = c;
 				}
 			}
 			System.out.println("After Map initializer");
 
 			for (int y = 0; y < lvlHeight; y++) {
 				for (int x = 0; x < lvlWidth; x++) {
-					if(map[x][y] == 'X') {
+					if (map[x][y] == 'X') {
 						int xSize = 1;
 						int ySize = 1;
-						if(map[x+1][y] == 'X') {
+						if (map[x + 1][y] == 'X') {
 							xSize++;
-							while(map[x+xSize][y] == 'X') {
+							while (map[x + xSize][y] == 'X') {
 								xSize++;
-								if(x+xSize >= lvlWidth) {
+								if (x + xSize >= lvlWidth) {
 									break;
 								}
 							}
-						} else if(map[x][y+1] == 'X') {
+						} else if (map[x][y + 1] == 'X') {
 							ySize++;
-							while(map[x][y+ySize] == 'X') {
+							while (map[x][y + ySize] == 'X') {
 								ySize++;
-								if(y+ySize >= lvlHeight) {
+								if (y + ySize >= lvlHeight) {
 									break;
 								}
 							}
 						}
-						level.walls.add(new Wall(xx+(5*x), yy+(5*y), size*xSize, size*ySize));
+						level.walls.add(new Wall(xx + (5 * x), yy + (5 * y),
+								size * xSize, size * ySize));
 						System.out.println("Wall added");
 						xSize--;
 						ySize--;
-						for(;xSize > 0;xSize--) {
-							map[x+xSize][y] = 'o';
+						for (; xSize > 0; xSize--) {
+							map[x + xSize][y] = 'o';
 						}
-						
-						for(;ySize > 0;ySize--) {
-							map[x][y+ySize] = 'o';
+
+						for (; ySize > 0; ySize--) {
+							map[x][y + ySize] = 'o';
 						}
-						
+
+					} else if (map[x][y] == '^') {
+
+						if (map[x + 1][y] == '-') {
+							level.doors.add(new Door(
+											xx + (5 * x),
+											yy + (5 * y),
+											Door.DoorTypes.OPENS_UP_HINGE_LEFT,
+											true));
+						} else if (map[x - 1][y] == '-') {
+							level.doors.add(new Door(
+									xx + (5 * x),
+									yy + (5 * y),
+									Door.DoorTypes.OPENS_UP_HINGE_RIGHT,
+									true));
+						}
+
+						System.out.println("Door added");
+
+					} else if (map[x][y] == 'V') {
+
+						if (map[x + 1][y] == '-') {
+							level.doors.add(new Door(
+											xx + (5 * x),
+											yy + (5 * y),
+											Door.DoorTypes.OPENS_DOWN_HINGE_LEFT,
+											true));
+						} else if (map[x - 1][y] == '-') {
+							level.doors.add(new Door(
+									xx + (5 * x),
+									yy + (5 * y),
+									Door.DoorTypes.OPENS_DOWN_HINGE_RIGHT,
+									true));
+						}
+
+						System.out.println("Door added");
+
+					} else if (map[x][y] == '<') {
+
+						if (map[x][y + 1] == '-') {
+							level.doors.add(new Door(
+											xx + (5 * x),
+											yy + (5 * y),
+											Door.DoorTypes.OPENS_LEFT_HINGE_TOP,
+											true));
+						} else if (map[x][y + 1] == '-') {
+							level.doors.add(new Door(
+									xx + (5 * x),
+									yy + (5 * y),
+									Door.DoorTypes.OPENS_LEFT_HINGE_BOTTOM,
+									true));
+						}
+
+						System.out.println("Door added");
+
+					} else if (map[x][y] == '>') {
+
+						if (map[x][y + 1] == '-') {
+							level.doors.add(new Door(
+											xx + (5 * x),
+											yy + (5 * y),
+											Door.DoorTypes.OPENS_RIGHT_HINGE_TOP,
+											true));
+						} else if (map[x][y + 1] == '-') {
+							level.doors.add(new Door(
+									xx + (5 * x),
+									yy + (5 * y),
+									Door.DoorTypes.OPENS_RIGHT_HINGE_BOTTOM,
+									true));
+						}
+
+						System.out.println("Door added");
+
 					}
 				}
 			}
