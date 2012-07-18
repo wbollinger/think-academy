@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class HeistCore extends JFrame {
+	
+	public static final boolean DEBUG = true;
 
 	
 	public static HeistCore mainClass;
@@ -25,6 +27,10 @@ public class HeistCore extends JFrame {
 
 	public static void main(String[] args) {
 		mainClass = new HeistCore();
+		
+		if(DEBUG) {
+			new DebugWindow();
+		}
 	}
 
 }
