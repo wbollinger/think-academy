@@ -11,16 +11,16 @@ import javax.swing.*;
 public class HeistPanel extends JPanel {
 
 	public static HeistPanel mainPanel;
-	
+
 	public static int width = 800;
 	public static int height = 800;
 	int currentLevel;
 
 	InputManager input;
-	
+
 	LevelReader lvlLoader;
 	Level lvl;
-	
+
 	Image invImage;
 	Image backgroundImage;
 	Image invSelect;
@@ -41,15 +41,15 @@ public class HeistPanel extends JPanel {
 
 	public HeistPanel() {
 		mainPanel = this;
-		
+
 		lvlLoader = new LevelReader("Levels");
-		currentLevel =  1;
+		currentLevel = 1;
 		lvl = lvlLoader.readLevel(currentLevel);
-		
+
 		input = new InputManager();
 		addKeyListener(input);
 		addMouseMotionListener(input);
-		
+
 		setFocusable(true);
 		requestFocus();
 		invImage = Toolkit.getDefaultToolkit().createImage(
@@ -69,8 +69,6 @@ public class HeistPanel extends JPanel {
 		addItems();
 		itemSelected = 1;
 	}
-	
-
 
 	public void addItems() {
 		items.add(new ItemLockPick("Test"));
@@ -80,14 +78,19 @@ public class HeistPanel extends JPanel {
 		items.add(new ItemLockPick("Test5"));
 		items.add(new ItemLockPick("Test6"));
 	}
-	
-	public void increaseLevel(){
+
+	public void increaseLevel() {
 		currentLevel += 1;
 	}
-	
-	public void decreaseLevel(){
+
+	public void decreaseLevel() {
 		currentLevel -= 1;
 	}
+
+	public void loadCurrentLevel() {
+		lvl = lvlLoader.readLevel(currentLevel);
+	}
+
 	public void paintComponent(Graphics g) {
 		draw(g);
 		repaint();
@@ -103,7 +106,8 @@ public class HeistPanel extends JPanel {
 		}
 		Color view = new Color(255, 255, 255, 80);
 		g.setColor(view);
-		g.fillArc((int)(p1.getX()+11-200),(int)(p1.getY()+7-200),400,400,(int)(-p1.heading*180/Math.PI-45),90);
+		g.fillArc((int) (p1.getX() + 11 - 200), (int) (p1.getY() + 7 - 200),
+				400, 400, (int) (-p1.heading * 180 / Math.PI - 45), 90);
 		p1.draw((Graphics2D) g);
 
 	}
@@ -163,7 +167,8 @@ public class HeistPanel extends JPanel {
 				for (int i = 0; i < lvl.doors.size(); i++) {
 					if (findDistance((int) Math.round(p1.getX()),
 							Math.round((int) p1.getY()), lvl.doors.get(i)
-									.getCurrentX(), lvl.doors.get(i).getCurrentY()) < 40) {
+									.getCurrentX(), lvl.doors.get(i)
+									.getCurrentY()) < 40) {
 						ItemLockPick temp = (ItemLockPick) items
 								.get(itemSelected - 1);
 						temp.unlockDoor(lvl.doors.get(i));
@@ -214,8 +219,7 @@ public class HeistPanel extends JPanel {
 			}
 		} else if (input.isKeyPressed(KeyEvent.VK_S)
 				&& input.isKeyPressed(KeyEvent.VK_D)
-				&& (p1.getY() + 15) < height
-				&& (p1.getX() + 15) < width) {
+				&& (p1.getY() + 15) < height && (p1.getX() + 15) < width) {
 			p1.moveDownRight(Player.baseSpeed);
 			for (int i = 0; i < lvl.walls.size(); i++) {
 				if (p1.collisionCheck(lvl.walls.get(i))) {
