@@ -21,6 +21,11 @@ public class Bullet {
 		this.speed = speed;
 		rect = new Rectangle((int)x, (int)y, 2, 2);
 		bullet = Toolkit.getDefaultToolkit().createImage("Images/Bullet.png");
+		try {
+			MakeSound.playSound("Sounds/Gun_Shot.wav");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void draw(Graphics2D g) {
