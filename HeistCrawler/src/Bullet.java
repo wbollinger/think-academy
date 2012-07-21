@@ -22,7 +22,7 @@ public class Bullet {
 		rect = new Rectangle((int)x, (int)y, 2, 2);
 		bullet = Toolkit.getDefaultToolkit().createImage("Images/Bullet.png");
 		try {
-			MakeSound.playSound("Sounds/Gun_Shot.wav");
+			MakeSound.playSound("Sounds/Gun_Silencer.wav");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -34,6 +34,11 @@ public class Bullet {
 	
 	public boolean collisionCheck(Wall w) {
 		if (rect.intersects(w.rect)) {
+			try {
+				MakeSound.playSound("Sounds/Hit_Wall.wav");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			return true;
 		} else {
 			return false;
@@ -42,6 +47,11 @@ public class Bullet {
 	
 	public boolean collisionCheck(Door d) {
 		if (rect.intersects(d.rect)) {
+			try {
+				MakeSound.playSound("Sounds/Hit_Wall.wav");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			return true;
 		} else {
 			return false;
