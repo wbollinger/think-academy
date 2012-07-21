@@ -61,6 +61,11 @@ public class Door {
 	}
 	
 	public void setLocked(boolean locked) {
+		try {
+			MakeSound.playSound("Sounds/Pick_Lock.wav");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		this.locked = locked;
 	}
 
