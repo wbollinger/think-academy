@@ -118,7 +118,8 @@ public class StateCommand extends State {
 		String command = st.nextToken();
 
 		// Check for command line arguments; support simple access to arg0
-		String arg0 = null, arg1 = null, arg2 = null;
+		String arg0 = null, arg1 = null;
+		//String arg2 = null;
 		String[] args = new String[st.countTokens()];
 		for (i = 0; i < args.length; i++) {
 			args[i] = st.nextToken();
@@ -129,8 +130,8 @@ public class StateCommand extends State {
 			case 1:
 				arg1 = args[1];
 				break;
-			case 2:
-				arg2 = args[2];
+			//case 2:
+			//	arg2 = args[2];
 			}
 			
 		}
