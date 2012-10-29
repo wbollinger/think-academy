@@ -16,6 +16,8 @@ void Init_Analog(void)
 		g_AnalogFlags[i].bUpdate = FALSE;
 	}
 
+	// Turn on internal pull-up resistor for switch connected to Analog input?
+
 	// To do?  Enable monitoring of Analog ports of interest
 }
 
@@ -34,6 +36,9 @@ void Analog_Handler(void)
 	g_u16Analog[2] = analogRead(A2);
 	g_AnalogFlags[2].bUpdate = TRUE;
 
+	// Read optional fourth analog sensor
+	//g_u16Analog[3] = analogRead(A3);
+	//g_AnalogFlags[3].bUpdate = TRUE;
 }
 
 //---------------------------------------------------------------------

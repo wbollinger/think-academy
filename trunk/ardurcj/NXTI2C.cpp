@@ -155,7 +155,7 @@ static union {
 
 		// Analog Measurement Inputs
 		UINT_16 u16AnalogValue[NUM_ANALOG_CH]; // 0x62 - 0x6F Analog Input (Raw value from 0 to 1023)
-		INT_8 i8AnalogValue[NUM_ANALOG_CH]; // 0x70 - 0x76 Signed Analog Input (8 bit scaled value)
+		INT_8 i8DigitalValue[NUM_DIGITAL_CH]; // 0x70 - 0x76 Digital Input (was 8 bit scaled value in original code)
 		//byte u8MuxMode; // 0x77 Multiplexer Mode (0 = Radio Control, 1 = NXT Control)
 		byte u8Dummy;
 
@@ -510,13 +510,22 @@ static void NXTUpdateValues(void)
 	for (byte i = 0; i < NUM_ANALOG_CH; i++) {
 		if (g_AnalogFlags[i].bUpdate) {
 			// Analog value (may) have been updated
-			int i16AnalogScaled = (int) Analog_getChannel(i) / 4;  // Will scale this value
-			m_NXTInterfaceData.Fields.i8AnalogValue[i] = (INT_8) i16AnalogScaled; // 8 bit version of Signed Radio Control input (units of 4uS)
+			//int i16AnalogScaled = (int) Analog_getChannel(i) / 4;  // Will scale this value
+			//m_NXTInterfaceData.Fields.i8AnalogValue[i] = (INT_8) i16AnalogScaled; // 8 bit version of Signed Radio Control input (units of 4uS)
 
 			m_NXTInterfaceData.Fields.u16AnalogValue[i] = Analog_getChannel(i);     // Read raw Analog Value
 
 			g_AnalogFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
 		}
+	}
+
+	for (byte i = 0; i < NUM_DIGITAL_CH; i++) {
+		if (g_DigitalFlags[i].bUpdate) {
+			// Digital value (may) have been updated
+			m_NXTInterfaceData.Fields.i8DigitalValue[i] = (INT_8) Digital_getChannel(i);
+			g_AnalogFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
+		}
+
 	}
 }
 

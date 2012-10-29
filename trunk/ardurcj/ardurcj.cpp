@@ -35,6 +35,7 @@
  * General variables
  **************************************************************************/
 volatile AnalogInputFlags g_AnalogFlags[NUM_ANALOG_CH]; // Analog Input channel flags
+volatile DigitalInputFlags g_DigitalFlags[NUM_DIGITAL_CH]; // Digital Input channel flags
 DiagnosticsFlags g_DiagnosticsFlags;
 ConfigurationFlags g_ConfigurationFlags;
 volatile MiscFlags g_MiscFlags;
@@ -47,6 +48,8 @@ void ServoOutput_Handler(void);
 
 // Functions in NXTAnalog
 void Analog_Handler(void);
+// Functions in NXTDigital
+void Digital_Handler(void);
 
 // Functions in NXTI2C
 void NXT_Handler(void);
@@ -58,7 +61,6 @@ void Diagnostics_Handler(void);
 
 // Functions in NXTServoOutput
 void Init_ServoOutput(void);
-void pulse_servo_0(unsigned int u16PulseWidth);
 
 //---------------------------------------------------------------------
 // Local Functions
@@ -86,6 +88,7 @@ void loop()
 	//RCInput_Handler();
 
 	Analog_Handler();
+	Digital_Handler();
 
 	NXT_Handler();
 	//Multiplexer_Handler();

@@ -22,6 +22,7 @@
 //#define SERIAL_BAUD     (38400)          // Baud Rate used for GPS and Diagnostics
 
 #define NUM_ANALOG_CH		(4U)		   // Number of Analog Input Channels
+#define NUM_DIGITAL_CH		(4U)		   // Number of Digital Input Channels
 #define NUM_SERVO_CH		(4U)		   // total number of servo output channels
 //#define ATTINY_IN_USE                    // If you do not hold the ATTiny in reset, on the Ardupilot prototype,
                                            // then it is in contrl of the multiplexer
@@ -90,6 +91,17 @@ typedef union {
 	};
 } AnalogInputFlags;
 
+typedef union {
+	struct {
+		// High level
+		unsigned bValid :1; // Flag to indicate that the channel is being used
+		unsigned bUpdate :1; // Flag to indicate that data has been updated
+	};
+	struct {
+		UINT_8 u8Value;
+	};
+} DigitalInputFlags;
+
 /*************************************************************************
  *
  *************************************************************************/
@@ -102,11 +114,13 @@ typedef union {
  * General variables
  **************************************************************************/
 extern volatile AnalogInputFlags g_AnalogFlags[NUM_ANALOG_CH]; // Analog Input channel flags
+extern volatile DigitalInputFlags g_DigitalFlags[NUM_DIGITAL_CH]; // Digital Input channel flags
 extern DiagnosticsFlags g_DiagnosticsFlags;
 extern ConfigurationFlags g_ConfigurationFlags;
 extern volatile MiscFlags g_MiscFlags;
 
-unsigned Analog_getChannel(unsigned char u8Ch);
+unsigned      Analog_getChannel(unsigned char u8Ch);
+unsigned char Digital_getChannel(unsigned char u8Ch);
 
 //end of add your includes here
 #ifdef __cplusplus
