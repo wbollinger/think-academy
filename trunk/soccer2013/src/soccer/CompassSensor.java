@@ -1,16 +1,11 @@
 package soccer;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
-import lejos.nxt.Motor;
-import lejos.nxt.MotorPort;
-import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
 
 public class CompassSensor {
 
-	NXTMotor motA;
-	NXTMotor motB;
 	CompassHTSensor compass;
 	OmniDirRobot move;
 	
@@ -18,8 +13,6 @@ public class CompassSensor {
 
 		move = new OmniDirRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
-		motA = new NXTMotor(MotorPort.A);
-		motB = new NXTMotor(MotorPort.B);
 
 	}
 	
