@@ -12,9 +12,11 @@ public class CompassSensor {
 	NXTMotor motA;
 	NXTMotor motB;
 	CompassHTSensor compass;
-
+	OmniDirRobot move;
+	
 	CompassSensor() {
 
+		move = new OmniDirRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
@@ -22,6 +24,7 @@ public class CompassSensor {
 	}
 	
 //Just what I thought was the old compass averaging code
+	
 	/*
 	 * public float getHeading() { float cReading = 0.0f; float
 	 * correctedCReading = 0.0f;
@@ -44,21 +47,21 @@ public class CompassSensor {
 		// LCD.drawString("New Degree:" + newDegree, 0, 2);
 		if (n < 180) {
 			while (true) {
-				// turnRight();
+				move.turnRight();
 				if (compass.getDegrees() == newDegree) {
 					break;
 				}
 			}
 		} else {
 			while (true) {
-				// turnLeft();
+				move.turnLeft();
 				if (compass.getDegrees() == newDegree) {
 					break;
 				}
 			}
 		}
 
-		// allStop();
+		move.stopAll();
 
 	}
 
