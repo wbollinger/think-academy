@@ -35,10 +35,20 @@ public class CompassSensor {
 	public void degreeTurn(int n) {
 		int degree = (int) compass.getDegrees();
 		int newDegree = degree + n;
+		
+		//The new degree, which comes from adding the specified turn (n) 
+		//to the current degree the robot is facing
+		
 		if (newDegree > 359) {
+			//This makes sure the new degree stays modulo 360
+			//aka after reaching 359 it loops back to 0
 			newDegree = newDegree - 360;
 		}
 		// LCD.drawString("New Degree:" + newDegree, 0, 2);
+		
+		//This next bit of code makes it find the optimal direction to turn to
+		// as well as actually make it turn
+		
 		if (n < 180) {
 			while (true) {
 				move.turnRight();
