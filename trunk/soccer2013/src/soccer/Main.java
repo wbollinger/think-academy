@@ -22,7 +22,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		int buttons;
+		int buttons = -1;
 
 		// create a robot
 		Robot robot = Robot.getRobot();
@@ -33,8 +33,8 @@ public class Main {
 			//robot.setUseDebug(false);
 		} else {
 			// Use BlueTooth command loop
-			robot.setUseCommands(true);
-			robot.setUseDebug(true);
+			//robot.setUseCommands(true);
+			//robot.setUseDebug(true);
 		}
 		robot.run();
 	}
