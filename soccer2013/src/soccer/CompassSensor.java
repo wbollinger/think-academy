@@ -1,4 +1,5 @@
 package soccer;
+
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
@@ -8,16 +9,16 @@ public class CompassSensor {
 
 	CompassHTSensor compass;
 	OmniDirRobot move;
-	
+
 	CompassSensor() {
 
 		move = new OmniDirRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
 
 	}
-	
-//Just what I thought was the old compass averaging code
-	
+
+	// Just what I thought was the old compass averaging code
+
 	/*
 	 * public float getHeading() { float cReading = 0.0f; float
 	 * correctedCReading = 0.0f;
