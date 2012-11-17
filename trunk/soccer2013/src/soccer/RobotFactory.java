@@ -12,7 +12,7 @@ public class RobotFactory {
 		Robot robot;
 		if(name.equals("NXTChris")) { // Chris' robot
 			robot = new RobotChris();
-		} else if(name.equals("JEREMY")) { // Jeremy's robot
+		} else if(name.equals("JPNXT")) { // Jeremy's robot
 			robot = new RobotJeremy();
 		} else if(name.equals("TIM")) { // Tim's robot
 			robot = new RobotTim();
