@@ -59,8 +59,8 @@ public class OmniDirRobot {
 	
 	public void moveForward(){
 		
-		motB.backward();
 		motC.forward();
+		motB.backward();
 		
 	}
 	
