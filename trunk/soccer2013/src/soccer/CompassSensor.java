@@ -50,15 +50,17 @@ public class CompassSensor {
 		// as well as actually make it turn
 		
 		if (n < 180) {
+			move.turnRight();
 			while (true) {
-				move.turnRight();
+				
 				if (compass.getDegrees() == newDegree) {
 					break;
 				}
 			}
 		} else {
+			move.turnLeft();
 			while (true) {
-				move.turnLeft();
+				
 				if (compass.getDegrees() == newDegree) {
 					break;
 				}
