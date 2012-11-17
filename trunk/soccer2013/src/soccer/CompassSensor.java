@@ -71,9 +71,9 @@ public class CompassSensor {
 
 	public void run() throws InterruptedException {
 
-		while (Button.ESCAPE.isUp()) {
+		while (true) {
 
-			LCD.drawInt((int) compass.getDegrees(), 0, 1);
+			LCD.drawInt((int) Math.round(compass.getDegrees()), 0, 1);
 			degreeTurn(90);
 			Thread.sleep(20);
 			LCD.clear();
