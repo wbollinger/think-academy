@@ -51,17 +51,23 @@ public class CompassSensor {
 		
 		if (n < 180) {
 			move.turnRight();
+			
+			int dif = Math.abs(degree - newDegree);
+			
 			while (true) {
+				degree = (int)compass.getDegrees();
 				
-				if (compass.getDegrees() == newDegree) {
+				if (dif < 3) {
 					break;
 				}
 			}
 		} else {
 			move.turnLeft();
+			
+			int dif = Math.abs(degree - newDegree);
 			while (true) {
 				
-				if (compass.getDegrees() == newDegree) {
+				if (dif < 3) {
 					break;
 				}
 			}
