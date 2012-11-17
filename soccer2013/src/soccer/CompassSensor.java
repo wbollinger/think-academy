@@ -17,7 +17,7 @@ public class CompassSensor {
 
 	}
 
-	// Just what I thought was the old compass averaging code
+	// Just what I thought was the old compass accuracy code
 
 	/*
 	 * public float getHeading() { float cReading = 0.0f; float
