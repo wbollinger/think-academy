@@ -44,7 +44,7 @@ public class CompassSensor {
 			//aka after reaching 359 it loops back to 0
 			newDegree = newDegree - 360;
 		}
-		// LCD.drawString("New Degree:" + newDegree, 0, 2);
+		LCD.drawString("New Degree:" + newDegree, 0, 2);
 		
 		//This next bit of code makes it find the optimal direction to turn to
 		// as well as actually make it turn
@@ -52,24 +52,44 @@ public class CompassSensor {
 		if (n < 180) {
 			move.turnRight();
 			
-			int dif = Math.abs(degree - newDegree);
+			int dif;
 			
 			while (true) {
-				degree = (int)compass.getDegrees();
-				
-				if (dif < 3) {
+				degree = Math.round(compass.getDegrees());
+				LCD.drawInt(degree, 0, 1);
+				dif = Math.abs(degree - newDegree);
+				if (dif < 10) {
 					break;
 				}
+				
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				LCD.clear();
+				
 			}
 		} else {
 			move.turnLeft();
 			
 			int dif = Math.abs(degree - newDegree);
 			while (true) {
-				
-				if (dif < 3) {
+				degree = Math.round(compass.getDegrees());
+				LCD.drawInt(degree, 0, 1);
+				dif = Math.abs(degree - newDegree);
+				if (dif < 10) {
 					break;
 				}
+				
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				LCD.clear();
 			}
 		}
 
@@ -81,10 +101,8 @@ public class CompassSensor {
 
 		while (true) {
 
-			LCD.drawInt((int) Math.round(compass.getDegrees()), 0, 1);
 			degreeTurn(90);
 			Thread.sleep(20);
-			LCD.clear();
 
 		}
 	}
