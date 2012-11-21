@@ -61,7 +61,7 @@ public class RobotChris extends Robot{
 	}
 	
 	public static void main(String[] args) {
-		Robot robot = RobotFactory.makeRobot();
+		Robot robot = Robot.getRobot();
 		robot.run();
 	}
 }

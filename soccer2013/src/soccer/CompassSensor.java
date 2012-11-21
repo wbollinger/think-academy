@@ -9,29 +9,12 @@ import lejos.robotics.navigation.CompassPilot;
 public class CompassSensor {
 	
 	CompassHTSensor compass;
-	OmniDirRobot move;
+	Robot move;
 
 	CompassSensor() {
-
-		move = new OmniDirRobot();
+		move = Robot.getRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
-
 	}
-
-	// Just what I thought was the old compass accuracy code
-
-	/*
-	 * public float getHeading() { float cReading = 0.0f; float
-	 * correctedCReading = 0.0f;
-	 * 
-	 * if (compass != null) { cReading = compass.getDegrees(); }
-	 * correctedCReading = 360 - cReading + 90; // debugln("Old Heading: " +
-	 * correctedCReading); if (correctedCReading >= 360) { correctedCReading =
-	 * correctedCReading - 360; } correctedCReading = correctedCReading -
-	 * compOffset; // debugln("New Heading: " + correctedCReading); if
-	 * (correctedCReading < 0) { correctedCReading = correctedCReading + 360; }
-	 * return correctedCReading; }
-	 */
 
 	public void rotate(int n) {
 		int degree = (int) compass.getDegrees();
@@ -62,10 +45,8 @@ public class CompassSensor {
 				dif = Math.abs(degree - newDegree);
 				if (dif < 2) {
 					break;
-				}
-				
-				//Thread.sleep(50);
-				
+				}	
+				//Thread.sleep(50);	
 			}
 		} else {
 			move.turnLeft();
@@ -79,29 +60,16 @@ public class CompassSensor {
 				if (dif < 2) {
 					break;
 				}
-	
-				//sleep(50);
-				
+				//sleep(50);	
 			}
 		}
-
 		move.stopAll();
-
 	}
 
-	public void run() throws InterruptedException {
+	public void run() {
 		
 			rotate(270);
-			Thread.sleep(20);
-	}
-	
-	public void sleep(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			move.sleep(20);
 	}
 
 	/**
@@ -112,7 +80,7 @@ public class CompassSensor {
 
 		CompassSensor bot = new CompassSensor();
 		bot.run();
-		bot.sleep(1000);
+		bot.move.sleep(1000);
 	}
 
 }
