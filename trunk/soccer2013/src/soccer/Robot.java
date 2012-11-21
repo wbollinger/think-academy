@@ -17,6 +17,10 @@ public class Robot {
 		return robot;
 	}
 	
+	public Robot() {
+		
+	}
+	
 	public void sleep(int time) {
 		try {
 			Thread.sleep(time);
