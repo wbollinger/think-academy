@@ -4,9 +4,10 @@ import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
+import lejos.robotics.navigation.CompassPilot;
 
 public class CompassSensor {
-
+	
 	CompassHTSensor compass;
 	OmniDirRobot move;
 
@@ -32,7 +33,7 @@ public class CompassSensor {
 	 * return correctedCReading; }
 	 */
 
-	public void degreeTurn(int n) {
+	public void rotate(int n) {
 		int degree = (int) compass.getDegrees();
 		int newDegree = degree + n;
 		
@@ -90,7 +91,7 @@ public class CompassSensor {
 
 	public void run() throws InterruptedException {
 		
-			degreeTurn(270);
+			rotate(270);
 			Thread.sleep(20);
 	}
 	
