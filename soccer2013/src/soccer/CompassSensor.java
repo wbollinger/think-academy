@@ -44,7 +44,7 @@ public class CompassSensor {
 			//aka after reaching 359 it loops back to 0
 			newDegree = newDegree - 360;
 		}
-		LCD.drawString("New Degree:" + newDegree, 0, 2);
+		//LCD.drawString("New Degree:" + newDegree, 0, 2);
 		
 		//This next bit of code makes it find the optimal direction to turn to
 		// as well as actually make it turn
@@ -56,19 +56,14 @@ public class CompassSensor {
 			
 			while (true) {
 				degree = Math.round(compass.getDegrees());
-				LCD.drawInt(degree, 0, 1);
+				//LCD.drawInt(degree, 0, 1);
+				//LCD.drawString("New Degree:" + newDegree, 0, 2);
 				dif = Math.abs(degree - newDegree);
-				if (dif < 10) {
+				if (dif < 2) {
 					break;
 				}
 				
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				LCD.clear();
+				//Thread.sleep(50);
 				
 			}
 		} else {
@@ -77,19 +72,15 @@ public class CompassSensor {
 			int dif = Math.abs(degree - newDegree);
 			while (true) {
 				degree = Math.round(compass.getDegrees());
-				LCD.drawInt(degree, 0, 1);
+				//LCD.drawInt(degree, 0, 1);
+				//LCD.drawString("New Degree:" + newDegree, 0, 2);
 				dif = Math.abs(degree - newDegree);
-				if (dif < 10) {
+				if (dif < 2) {
 					break;
 				}
+	
+				//sleep(50);
 				
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				LCD.clear();
 			}
 		}
 
@@ -98,12 +89,17 @@ public class CompassSensor {
 	}
 
 	public void run() throws InterruptedException {
-
-		while (true) {
-
-			degreeTurn(90);
+		
+			degreeTurn(270);
 			Thread.sleep(20);
-
+	}
+	
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -115,6 +111,7 @@ public class CompassSensor {
 
 		CompassSensor bot = new CompassSensor();
 		bot.run();
+		bot.sleep(1000);
 	}
 
 }
