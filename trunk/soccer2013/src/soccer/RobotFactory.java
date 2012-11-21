@@ -10,7 +10,7 @@ public class RobotFactory {
 		Properties props = Settings.getProperties();
 		String name = props.getProperty("lejos.usb_name");
 		Robot robot;
-		if(name.equals("NXTChris")) { // Chris' robot
+		if(name.equals("NXTChris")||name.equals("bbot")) { // Chris' robot
 			robot = new RobotChris();
 		} else if(name.equals("JPNXT")) { // Jeremy's robot
 			robot = new RobotJeremy();
