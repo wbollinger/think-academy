@@ -31,5 +31,13 @@ public class Robot {
 	}
 	
 	public void run(){}
+	
+	public void moveForward(){}
+	
+	public void stopAll(){}
+
+	public void turnLeft() {}
+
+	public void turnRight() {}
 
 }
