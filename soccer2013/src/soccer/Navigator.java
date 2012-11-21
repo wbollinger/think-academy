@@ -5,12 +5,12 @@ import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
 
-public class CompassSensor {
+public class Navigator {
 	
 	CompassHTSensor compass;
 	Robot move;
 
-	CompassSensor() {
+	Navigator() {
 		move = Robot.getRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
 	}
@@ -77,7 +77,7 @@ public class CompassSensor {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 
-		CompassSensor bot = new CompassSensor();
+		Navigator bot = new Navigator();
 		bot.run();
 		bot.move.sleep(1000);
 	}
