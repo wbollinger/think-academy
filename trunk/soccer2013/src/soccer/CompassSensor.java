@@ -4,7 +4,6 @@ import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
-import lejos.robotics.navigation.CompassPilot;
 
 public class CompassSensor {
 	
