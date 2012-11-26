@@ -15,7 +15,7 @@ public class Navigator {
 		compass = new CompassHTSensor(SensorPort.S2);
 	}
 
-	public void rotate(int n) {
+	public void turnTo(int n) {
 		int degree = (int) compass.getDegrees();
 		int newDegree = degree + n;
 		
@@ -67,15 +67,15 @@ public class Navigator {
 
 	public void run() {
 		
-			rotate(270);
-			move.sleep(20);
+			turnTo(90);
+			
 	}
 
 	/**
 	 * @param args
 	 * @throws InterruptedException
 	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 
 		Navigator bot = new Navigator();
 		bot.run();
