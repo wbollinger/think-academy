@@ -56,7 +56,7 @@ public class Navigator {
 				//LCD.drawInt(degree, 0, 1);
 				//LCD.drawString("New Degree:" + newDegree, 0, 2);
 				dif = Math.abs(degree - newDegree);
-				if (dif < 2) {
+				if (dif < 3) {
 					break;
 				}
 				//sleep(50);	
@@ -67,7 +67,7 @@ public class Navigator {
 
 	public void run() {
 		
-			turnTo(90);
+			turnTo(270);
 			
 	}
 
