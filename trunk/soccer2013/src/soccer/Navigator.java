@@ -100,7 +100,7 @@ public class Navigator {
 	
 	public void run() {
 	
-			turnTo(90);
+			moveDir(0);
 	}
 
 	/**
