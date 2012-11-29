@@ -14,6 +14,36 @@ public class Navigator {
 		move = Robot.getRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
 	}
+	
+	public void moveDir(double dir) {
+		Vector2D v = new Vector2D(Vector2D.toRadian(dir));
+		
+		//LCD.drawInt((int)Math.round(Vector2D.toRadian(dir)), 0, 0);
+		
+		double w0 = v.dot(Robot.F0)/Robot.getR();
+		double w1 = v.dot(Robot.F1)/Robot.getR();
+		double w2 = v.dot(Robot.F2)/Robot.getR();
+		
+		//LCD.drawString(Double.toString(v.getX()), 0, 0);
+		//LCD.drawString(Double.toString(v.getY()), 0, 1);
+		
+//		LCD.drawString(Double.toString(v.dot(F0)), 0, 0);
+//		LCD.drawString(Double.toString(v.dot(F1)), 0, 1);
+//		LCD.drawString(Double.toString(v.dot(F2)), 0, 2);
+			
+		double max = Math.max(Math.abs(w0), Math.max(Math.abs(w1), Math.abs(w2)));
+		
+		double scale = 100.0/max;
+		
+		LCD.drawString(Double.toString(scale), 0, 4);
+		
+		move.motA.setPower((int)Math.round(w0*scale));
+		move.motB.setPower((int)Math.round(w1*scale));
+		move.motC.setPower((int)Math.round(w2*scale));
+		move.motA.forward();
+		move.motB.forward();
+		move.motC.forward();
+	}
 
 	public void turnTo(int angle) {
 		int degree = (int) compass.getDegrees();
