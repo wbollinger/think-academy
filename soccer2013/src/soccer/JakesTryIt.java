@@ -1,9 +1,8 @@
 package soccer;
+import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
-import lejos.nxt.addon.CompassHTSensor;
-import lejos.nxt.addon.IRSeekerV2;
 import lejos.nxt.addon.*;
 
 public class JakesTryIt {
@@ -66,6 +65,8 @@ public class JakesTryIt {
 			
 			JakesTryIt robot = new JakesTryIt();
 			robot.run();
-			robot.moveForward();
+			while (Button.ESCAPE.isUp()){
+				robot.moveForward();
+			}
 		}
 	}
