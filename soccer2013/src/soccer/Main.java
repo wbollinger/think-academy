@@ -36,6 +36,6 @@ public class Main {
 			//robot.setUseCommands(true);
 			//robot.setUseDebug(true);
 		}
-		robot.run();
+		robot.followBall();
 	}
 }
