@@ -7,9 +7,6 @@ import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotChris extends Robot{
 
-	NXTMotor motA;
-	NXTMotor motB;
-	NXTMotor motC;
 	IRSeekerV2 IR;
 	
 	public RobotChris() {
@@ -25,6 +22,9 @@ public class RobotChris extends Robot{
 		motA.stop();
 		motB.stop();
 		motC.stop();
+		
+		r = 2.5;
+		b = 0;
 	}
 	
 	public void followBall() {
