@@ -7,9 +7,6 @@ import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotTim extends Robot{
 
-	NXTMotor motA;
-	NXTMotor motB;
-	NXTMotor motC;
 	IRSeekerV2 IR;
 	
 	public RobotTim() {
