@@ -10,7 +10,7 @@ public class Navigator {
 	CompassHTSensor compass;
 	Robot move;
 
-	Navigator() {
+	public Navigator() {
 		move = Robot.getRobot();
 		compass = new CompassHTSensor(SensorPort.S2);
 	}
@@ -45,6 +45,23 @@ public class Navigator {
 		move.motC.forward();
 	}
 
+	public void rotate360(){
+		float degree = 0;
+		float newDegree = degree + 360;
+		float dif;
+		
+		while(true){
+			move.turnRight();
+			degree = compass.getDegrees();
+				dif = Math.abs(degree - newDegree);
+				if (dif < 3) {
+					break;
+				
+			}
+		}
+		
+		}
+	
 	public void turnTo(int angle) {
 		int degree = (int) compass.getDegrees();
 		int newDegree = degree + angle;
