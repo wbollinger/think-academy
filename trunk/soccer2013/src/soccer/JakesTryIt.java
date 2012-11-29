@@ -4,6 +4,7 @@ import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
+import lejos.nxt.addon.*;
 
 public class JakesTryIt {
 
@@ -28,9 +29,11 @@ public class JakesTryIt {
 		motB.stop();
 		motC.stop();
 	}
-		public static void main(String[] args) {
-			
+		
+		public void run(){
+			moveForward();
 		}
+		
 	public void moveForward(){
 			
 			motC.forward();
@@ -58,5 +61,11 @@ public class JakesTryIt {
 			motB.forward();
 			motC.forward();
 
+		}
+		public static void main(String[] args) {
+			
+			JakesTryIt robot = new JakesTryIt();
+			robot.run();
+			robot.moveForward();
 		}
 	}
