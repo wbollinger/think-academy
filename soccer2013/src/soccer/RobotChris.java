@@ -27,7 +27,7 @@ public class RobotChris extends Robot{
 		motC.stop();
 	}
 	
-	public void run() {
+	public void followBall() {
 		
 	}
 	
@@ -62,6 +62,6 @@ public class RobotChris extends Robot{
 	
 	public static void main(String[] args) {
 		Robot robot = Robot.getRobot();
-		robot.run();
+		robot.followBall();
 	}
 }

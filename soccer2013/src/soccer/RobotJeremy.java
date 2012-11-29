@@ -26,7 +26,7 @@ public class RobotJeremy extends Robot{
 		motC.stop();
 	}
 	
-	public void run() {
+	public void followBall() {
 		
 		while (true) {
 			

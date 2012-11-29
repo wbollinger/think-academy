@@ -46,7 +46,7 @@ public class Robot {
 		}
 	}
 	
-	public void run(){}
+	public void followBall(){}
 	
 	public void moveForward(){
 		motC.forward();
