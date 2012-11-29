@@ -46,6 +46,11 @@ public class Navigator {
 	}
 
 	public void rotate360(){
+		
+		/*----------WARNING----------*\
+	    ||---This method is a fail---||
+	    \*----------WARNING----------*/
+		
 		float degree = 0;
 		float newDegree = degree + 360;
 		float dif;
