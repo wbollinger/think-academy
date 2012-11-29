@@ -26,7 +26,7 @@ public class RobotTim extends Robot{
 		motC.stop();
 	}
 	
-	public void run() {
+	public void followBall() {
 		
 		while (true) {
 			
@@ -51,13 +51,6 @@ public class RobotTim extends Robot{
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException {
-
-		OmniDirRobot start = new OmniDirRobot();
-		start.run();
-
-	}
-	
 	public void moveForward(){
 		
 		motC.forward();

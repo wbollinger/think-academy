@@ -15,24 +15,20 @@ public class Navigator {
 		compass = new CompassHTSensor(SensorPort.S2);
 	}
 
-	public void turnTo(int n) {
+	public void turnTo(int angle) {
 		int degree = (int) compass.getDegrees();
-		int newDegree = degree + n;
+		int newDegree = degree + angle;
 		
 		//The new degree, which comes from adding the specified turn (n) 
 		//to the current degree the robot is facing
 		
-		if (newDegree > 359) {
-			//This makes sure the new degree stays modulo 360
-			//aka after reaching 359 it loops back to 0
-			newDegree = newDegree - 360;
-		}
+		newDegree = (int) normalize(newDegree);
 		//LCD.drawString("New Degree:" + newDegree, 0, 2);
 		
 		//This next bit of code makes it find the optimal direction to turn to
 		// as well as actually make it turn
 		
-		if (n < 180) {
+		if (angle > 0) {
 			move.turnRight();
 			
 			int dif;
@@ -65,11 +61,16 @@ public class Navigator {
 		move.stopAll();
 	}
 
+	protected float normalize(float angle)
+	  {
+	    while (angle > 180)angle -= 360;
+	    while (angle < -180)angle += 360;
+	    return angle;
+	  }
+	
 	public void run() {
-		
-		
+	
 			turnTo(90);
-			
 	}
 
 	/**
