@@ -67,7 +67,8 @@ public class Navigator {
 
 	public void run() {
 		
-			turnTo(270);
+		
+			turnTo(90);
 			
 	}
 
