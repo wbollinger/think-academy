@@ -38,6 +38,7 @@ Robot move;
 			move.turnLeft(1000);
 			move.turnRight(1000);
 	}
+	
 	//This checks to see if all the motors are connected
 	public boolean motorCheckAll(int order) {
 		if (motA != null && motB != null && motC != null) {
