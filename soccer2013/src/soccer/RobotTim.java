@@ -55,6 +55,16 @@ public class RobotTim extends Robot{
 		
 	}
 	
+	public void forward(int time) {
+		motA.backward();
+		motB.forward();
+		motC.stop();
+		sleep(time);
+		motA.stop();
+		motB.stop();
+		motC.stop();
+	}
+	
 	public void stopAll(){
 		motA.stop();
 		motB.stop();
@@ -68,6 +78,15 @@ public class RobotTim extends Robot{
 		motC.backward();
 
 	}
+	public void turnLeft(int time) {
+		motA.backward();
+		motB.backward();
+		motC.backward();
+		sleep(time);
+		motA.stop();
+		motB.stop();
+		motC.stop();
+	}
 
 	public void turnRight() {
 
@@ -76,5 +95,15 @@ public class RobotTim extends Robot{
 		motC.forward();
 
 	}
+	public void turnRight(int time) {
+		motA.forward();
+		motB.forward();
+		motC.forward();
+		sleep(time);
+		motA.stop();
+		motB.stop();
+		motC.stop();
+	}
+	
 	
 }

@@ -56,10 +56,16 @@ public class Robot {
 	
 	public void moveForward(){}
 	
+	public void moveForward(int time){}
+	
 	public void stopAll(){}
 
 	public void turnLeft() {}
+	
+	public void turnLeft(int time) {}
 
 	public void turnRight() {}
+	
+	public void turnRight(int time) {}
 
 }
