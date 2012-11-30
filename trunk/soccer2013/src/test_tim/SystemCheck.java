@@ -33,11 +33,14 @@ Robot move;
 		
 	}
 	
-	public boolean motorTestAll(int order){
+	//This tests all motors by turning them right and left
+	public void motorTestAll(int order){
 		while(true){
 			move.turnLeft(1000);
 			move.turnRight(1000);
+			break;
 		}
+		
 	}
 	//This checks to see if all the motors are connected
 	public boolean motorCheckAll(int order) {
