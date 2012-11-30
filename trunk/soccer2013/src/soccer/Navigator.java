@@ -121,7 +121,7 @@ public class Navigator {
 	  }
 	
 	public void run() {
-	
+
 			moveDir(0);
 	}
 
