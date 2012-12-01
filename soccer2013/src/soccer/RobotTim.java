@@ -10,6 +10,7 @@ public class RobotTim extends Robot{
 	IRSeekerV2 IR;
 	
 	public RobotTim() {
+		super();
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
@@ -21,6 +22,9 @@ public class RobotTim extends Robot{
 		motA.stop();
 		motB.stop();
 		motC.stop();
+		
+		r = 2.5;
+		b = 0;
 	}
 	
 	public void followBall() {

@@ -12,7 +12,7 @@ public class Navigator {
 
 	public Navigator() {
 		move = Robot.getRobot();
-		compass = new CompassHTSensor(SensorPort.S2);
+		compass = new CompassHTSensor(SensorPort.S1);
 	}
 	
 	public void moveDir(double dir) {
@@ -74,13 +74,17 @@ public class Navigator {
 		//The new degree, which comes from adding the specified turn (n) 
 		//to the current degree the robot is facing
 		
-		newDegree = (int) normalize(newDegree);
+		if(newDegree > 359){
+			newDegree = newDegree - 360;
+		}
+		
+		
 		//LCD.drawString("New Degree:" + newDegree, 0, 2);
 		
 		//This next bit of code makes it find the optimal direction to turn to
 		// as well as actually make it turn
 		
-		if (angle > 0) {
+		if (newDegree < 180) {
 			move.turnRight();
 			
 			int dif;
@@ -90,7 +94,7 @@ public class Navigator {
 				//LCD.drawInt(degree, 0, 1);
 				//LCD.drawString("New Degree:" + newDegree, 0, 2);
 				dif = Math.abs(degree - newDegree);
-				if (dif < 2) {
+				if (dif < 3) {
 					break;
 				}	
 				//Thread.sleep(50);	
@@ -122,7 +126,7 @@ public class Navigator {
 	
 	public void run() {
 
-			moveDir(0);
+			moveDir(240);
 	}
 
 	/**
