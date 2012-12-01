@@ -5,6 +5,7 @@ import lejos.nxt.LCD;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
 import lejos.robotics.navigation.OmniPilot;
@@ -39,12 +40,22 @@ Robot move;
 			move.turnRight(1000);
 	}
 	
+	public void test(){
+		if(MotorPort.A != null){
+			Sound.beep();
+		}else{
+			Sound.beepSequence();
+		}
+	}
+	
 	//This checks to see if all the motors are connected
 	public boolean motorCheckAll(int order) {
 		if (motA != null && motB != null && motC != null) {
+			Sound.beep();
 			LCD.drawString("All of the motors are connected", 0, order);
 			return true;
 		} else {
+			Sound.beepSequence();
 			LCD.drawString("One or more of the motors are NOT connected", 0,
 					order);
 			return false;
@@ -134,11 +145,13 @@ Robot move;
 	//This checks to see if the sensor in the specified port is connected
 	public boolean sensorCheckSingle(SensorPort sensorPort, int order) {
 		if (sensorPort != null) {
+			Sound.beep();
 			LCD.drawString("The sensor in " + sensorPort + " is connected", 0,
 					order);
 			return true;
 
 		} else {
+			Sound.beepSequence();
 			LCD.drawString("The sensor in " + sensorPort + " is NOT connected",
 					0, order);
 			return false;
@@ -147,8 +160,7 @@ Robot move;
 
 	//The basic diagnostic check
 	public void run() {
-		motorCheckAll(0);
-		sensorCheckAll(1, 1);
+		test();
 	}
 
 	public static void main(String[] args) {

@@ -17,14 +17,23 @@ public class GoalieNavigator extends Navigator{
 		
 	}
 	
-public void defaultGoalie(){
+	public void goalieDefault(){
+		while(true){
+			moveDir(60);
+			move.sleep(3000);
+			moveDir(240);
+			move.sleep(3000);
+		}
+	}
+	
+public void goalieAware(){
 	while (true) {
 		
 		if(IR.getDirection() > 0 && IR.getDirection() < 5){
 			if(IR.getSensorValue(3) > 200){
 				move.stopAll();
 			} else {
-			moveDir(180);
+			moveDir(60);
 			}
 			if(IR.getSensorValue(3) > 200){
 				move.stopAll();
@@ -34,10 +43,20 @@ public void defaultGoalie(){
 			move.stopAll();
 		}
 		if(IR.getDirection() > 5 && IR.getDirection() < 10){
-			moveDir(0);
+			moveDir(240);
 		}
 		
 	}
+}
+
+public void run(){
+	goalieDefault();
+}
+public static void main(String[] args) {
+
+	GoalieNavigator bot = new GoalieNavigator();
+	bot.run();
+	bot.move.sleep(1000);
 }
 }	
 	
