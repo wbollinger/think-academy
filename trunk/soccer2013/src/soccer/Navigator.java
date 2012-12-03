@@ -68,6 +68,10 @@ public class Navigator {
 		}
 	
 	public void turnTo(int angle) {
+		/*----------WARNING-----------*\
+	    ||-This method is also a fail-||
+	    \*----------WARNING-----------*/
+		
 		int degree = (int) compass.getDegrees();
 		int newDegree = degree + angle;
 		
