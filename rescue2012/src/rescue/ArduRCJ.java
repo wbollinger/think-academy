@@ -85,7 +85,6 @@ public class ArduRCJ extends I2CSensor {
 	 * @return the battery voltage in millivolts
 	 */
 	public int getBattery() {
-		byte[] bufReadResponse = new byte[1];
 		getData(ArduRCJ_VBATT, bufReadResponse, 1);
 
 		// 37 is calculated from 4700 mv /128
