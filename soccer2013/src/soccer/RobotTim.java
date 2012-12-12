@@ -55,8 +55,8 @@ public class RobotTim extends Robot{
 
 	public void moveForward(){
 		
-		motC.forward();
-		motB.backward();
+		motA.backward();
+		motB.forward();
 		
 	}
 	
