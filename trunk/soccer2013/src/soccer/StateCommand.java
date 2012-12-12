@@ -186,7 +186,7 @@ public class StateCommand extends State {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
-			}  else if (command.equalsIgnoreCase("jake_sucks")) {
+			}  else if (command.equalsIgnoreCase("jeremy_sucks")) {
 				debugln("Yes, yes he does!");
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
@@ -205,7 +205,7 @@ public class StateCommand extends State {
 						String key = (String) e.nextElement();
 						debugln(key + " = " + props.getProperty(key));
 					}
-				}
+				} 
 			//} else if (command.equalsIgnoreCase("joydata")) {
 				//showPrompt = false;
 				//debugln("joystick command detected");
@@ -214,7 +214,28 @@ public class StateCommand extends State {
 				//int button = Integer.parseInt(args[2]);
 				//TODO: Get joystick control working again
 				//robot.joystickControl(x, y, button); 
-			} else {
+			} else if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("?")){
+				debugln("Navigation Commands:");
+				debugln("'stop' (stops all motors)");
+				debugln("'right' (rotates the robot clockwise)");
+				debugln("'left' (rotates the robot counterclockwise)");
+				debugln("'follow_ball' (follows the IR ball [currently buggy!])");
+				debugln("'forward' (moves the robot forward)");
+				debugln("'backward' or 'reverse' (moves the robot backward) \n");
+				debugln("System Check Commands:");
+				debugln("'bat' (displays the current battery voltage)");
+				debugln("'mem' (displays the amount of free, total, and used memory in the NXT Brick)");
+				debugln("'debug' (Not implemented)");
+				debugln("'prop' (displays basic properties of the NXT Brick such as name and volume) \n");
+				debugln("State Commands:");
+				debugln("'quit' or 'exit' (exits the current state) \n");
+				debugln("Misc. Commands:");
+				debugln("'shutdown' (Turns the NXT off)");
+				debugln("'prompt' (toggles the prompt)");
+				debugln("'play [tone] [length]' (plays a note of the specified tone and length)");
+				debugln("'echo [phrase]' (displays whatever you type in as the phrase)");
+				debugln("not to mention there are easter egg commands :)");
+			} else { 
 				debugln("?");
 				// // 4.5 Check if it is a filename:
 				// File f = new File(command);
