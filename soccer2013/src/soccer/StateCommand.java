@@ -1,0 +1,267 @@
+package soccer;
+
+//------------------------------------------------------------------------
+//  robot Command state - accept a text command and call robot methods
+//------------------------------------------------------------------------
+import java.io.File;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Properties;
+import java.util.StringTokenizer;
+
+import lejos.nxt.*;
+import lejos.nxt.comm.Bluetooth;
+
+public class StateCommand extends State {
+
+	private static StateCommand instance = new StateCommand();
+
+	private boolean firstTime;
+	private boolean showPrompt;
+	private boolean isCommandLoopRunning;
+
+	private static int warningBeep = 0;
+
+	private StateCommand() {
+		firstTime = true;
+		showPrompt = true;
+		isCommandLoopRunning = false;
+	}
+
+	// this is a singleton
+	public static StateCommand getInstance() {
+		return instance;
+	}
+
+	public boolean getCommandLoopRunning() {
+		return isCommandLoopRunning;
+	}
+
+	private int parseInt(String arg) {
+		int value = -1;
+		if ((arg != null) && (arg.length() > 0)) {
+			try {
+				value = Integer.parseInt(arg);
+				return value;
+			} catch (Exception e) { // survive a parse error
+			}
+		}
+		Sound.playTone(880, 200); // error beep
+		return value;
+	}
+
+	private double parseDouble(String arg) {
+		double value = -1;
+		if ((arg != null) && (arg.length() > 0)) {
+			try {
+				value = Double.parseDouble(arg);
+				return value;
+			} catch (Exception e) { // survive a parse error
+			}
+		}
+		Sound.playTone(880, 200); // error beep
+		return value;
+	}
+
+	// --------------------------------------------------------------------
+	public void execute(Robot robot) {
+		if (robot.io.btc == null) {
+			// no connection: warning beeps and bail
+			Sound.playTone(440, 200);
+			robot.sleep(200);
+			if (warningBeep++ > 9) {
+				// clear flag so that exit will really exit
+				isCommandLoopRunning = false;
+				robot.changeState(StateExit.getInstance());
+			}
+			return;
+		}
+
+		int i;
+		String inputString = "";
+		try {
+			if (firstTime) {
+				float volts = Battery.getVoltage();
+				robot.io.outStream.writeUTF(robot.name + " battery: " + volts
+						+ "\n");
+				if (volts < 6.3f) {
+					Sound.beep();
+					Sound.beep();
+					Sound.beep();
+					debugln("LOW VOLTAGE!!!");
+				}
+				firstTime = false;
+			}
+			if (showPrompt) {
+				// display prompt in PC console
+				if (robot.io.inStream.available() > 0) {
+					robot.io.outStream.writeUTF("+");
+				} else {
+					robot.io.outStream.writeUTF(">>> ");
+				}
+				robot.io.outStream.flush();
+			}
+			// read in a cmd
+			inputString = robot.io.inStream.readUTF();
+		} catch (IOException e) {
+			LCD.drawString("Cmd IO Err", 0, 1);
+			Sound.playTone(880, 200);
+			System.exit(0);
+		}
+
+		// Parse out the command args using ' ' with StringTokenizer
+		inputString = inputString.trim();
+		if (inputString.equals("")) {
+			return;
+		}
+		StringTokenizer st = new StringTokenizer(inputString, " ");
+		String command = st.nextToken();
+
+		// Check for command line arguments; support simple access to arg0
+		String arg0 = null, arg1 = null, arg2 = null;
+		String[] args = new String[st.countTokens()];
+		for (i = 0; i < args.length; i++) {
+			args[i] = st.nextToken();
+			switch (i) {
+			case 0:
+				arg0 = args[0];
+				break;
+			case 1:
+				arg1 = args[1];
+				break;
+			case 2:
+				arg2 = args[2];
+			}
+			
+		}
+
+		try {
+			// Select from list:
+			if (command.equalsIgnoreCase("stop")) {
+				robot.stopAll();
+			} else if (command.equalsIgnoreCase("right")) {
+				double degrees = parseDouble(arg0);
+				robot.turnRight();
+			} else if (command.equalsIgnoreCase("left")) {
+				double degrees = parseDouble(arg0);
+				robot.turnLeft();
+			} else if (command.equalsIgnoreCase("forward")) {
+				if (args.length > 0) {
+					double distance = parseDouble(arg0);
+					//robot.forward(distance);
+					return;
+				}
+				robot.moveForward();
+			} else if (command.equalsIgnoreCase("reverse")
+					|| command.equalsIgnoreCase("backward")) {
+				if (args.length > 0) {
+					double distance = parseDouble(arg0);
+					//robot.backward(distance);
+					return;
+				}
+				robot.moveBackward();
+			} else if (command.equalsIgnoreCase("bat")) {
+				debug("Battery: " + Battery.getVoltage() + "\n");
+			} else if (command.equalsIgnoreCase("echo")) {
+				for (i = 0; i < args.length; i++) {
+					if (i > 0)
+						debug(" ");
+					debug(args[i]);
+				}
+				debug("\n");
+			} else if (command.equalsIgnoreCase("exit")
+					| command.equalsIgnoreCase("quit")) {
+				// clear flag so that exit will really exit
+				isCommandLoopRunning = false;
+				robot.changeState(StateExit.getInstance());
+			} else if (command.equalsIgnoreCase("shutdown")) {
+				NXT.shutDown();
+			} else if (command.equalsIgnoreCase("mem")) {
+				debug(Runtime.getRuntime().freeMemory() + " free\n");
+				debug(Runtime.getRuntime().totalMemory() + " total\n");
+				debug(File.freeMemory() + " disk\n");
+			} else if (command.equalsIgnoreCase("prompt")) {
+				showPrompt = !showPrompt;
+			} else if (command.equalsIgnoreCase("debug")) {
+				debug("Not implemented\n");
+			} else if (command.equalsIgnoreCase("play")) {
+				int freq = parseInt(arg0);
+				int time = 200;
+				if (args.length > 1) {
+					time = parseInt(arg1);
+				}
+				Sound.playTone(freq, time);
+			} else if (command.equalsIgnoreCase("prop")) {
+				Properties props = Settings.getProperties();
+				if (args.length > 0) {
+					debugln(props.getProperty(arg0));
+				} else {
+					Enumeration<?> e = props.propertyNames();
+					while (e.hasMoreElements()) {
+						String key = (String) e.nextElement();
+						debugln(key + " = " + props.getProperty(key));
+					}
+				}
+			//} else if (command.equalsIgnoreCase("joydata")) {
+				//showPrompt = false;
+				//debugln("joystick command detected");
+				//double x = Double.parseDouble(args[0]);
+				//double y = Double.parseDouble(args[1]);
+				//int button = Integer.parseInt(args[2]);
+				//TODO: Get joystick control working again
+				//robot.joystickControl(x, y, button); 
+			} else {
+				debugln("?");
+				// // 4.5 Check if it is a filename:
+				// File f = new File(command);
+				// if (f.exists()) {
+				// debug(command + " exists\n");
+				// f.exec();
+				// } else {
+				// // Unrecognized command output error message
+				// debug(command + " unrecognized\n");
+				// }
+			}
+		} catch (Exception e) {
+			// Ignore exceptions in command loop
+		}
+	}
+
+	// --------------------------------------------------------------------------------------------
+	public void enter(Robot robot) {
+		// Note: debug support is not yet running at this point
+
+		int buttons = Button.ID_ENTER;
+		/*
+		int i = 0;
+		while ((checkPress = Button.readButtons()) == 0) {
+			if (i % 10 == 0) {
+				Sound.playTone(330, 100);
+			} else {
+				robot.sleep(100);
+			}
+			if (i++ > 50) {
+				break;
+			}
+		}
+		*/
+		
+		if (buttons == Button.ID_ENTER) {
+			if (robot.io.btc == null) {
+				Sound.playTone(440, 100);
+				LCD.drawString("BT command...", 0, 1);
+				robot.io.btc = Bluetooth.waitForConnection();
+				Sound.playTone(660, 100);
+				robot.io.inStream = robot.io.btc.openDataInputStream();
+				robot.io.outStream = robot.io.btc.openDataOutputStream();
+
+				isCommandLoopRunning = true;
+			}
+		}
+		// print this here - only once is enough
+		// debug("Enter command:");
+	}
+
+	public void exit(Robot robot) {
+	}
+}

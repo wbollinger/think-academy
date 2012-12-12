@@ -9,8 +9,8 @@ public class RobotChris extends Robot{
 
 	IRSeekerV2 IR;
 	
-	public RobotChris() {
-		super();
+	public RobotChris(String name) {
+		super(name);
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);

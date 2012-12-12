@@ -37,5 +37,6 @@ public class Main {
 			//robot.setUseDebug(true);
 		}
 		robot.followBall();
+		//robot.run(); uncomment to activate state machine
 	}
 }
