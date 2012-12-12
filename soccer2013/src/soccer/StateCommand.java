@@ -145,6 +145,8 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeft();
+			} else if (command.equalsIgnoreCase("follow_ball")) {
+				robot.followBall();
 			} else if (command.equalsIgnoreCase("forward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
@@ -184,6 +186,8 @@ public class StateCommand extends State {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
+			}  else if (command.equalsIgnoreCase("jake_sucks")) {
+				debugln("Yes, yes he does!");
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;

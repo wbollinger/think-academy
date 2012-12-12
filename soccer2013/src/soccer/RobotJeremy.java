@@ -1,5 +1,6 @@
 package soccer;
 
+import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
@@ -30,7 +31,7 @@ public class RobotJeremy extends Robot{
 	
 	public void followBall() {
 		
-		while (true) {
+		while (!Button.ENTER.isDown()) {
 			
 			if(IR.getDirection() > 0 && IR.getDirection() < 5){
 				if(IR.getSensorValue(3) > 200){
