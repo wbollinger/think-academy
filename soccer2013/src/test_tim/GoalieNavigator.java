@@ -50,7 +50,9 @@ public void goalieAware(){
 }
 
 public void run(){
-	goalieDefault();
+	
+		goalieAware();
+	
 }
 public static void main(String[] args) {
 
