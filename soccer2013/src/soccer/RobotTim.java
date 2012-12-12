@@ -12,6 +12,8 @@ public class RobotTim extends Robot{
 	public RobotTim(String name) {
 		super(name);
 		
+		io.debugln("I am Tim the Robot!");
+		
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
@@ -58,6 +60,11 @@ public class RobotTim extends Robot{
 		motA.backward();
 		motB.forward();
 		
+		
+	}
+	public void moveBackward(){
+		motA.forward();
+		motB.backward();
 	}
 	
 	public void forward(int time) {
