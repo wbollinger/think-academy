@@ -9,7 +9,7 @@ import lejos.nxt.addon.IRSeekerV2;
 public class Robot {
 	
 	State current_state;
-	boolean exit = false;
+	boolean exit;
 	
 	public String name;
 
@@ -42,6 +42,8 @@ public class Robot {
 	public Robot(String name) {
 		this.name = name;
 		current_state = StateStart.getInstance();
+		io = new BrickIO();
+		exit = false;
 	}
 	
 	public void sleep(int time) {
