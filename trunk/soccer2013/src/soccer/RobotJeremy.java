@@ -12,7 +12,9 @@ public class RobotJeremy extends Robot{
 	NXTMotor motC;
 	IRSeekerV2 IR;
 	
-	public RobotJeremy() {
+	public RobotJeremy(String name) {
+		super(name);
+		
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);

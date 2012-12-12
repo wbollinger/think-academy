@@ -25,14 +25,14 @@ public abstract class State {
 	 */
 	public abstract void exit(Robot r);
 	
-/*	
+	
 	public void debug(String msg) {
-		Robot.getRobot().debug(msg);
+		Robot.getRobot().io.debug(msg);
 	}
 
 	public void debugln(String msg) {
 		debug(msg + "\n");
 	}
-*/
+
 	
 }

@@ -13,7 +13,8 @@ public class RobotJake extends Robot{
 	IRSeekerV2 IR;
 	CompassHTSensor compass;
 	
-	public RobotJake(){
+	public RobotJake(String name){
+	super(name);
 		
 	motA = new NXTMotor(MotorPort.A);
 	motB = new NXTMotor(MotorPort.B);

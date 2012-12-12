@@ -9,8 +9,9 @@ public class RobotTim extends Robot{
 
 	IRSeekerV2 IR;
 	
-	public RobotTim() {
-		super();
+	public RobotTim(String name) {
+		super(name);
+		
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
