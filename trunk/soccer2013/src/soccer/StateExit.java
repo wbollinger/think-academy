@@ -25,9 +25,7 @@ public class StateExit extends State {
 
 	public void execute(Robot robot) {
 		System.out.println("StateExit");
-		robot.motA.stop();
-		robot.motB.stop();
-		robot.motC.stop();
+		robot.stopAll();
 
 		if (StateCommand.getInstance().getCommandLoopRunning() == true) {
 			// Command loop is running; get the next command

@@ -36,7 +36,7 @@ public class Main {
 			//robot.setUseCommands(true);
 			//robot.setUseDebug(true);
 		}
-		robot.followBall();
-		//robot.run(); uncomment to activate state machine
+		//robot.followBall();
+		robot.run(); //uncomment to activate state machine
 	}
 }
