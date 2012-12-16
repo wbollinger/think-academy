@@ -13,7 +13,7 @@ import lejos.robotics.navigation.OmniPilot;
 /*
  * A quick system check customizable by the run method
  */
-public class SystemCheck {
+public class SystemCheck{
 	
 NXTMotor motA;
 NXTMotor motB;
@@ -35,10 +35,19 @@ Robot move;
 	}
 	
 	//This tests all motors by turning them right and left
-	public void motorTestAll(int order){
-			move.turnLeft(1000);
-			move.turnRight(1000);
+	public void check(MotorPort mot){
+			if(mot.getTachoCount() == 1){
+				
+			}
 	}
+	public void check(SensorPort sen){
+		
+			if(sen.readValue() == 0){
+				Sound.beep();
+			}else{
+				Sound.beepSequence();
+			}
+}
 	
 	public void test(){
 		if(MotorPort.A != null){
@@ -160,7 +169,7 @@ Robot move;
 
 	//The basic diagnostic check
 	public void run() {
-		test();
+		check(SensorPort.S1);
 	}
 
 	public static void main(String[] args) {

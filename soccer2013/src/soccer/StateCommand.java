@@ -166,6 +166,10 @@ public class StateCommand extends State {
 				if (args.length > 0) {
 					//TODO	Add check method
 					if(arg0.equalsIgnoreCase("SP1")){
+						SensorPort sen = SensorPort.S1;
+						LightSensor lig = new LightSensor(SensorPort.S1);
+						NXTMotor mot = new NXTMotor(MotorPort.A);
+						debugln("" + sen.i2cStatus());
 						//check(SensorPort.S1);
 					}
 					if(arg0.equalsIgnoreCase("SP2")){
@@ -178,13 +182,46 @@ public class StateCommand extends State {
 						//check(SensorPort.S4);
 					}
 					if(arg0.equalsIgnoreCase("MPA")){
-						//check(MotorPort.A);
+						if(robot.check(MotorPort.A)){
+							debugln("The motor in port A is plugged in.");	
+							}else{
+							debugln("The motor in port A is unplugged!");	
+							}
 					}
 					if(arg0.equalsIgnoreCase("MPB")){
-						//check(MotorPort.B);
+						if(robot.check(MotorPort.B)){
+						debugln("The motor in port B is plugged in.");	
+						}else{
+						debugln("The motor in port B is unplugged!");	
+						}
 					}
 					if(arg0.equalsIgnoreCase("MPC")){
-						//check(MotorPort.C);
+						if(robot.check(MotorPort.C)){
+							debugln("The motor in port C is plugged in.");	
+							}else{
+							debugln("The motor in port C is unplugged!");	
+							}
+					}
+					if(arg0.equalsIgnoreCase("All")){
+						if(robot.check(MotorPort.A)){
+							debugln("The motor in port A is plugged in.");	
+							}else{
+							debugln("The motor in port A is unplugged!.");	
+							}
+						if(robot.check(MotorPort.B)){
+							debugln("The motor in port B is plugged in.");	
+							}else{
+							debugln("The motor in port B is unplugged!.");	
+							}
+						if(robot.check(MotorPort.C)){
+							debugln("The motor in port C is plugged in.");	
+							}else{
+							debugln("The motor in port C is unplugged!.");	
+							}
+						//check(SensorPort.S1);
+						//check(SensorPort.S2);
+						//check(SensorPort.S3);
+						//check(SensorPort.S4);
 					}else{
 						debugln("Not a valid arguement.");
 					}
