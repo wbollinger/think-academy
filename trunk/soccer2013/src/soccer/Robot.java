@@ -1,6 +1,7 @@
 package soccer;
 
 import lejos.nxt.Button;
+import lejos.nxt.LightSensor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
@@ -89,7 +90,31 @@ public class Robot {
 	}
 	
 	public void turnRight(int time) {}
-
+	
+	public boolean check(MotorPort mot){
+		if(mot.getTachoCount() == -1){
+			return false;
+		}else{
+			return true;
+		}
+		
+	}
+	
+	/*
+	public boolean check(SensorPort sen){
+		if(sen.i2cStatus() == -5){
+			LightSensor lit = new LightSensor(sen);
+			if(lit.getLightValue() == 0){
+				return false;
+			}else{
+				return true;
+			}
+		}else{
+			
+		}
+		
+	}
+*/
 	public void update() {
 		if (current_state != null) {
 			current_state.execute(this);
