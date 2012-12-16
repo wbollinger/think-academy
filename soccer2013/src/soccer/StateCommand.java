@@ -162,6 +162,36 @@ public class StateCommand extends State {
 					return;
 				}
 				robot.moveBackward();
+			} else if(command.equalsIgnoreCase("check")){
+				if (args.length > 0) {
+					//TODO	Add check method
+					if(arg0.equalsIgnoreCase("SP1")){
+						//check(SensorPort.S1);
+					}
+					if(arg0.equalsIgnoreCase("SP2")){
+						//check(SensorPort.S2);
+					}
+					if(arg0.equalsIgnoreCase("SP3")){
+						//check(SensorPort.S3);
+					}
+					if(arg0.equalsIgnoreCase("SP4")){
+						//check(SensorPort.S4);
+					}
+					if(arg0.equalsIgnoreCase("MPA")){
+						//check(MotorPort.A);
+					}
+					if(arg0.equalsIgnoreCase("MPB")){
+						//check(MotorPort.B);
+					}
+					if(arg0.equalsIgnoreCase("MPC")){
+						//check(MotorPort.C);
+					}else{
+						debugln("Not a valid arguement.");
+					}
+					
+					return;
+				}
+				
 			} else if (command.equalsIgnoreCase("bat")) {
 				debug("Battery: " + Battery.getVoltage() + "\n");
 			} else if (command.equalsIgnoreCase("echo")) {
