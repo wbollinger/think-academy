@@ -43,7 +43,12 @@ public void goalieAware(){
 		if(IR.getDirection() == 5){
 			move.stopAll();
 		}
+		
+		//if(IR.getAngle() > 350 || IR.getAngle() < 10){
+			move.stopAll();
+		//}
 		if(IR.getDirection() > 5 && IR.getDirection() < 10){
+		
 			//This goes right
 			moveDir(60);
 		}
