@@ -29,9 +29,6 @@ public class RobotJake extends Robot{
 	motB.stop();
 	motC.stop();
 }
-	public static void main(String[] args) {
-		
-	}
 
 
 	}

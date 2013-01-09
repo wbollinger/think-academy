@@ -21,7 +21,7 @@ public class Robot {
 	public final static Vector2D F1 = new Vector2D(0.5, -1.0*Math.sqrt(3)/2.0);
 	public final static Vector2D F2 = new Vector2D(0.5, Math.sqrt(3)/2.0);
 	
-	Navigator nav;
+//	Navigator nav;
 	
 	NXTMotor motA;
 	NXTMotor motB;
@@ -46,7 +46,7 @@ public class Robot {
 		this.name = name;
 		current_state = StateStart.getInstance();
 		io = new BrickIO();
-		nav = new Navigator();
+//		nav = new Navigator();
 		exit = false;
 	}
 	

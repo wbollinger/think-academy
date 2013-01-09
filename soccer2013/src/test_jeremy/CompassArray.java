@@ -35,43 +35,69 @@ public class CompassArray {
 		int count = 500;
 		int index = 0;
 		int data[] = new int[500];
-			
-		turnLeft();
-		while(count > 0) {
-			
-			data[index] = (int) compass.getDegrees();
-			count--;
-			index++;
-			
-		}	
-		stopAll();
 		
-		FileOutputStream out = null; // declare outside the try block
-	    File file = new File("log.txt");
-
-	    try {
-	      out = new FileOutputStream(file);
-	    } catch(IOException e) {
-	    	System.err.println("Failed to create output stream");
-	    	System.exit(1);
-	    }
-
-	    DataOutputStream dataOut = new DataOutputStream(out);
-	    PrintStream printOut = new PrintStream(dataOut);
-
-	    char buf[];
-	    int length = 500;
-
-	    try { // write
-	      for(int i = 0 ; i<length; i++ ) {
-	    	printOut.println(Integer.toString(data[i])+' ');
-	      }
-	      out.close(); // flush the buffer and write the file
-	    } catch (IOException e) {
-	      System.err.println("Failed to write to output stream");
-	    }
+		createFile("sup");
+			
+//		turnLeft();
+//		while(count > 0) {
+//			
+//			data[index] = (int) compass.getDegrees();
+//			count--;
+//			index++;
+//			
+//		}	
+//		stopAll();
+//		
+//		FileOutputStream out = null; // declare outside the try block
+//	    File file = new File("log.txt");
+//
+//	    try {
+//	      out = new FileOutputStream(file);
+//	    } catch(IOException e) {
+//	    	System.err.println("Failed to create output stream");
+//	    	System.exit(1);
+//	    }
+//
+//	    DataOutputStream dataOut = new DataOutputStream(out);
+//	    PrintStream printOut = new PrintStream(dataOut);
+//
+//	    char buf[];
+//	    int length = 500;
+//
+//	    try { // write
+//	      for(int i = 0 ; i<length; i++ ) {
+//	    	printOut.println(Integer.toString(data[i])+' ');
+//	      }
+//	      out.close(); // flush the buffer and write the file
+//	    } catch (IOException e) {
+//	      System.err.println("Failed to write to output stream");
+//	    }
 		
 		}
+	
+	public void createFile(String name){
+		FileOutputStream out = null;
+	    File file = new File(name+".txt");
+	    
+	    try {
+		      out = new FileOutputStream(file);
+		    } catch(IOException e) {
+		    	System.err.println("Failed to create output stream");
+		    	System.exit(1);
+		    }
+	    
+//	    DataOutputStream dataOut = new DataOutputStream(out);
+//	    PrintStream printOut = new PrintStream(dataOut);
+	}
+	
+	public void writeToFile(String name, String text){
+		
+		    
+	    
+//	    DataOutputStream dataOut = new DataOutputStream(out);
+//	    PrintStream printOut = new PrintStream(dataOut);
+		
+	}
 
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 

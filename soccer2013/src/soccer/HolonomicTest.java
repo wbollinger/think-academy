@@ -84,10 +84,5 @@ public class HolonomicTest {
 		robot.sleep(5000);
 	}
 		
-	public static void main(String[] args) throws InterruptedException{
-		
-		HolonomicTest test = new HolonomicTest();
-		test.run();
-	}
 }
 	
