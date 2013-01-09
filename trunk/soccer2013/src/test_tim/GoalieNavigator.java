@@ -33,6 +33,7 @@ public void goalieAware(){
 			if(IR.getSensorValue(3) > 200){
 				move.stopAll();
 			} else {
+				//This goes left
 			moveDir(240);
 			}
 			if(IR.getSensorValue(3) > 200){
@@ -43,6 +44,7 @@ public void goalieAware(){
 			move.stopAll();
 		}
 		if(IR.getDirection() > 5 && IR.getDirection() < 10){
+			//This goes right
 			moveDir(60);
 		}
 		
