@@ -8,7 +8,7 @@ import lejos.nxt.addon.CompassHTSensor;
 public class Navigator {
 	
 	CompassHTSensor compass;
-	Robot move;
+	protected Robot move;
 
 	public Navigator() {
 		move = Robot.getRobot();
@@ -137,11 +137,5 @@ public class Navigator {
 	 * @param args
 	 * @throws InterruptedException
 	 */
-	public static void main(String[] args) {
-
-		Navigator bot = new Navigator();
-		bot.run();
-		bot.move.sleep(1000);
-	}
 
 }

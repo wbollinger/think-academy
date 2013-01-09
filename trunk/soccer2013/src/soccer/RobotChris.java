@@ -60,8 +60,4 @@ public class RobotChris extends Robot{
 
 	}
 	
-	public static void main(String[] args) {
-		Robot robot = Robot.getRobot();
-		robot.followBall();
-	}
 }

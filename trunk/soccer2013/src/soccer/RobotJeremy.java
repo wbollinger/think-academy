@@ -53,13 +53,6 @@ public class RobotJeremy extends Robot{
 			
 		}
 	}
-
-	public static void main(String[] args) throws InterruptedException {
-
-		OmniDirRobot start = new OmniDirRobot();
-		start.run();
-
-	}
 	
 	public void moveForward(){
 		
