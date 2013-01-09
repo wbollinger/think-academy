@@ -1,6 +1,7 @@
-package soccer;
-import lejos.nxt.MotorPort;
-import lejos.nxt.NXTMotor;
+package test_chris;
+
+//import soccer.Robot;
+import soccer.Vector2D;
 import lejos.nxt.*;
 
 public class HolonomicTest {
@@ -11,10 +12,18 @@ public class HolonomicTest {
 	public final static Vector2D F1 = new Vector2D(0.5, -1.0*Math.sqrt(3)/2.0);
 	public final static Vector2D F2 = new Vector2D(0.5, Math.sqrt(3)/2.0);
 	
-	Robot robot;
-		
+	HolonomicTest robot;
+	
+	NXTMotor motA;
+	NXTMotor motB;
+	NXTMotor motC;
+
 	public HolonomicTest() {
-		robot = Robot.getRobot();
+		motA = new NXTMotor(MotorPort.A);
+		motB = new NXTMotor(MotorPort.B);
+		motC = new NXTMotor(MotorPort.C);
+
+		robot = this;
 	}
 	
 	public void forward() {
@@ -79,6 +88,15 @@ public class HolonomicTest {
 		robot.motC.forward();
 	}
 	
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void run() {
 		moveDir(0);
 		robot.sleep(5000);

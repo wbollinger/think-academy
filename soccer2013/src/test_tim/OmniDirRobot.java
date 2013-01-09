@@ -1,4 +1,4 @@
-package soccer;
+package test_tim;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
