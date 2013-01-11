@@ -6,8 +6,6 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotTim extends Robot{
-
-	IRSeekerV2 IR;
 	
 	public RobotTim(String name) {
 		super(name);

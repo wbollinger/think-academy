@@ -7,11 +7,6 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotJeremy extends Robot{
-
-	NXTMotor motA;
-	NXTMotor motB;
-	NXTMotor motC;
-	IRSeekerV2 IR;
 	
 	public RobotJeremy(String name) {
 		super(name);

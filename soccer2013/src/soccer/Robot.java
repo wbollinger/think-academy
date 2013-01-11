@@ -29,6 +29,8 @@ public class Robot {
 	
 	BrickIO io;
 	
+	IRSeekerV2 IR;
+	
 	// this is a singleton
 	private static Robot robot;
 	
