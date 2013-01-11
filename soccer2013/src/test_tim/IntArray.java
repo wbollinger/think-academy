@@ -8,13 +8,12 @@ import lejos.nxt.addon.CompassHTSensor;
 public class IntArray {
 
 	Robot move = Robot.getRobot();
-	Navigator nav = new Navigator();
 	CompassHTSensor compass = new CompassHTSensor(SensorPort.S2);
 	double[] data = new double[1000];
 	
 	public void run(){
 		while(true){
-			nav.rotate360();
+			move.nav.rotate360();
 		}
 	}
 	

@@ -22,7 +22,7 @@ public class Robot {
 	public final static Vector2D F1 = new Vector2D(0.5, -1.0 * Math.sqrt(3) / 2.0);
 	public final static Vector2D F2 = new Vector2D(0.5, Math.sqrt(3) / 2.0);
 
-	// Navigator nav;
+	public Navigator nav;
 
 	NXTMotor motA;
 	NXTMotor motB;
@@ -46,12 +46,12 @@ public class Robot {
 		return robot;
 	}
 
-	public Robot(String name) {
+	protected Robot(String name) {
 		this.name = name;
 		current_state = StateStart.getInstance();
 		io = new BrickIO();
-		// nav = new Navigator();
 		exit = false;
+		nav = new Navigator(this);
 	}
 
 	public void sleep(int time) {

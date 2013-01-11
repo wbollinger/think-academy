@@ -7,12 +7,10 @@ import lejos.nxt.addon.CompassHTSensor;
 
 public class Navigator {
 
-	CompassHTSensor compass;
 	protected Robot bot;
 
-	public Navigator() {
-		bot = Robot.getRobot();
-		compass = new CompassHTSensor(SensorPort.S1);
+	public Navigator(Robot bot) {
+		this.bot = bot;
 	}
 
 	public void moveDir(double dir) {
@@ -58,7 +56,7 @@ public class Navigator {
 
 		while (true) {
 			bot.turnRight();
-			degree = compass.getDegrees();
+			degree = bot.compass.getDegrees();
 			dif = Math.abs(degree - newDegree);
 			if (dif < 3) {
 				break;
@@ -73,7 +71,7 @@ public class Navigator {
 		||-This method is also a fail-||
 		\*----------WARNING-----------*/
 
-		int degree = (int) compass.getDegrees();
+		int degree = (int) bot.compass.getDegrees();
 		int newDegree = degree + angle;
 
 		// The new degree, which comes from adding the specified turn (n)
@@ -94,7 +92,7 @@ public class Navigator {
 			int dif;
 
 			while (true) {
-				degree = Math.round(compass.getDegrees());
+				degree = Math.round(bot.compass.getDegrees());
 				// LCD.drawInt(degree, 0, 1);
 				// LCD.drawString("New Degree:" + newDegree, 0, 2);
 				dif = Math.abs(degree - newDegree);
@@ -108,7 +106,7 @@ public class Navigator {
 
 			int dif = Math.abs(degree - newDegree);
 			while (true) {
-				degree = Math.round(compass.getDegrees());
+				degree = Math.round(bot.compass.getDegrees());
 				// LCD.drawInt(degree, 0, 1);
 				// LCD.drawString("New Degree:" + newDegree, 0, 2);
 				dif = Math.abs(degree - newDegree);

@@ -10,8 +10,8 @@ public class GoalieNavigator extends Navigator {
 	
 	IRSeekerV2 IR;
 
-	public GoalieNavigator() {
-		super();
+	public GoalieNavigator(Robot robot) {
+		super(robot);
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 
 	}
