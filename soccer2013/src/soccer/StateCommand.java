@@ -285,6 +285,8 @@ public class StateCommand extends State {
 						String key = (String) e.nextElement();
 						debugln(key + " = " + props.getProperty(key));
 					}
+					debugln("The robot's wheel radius is " + robot.getR());
+					debugln("The robot's wheel base is " + robot.getB());
 				} 
 			//} else if (command.equalsIgnoreCase("joydata")) {
 				//showPrompt = false;
