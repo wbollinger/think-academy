@@ -43,12 +43,13 @@ public class GoalieNavigator extends Navigator {
 	}
 
 	public void run() {
-
 		goalieAware();
 
 	}
-	public void main(String[] args){
-		run();
+	public static void main(String[] args){
+		Robot robot =  Robot.getRobot();
+		GoalieNavigator test = new GoalieNavigator(robot);
+		test.run();
 	}
 
 }
