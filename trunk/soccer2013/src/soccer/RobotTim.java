@@ -32,24 +32,19 @@ public class RobotTim extends Robot {
 
 		while (true) {
 
-			if (IR.getDirection() > 0 && IR.getDirection() < 5) {
+			if (IR.getDirection() == 5) {
 				if (IR.getSensorValue(3) > 200) {
 					stopAll();
 				} else {
-					turnLeft();
+					moveForward();
 				}
-				if (IR.getSensorValue(3) > 200) {
-					stopAll();
-				}
-			}
-			if (IR.getDirection() == 5) {
-				stopAll();
-				moveForward();
-			}
-			if (IR.getDirection() > 5 && IR.getDirection() < 10) {
+			} else if (IR.getDirection() < 5) {
+				turnLeft();
+			} else if (IR.getDirection() > 5) {
 				turnRight();
+			} else {
+				stopAll();
 			}
-
 		}
 	}
 
