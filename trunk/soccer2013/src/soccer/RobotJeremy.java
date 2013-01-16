@@ -69,6 +69,19 @@ public class RobotJeremy extends Robot{
 		motC.backward();
 
 	}
+	
+	public void turnLeft90() {
+		motA.backward();
+		motB.backward();
+		motC.backward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+	}
 
 	public void turnRight() {
 
@@ -76,6 +89,19 @@ public class RobotJeremy extends Robot{
 		motB.forward();
 		motC.forward();
 
+	}
+	
+public void turnRight90() {
+	motA.forward();
+	motB.forward();
+	motC.forward();
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	stopAll();
 	}
 	
 }

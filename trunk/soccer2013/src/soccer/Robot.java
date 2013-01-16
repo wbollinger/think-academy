@@ -88,11 +88,17 @@ public class Robot {
 
 	public void turnLeft() {
 	}
+	
+	public void turnLeft90() {
+	}
 
 	public void turnLeft(int time) {
 	}
 
 	public void turnRight() {
+	}
+	
+	public void turnRight90() {
 	}
 
 	public void turnRight(int time) {
