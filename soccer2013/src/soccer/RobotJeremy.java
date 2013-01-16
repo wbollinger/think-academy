@@ -4,9 +4,11 @@ import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotJeremy extends Robot{
+	public UltrasonicSensor US;
 	
 	public RobotJeremy(String name) {
 		super(name);
@@ -15,6 +17,7 @@ public class RobotJeremy extends Robot{
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+	    US = new UltrasonicSensor(SensorPort.S2); 
 		
 		motA.setPower(50);
 		motB.setPower(50);
@@ -109,5 +112,43 @@ public void turnRightprecise(double degrees) {
 	motB.resetTachoCount();
 	motC.resetTachoCount();
 	}
+
+public void pointToGoal(){
+	double wall1dist;
+	double wall2dist;
+	wall1dist = US.getDistance();
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	turnRightprecise(90);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	wall2dist = US.getDistance();
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	double angle = Math.atan2(91-wall2dist, wall1dist);
+	turnLeftprecise(90);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	turnLeftprecise(angle);
+	
+	
+}
 	
 }
