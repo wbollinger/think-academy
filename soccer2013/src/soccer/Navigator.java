@@ -18,9 +18,9 @@ public class Navigator {
 
 		// LCD.drawInt((int)Math.round(Vector2D.toRadian(dir)), 0, 0);
 
-		double w0 = v.dot(Robot.F0) / Robot.getR();
-		double w1 = v.dot(Robot.F1) / Robot.getR();
-		double w2 = v.dot(Robot.F2) / Robot.getR();
+		double w0 = v.dot(Robot.F0) / bot.getR();
+		double w1 = v.dot(Robot.F1) / bot.getR();
+		double w2 = v.dot(Robot.F2) / bot.getR();
 
 		// LCD.drawString(Double.toString(v.getX()), 0, 0);
 		// LCD.drawString(Double.toString(v.getY()), 0, 1);
