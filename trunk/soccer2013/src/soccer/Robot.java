@@ -63,11 +63,11 @@ public class Robot {
 		}
 	}
 
-	public static double getR() {
+	public double getR() {
 		return r;
 	}
 
-	public static double getB() {
+	public double getB() {
 		return b;
 	}
 
