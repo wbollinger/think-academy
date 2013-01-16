@@ -71,16 +71,19 @@ public class RobotJeremy extends Robot{
 	}
 	
 	public void turnLeft90() {
-		motA.backward();
-		motB.backward();
-		motC.backward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		int count = 280;
+		while(Math.abs(motA.getTachoCount()) < count){
+			motA.backward();
+			motB.backward();
+			motC.backward();
 		}
 		stopAll();
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
 	}
 
 	public void turnRight() {
@@ -92,16 +95,19 @@ public class RobotJeremy extends Robot{
 	}
 	
 public void turnRight90() {
-	motA.forward();
-	motB.forward();
-	motC.forward();
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	motA.resetTachoCount();
+	motB.resetTachoCount();
+	motC.resetTachoCount();
+	int count = 280;
+	while(Math.abs(motA.getTachoCount()) < count){
+		motA.forward();
+		motB.forward();
+		motC.forward();
 	}
 	stopAll();
+	motA.resetTachoCount();
+	motB.resetTachoCount();
+	motC.resetTachoCount();
 	}
 	
 }
