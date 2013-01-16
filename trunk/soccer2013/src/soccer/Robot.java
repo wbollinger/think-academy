@@ -73,6 +73,9 @@ public class Robot {
 
 	public void followBall() {
 	}
+	
+	public void pointToGoal() {
+	}
 
 	public void moveForward() {
 	}

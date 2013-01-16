@@ -145,6 +145,8 @@ public class StateCommand extends State {
 			}else if (command.equalsIgnoreCase("rightprecise")) {
 				double degrees = parseDouble(arg0);
 				robot.turnRightprecise(degrees);
+			}else if (command.equalsIgnoreCase("pointtogoal")) {
+				robot.pointToGoal();
 			}else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeft();
