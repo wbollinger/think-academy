@@ -103,6 +103,9 @@ public class Robot {
 
 	public void turnRight(int time) {
 	}
+	
+	public void tacoMeterTurn(){
+	}
 
 	public void run() {
 		while (Button.ESCAPE.isUp() && !this.exit) {
