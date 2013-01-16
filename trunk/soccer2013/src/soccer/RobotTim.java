@@ -25,7 +25,7 @@ public class RobotTim extends Robot {
 		motC.stop();
 
 		r = 2.5;
-		b = 0;
+		b = 9.5;
 	}
 
 	public void followBall() {
