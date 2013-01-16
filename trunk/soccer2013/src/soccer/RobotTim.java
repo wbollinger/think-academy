@@ -3,9 +3,12 @@ package soccer;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.TouchSensor;
 import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotTim extends Robot {
+
+	TouchSensor touch = new TouchSensor(SensorPort.S2);
 
 	public RobotTim(String name) {
 		super(name);
@@ -31,19 +34,20 @@ public class RobotTim extends Robot {
 	public void followBall() {
 
 		while (true) {
-
-			if (IR.getDirection() == 5) {
-				if (IR.getSensorValue(3) > 200) {
-					stopAll();
-				} else {
-					moveForward();
-				}
-			} else if (IR.getDirection() < 5) {
-				turnLeft();
-			} else if (IR.getDirection() > 5) {
-				turnRight();
-			} else {
+			if (touch.isPressed()) {
 				stopAll();
+				return;
+			} else {
+
+				if (IR.getDirection() == 5) {
+					moveForward();
+				} else if (IR.getDirection() < 5) {
+					turnLeft();
+				} else if (IR.getDirection() > 5) {
+					turnRight();
+				} else {
+					stopAll();
+				}
 			}
 		}
 	}
