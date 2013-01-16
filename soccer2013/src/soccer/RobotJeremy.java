@@ -70,11 +70,11 @@ public class RobotJeremy extends Robot{
 
 	}
 	
-	public void turnLeft90() {
+	public void turnLeftprecise(double degrees) {
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
-		int count = 280;
+		double count = 3.14*degrees;
 		while(Math.abs(motA.getTachoCount()) < count){
 			motA.backward();
 			motB.backward();
@@ -94,11 +94,11 @@ public class RobotJeremy extends Robot{
 
 	}
 	
-public void turnRight90() {
+public void turnRightprecise(double degrees) {
 	motA.resetTachoCount();
 	motB.resetTachoCount();
 	motC.resetTachoCount();
-	int count = 280;
+	double count = 3.14*degrees;
 	while(Math.abs(motA.getTachoCount()) < count){
 		motA.forward();
 		motB.forward();
