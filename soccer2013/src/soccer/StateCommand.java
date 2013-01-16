@@ -142,9 +142,15 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("right")) {
 				double degrees = parseDouble(arg0);
 				robot.turnRight();
-			} else if (command.equalsIgnoreCase("left")) {
+			}else if (command.equalsIgnoreCase("right90")) {
+				double degrees = parseDouble(arg0);
+				robot.turnRight90();
+			}else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeft();
+			}else if (command.equalsIgnoreCase("left90")) {
+				double degrees = parseDouble(arg0);
+				robot.turnLeft90();
 			} else if (command.equalsIgnoreCase("follow_ball")) {
 				robot.followBall();
 			} else if (command.equalsIgnoreCase("forward")) {
@@ -292,7 +298,9 @@ public class StateCommand extends State {
 				debugln("Navigation Commands:");
 				debugln("'stop' (stops all motors)");
 				debugln("'right' (rotates the robot clockwise)");
+				debugln("'right90' (rotates the robot clockwise for 1 second)");
 				debugln("'left' (rotates the robot counterclockwise)");
+				debugln("'left90' (rotates the robot counterclockwise for 1 second)");
 				debugln("'follow_ball' (follows the IR ball [currently buggy!])");
 				debugln("'forward' (moves the robot forward)");
 				debugln("'backward' or 'reverse' (moves the robot backward) \n");
