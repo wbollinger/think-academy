@@ -7,12 +7,10 @@ import soccer.Robot;
 
 public class GoalieNavigator extends Navigator {
 
-	
-	IRSeekerV2 IR;
 
 	public GoalieNavigator(Robot bot) {
 		super(bot);
-		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+	
 
 	}
 
@@ -28,14 +26,14 @@ public class GoalieNavigator extends Navigator {
 	public void goalieAware() {
 		while (true) {
 
-			if (IR.getDirection() > 0 && IR.getDirection() < 5) {
+			if (bot.IR.getDirection() > 0 && bot.IR.getDirection() < 5) {
 				//turns left?
 					moveDir(240);
 			}
-			if (IR.getDirection() == 5) {
+			if (bot.IR.getDirection() == 5) {
 				bot.stopAll();
 			}
-			if (IR.getDirection() > 5 && IR.getDirection() < 10) {
+			if (bot.IR.getDirection() > 5) {
 				//turns right?
 				moveDir(60);
 			}
@@ -50,7 +48,6 @@ public class GoalieNavigator extends Navigator {
 
 	}
 	public void main(String[] args){
-		Robot robot = Robot.getRobot();
 		run();
 	}
 

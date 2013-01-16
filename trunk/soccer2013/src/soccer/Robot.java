@@ -30,8 +30,8 @@ public class Robot {
 
 	BrickIO io;
 
-	IRSeekerV2 IR;
-	CompassHTSensor compass;
+	public IRSeekerV2 IR;
+	public CompassHTSensor compass;
 
 	// this is a singleton
 	private static Robot robot;
