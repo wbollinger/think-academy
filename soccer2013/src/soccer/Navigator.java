@@ -48,7 +48,8 @@ public class Navigator {
 	
 		
 		float faceDegree = bot.compass.getDegrees();
-		float newDegree = faceDegree + Math.abs(turnDegree);
+		faceDegree = (float)normalize(faceDegree);
+		float newDegree = faceDegree + turnDegree;
 		boolean turnRight;
 		
 		newDegree = (float)normalize(newDegree);
@@ -66,6 +67,7 @@ public class Navigator {
 			}
 			faceDegree = bot.compass.getDegrees();
 			faceDegree = (float)normalize(faceDegree);
+			bot.io.debugln("" + faceDegree);
 			if(newDegree < faceDegree + 5 && newDegree > faceDegree - 5){
 				break;
 			}
