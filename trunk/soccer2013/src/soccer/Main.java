@@ -23,20 +23,20 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		int buttons = checkButtons();
+		//int buttons = checkButtons();
 		
 		// create a robot
 		Robot robot = Robot.getRobot();
 
-		if (buttons == Button.ID_ENTER) {
-			// Run in autonomous mode
-			robot.io.setUseCommands(false);
-			robot.io.setUseDebug(false);
-		} else {
+		//if (buttons == Button.ID_ENTER) {
+		//	// Run in autonomous mode
+		//	robot.io.setUseCommands(false);
+		//	robot.io.setUseDebug(false);
+		//} else {
 			// Use BlueTooth command loop
 			robot.io.setUseCommands(true);
 			robot.io.setUseDebug(true);
-		}
+		//}
 		//robot.followBall();
 		robot.run(); //uncomment to activate state machine
 	}
