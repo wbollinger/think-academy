@@ -51,26 +51,21 @@ public class Navigator {
 		float newDegree = faceDegree + Math.abs(turnDegree);
 		boolean turnRight;
 		
-		if(newDegree > 360){
-			newDegree = newDegree - 360;
-		}
-	
-		if(turnDegree < 0){
-			turnRight = false;
-		} else {
-			turnRight = true;
-		}
-		bot.io.debugln("Hi 2");
+		newDegree = (float)normalize(newDegree);
+		
+		bot.io.debugln("" + newDegree);
+		
 		while(true){
-			
+			bot.io.debugln("" + newDegree);
 			for(int i = 0; i < 1; i ++){
-				if(turnRight == true){
+				if(newDegree > 0){
 					bot.turnRight();
 				}else{
 					bot.turnLeft();
 				}
 			}
 			faceDegree = bot.compass.getDegrees();
+			faceDegree = (float)normalize(faceDegree);
 			if(newDegree < faceDegree + 5 && newDegree > faceDegree - 5){
 				break;
 			}
@@ -101,11 +96,23 @@ public class Navigator {
 
 	}
 
-	protected float normalize(float angle) {
-		while (angle > 180)
+	protected double normalize(double angle) {
+		while(angle > 360){
 			angle -= 360;
-		while (angle < -180)
+		}
+		
+		while(angle < -360){
 			angle += 360;
+		}
+		
+		if(angle > 180){
+			angle = angle - 360;
+			
+		}
+		if(angle < -180){
+			angle = angle + 360;
+	
+		}
 		return angle;
 	}
 
