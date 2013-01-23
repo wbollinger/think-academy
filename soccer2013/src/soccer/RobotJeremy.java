@@ -1,6 +1,7 @@
 package soccer;
 
 import lejos.nxt.Button;
+import lejos.nxt.LCD;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
@@ -113,9 +114,60 @@ public void turnRightprecise(double degrees) {
 	motC.resetTachoCount();
 	}
 
-public void pointToGoal(){
+public void pointTGoal(){
 	double wall1dist;
 	double wall2dist;
+	wall1dist = US.getDistance();
+	LCD.drawInt(US.getDistance(), 0, 0);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	turnRightprecise(90);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	wall2dist = US.getDistance();
+	LCD.drawInt(US.getDistance(), 0, 0);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	double angle = Math.atan2(91-wall2dist, wall1dist);
+	angle = (angle*180)/Math.PI;
+	LCD.drawInt((int)angle, 0, 0);
+	turnLeftprecise(90);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	turnLeftprecise(angle);
+	try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+}
+
+public double[] getLocation(){
+	double wall1dist;
+	double wall2dist;
+	double xPos;
+	double yPos;
+	double array[] = new double[]{1,1};
 	wall1dist = US.getDistance();
 	try {
 		Thread.sleep(1000);
@@ -137,17 +189,13 @@ public void pointToGoal(){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
-	double angle = Math.atan2(91-wall2dist, wall1dist);
 	turnLeftprecise(90);
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	turnLeftprecise(angle);
 	
+	xPos = 182-wall2dist;
+	yPos = wall1dist;
+	array[0] = xPos;
+	array[1] = yPos;
+	return array;
 	
 }
 	
