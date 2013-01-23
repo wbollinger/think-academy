@@ -44,6 +44,41 @@ public class Navigator {
 		bot.motC.forward();
 	}
 
+	public void rotateTo(float turnDegree){
+	
+		
+		float faceDegree = bot.compass.getDegrees();
+		float newDegree = faceDegree + Math.abs(turnDegree);
+		boolean turnRight;
+		
+		if(newDegree > 360){
+			newDegree = newDegree - 360;
+		}
+	
+		if(turnDegree < 0){
+			turnRight = false;
+		} else {
+			turnRight = true;
+		}
+		bot.io.debugln("Hi 2");
+		while(true){
+			
+			for(int i = 0; i < 1; i ++){
+				if(turnRight == true){
+					bot.turnRight();
+				}else{
+					bot.turnLeft();
+				}
+			}
+			faceDegree = bot.compass.getDegrees();
+			if(newDegree < faceDegree + 5 && newDegree > faceDegree - 5){
+				break;
+			}
+		}
+		bot.stopAll();
+	}
+
+
 	public void rotate360() {
 
 		/*----------WARNING----------*\
@@ -64,59 +99,6 @@ public class Navigator {
 			}
 		}
 
-	}
-
-	public void turnTo(int angle) {
-		/*----------WARNING-----------*\
-		||-This method is also a fail-||
-		\*----------WARNING-----------*/
-
-		int degree = (int) bot.compass.getDegrees();
-		int newDegree = degree + angle;
-
-		// The new degree, which comes from adding the specified turn (n)
-		// to the current degree the robot is facing
-
-		if (newDegree > 359) {
-			newDegree = newDegree - 360;
-		}
-
-		// LCD.drawString("New Degree:" + newDegree, 0, 2);
-
-		// This next bit of code makes it find the optimal direction to turn to
-		// as well as actually make it turn
-
-		if (newDegree < 180) {
-			bot.turnRight();
-
-			int dif;
-
-			while (true) {
-				degree = Math.round(bot.compass.getDegrees());
-				// LCD.drawInt(degree, 0, 1);
-				// LCD.drawString("New Degree:" + newDegree, 0, 2);
-				dif = Math.abs(degree - newDegree);
-				if (dif < 3) {
-					break;
-				}
-				// Thread.sleep(50);
-			}
-		} else {
-			bot.turnLeft();
-
-			int dif = Math.abs(degree - newDegree);
-			while (true) {
-				degree = Math.round(bot.compass.getDegrees());
-				// LCD.drawInt(degree, 0, 1);
-				// LCD.drawString("New Degree:" + newDegree, 0, 2);
-				dif = Math.abs(degree - newDegree);
-				if (dif < 3) {
-					break;
-				}
-				// sleep(50);
-			}
-		}
-		bot.stopAll();
 	}
 
 	protected float normalize(float angle) {

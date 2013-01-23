@@ -4,6 +4,7 @@ import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
+import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotTim extends Robot {
@@ -13,6 +14,8 @@ public class RobotTim extends Robot {
 	public RobotTim(String name) {
 		super(name);
 
+		compass = new CompassHTSensor(SensorPort.S1);
+		
 		io.debugln("I am Tim the Robot!");
 
 		motA = new NXTMotor(MotorPort.A);
