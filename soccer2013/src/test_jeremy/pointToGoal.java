@@ -33,10 +33,10 @@ public class pointToGoal {
 		motA.stop();
 		motB.stop();
 		motC.stop();
-//		pointTGoal();
-		getLocation();
-		LCD.drawInt(array[0], 0, 0);
-		LCD.drawInt(array[1], 0, 1);
+		pointTGoal();
+//		getLocation();
+//		LCD.drawInt(array[0], 0, 0);
+//		LCD.drawInt(array[1], 0, 1);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -58,7 +58,7 @@ public class pointToGoal {
 		double wall1dist;
 		double wall2dist;
 		wall1dist = US.getDistance();
-		LCD.drawInt(US.getDistance(), 0, 0);
+		LCD.drawInt((int)wall1dist, 1, 1);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -73,7 +73,7 @@ public class pointToGoal {
 			e.printStackTrace();
 		}
 		wall2dist = US.getDistance();
-		LCD.drawInt(US.getDistance(), 0, 0);
+		LCD.drawInt((int)wall2dist, 2, 2);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -83,7 +83,7 @@ public class pointToGoal {
 		
 		double angle = Math.atan2(91-wall2dist, wall1dist);
 		angle = (angle*180)/Math.PI;
-		LCD.drawInt((int)angle, 0, 0);
+		LCD.drawInt((int)angle, 3, 3);
 		turnLeftprecise(90);
 		try {
 			Thread.sleep(1000);
@@ -91,7 +91,11 @@ public class pointToGoal {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(angle > 0){
 		turnLeftprecise(angle);
+		} else {
+			turnRightprecise(Math.abs(angle));
+		}
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
