@@ -60,6 +60,41 @@ public class RobotJeremy extends Robot{
 		
 	}
 	
+	public void moveBackward(){
+		
+		motC.backward();
+		motB.forward();
+		
+	}
+
+	public void moveWestForward(){
+		
+		motA.backward();
+		motB.forward();
+		
+	}
+	
+	public void moveEastForward(){
+		
+		motA.forward();
+		motC.backward();
+		
+	}
+	
+	public void moveEastBackward(){
+		
+		motA.forward();
+		motB.backward();
+		
+	}
+	
+	public void moveWestBackward(){
+		
+		motA.backward();
+		motC.forward();
+		
+	}
+	
 	public void stopAll(){
 		motA.stop();
 		motB.stop();

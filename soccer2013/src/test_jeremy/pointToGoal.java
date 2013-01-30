@@ -18,10 +18,11 @@ import lejos.nxt.addon.IRSeekerV2;
 import lejos.nxt.addon.CompassHTSensor;
 
 public class pointToGoal {
-	public UltrasonicSensor US = new UltrasonicSensor(SensorPort.S2); 
+	UltrasonicSensor US = new UltrasonicSensor(SensorPort.S2); 
 	NXTMotor motA = new NXTMotor(MotorPort.A);
 	NXTMotor motB = new NXTMotor(MotorPort.B);
 	NXTMotor motC = new NXTMotor(MotorPort.C);
+    IRSeekerV2 IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 	CompassHTSensor compass = new CompassHTSensor(SensorPort.S1);
 	int array[] = new int[]{1,1};
 	
@@ -33,7 +34,56 @@ public class pointToGoal {
 		motA.stop();
 		motB.stop();
 		motC.stop();
-		pointTGoal();
+		
+		moveForward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+		moveBackward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+		moveWestForward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+		moveEastBackward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+		moveEastForward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+		moveWestBackward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		stopAll();
+//		LCD.drawInt((int)pointGoal(), 4,4);
 //		getLocation();
 //		LCD.drawInt(array[0], 0, 0);
 //		LCD.drawInt(array[1], 0, 1);
@@ -54,7 +104,7 @@ public class pointToGoal {
 
 	}
 	
-	public void pointTGoal(){
+	public double pointGoal(){
 		double wall1dist;
 		double wall2dist;
 		wall1dist = US.getDistance();
@@ -103,7 +153,7 @@ public class pointToGoal {
 			e.printStackTrace();
 		}
 		
-		
+		return Math.sqrt(Math.pow(wall1dist,2)+Math.pow(91-wall2dist,2));
 	}
 	
 	public int[] getLocation(){
@@ -142,12 +192,54 @@ public class pointToGoal {
 		
 	}
 	
+	public void postoshoot(){
+		double goaldist = pointGoal();
+		double balldist = 10; //need method still
+		double ballwalldist = 10;//need method still
+		IR.getAngle();
+		
+		
+	}
 	
+public void moveForward(){
+		
+		motC.backward();
+		motB.forward();
+		
+	}
 	
-	public void moveForward(){
+	public void moveBackward(){
+		
+		motC.forward();
+		motB.backward();
+		
+	}
+
+	public void moveWestForward(){
 		
 		motA.backward();
 		motB.forward();
+		
+	}
+	
+	public void moveEastForward(){
+		
+		motA.forward();
+		motC.backward();
+		
+	}
+	
+	public void moveEastBackward(){
+		
+		motA.forward();
+		motB.backward();
+		
+	}
+	
+	public void moveWestBackward(){
+		
+		motA.backward();
+		motC.forward();
 		
 	}
 	
