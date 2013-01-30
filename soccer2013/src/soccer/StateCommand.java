@@ -173,9 +173,9 @@ public class StateCommand extends State {
 				if(args.length > 0){
 					double rotate = parseDouble(arg0);
 					robot.nav.rotateTo((float)rotate);
-				}else if (command.equalsIgnoreCase("calibrate")) {
-					robot.nav.calibrate();
 				}
+			}else if (command.equalsIgnoreCase("calibrate")) {
+				robot.nav.calibrate();
 			} else if (command.equalsIgnoreCase("reverse")
 					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
