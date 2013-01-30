@@ -44,28 +44,31 @@ public class Navigator {
 		bot.motC.forward();
 	}
 
-	public void rotateTo(float turnDegree){
-	
+	public void rotateTo(float turnDegree) {
+
+		float headingDegree = bot.compass.getDegrees();
+		float targetDegree = headingDegree + turnDegree;
+		headingDegree = (float) normalize(headingDegree);
+		bot.io.debugln("First Heading: " + headingDegree);
+		targetDegree = (float) normalize(targetDegree);
+		bot.io.debugln("Target: " + targetDegree);
 		
-		float faceDegree = bot.compass.getDegrees();
-		faceDegree = (float)normalize(faceDegree);
-		float newDegree = faceDegree + turnDegree;
-		bot.io.debugln("N" + newDegree);
-		newDegree = (float)normalize(newDegree);
+		if (turnDegree > 0) {
+			bot.turnRight();
+		} else {
+			bot.turnLeft();
+
+		}
 		
-		while(true){
-			bot.io.debugln("N" + newDegree);
-			for(int i = 0; i < 1; i ++){
-				if(newDegree > 0){
-					bot.turnRight();
-				}else{
-					bot.turnLeft();
-				}
-			}
-			faceDegree = bot.compass.getDegrees();
-			faceDegree = (float)normalize(faceDegree);
-			bot.io.debugln("F" + faceDegree);
-			if(newDegree < faceDegree + 3 && newDegree > faceDegree - 3){
+		while (true) {
+
+			headingDegree = bot.compass.getDegrees();
+			headingDegree = (float) normalize(headingDegree);
+			bot.io.debugln("Heading: " + headingDegree + " Remaining Angle: "
+					+ normalize(targetDegree - headingDegree));
+
+			if (targetDegree < headingDegree + 5
+					&& targetDegree > headingDegree - 5) {
 				break;
 			}
 		}
@@ -74,7 +77,7 @@ public class Navigator {
 
 	public void calibrate() {
 		bot.compass.startCalibration();
-		if(Button.ESCAPE.isDown()){
+		if (Button.ESCAPE.isDown()) {
 			bot.compass.stopCalibration();
 		}
 	}
@@ -102,22 +105,23 @@ public class Navigator {
 	}
 
 	protected double normalize(double angle) {
-		while(angle > 360){
+		while (angle >= 360) {
 			angle -= 360;
 		}
-		
-		while(angle < -360){
+
+		while (angle <= -360) {
 			angle += 360;
 		}
-		
-		if(angle > 180){
-			angle = angle - 180;
-			
+
+		if (angle >= 180) {
+			angle = angle - 360;
+
 		}
-		if(angle < -180){
+		if (angle <= -180) {
 			angle = angle + 180;
-	
+
 		}
+
 		return angle;
 	}
 
