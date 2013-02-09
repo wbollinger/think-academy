@@ -47,7 +47,14 @@ public class Navigator {
 	
 	public void pointToHeading(float pointTo){
 		headingDegree = bot.compass.getDegrees();
+		headingDegree = (float) normalize(headingDegree);
+		pointTo = (float) normalize(pointTo);
+		bot.io.debugln("Robot is facing: " + headingDegree);
 		float pointToDegree = headingDegree - pointTo;
+		normalize(pointToDegree);
+		
+		bot.io.debugln("Point to: " + pointToDegree);
+		
 		rotateTo(pointToDegree);
 	}
 
