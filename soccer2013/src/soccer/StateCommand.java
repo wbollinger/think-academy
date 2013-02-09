@@ -13,9 +13,10 @@ import lejos.nxt.*;
 import lejos.nxt.comm.Bluetooth;
 
 public class StateCommand extends State {
-
+	
 	private static StateCommand instance = new StateCommand();
-
+	StateStriker stateStriker = new StateStriker();
+	
 	private boolean firstTime;
 	private boolean showPrompt;
 	private boolean isCommandLoopRunning;
@@ -260,7 +261,10 @@ public class StateCommand extends State {
 					debug(args[i]);
 				}
 				debug("\n");
-			} else if (command.equalsIgnoreCase("exit")
+				
+			} else if (command.equalsIgnoreCase("StateStriker")) {
+				robot.changeState(stateStriker);
+			}else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
 				isCommandLoopRunning = false;
