@@ -51,7 +51,7 @@ public class Navigator {
 		pointTo = (float) normalize(pointTo);
 		bot.io.debugln("Robot is facing: " + headingDegree);
 		float pointToDegree = headingDegree - pointTo;
-		normalize(pointToDegree);
+		pointTo = (float)normalize(pointToDegree);
 		
 		bot.io.debugln("Point to: " + pointToDegree);
 		
