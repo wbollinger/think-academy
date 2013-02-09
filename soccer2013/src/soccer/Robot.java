@@ -5,6 +5,7 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
 
@@ -32,6 +33,7 @@ public class Robot {
 
 	public IRSeekerV2 IR;
 	public CompassHTSensor compass;
+	public UltrasonicSensor US;
 
 	// this is a singleton
 	private static Robot robot;

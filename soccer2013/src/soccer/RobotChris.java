@@ -3,6 +3,7 @@ package soccer;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.IRSeekerV2;
 import lejos.nxt.addon.CompassHTSensor;
 
@@ -17,6 +18,7 @@ public class RobotChris extends Robot {
 		
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		compass = new CompassHTSensor(SensorPort.S2);
+		US = new UltrasonicSensor(SensorPort.S3);
 
 		motA.setPower(50);
 		motB.setPower(50);
