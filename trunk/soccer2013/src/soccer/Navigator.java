@@ -8,6 +8,7 @@ import lejos.nxt.addon.CompassHTSensor;
 public class Navigator {
 
 	protected Robot bot;
+	private float headingDegree;
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
@@ -43,10 +44,16 @@ public class Navigator {
 		bot.motB.forward();
 		bot.motC.forward();
 	}
+	
+	public void pointToHeading(float pointTo){
+		headingDegree = bot.compass.getDegrees();
+		float pointToDegree = headingDegree - pointTo;
+		rotateTo(pointToDegree);
+	}
 
 	public void rotateTo(float turnDegree) {
 
-		float headingDegree = bot.compass.getDegrees();
+		headingDegree = bot.compass.getDegrees();
 		float targetDegree = headingDegree + turnDegree;
 		headingDegree = (float) normalize(headingDegree);
 		bot.io.debugln("First Heading: " + headingDegree);
@@ -80,28 +87,6 @@ public class Navigator {
 		if (Button.ESCAPE.isDown()) {
 			bot.compass.stopCalibration();
 		}
-	}
-
-	public void rotate360() {
-
-		/*----------WARNING----------*\
-		||---This method is a fail---||
-		\*----------WARNING----------*/
-
-		float degree = 0;
-		float newDegree = degree + 360;
-		float dif;
-
-		while (true) {
-			bot.turnRight();
-			degree = bot.compass.getDegrees();
-			dif = Math.abs(degree - newDegree);
-			if (dif < 3) {
-				break;
-
-			}
-		}
-
 	}
 	
 	public double pointGoal(){
