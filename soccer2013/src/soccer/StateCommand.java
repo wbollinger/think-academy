@@ -175,6 +175,12 @@ public class StateCommand extends State {
 					double rotate = parseDouble(arg0);
 					robot.nav.rotateTo((float)rotate);
 				}
+				
+			}else if (command.equalsIgnoreCase("heading")){
+				if(args.length > 0){
+					double rotate = parseDouble(arg0);
+					robot.nav.pointToHeading((float)rotate);
+				}
 			}else if (command.equalsIgnoreCase("calibrate")) {
 				robot.nav.calibrate();
 			} else if (command.equalsIgnoreCase("reverse")
