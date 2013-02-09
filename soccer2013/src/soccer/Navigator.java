@@ -103,6 +103,56 @@ public class Navigator {
 		}
 
 	}
+	
+	public double pointGoal(){
+		double wall1dist;
+		double wall2dist;
+		wall1dist = bot.US.getDistance();
+		LCD.drawInt((int)wall1dist, 1, 1);
+		bot.sleep(1000);
+		bot.turnRightprecise(90);
+		bot.sleep(1000);
+		wall2dist = bot.US.getDistance();
+		LCD.drawInt((int)wall2dist, 2, 2);
+		bot.sleep(1000);
+		
+		double angle = Math.atan2(91-wall2dist, wall1dist);
+		angle = (angle*180)/Math.PI;
+		LCD.drawInt((int)angle, 3, 3);
+		bot.turnLeftprecise(90);
+		bot.sleep(1000);
+		if(angle > 0){
+			bot.turnLeftprecise(angle);
+		} else {
+			bot.turnRightprecise(Math.abs(angle));
+		}
+		bot.sleep(1000);
+		
+		return Math.sqrt(Math.pow(wall1dist,2)+Math.pow(91-wall2dist,2));
+	}
+	
+	public int[] getLocation(){
+		int wall1dist;
+		int wall2dist;
+		int xPos;
+		int yPos;
+		wall1dist = bot.US.getDistance();
+		bot.sleep(1000);
+		bot.turnRightprecise(90);
+		bot.sleep(1000);
+		wall2dist = bot.US.getDistance();
+		bot.sleep(1000);
+		bot.turnLeftprecise(90);
+		
+		xPos = 182-wall2dist;
+		yPos = wall1dist;
+		int array[] = new int[2];
+		array[0] = xPos;
+		array[1] = yPos;
+		
+		return array;
+		
+	}
 
 	protected double normalize(double angle) {
 		while (angle >= 360) {
