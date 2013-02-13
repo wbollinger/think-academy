@@ -19,7 +19,7 @@ import lejos.nxt.addon.CompassHTSensor;
 
 public class pointToGoal {
 	UltrasonicSensor USY = new UltrasonicSensor(SensorPort.S2);
-	UltrasonicSensor USX = new UltrasonicSensor(SensorPort.S2); 
+	UltrasonicSensor USX = new UltrasonicSensor(SensorPort.S3); 
 	NXTMotor motA = new NXTMotor(MotorPort.A);
 	NXTMotor motB = new NXTMotor(MotorPort.B);
 	NXTMotor motC = new NXTMotor(MotorPort.C);
@@ -35,55 +35,55 @@ public class pointToGoal {
 		motA.stop();
 		motB.stop();
 		motC.stop();
-		
-		moveForward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stopAll();
-		moveBackward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stopAll();
-		moveWestForward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stopAll();
-		moveEastBackward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stopAll();
-		moveEastForward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stopAll();
-		moveWestBackward();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stopAll();
+		pointGoal();
+//		moveForward();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		stopAll();
+//		moveBackward();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		stopAll();
+//		moveWestForward();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		stopAll();
+//		moveEastBackward();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		stopAll();
+//		moveEastForward();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		stopAll();
+//		moveWestBackward();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		stopAll();
 //		LCD.drawInt((int)pointGoal(), 4,4);
 //		getLocation();
 //		LCD.drawInt(array[0], 0, 0);
