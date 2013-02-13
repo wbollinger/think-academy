@@ -15,7 +15,7 @@ import lejos.nxt.comm.Bluetooth;
 public class StateCommand extends State {
 	
 	private static StateCommand instance = new StateCommand();
-	StateStriker stateStriker = new StateStriker();
+	
 	
 	private boolean firstTime;
 	private boolean showPrompt;
@@ -44,10 +44,11 @@ public class StateCommand extends State {
 			try {
 				value = Integer.parseInt(arg);
 				return value;
-			} catch (Exception e) { // survive a parse error
+			} catch (Exception e) {
+				Sound.playTone(880, 200);// survive a parse error
 			}
 		}
-		Sound.playTone(880, 200); // error beep
+		 // error beep
 		return value;
 	}
 
@@ -57,10 +58,11 @@ public class StateCommand extends State {
 			try {
 				value = Double.parseDouble(arg);
 				return value;
-			} catch (Exception e) { // survive a parse error
+			} catch (Exception e) { 
+				Sound.playTone(880, 200);// survive a parse error
 			}
 		}
-		Sound.playTone(880, 200); // error beep
+		 // error beep
 		return value;
 	}
 
@@ -191,7 +193,7 @@ public class StateCommand extends State {
 					return;
 				}
 				robot.moveBackward();
-			} else if(command.equalsIgnoreCase("check")){
+/*			} else if(command.equalsIgnoreCase("check")){
 				if (args.length > 0) {
 					//TODO	Add check method
 					if(arg0.equalsIgnoreCase("SP1")){
@@ -248,16 +250,16 @@ public class StateCommand extends State {
 							debugln("The motor in port C is unplugged!.");	
 							}
 						//check(SensorPort.S1);
-						//check(SensorPort.S2);
+					//check(SensorPort.S2);
 						//check(SensorPort.S3);
 						//check(SensorPort.S4);
 					}else{
 						debugln("Not a valid arguement.");
 					}
 					
-					return;
-				}
-				
+				return;
+			}
+	*/			
 			} else if (command.equalsIgnoreCase("bat")) {
 				debug("Battery: " + Battery.getVoltage() + "\n");
 			} else if (command.equalsIgnoreCase("echo")) {
@@ -269,7 +271,7 @@ public class StateCommand extends State {
 				debug("\n");
 				
 			} else if (command.equalsIgnoreCase("StateStriker")) {
-				robot.changeState(stateStriker);
+				robot.changeState(StateStriker.getInstance());
 			}else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
@@ -285,8 +287,6 @@ public class StateCommand extends State {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
-			}  else if (command.equalsIgnoreCase("jeremy_sucks")) {
-				debugln("Yes, yes he does!");
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;
@@ -316,22 +316,27 @@ public class StateCommand extends State {
 				//TODO: Get joystick control working again
 				//robot.joystickControl(x, y, button); 
 			} else if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("?")){
-				debugln("Navigation Commands:");
+				debugln("\n Navigation Commands:");
 				debugln("'stop' (stops all motors)");
 				debugln("'right' (rotates the robot clockwise)");
 				debugln("'rightprecise' (rotates the robot clockwise for desired degrees)");
 				debugln("'left' (rotates the robot counterclockwise)");
 				debugln("'leftprecise' (rotates the robot counterclockwise for desired degrees)");
-				debugln("'follow_ball' (follows the IR ball [currently buggy!])");
 				debugln("'forward' (moves the robot forward)");
-				debugln("'backward' or 'reverse' (moves the robot backward) \n");
+				debugln("'backward' or 'reverse' (moves the robot backward)");
+				debugln("'calibrate' (calibrates the compass)");
+				debugln("'pointToGoal' (points the robot towards the goal)");
+				debugln("'moveDir [direction]' (moves the robot in any direction 0-359)");
+				debugln("'follow_ball' (follows the IR ball [currently buggy!]) \n");
 				debugln("System Check Commands:");
 				debugln("'bat' (displays the current battery voltage)");
 				debugln("'mem' (displays the amount of free, total, and used memory in the NXT Brick)");
 				debugln("'debug' (Not implemented)");
 				debugln("'prop' (displays basic properties of the NXT Brick such as name and volume) \n");
 				debugln("State Commands:");
-				debugln("'quit' or 'exit' (exits the current state) \n");
+				debugln("'quit' or 'exit' (exits the current state)");
+				debugln("'StateStriker' (changes state to StateStriker) \n");
+				debugln("'StateGoalie' (changes state to StateGoalie) \n");
 				debugln("Misc. Commands:");
 				debugln("'shutdown' (Turns the NXT off)");
 				debugln("'prompt' (toggles the prompt)");
