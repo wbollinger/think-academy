@@ -19,6 +19,7 @@ public class RobotJeremy extends Robot{
 		motC = new NXTMotor(MotorPort.C);
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 	    US = new UltrasonicSensor(SensorPort.S2); 
+	    
 		
 		motA.setPower(50);
 		motB.setPower(50);
@@ -148,54 +149,6 @@ public void turnRightprecise(double degrees) {
 	motB.resetTachoCount();
 	motC.resetTachoCount();
 	}
-
-public void pointTGoal(){
-	double wall1dist;
-	double wall2dist;
-	wall1dist = US.getDistance();
-	LCD.drawInt(US.getDistance(), 0, 0);
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	turnRightprecise(90);
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	wall2dist = US.getDistance();
-	LCD.drawInt(US.getDistance(), 0, 0);
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	double angle = Math.atan2(91-wall2dist, wall1dist);
-	angle = (angle*180)/Math.PI;
-	LCD.drawInt((int)angle, 0, 0);
-	turnLeftprecise(90);
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	turnLeftprecise(angle);
-	try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	
-}
 
 public double[] getLocation(){
 	double wall1dist;
