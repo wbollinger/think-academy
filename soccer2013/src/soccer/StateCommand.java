@@ -325,7 +325,7 @@ public class StateCommand extends State {
 				debugln("'leftprecise' (Rotates the robot counterclockwise for desired degrees.)");
 				debugln("'forward' (Moves the robot forwardr.)");
 				debugln("'backward' or 'reverse' (Moves the robot backward.)");
-				debugln("'calibrate' (Calibrates the compass.)");
+				debugln("'calibrate' (Starts calibration. End the calibration by pressoing the enter button.)");
 				debugln("'heading' (Rotates the robot to a fixed degree.)");
 				debugln("'rotate [degree]' (Rotates to a degree. Positve numbers turn right while negitve numbers turn left.)");
 				debugln("'pointToGoal' (Points the robot towards the goal.)");
