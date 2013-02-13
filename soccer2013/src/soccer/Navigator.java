@@ -92,10 +92,14 @@ public class Navigator {
 
 	public void calibrate() {
 		bot.compass.startCalibration();
+		rotateTo(359);
+		rotateTo(359);
+		bot.compass.stopCalibration();
+		
 		if (Button.ESCAPE.isDown()) {
 			bot.compass.stopCalibration();
-			
 		}
+		return;
 	}
 	
 	public double pointGoal(){
