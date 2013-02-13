@@ -9,7 +9,7 @@ public class StateStriker extends State{
 	//--------------------------------------------------------------------------------------
 	public void execute(Robot robot) {
 		robot.followBall();
-		nav.pointGoal();
+		nav.pointToGoal();
 		//moveForward will be changed to kick. 
 		robot.moveForward();
 	}

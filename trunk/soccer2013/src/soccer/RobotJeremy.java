@@ -18,7 +18,8 @@ public class RobotJeremy extends Robot{
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
-	    US = new UltrasonicSensor(SensorPort.S2); 
+	    USY = new UltrasonicSensor(SensorPort.S2);
+	    USX = new UltrasonicSensor(SensorPort.S3);
 	    
 		
 		motA.setPower(50);
@@ -52,6 +53,31 @@ public class RobotJeremy extends Robot{
 			}
 			
 		}
+	}
+	
+	public double pointToGoal(){
+		io.debugln("went into pointgoal");
+		double wall1dist; // pointing north
+		double wall2dist; // pointing east
+		wall1dist = USY.getDistance();
+		io.debugln("first reading");
+		wall2dist = USX.getDistance();
+		
+		io.debugln("Second reading");
+		sleep(1000);
+		double angle = Math.atan2(91-wall2dist, wall1dist);
+		angle = (angle*180)/Math.PI;
+		LCD.drawInt((int)angle, 3, 3);
+		io.debugln("Angle calculated");
+		if(angle > 0){
+			turnLeftprecise(angle);
+		} else {
+			turnRightprecise(Math.abs(angle));
+		}
+		io.debugln("turned");
+		sleep(1000);
+		
+		return Math.sqrt(Math.pow(wall1dist,2)+Math.pow(91-wall2dist,2));
 	}
 	
 	public void moveForward(){
