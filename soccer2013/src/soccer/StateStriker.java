@@ -13,6 +13,10 @@ public class StateStriker extends State{
 		//moveForward will be changed to kick. 
 		robot.moveForward();
 	}
+	
+	public static StateStriker getInstance() {
+		return instance;
+	}
 
 	public void enter(Robot robot) {
 		

@@ -94,6 +94,7 @@ public class Navigator {
 		bot.compass.startCalibration();
 		if (Button.ESCAPE.isDown()) {
 			bot.compass.stopCalibration();
+			
 		}
 	}
 	
