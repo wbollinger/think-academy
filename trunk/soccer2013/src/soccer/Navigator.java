@@ -93,7 +93,7 @@ public class Navigator {
 	public void calibrate() {
 		bot.compass.startCalibration();
 		while (true){
-		if (Button.ESCAPE.isDown()) {
+		if (Button.ENTER.isDown()) {
 			bot.compass.stopCalibration();
 			return;
 		}
