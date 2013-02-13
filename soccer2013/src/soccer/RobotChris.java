@@ -1,5 +1,6 @@
 package soccer;
 
+import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
@@ -34,10 +35,16 @@ public class RobotChris extends Robot {
 	public void followBall() {
 
 		while (true) {
+			
+			//will return on push of orange button. ONLY FOR DEBUG.
+			if(Button.ENTER.isDown()) {
+				return;
+			}
 
 			if (IR.getDirection() == 5) {
 				if (IR.getSensorValue(3) > 200) {
 					stopAll();
+					return;
 				} else {
 					moveForward();
 				}
@@ -55,6 +62,11 @@ public class RobotChris extends Robot {
 		motC.backward();
 		motB.forward();
 	}
+	
+	public void moveBackward() {
+		motC.forward();
+		motB.backward();
+	}
 
 	public void stopAll() {
 		motA.stop();
@@ -62,13 +74,13 @@ public class RobotChris extends Robot {
 		motC.stop();
 	}
 
-	public void turnLeft() {
+	public void turnRight() {
 		motA.forward();
 		motB.forward();
 		motC.forward();
 	}
 
-	public void turnRight() {
+	public void turnLeft() {
 		motA.backward();
 		motB.backward();
 		motC.backward();
