@@ -99,22 +99,17 @@ public class Navigator {
 	}
 	
 	public double pointGoal(){
-		double wall1dist;
-		double wall2dist;
-		wall1dist = bot.US.getDistance();
+		double wall1dist; // pointing north
+		double wall2dist; // pointing east
+		wall1dist = bot.USY.getDistance();
 		LCD.drawInt((int)wall1dist, 1, 1);
-		bot.sleep(1000);
-		bot.turnRightprecise(90);
-		bot.sleep(1000);
-		wall2dist = bot.US.getDistance();
+		
+		wall2dist = bot.USX.getDistance();
 		LCD.drawInt((int)wall2dist, 2, 2);
 		bot.sleep(1000);
-		
 		double angle = Math.atan2(91-wall2dist, wall1dist);
 		angle = (angle*180)/Math.PI;
 		LCD.drawInt((int)angle, 3, 3);
-		bot.turnLeftprecise(90);
-		bot.sleep(1000);
 		if(angle > 0){
 			bot.turnLeftprecise(angle);
 		} else {
@@ -130,14 +125,8 @@ public class Navigator {
 		int wall2dist;
 		int xPos;
 		int yPos;
-		wall1dist = bot.US.getDistance();
-		bot.sleep(1000);
-		bot.turnRightprecise(90);
-		bot.sleep(1000);
-		wall2dist = bot.US.getDistance();
-		bot.sleep(1000);
-		bot.turnLeftprecise(90);
-		
+		wall1dist = bot.USY.getDistance();
+		wall2dist = bot.USX.getDistance();
 		xPos = 182-wall2dist;
 		yPos = wall1dist;
 		int array[] = new int[2];

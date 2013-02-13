@@ -19,7 +19,8 @@ public class RobotChris extends Robot {
 		
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		compass = new CompassHTSensor(SensorPort.S2);
-		US = new UltrasonicSensor(SensorPort.S3);
+		USY = new UltrasonicSensor(SensorPort.S3);
+		USX = new UltrasonicSensor(SensorPort.S4);
 
 		motA.setPower(50);
 		motB.setPower(50);

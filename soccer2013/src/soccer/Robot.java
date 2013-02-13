@@ -33,7 +33,8 @@ public class Robot {
 
 	public IRSeekerV2 IR;
 	public CompassHTSensor compass;
-	public UltrasonicSensor US;
+	public UltrasonicSensor USY;
+	public UltrasonicSensor USX;
 
 	// this is a singleton
 	private static Robot robot;

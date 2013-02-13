@@ -18,7 +18,8 @@ import lejos.nxt.addon.IRSeekerV2;
 import lejos.nxt.addon.CompassHTSensor;
 
 public class pointToGoal {
-	UltrasonicSensor US = new UltrasonicSensor(SensorPort.S2); 
+	UltrasonicSensor USY = new UltrasonicSensor(SensorPort.S2);
+	UltrasonicSensor USX = new UltrasonicSensor(SensorPort.S2); 
 	NXTMotor motA = new NXTMotor(MotorPort.A);
 	NXTMotor motB = new NXTMotor(MotorPort.B);
 	NXTMotor motC = new NXTMotor(MotorPort.C);
@@ -107,40 +108,13 @@ public class pointToGoal {
 	public double pointGoal(){
 		double wall1dist;
 		double wall2dist;
-		wall1dist = US.getDistance();
+		wall1dist = USY.getDistance();
 		LCD.drawInt((int)wall1dist, 1, 1);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		turnRightprecise(90);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		wall2dist = US.getDistance();
+		wall2dist = USX.getDistance();
 		LCD.drawInt((int)wall2dist, 2, 2);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		double angle = Math.atan2(91-wall2dist, wall1dist);
 		angle = (angle*180)/Math.PI;
 		LCD.drawInt((int)angle, 3, 3);
-		turnLeftprecise(90);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if(angle > 0){
 		turnLeftprecise(angle);
 		} else {
@@ -161,29 +135,8 @@ public class pointToGoal {
 		int wall2dist;
 		int xPos;
 		int yPos;
-		wall1dist = US.getDistance();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		turnRightprecise(90);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		wall2dist = US.getDistance();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		turnLeftprecise(90);
-		
+		wall1dist = USY.getDistance();
+		wall2dist = USX.getDistance();
 		xPos = 182-wall2dist;
 		yPos = wall1dist;
 		array[0] = xPos;
