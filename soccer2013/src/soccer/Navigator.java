@@ -101,23 +101,26 @@ public class Navigator {
 		}
 	}
 	
-	public double pointGoal(){
+	public double pointToGoal(){
+		bot.io.debugln("went into pointToGoal");
 		double wall1dist; // pointing north
 		double wall2dist; // pointing east
 		wall1dist = bot.USY.getDistance();
-		LCD.drawInt((int)wall1dist, 1, 1);
-		
+		bot.io.debugln("first reading");
 		wall2dist = bot.USX.getDistance();
-		LCD.drawInt((int)wall2dist, 2, 2);
+		
+		bot.io.debugln("Second reading");
 		bot.sleep(1000);
 		double angle = Math.atan2(91-wall2dist, wall1dist);
 		angle = (angle*180)/Math.PI;
 		LCD.drawInt((int)angle, 3, 3);
+		bot.io.debugln("Angle calculated");
 		if(angle > 0){
 			bot.turnLeftprecise(angle);
 		} else {
 			bot.turnRightprecise(Math.abs(angle));
 		}
+		bot.io.debugln("turned");
 		bot.sleep(1000);
 		
 		return Math.sqrt(Math.pow(wall1dist,2)+Math.pow(91-wall2dist,2));
