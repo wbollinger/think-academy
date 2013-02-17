@@ -69,6 +69,10 @@ public class Vector2D {
 		return this.getX()*b.getX()+this.getY()*b.getY();
 	}
 	
+	public Vector2D times(double b) {
+		return new Vector2D(this.getX()*b, this.getY()*b);
+	}
+	
 	public static double toRadian(double angle) {
 		return Math.PI*angle/180.0;
 	}
