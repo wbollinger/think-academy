@@ -39,11 +39,12 @@ public class RobotChris extends Robot {
 			
 			//will return on push of orange button. ONLY FOR DEBUG.
 			if(Button.ENTER.isDown()) {
+				stopAll();
 				return;
 			}
 
 			if (IR.getDirection() == 5) {
-				if (IR.getSensorValue(3) > 200) {
+				if (IR.getSensorValue(3) > 180) {
 					stopAll();
 					return;
 				} else {
@@ -62,11 +63,13 @@ public class RobotChris extends Robot {
 	public void moveForward() {
 		motC.backward();
 		motB.forward();
+		motA.stop();
 	}
 	
 	public void moveBackward() {
 		motC.forward();
 		motB.backward();
+		motA.stop();
 	}
 
 	public void stopAll() {
