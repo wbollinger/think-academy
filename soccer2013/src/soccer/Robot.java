@@ -4,6 +4,7 @@ import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
+import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.CompassHTSensor;
@@ -28,6 +29,10 @@ public class Robot {
 	NXTMotor motA;
 	NXTMotor motB;
 	NXTMotor motC;
+	
+	NXTRegulatedMotor regMotA;
+	NXTRegulatedMotor regMotB;
+	NXTRegulatedMotor regMotC;
 
 	BrickIO io;
 
