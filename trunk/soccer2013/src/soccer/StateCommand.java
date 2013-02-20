@@ -294,6 +294,8 @@ public class StateCommand extends State {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
+			}  else if (command.equalsIgnoreCase("tacoMeterTurn")) {
+				robot.tacoMeterTurn();
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;
@@ -347,11 +349,13 @@ public class StateCommand extends State {
 				debugln("'StateStriker' (Changes state to StateStriker.)");
 				debugln("'StateGoalie' (Changes state to StateGoalie.) \n");
 				debugln("Misc. Commands:");
+				debugln("'TacoTime'(related to tachometer)");
 				debugln("'shutdown' (Turns the NXT off.)");
 				debugln("'prompt' (Toggles the prompt.)");
 				debugln("'play [tone] [length]' (Plays a note of the specified tone and length.)");
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
 				debugln("Not to mention there are easter egg commands :)");
+				debugln("'Sucker' Its what you are.....no explaining necessary! ");
 			} else { 
 				debugln("?");
 				// // 4.5 Check if it is a filename:
