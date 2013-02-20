@@ -118,15 +118,9 @@ public class Navigator {
 
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
-		double wall1dist; // pointing north
-		double wall2dist; // pointing east
-		wall1dist = bot.USY.getDistance();
-		bot.io.debugln("first reading");
-		wall2dist = bot.USX.getDistance();
-
-		bot.io.debugln("Second reading");
+		int array[] = getLocation();
 		bot.sleep(1000);
-		double angle = Math.atan2(91 - wall2dist, wall1dist);
+		double angle = Math.atan2(91 - array[0], array[1]);
 		angle = (angle * 180) / Math.PI;
 		LCD.drawInt((int) angle, 3, 3);
 		bot.io.debugln("Angle calculated");
@@ -138,7 +132,7 @@ public class Navigator {
 		bot.io.debugln("turned");
 		bot.sleep(1000);
 
-		return Math.sqrt(Math.pow(wall1dist, 2) + Math.pow(91 - wall2dist, 2));
+		return Math.sqrt(Math.pow(array[1], 2) + Math.pow(91 - array[0], 2));
 	}
 
 	public int[] getLocation() {
@@ -148,8 +142,8 @@ public class Navigator {
 		int yPos;
 		wall1dist = bot.USY.getDistance();
 		wall2dist = bot.USX.getDistance();
-		xPos = 182 - wall2dist;
-		yPos = wall1dist;
+		xPos = 122 - wall2dist;
+		yPos = 182-wall1dist;
 		int array[] = new int[2];
 		array[0] = xPos;
 		array[1] = yPos;
