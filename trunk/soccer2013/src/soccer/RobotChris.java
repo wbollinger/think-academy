@@ -61,14 +61,20 @@ public class RobotChris extends Robot {
 	}
 
 	public void moveForward() {
-		motC.backward();
-		motB.forward();
+		motA.setPower(50);
+		motB.setPower(50);
+		motC.setPower(50);
+		motC.forward();
+		motB.backward();
 		motA.stop();
 	}
 	
 	public void moveBackward() {
-		motC.forward();
-		motB.backward();
+		motA.setPower(50);
+		motB.setPower(50);
+		motC.setPower(50);
+		motC.backward();
+		motB.forward();
 		motA.stop();
 	}
 
@@ -79,12 +85,18 @@ public class RobotChris extends Robot {
 	}
 
 	public void turnRight() {
+		motA.setPower(50);
+		motB.setPower(50);
+		motC.setPower(50);
 		motA.forward();
 		motB.forward();
 		motC.forward();
 	}
 
 	public void turnLeft() {
+		motA.setPower(50);
+		motB.setPower(50);
+		motC.setPower(50);
 		motA.backward();
 		motB.backward();
 		motC.backward();

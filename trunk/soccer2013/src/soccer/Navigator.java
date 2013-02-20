@@ -11,6 +11,10 @@ public class Navigator {
 	private float facingDegree;
 
 	private int location[] = new int[2];
+	
+	private int lastTachoA;
+	private int lastTachoB;
+	private int lastTachoC;
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
@@ -28,7 +32,7 @@ public class Navigator {
 
 		double scale = 100.0 / max;
 
-		LCD.drawString(Double.toString(scale), 0, 4);
+		bot.io.debugln(""+Double.toString(scale));
 
 		bot.motA.setPower((int) Math.round(w0 * scale));
 		bot.motB.setPower((int) Math.round(w1 * scale));
@@ -39,7 +43,7 @@ public class Navigator {
 	}
 
 	// NOTE: speed is not handled well for values close to and over 100. 
-	// May want to keep below 75 for predictable results. -- Chris
+	// Keep below 75 for predictable results. -- Chris
 	public void moveDir(double dir, int speed) {
 		Vector2D v = new Vector2D(Vector2D.toRadian(dir)).times(speed);
 
@@ -152,6 +156,30 @@ public class Navigator {
 
 		return array;
 
+	}
+	
+	public void updateLocation() {
+		int tachoA = bot.motA.getTachoCount();
+		int tachoB = bot.motB.getTachoCount();
+		int tachoC = bot.motC.getTachoCount();
+		
+		int tachoDiffA = lastTachoA - tachoA;
+		int tachoDiffB = lastTachoB - tachoB;
+		int tachoDiffC = lastTachoC - tachoC;
+		
+		double moveDistA = tachoDiffA*bot.getR();
+		double moveDistB = tachoDiffB*bot.getR();
+		double moveDistC = tachoDiffC*bot.getR();
+
+	}
+	
+	public void resetLocation() {
+		lastTachoA = 0;
+		lastTachoB = 0;
+		lastTachoC = 0;
+		bot.motA.resetTachoCount();
+		bot.motB.resetTachoCount();
+		bot.motC.resetTachoCount();
 	}
 
 	protected double normalize(double angle) {
