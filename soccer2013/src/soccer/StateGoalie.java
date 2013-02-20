@@ -10,6 +10,7 @@ public class StateGoalie extends State {
 
 	@Override
 	public void execute(Robot r) {
+		double heading = r.compass.getDegrees();
 			while (true) {
 
 				if (r.IR.getDirection() > 0 && r.IR.getDirection() < 5) {
@@ -22,6 +23,17 @@ public class StateGoalie extends State {
 				if (r.IR.getDirection() > 5) {
 					//turns right?
 					r.nav.moveDir(60);
+				}
+				if(r.compass.getDegrees() < heading + 5
+						&& r.compass.getDegrees() > heading - 5){
+					r.nav.rotateTo((float)heading);
+					
+				}
+				if(r.USX.getDistance() < 100){
+					r.moveForward();
+					if(r.USX.getDistance() > 120){
+						r.stopAll();
+					}
 				}
 
 			}
