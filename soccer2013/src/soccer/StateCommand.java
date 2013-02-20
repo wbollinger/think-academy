@@ -337,7 +337,7 @@ public class StateCommand extends State {
 				debugln("'heading' (Rotates the robot to a fixed degree.)");
 				debugln("'rotate [degree]' (Rotates to a degree. Positve numbers turn right while negitve numbers turn left.)");
 				debugln("'pointToGoal' (Points the robot towards the goal.)");
-				debugln("'moveDir [direction]' (Moves the robot in any direction 0-359.)");
+				debugln("'moveDir [direction], [speed]' (Moves the robot in any direction 0-359 at a set speed.)");
 				debugln("'follow_ball' (Follows the IR ball [currently buggy!]) \n");
 				debugln("System Check Commands:");
 				debugln("'bat' (Displays the current battery voltage.)");
