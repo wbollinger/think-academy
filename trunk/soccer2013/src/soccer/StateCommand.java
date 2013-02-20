@@ -167,7 +167,13 @@ public class StateCommand extends State {
 				}
 				robot.moveForward();
 			}  else if (command.equalsIgnoreCase("movedir")) {
-				if (args.length > 0) {
+				if (args.length == 2) {
+					double dir = parseDouble(arg0);
+					int scale = parseInt(arg1);
+					robot.nav.moveDir(dir, scale);
+					return;
+				}
+				if(args.length == 1){
 					double dir = parseDouble(arg0);
 					robot.nav.moveDir(dir);
 					return;
