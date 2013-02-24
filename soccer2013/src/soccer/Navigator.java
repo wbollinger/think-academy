@@ -11,7 +11,7 @@ public class Navigator {
 	private float facingDegree;
 
 	private int location[] = new int[2];
-	
+
 	private int lastTachoA;
 	private int lastTachoB;
 	private int lastTachoC;
@@ -32,7 +32,7 @@ public class Navigator {
 
 		double scale = 100.0 / max;
 
-		bot.io.debugln(""+Double.toString(scale));
+		bot.io.debugln("" + Double.toString(scale));
 
 		bot.motA.setPower((int) Math.round(w0 * scale));
 		bot.motB.setPower((int) Math.round(w1 * scale));
@@ -42,7 +42,7 @@ public class Navigator {
 		bot.motC.forward();
 	}
 
-	// NOTE: speed is not handled well for values close to and over 100. 
+	// NOTE: speed is not handled well for values close to and over 100.
 	// Keep below 75 for predictable results. -- Chris
 	public void moveDir(double dir, int speed) {
 		Vector2D v = new Vector2D(Vector2D.toRadian(dir)).times(speed);
@@ -116,6 +116,27 @@ public class Navigator {
 		}
 	}
 
+	public void whoWantsSomePizza() {
+		double heading = bot.compass.getDegrees();
+		long timeOne = System.currentTimeMillis();
+		while (true) {
+			long timeTwo = System.currentTimeMillis();
+			if(timeOne - timeTwo > 1000){
+				moveDir(240);
+			}
+			if(timeOne - timeTwo < 1000){
+				moveDir(60);
+			}
+			
+			if (bot.compass.getDegrees() < heading + 5
+					&& bot.compass.getDegrees() > heading - 5) {
+				bot.nav.rotateTo((float) heading);
+
+			}
+
+		}
+	}
+
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
 		int array[] = getLocation();
@@ -143,7 +164,7 @@ public class Navigator {
 		wall1dist = bot.USY.getDistance();
 		wall2dist = bot.USX.getDistance();
 		xPos = 122 - wall2dist;
-		yPos = 182-wall1dist;
+		yPos = 182 - wall1dist;
 		int array[] = new int[2];
 		array[0] = xPos;
 		array[1] = yPos;
@@ -151,22 +172,22 @@ public class Navigator {
 		return array;
 
 	}
-	
+
 	public void updateLocation() {
 		int tachoA = bot.motA.getTachoCount();
 		int tachoB = bot.motB.getTachoCount();
 		int tachoC = bot.motC.getTachoCount();
-		
+
 		int tachoDiffA = lastTachoA - tachoA;
 		int tachoDiffB = lastTachoB - tachoB;
 		int tachoDiffC = lastTachoC - tachoC;
-		
-		double moveDistA = tachoDiffA*bot.getR();
-		double moveDistB = tachoDiffB*bot.getR();
-		double moveDistC = tachoDiffC*bot.getR();
+
+		double moveDistA = tachoDiffA * bot.getR();
+		double moveDistB = tachoDiffB * bot.getR();
+		double moveDistC = tachoDiffC * bot.getR();
 
 	}
-	
+
 	public void resetLocation() {
 		lastTachoA = 0;
 		lastTachoB = 0;
