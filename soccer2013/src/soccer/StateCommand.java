@@ -150,6 +150,11 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("pointtogoal")) {
 				debugln("called");
 				robot.nav.pointToGoal();
+			}  else if (command.equalsIgnoreCase("getlocation")) {
+				debugln(""+robot.nav.getLocation());
+			}else if (command.equalsIgnoreCase("getusreading")) {
+				debugln("yo"+robot.USY.getDistance());
+		
 			} else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeft();
@@ -265,7 +270,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("prompt")) {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("getcompreading")) {
-				robot.compass.getDegrees();
+				debugln(""+robot.compass.getDegrees());
 			}else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
@@ -315,6 +320,7 @@ public class StateCommand extends State {
 				debugln("'moveDir [direction], [speed]' (Moves the robot in any direction 0-359 at a set speed.)");
 				debugln("'follow_ball' (Follows the IR ball [currently buggy!]) \n");
 				debugln("'getcompreading' (Displays what the compass is reading.)");
+				debugln("'getusreading' (Displays what the Ultrasonic is reading.)");
 				debugln("System Check Commands:");
 				debugln("'bat' (Displays the current battery voltage.)");
 				debugln("'mem' (Displays the amount of free, total, and used memory in the NXT Brick.)");
