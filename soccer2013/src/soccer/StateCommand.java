@@ -264,7 +264,9 @@ public class StateCommand extends State {
 				debug(File.freeMemory() + " disk\n");
 			} else if (command.equalsIgnoreCase("prompt")) {
 				showPrompt = !showPrompt;
-			} else if (command.equalsIgnoreCase("debug")) {
+			} else if (command.equalsIgnoreCase("getcompreading")) {
+				robot.compass.getDegrees();
+			}else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
@@ -312,6 +314,7 @@ public class StateCommand extends State {
 				debugln("'pointToGoal' (Points the robot towards the goal.)");
 				debugln("'moveDir [direction], [speed]' (Moves the robot in any direction 0-359 at a set speed.)");
 				debugln("'follow_ball' (Follows the IR ball [currently buggy!]) \n");
+				debugln("'getcompreading' (Displays what the compass is reading.)");
 				debugln("System Check Commands:");
 				debugln("'bat' (Displays the current battery voltage.)");
 				debugln("'mem' (Displays the amount of free, total, and used memory in the NXT Brick.)");
@@ -322,13 +325,10 @@ public class StateCommand extends State {
 				debugln("'StateStriker' (Changes state to StateStriker.)");
 				debugln("'StateGoalie' (Changes state to StateGoalie.) \n");
 				debugln("Misc. Commands:");
-				debugln("'TacoTime'(related to tachometer)");
 				debugln("'shutdown' (Turns the NXT off.)");
 				debugln("'prompt' (Toggles the prompt.)");
 				debugln("'play [tone] [length]' (Plays a note of the specified tone and length.)");
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
-				debugln("Not to mention there are easter egg commands :)");
-				debugln("'Sucker' Its what you are.....no explaining necessary! ");
 			} else {
 				debugln("?");
 				// // 4.5 Check if it is a filename:
