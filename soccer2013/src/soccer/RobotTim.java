@@ -15,7 +15,7 @@ public class RobotTim extends Robot {
 		super(name);
 
 		compass = new CompassHTSensor(SensorPort.S1);
-		
+
 		io.debugln("I am Tim the Robot!");
 
 		motA = new NXTMotor(MotorPort.A);
@@ -60,7 +60,7 @@ public class RobotTim extends Robot {
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
-		
+
 		motC.stop();
 		motA.backward();
 		motB.forward();
@@ -68,22 +68,22 @@ public class RobotTim extends Robot {
 	}
 
 	public void moveBackward() {
-		
+
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
-		
+
 		motC.stop();
 		motA.forward();
 		motB.backward();
 	}
 
 	public void forward(int time) {
-		
+
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
-		
+
 		motA.backward();
 		motB.forward();
 		motC.stop();
@@ -94,10 +94,17 @@ public class RobotTim extends Robot {
 	}
 
 	public void stopAll() {
-		
+
 		motA.stop();
 		motB.stop();
 		motC.stop();
+	}
+
+	public void floatAll() {
+
+		motA.flt();
+		motB.flt();
+		motC.flt();
 	}
 
 	public void turnLeft() {
@@ -105,7 +112,7 @@ public class RobotTim extends Robot {
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
-		
+
 		motA.backward();
 		motB.backward();
 		motC.backward();
@@ -113,11 +120,11 @@ public class RobotTim extends Robot {
 	}
 
 	public void turnLeft(int time) {
-		
+
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
-		
+
 		motA.backward();
 		motB.backward();
 		motC.backward();
@@ -128,7 +135,7 @@ public class RobotTim extends Robot {
 	}
 
 	public void turnRight() {
-		
+
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
@@ -140,11 +147,11 @@ public class RobotTim extends Robot {
 	}
 
 	public void turnRight(int time) {
-		
+
 		motA.setPower(50);
 		motB.setPower(50);
 		motC.setPower(50);
-		
+
 		motA.forward();
 		motB.forward();
 		motC.forward();
