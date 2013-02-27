@@ -14,30 +14,29 @@ public class StateGoalie extends State {
 	@Override
 	public void execute(Robot r) {
 		double heading = r.compass.getDegrees();
+		r.io.debugln("" + heading);
 			while (true) {
-
-				if (r.IR.getDirection() > 0 && r.IR.getDirection() < 5) {
-					//turns left?
-						r.nav.moveDir(240);
-				}
-				if (r.IR.getDirection() == 5) {
+				
+				if ((r.IR.getDirection() == 5)||(r.IR.getDirection() == 0)) {
 					r.stopAll();
-				}
-				if (r.IR.getDirection() > 5) {
+				} else if (r.IR.getDirection() < 5) {
+					//turns left?
+						r.nav.moveDir(180);
+				} else if (r.IR.getDirection() > 5) {
 					//turns right?
-					r.nav.moveDir(60);
+					r.nav.moveDir(0);
 				}
-				if(r.compass.getDegrees() < heading + 5
-						&& r.compass.getDegrees() > heading - 5){
-					r.nav.rotateTo((float)heading);
+			//	if(r.compass.getDegrees() < heading + 5
+			//			&& r.compass.getDegrees() > heading - 5){
+			//		r.nav.rotateTo((float)heading);
 					
-				}
-				if(r.USX.getDistance() < 100){
-					r.moveForward();
-					if(r.USX.getDistance() > 120){
-						r.stopAll();
-					}
-				}
+			//	}
+				//if(r.USX.getDistance() < 100){
+					//r.moveForward();
+					//if(r.USX.getDistance() > 120){
+						//r.stopAll();
+					//}
+				//}
 
 			}
 		

@@ -249,7 +249,7 @@ public class StateCommand extends State {
 
 			} else if (command.equalsIgnoreCase("StateStriker")) {
 				robot.changeState(StateStriker.getInstance());
-			} else if (command.equalsIgnoreCase("StateStriker")) {
+			} else if (command.equalsIgnoreCase("StateGoalie")) {
 				robot.changeState(StateGoalie.getInstance());
 			} else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
