@@ -6,6 +6,7 @@ import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotJeremy extends Robot{
@@ -18,8 +19,9 @@ public class RobotJeremy extends Robot{
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
 		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
-	    USY = new UltrasonicSensor(SensorPort.S2);
-	    USX = new UltrasonicSensor(SensorPort.S3);
+		compass = new CompassHTSensor(SensorPort.S2);
+	    USY = new UltrasonicSensor(SensorPort.S3);
+	    USX = new UltrasonicSensor(SensorPort.S4);
 	    
 		
 		motA.setPower(50);
