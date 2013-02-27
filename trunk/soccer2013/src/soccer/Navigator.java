@@ -139,13 +139,18 @@ public class Navigator {
 	
 	public void strafe(){
 		double heading = bot.compass.getDegrees();
+
 		while(true){
 			moveDir(0);
-			bot.sleep(2000);
-			rotateTo((float)heading);
+			bot.sleep(1500);
+			pointToHeading((float)heading);
+			bot.floatAll();
+			bot.sleep(100);
 			moveDir(180);
-			bot.sleep(2000);
-			rotateTo((float)heading);
+			bot.sleep(1500);
+			pointToHeading((float)heading);
+			bot.floatAll();
+			bot.sleep(100);
 		}
 	}
 

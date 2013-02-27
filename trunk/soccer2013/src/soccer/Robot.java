@@ -98,6 +98,9 @@ public class Robot {
 	public void stopAll() {
 	}
 
+	public void floatAll(){
+		
+	}
 	public void turnLeft() {
 	}
 	
