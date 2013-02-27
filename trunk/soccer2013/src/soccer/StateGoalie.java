@@ -2,6 +2,9 @@ package soccer;
 
 public class StateGoalie extends State {
 
+	private static StateGoalie instance = new StateGoalie();
+	
+	
 	@Override
 	public void enter(Robot r) {
 		// TODO Auto-generated method stub
@@ -41,6 +44,9 @@ public class StateGoalie extends State {
 		
 
 		
+	}
+	public static StateGoalie getInstance() {
+		return instance;
 	}
 
 	@Override

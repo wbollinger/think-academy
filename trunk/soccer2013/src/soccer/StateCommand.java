@@ -13,10 +13,9 @@ import lejos.nxt.*;
 import lejos.nxt.comm.Bluetooth;
 
 public class StateCommand extends State {
-	
+
 	private static StateCommand instance = new StateCommand();
-	
-	
+
 	private boolean firstTime;
 	private boolean showPrompt;
 	private boolean isCommandLoopRunning;
@@ -48,7 +47,7 @@ public class StateCommand extends State {
 				Sound.playTone(880, 200);// survive a parse error
 			}
 		}
-		 // error beep
+		// error beep
 		return value;
 	}
 
@@ -58,11 +57,11 @@ public class StateCommand extends State {
 			try {
 				value = Double.parseDouble(arg);
 				return value;
-			} catch (Exception e) { 
+			} catch (Exception e) {
 				Sound.playTone(880, 200);// survive a parse error
 			}
 		}
-		 // error beep
+		// error beep
 		return value;
 	}
 
@@ -135,7 +134,7 @@ public class StateCommand extends State {
 			case 2:
 				arg2 = args[2];
 			}
-			
+
 		}
 
 		try {
@@ -145,16 +144,16 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("right")) {
 				double degrees = parseDouble(arg0);
 				robot.turnRight();
-			}else if (command.equalsIgnoreCase("rightprecise")) {
+			} else if (command.equalsIgnoreCase("rightprecise")) {
 				double degrees = parseDouble(arg0);
 				robot.turnRightprecise(degrees);
-			}else if (command.equalsIgnoreCase("pointtogoal")) {
+			} else if (command.equalsIgnoreCase("pointtogoal")) {
 				debugln("called");
 				robot.nav.pointToGoal();
-			}else if (command.equalsIgnoreCase("left")) {
+			} else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeft();
-			}else if (command.equalsIgnoreCase("leftprecise")) {
+			} else if (command.equalsIgnoreCase("leftprecise")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeftprecise(degrees);
 			} else if (command.equalsIgnoreCase("follow_ball")) {
@@ -162,111 +161,82 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("forward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
-					//robot.forward(distance);
+					// robot.forward(distance);
 					return;
 				}
 				robot.moveForward();
-			}  else if (command.equalsIgnoreCase("movedir")) {
+			} else if (command.equalsIgnoreCase("movedir")) {
 				if (args.length == 2) {
 					double dir = parseDouble(arg0);
 					int scale = parseInt(arg1);
 					robot.nav.moveDir(dir, scale);
 					return;
 				}
-				if(args.length == 1){
+				if (args.length == 1) {
 					double dir = parseDouble(arg0);
 					robot.nav.moveDir(dir);
 					return;
 				}
 				robot.moveForward();
-			}else if (command.equalsIgnoreCase("rotate")){
-				if(args.length > 0){
+			} else if (command.equalsIgnoreCase("rotate")) {
+				if (args.length > 0) {
 					double rotate = parseDouble(arg0);
-					robot.nav.rotateTo((float)rotate);
+					robot.nav.rotateTo((float) rotate);
 				}
-				
-			}else if (command.equalsIgnoreCase("heading")){
-				if(args.length > 0){
+
+			} else if (command.equalsIgnoreCase("heading")) {
+				if (args.length > 0) {
 					double rotate = parseDouble(arg0);
-					robot.nav.pointToHeading((float)rotate);
+					robot.nav.pointToHeading((float) rotate);
 				}
-			}else if (command.equalsIgnoreCase("calibrate")) {
+			} else if (command.equalsIgnoreCase("calibrate")) {
 				robot.nav.calibrate();
 			} else if (command.equalsIgnoreCase("reverse")
 					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
-					//robot.backward(distance);
+					// robot.backward(distance);
 					return;
 				}
 				robot.moveBackward();
-/*			} else if(command.equalsIgnoreCase("check")){
-				if (args.length > 0) {
-					//TODO	Add check method
-					if(arg0.equalsIgnoreCase("SP1")){
-						SensorPort sen = SensorPort.S1;
-						LightSensor lig = new LightSensor(SensorPort.S1);
-						NXTMotor mot = new NXTMotor(MotorPort.A);
-						debugln("" + sen.i2cStatus());
-						//check(SensorPort.S1);
-					}
-					if(arg0.equalsIgnoreCase("SP2")){
-						//check(SensorPort.S2);
-					}
-					if(arg0.equalsIgnoreCase("SP3")){
-						//check(SensorPort.S3);
-					}
-					if(arg0.equalsIgnoreCase("SP4")){
-						//check(SensorPort.S4);
-					}
-					if(arg0.equalsIgnoreCase("MPA")){
-						if(robot.check(MotorPort.A)){
-							debugln("The motor in port A is plugged in.");	
-							}else{
-							debugln("The motor in port A is unplugged!");	
-							}
-					}
-					if(arg0.equalsIgnoreCase("MPB")){
-						if(robot.check(MotorPort.B)){
-						debugln("The motor in port B is plugged in.");	
-						}else{
-						debugln("The motor in port B is unplugged!");	
-						}
-					}
-					if(arg0.equalsIgnoreCase("MPC")){
-						if(robot.check(MotorPort.C)){
-							debugln("The motor in port C is plugged in.");	
-							}else{
-							debugln("The motor in port C is unplugged!");	
-							}
-					}
-					if(arg0.equalsIgnoreCase("All")){
-						if(robot.check(MotorPort.A)){
-							debugln("The motor in port A is plugged in.");	
-							}else{
-							debugln("The motor in port A is unplugged!.");	
-							}
-						if(robot.check(MotorPort.B)){
-							debugln("The motor in port B is plugged in.");	
-							}else{
-							debugln("The motor in port B is unplugged!.");	
-							}
-						if(robot.check(MotorPort.C)){
-							debugln("The motor in port C is plugged in.");	
-							}else{
-							debugln("The motor in port C is unplugged!.");	
-							}
-						//check(SensorPort.S1);
-					//check(SensorPort.S2);
-						//check(SensorPort.S3);
-						//check(SensorPort.S4);
-					}else{
-						debugln("Not a valid arguement.");
-					}
-					
-				return;
-			}
-	*/			
+				/*
+				 * } else if(command.equalsIgnoreCase("check")){ if (args.length
+				 * > 0) { //TODO Add check method
+				 * if(arg0.equalsIgnoreCase("SP1")){ SensorPort sen =
+				 * SensorPort.S1; LightSensor lig = new
+				 * LightSensor(SensorPort.S1); NXTMotor mot = new
+				 * NXTMotor(MotorPort.A); debugln("" + sen.i2cStatus());
+				 * //check(SensorPort.S1); } if(arg0.equalsIgnoreCase("SP2")){
+				 * //check(SensorPort.S2); } if(arg0.equalsIgnoreCase("SP3")){
+				 * //check(SensorPort.S3); } if(arg0.equalsIgnoreCase("SP4")){
+				 * //check(SensorPort.S4); } if(arg0.equalsIgnoreCase("MPA")){
+				 * if(robot.check(MotorPort.A)){
+				 * debugln("The motor in port A is plugged in."); }else{
+				 * debugln("The motor in port A is unplugged!"); } }
+				 * if(arg0.equalsIgnoreCase("MPB")){
+				 * if(robot.check(MotorPort.B)){
+				 * debugln("The motor in port B is plugged in."); }else{
+				 * debugln("The motor in port B is unplugged!"); } }
+				 * if(arg0.equalsIgnoreCase("MPC")){
+				 * if(robot.check(MotorPort.C)){
+				 * debugln("The motor in port C is plugged in."); }else{
+				 * debugln("The motor in port C is unplugged!"); } }
+				 * if(arg0.equalsIgnoreCase("All")){
+				 * if(robot.check(MotorPort.A)){
+				 * debugln("The motor in port A is plugged in."); }else{
+				 * debugln("The motor in port A is unplugged!."); }
+				 * if(robot.check(MotorPort.B)){
+				 * debugln("The motor in port B is plugged in."); }else{
+				 * debugln("The motor in port B is unplugged!."); }
+				 * if(robot.check(MotorPort.C)){
+				 * debugln("The motor in port C is plugged in."); }else{
+				 * debugln("The motor in port C is unplugged!."); }
+				 * //check(SensorPort.S1); //check(SensorPort.S2);
+				 * //check(SensorPort.S3); //check(SensorPort.S4); }else{
+				 * debugln("Not a valid arguement."); }
+				 * 
+				 * return; }
+				 */
 			} else if (command.equalsIgnoreCase("bat")) {
 				debug("Battery: " + Battery.getVoltage() + "\n");
 			} else if (command.equalsIgnoreCase("echo")) {
@@ -276,10 +246,12 @@ public class StateCommand extends State {
 					debug(args[i]);
 				}
 				debug("\n");
-				
+
 			} else if (command.equalsIgnoreCase("StateStriker")) {
 				robot.changeState(StateStriker.getInstance());
-			}else if (command.equalsIgnoreCase("exit")
+			} else if (command.equalsIgnoreCase("StateStriker")) {
+				robot.changeState(StateGoalie.getInstance());
+			} else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
 				isCommandLoopRunning = false;
@@ -294,7 +266,7 @@ public class StateCommand extends State {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
-			}  else if (command.equalsIgnoreCase("tacoMeterTurn")) {
+			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
@@ -315,16 +287,17 @@ public class StateCommand extends State {
 					}
 					debugln("The robot's wheel radius is " + robot.getR());
 					debugln("The robot's wheel base is " + robot.getB());
-				} 
-			//} else if (command.equalsIgnoreCase("joydata")) {
-				//showPrompt = false;
-				//debugln("joystick command detected");
-				//double x = Double.parseDouble(args[0]);
-				//double y = Double.parseDouble(args[1]);
-				//int button = Integer.parseInt(args[2]);
-				//TODO: Get joystick control working again
-				//robot.joystickControl(x, y, button); 
-			} else if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("?")){
+				}
+				// } else if (command.equalsIgnoreCase("joydata")) {
+				// showPrompt = false;
+				// debugln("joystick command detected");
+				// double x = Double.parseDouble(args[0]);
+				// double y = Double.parseDouble(args[1]);
+				// int button = Integer.parseInt(args[2]);
+				// TODO: Get joystick control working again
+				// robot.joystickControl(x, y, button);
+			} else if (command.equalsIgnoreCase("help")
+					|| command.equalsIgnoreCase("?")) {
 				debugln("\n Navigation Commands:");
 				debugln("'stop' (Stops all motors.)");
 				debugln("'right' (Rotates the robot clockwise.)");
@@ -356,7 +329,7 @@ public class StateCommand extends State {
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
 				debugln("Not to mention there are easter egg commands :)");
 				debugln("'Sucker' Its what you are.....no explaining necessary! ");
-			} else { 
+			} else {
 				debugln("?");
 				// // 4.5 Check if it is a filename:
 				// File f = new File(command);
@@ -379,19 +352,11 @@ public class StateCommand extends State {
 
 		int buttons = Button.ID_ENTER;
 		/*
-		int i = 0;
-		while ((checkPress = Button.readButtons()) == 0) {
-			if (i % 10 == 0) {
-				Sound.playTone(330, 100);
-			} else {
-				robot.sleep(100);
-			}
-			if (i++ > 50) {
-				break;
-			}
-		}
-		*/
-		
+		 * int i = 0; while ((checkPress = Button.readButtons()) == 0) { if (i %
+		 * 10 == 0) { Sound.playTone(330, 100); } else { robot.sleep(100); } if
+		 * (i++ > 50) { break; } }
+		 */
+
 		if (buttons == Button.ID_ENTER) {
 			if (robot.io.btc == null) {
 				Sound.playTone(440, 100);
