@@ -189,7 +189,11 @@ public class StateCommand extends State {
 					robot.nav.rotateTo((float) rotate);
 				}
 
-			} else if (command.equalsIgnoreCase("heading")) {
+			}else if (command.equalsIgnoreCase("strafe")) {
+				robot.nav.strafe();
+			}
+			
+			else if (command.equalsIgnoreCase("heading")) {
 				if (args.length > 0) {
 					double rotate = parseDouble(arg0);
 					robot.nav.pointToHeading((float) rotate);
