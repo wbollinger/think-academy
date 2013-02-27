@@ -136,6 +136,18 @@ public class Navigator {
 
 		}
 	}
+	
+	public void strafe(){
+		double heading = bot.compass.getDegrees();
+		while(true){
+			moveDir(0);
+			bot.sleep(2000);
+			rotateTo((float)heading);
+			moveDir(180);
+			bot.sleep(2000);
+			rotateTo((float)heading);
+		}
+	}
 
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
