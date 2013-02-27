@@ -269,7 +269,7 @@ public class StateCommand extends State {
 				debug(File.freeMemory() + " disk\n");
 			} else if (command.equalsIgnoreCase("prompt")) {
 				showPrompt = !showPrompt;
-			} else if (command.equalsIgnoreCase("getcompreading")) {
+			} else if (command.equalsIgnoreCase("readcomp")) {
 				debugln(""+robot.compass.getDegrees());
 			}else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
