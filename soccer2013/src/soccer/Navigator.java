@@ -9,7 +9,6 @@ public class Navigator {
 
 	protected Robot bot;
 	private float facingDegree;
-
 	private int location[] = new int[2];
 
 	private int lastTachoA;
@@ -156,9 +155,9 @@ public class Navigator {
 
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
-		int array[] = getLocation();
+		setLocation();
 		bot.sleep(1000);
-		double angle = Math.atan2(91 - array[0], array[1]);
+		double angle = Math.atan2(91 - location[0], location[1]);
 		angle = (angle * 180) / Math.PI;
 		LCD.drawInt((int) angle, 3, 3);
 		bot.io.debugln("Angle calculated");
@@ -170,24 +169,27 @@ public class Navigator {
 		bot.io.debugln("turned");
 		bot.sleep(1000);
 
-		return Math.sqrt(Math.pow(array[1], 2) + Math.pow(91 - array[0], 2));
+		return Math.sqrt(Math.pow(location[1], 2) + Math.pow(91 - location[0], 2));
 	}
 
-	public int[] getLocation() {
+	public void setLocation() {
 		int wall1dist;
 		int wall2dist;
 		int xPos;
 		int yPos;
 		wall1dist = bot.USY.getDistance();
 		wall2dist = bot.USX.getDistance();
-		xPos = 122 - wall2dist;
-		yPos = 182 - wall1dist;
-		int array[] = new int[2];
-		array[0] = xPos;
-		array[1] = yPos;
-
-		return array;
-
+		xPos = 182 - wall2dist;
+		yPos = 243 - wall1dist;
+		location[0] = xPos;
+		location[1] = yPos;
+	}
+	
+	public int getXLocation() {
+		return location[0];
+	}
+	public int getYLocation() {
+		return location[1];
 	}
 
 	public void updateLocation() {

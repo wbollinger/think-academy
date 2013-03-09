@@ -151,7 +151,8 @@ public class StateCommand extends State {
 				debugln("called");
 				robot.nav.pointToGoal();
 			}  else if (command.equalsIgnoreCase("getlocation")) {
-				debugln(""+robot.nav.getLocation());
+				robot.nav.setLocation();
+				debugln(robot.nav.getXLocation()+" "+robot.nav.getYLocation());
 			}else if (command.equalsIgnoreCase("getusreading")) {
 				debugln("yo"+robot.USY.getDistance());
 		
