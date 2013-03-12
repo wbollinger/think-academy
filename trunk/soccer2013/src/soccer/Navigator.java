@@ -62,12 +62,12 @@ public class Navigator {
 		facingDegree = bot.compass.getDegrees();
 		facingDegree = (float) normalize(facingDegree);
 		heading = (float) normalize(heading);
-		bot.io.debugln("Heading is: " + heading);
-		bot.io.debugln("Robot is facing: " + facingDegree);
+		//bot.io.debugln("Heading is: " + heading);
+		//bot.io.debugln("Robot is facing: " + facingDegree);
 		float pointToDegree = heading - facingDegree;
 		pointToDegree = (float) normalize(pointToDegree);
 
-		bot.io.debugln("Point to: " + pointToDegree);
+		//bot.io.debugln("Point to: " + pointToDegree);
 
 		rotateTo(pointToDegree);
 	}
@@ -77,9 +77,9 @@ public class Navigator {
 		facingDegree = bot.compass.getDegrees();
 		float targetDegree = facingDegree + turnDegree;
 		facingDegree = (float) normalize(facingDegree);
-		bot.io.debugln("First Heading: " + facingDegree);
+		//bot.io.debugln("First Heading: " + facingDegree);
 		targetDegree = (float) normalize(targetDegree);
-		bot.io.debugln("Target: " + targetDegree);
+		//bot.io.debugln("Target: " + targetDegree);
 
 		if (turnDegree > 0) {
 			bot.turnRight();
@@ -92,8 +92,8 @@ public class Navigator {
 
 			facingDegree = bot.compass.getDegrees();
 			facingDegree = (float) normalize(facingDegree);
-			bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
-					+ normalize(targetDegree - facingDegree));
+			//bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
+			//		+ normalize(targetDegree - facingDegree));
 
 			if (targetDegree < facingDegree + 5
 					&& targetDegree > facingDegree - 5) {
@@ -150,6 +150,17 @@ public class Navigator {
 			pointToHeading((float)heading);
 			bot.floatAll();
 			bot.sleep(100);
+			if(bot.USY.getDistance() > 15) {
+				while(bot.USY.getDistance() > 15) {
+					moveDir(270);
+				}
+				bot.floatAll();
+			} else if(bot.USY.getDistance() < 10) {
+				while(bot.USY.getDistance() < 10) {
+					bot.nav.moveDir(90);
+				}
+				bot.floatAll();
+			}
 		}
 	}
 
