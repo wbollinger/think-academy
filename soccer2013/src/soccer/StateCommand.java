@@ -154,7 +154,8 @@ public class StateCommand extends State {
 				robot.nav.setLocation();
 				debugln(robot.nav.getXLocation()+" "+robot.nav.getYLocation());
 			}else if (command.equalsIgnoreCase("getusreading")) {
-				debugln("yo"+robot.USY.getDistance());
+				debugln("The y axis is reading "+robot.USY.getDistance());
+				debugln("The x axis is reading "+robot.USX.getDistance());
 		
 			} else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
