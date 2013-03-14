@@ -156,6 +156,7 @@ public class StateCommand extends State {
 			}else if (command.equalsIgnoreCase("getusreading")) {
 				debugln("The y axis is reading "+robot.USY.getDistance());
 				debugln("The x axis is reading "+robot.USX.getDistance());
+				debugln("The x axis normalized is reading "+robot.nav.normalizeMeasurement(robot.USX.getDistance()));
 		
 			} else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
