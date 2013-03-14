@@ -41,11 +41,11 @@ public class StateGoalie extends State {
 
 			if ((r.IR.getDirection() == 5) || (r.IR.getDirection() == 0)) {
 				r.stopAll();
-			} else if ((r.IR.getDirection() < 5) || (r.nav.normalizeMeasurement(r.USX.getDistance()) > 121)) {
+			} else if ((r.IR.getDirection() < 5) || (r.nav.normalizeMeasurement(r.USX.getDistance()) < 121)) {
 				// moves left, unless at edge of goal
 				r.io.debugln("Left");
 				r.nav.moveDir(180);
-			} else if ((r.IR.getDirection() > 5) || (r.nav.normalizeMeasurement(r.USX.getDistance()) < 64)) {
+			} else if ((r.IR.getDirection() > 5) || (r.nav.normalizeMeasurement(r.USX.getDistance()) > 64)) {
 				// moves right, unless at edge of goal
 				r.io.debugln("Right");
 				r.nav.moveDir(0);
