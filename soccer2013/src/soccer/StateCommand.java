@@ -203,7 +203,13 @@ public class StateCommand extends State {
 				}
 			} else if (command.equalsIgnoreCase("calibrate")) {
 				robot.nav.calibrate();
-			} else if (command.equalsIgnoreCase("reverse")
+			} else if (command.equalsIgnoreCase("setPower")){
+				if (args.length > 0) {
+					int power = parseInt(arg0);
+					robot.setPower(power);
+				}
+			}
+			else if (command.equalsIgnoreCase("reverse")
 					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
