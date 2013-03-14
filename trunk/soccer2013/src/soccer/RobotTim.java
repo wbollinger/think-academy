@@ -11,10 +11,12 @@ import lejos.nxt.addon.IRSeekerV2;
 public class RobotTim extends Robot {
 
 	TouchSensor touch = new TouchSensor(SensorPort.S2);
-	final int MOTOR_POWER = 100;
+	
 
 	public RobotTim(String name) {
 		super(name);
+		
+		MOTOR_POWER = 100;
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);

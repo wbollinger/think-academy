@@ -12,6 +12,8 @@ import lejos.nxt.addon.IRSeekerV2;
 
 public class Robot {
 
+	protected int MOTOR_POWER = 100;
+	
 	State current_state;
 	boolean exit;
 
@@ -84,6 +86,10 @@ public class Robot {
 	
 	public double pointToGoal() {
 		return 0.0;
+	}
+	
+	public void setPower(int power){
+		MOTOR_POWER = power;
 	}
 
 	public void moveForward() {
