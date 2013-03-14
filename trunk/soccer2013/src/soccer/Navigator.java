@@ -117,31 +117,46 @@ public class Navigator {
 	
 	public void strafe(){
 		double heading = bot.compass.getDegrees();
+		int i = 0;
+		boolean flip = false;
+		
+		while(Button.ENTER.isUp()){
 
-		while(true){
-			
-			moveDir(0);
-			bot.sleep(1500);
-			pointToHeading((float)heading);
-			bot.floatAll();
-			bot.sleep(100);
-			moveDir(180);
-			bot.sleep(1500);
-			pointToHeading((float)heading);
-			bot.floatAll();
-			bot.sleep(100);
-			if(bot.USY.getDistance() > 15) {
-				while(bot.USY.getDistance() > 15) {
-					moveDir(270);
+			if (bot.USY.getDistance() > 20) {
+				while (bot.USY.getDistance() > 20) {
+					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
-			} else if(bot.USY.getDistance() < 10) {
-				while(bot.USY.getDistance() < 10) {
+			} else if (bot.USY.getDistance() < 15) {
+				while (bot.USY.getDistance() < 15) {
 					bot.nav.moveDir(90);
 				}
 				bot.floatAll();
 			}
+
+			if (i > 5) {
+				bot.nav.pointToHeading((float) heading);
+				i = 0;
+			} else {
+				i++;
+			}
+
+			if ((normalizeMeasurement(bot.USX.getDistance()) < 110) && flip) {
+				// moves left, unless at edge of goal
+				bot.io.debugln("Left");
+				bot.nav.moveDir(180);
+			} else if ((normalizeMeasurement(bot.USX.getDistance()) > 64) && !flip) {
+				// moves right, unless at edge of goal
+				bot.io.debugln("Right");
+				bot.nav.moveDir(0);
+			}else{
+				flip = !flip;
+			}
+			
+
 		}
+		bot.stopAll();
+		bot.changeState(StateCommand.getInstance());
 	}
 
 	public double pointToGoal() {
