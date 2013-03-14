@@ -7,51 +7,55 @@ public class StateGoalie extends State {
 	private static StateGoalie instance = new StateGoalie();
 
 	@Override
-	public void enter(Robot r) {
+	public void enter(Robot bot) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void execute(Robot r) {
+	public void execute(Robot bot) {
 		int i = 0;
-		double heading = r.compass.getDegrees();
+		double heading = bot.compass.getDegrees();
 
-		r.io.debugln("" + heading);
+		bot.io.debugln("" + heading);
 		while (Button.ENTER.isUp()) {
 
-			if (r.USY.getDistance() > 20) {
-				while (r.USY.getDistance() > 20) {
-					r.nav.moveDir(270);
+			if (bot.USY.getDistance() > 20
+					&& bot.compass.getDegrees() == heading) {
+				while (bot.USY.getDistance() > 20) {
+					bot.nav.moveDir(270);
 				}
-				r.floatAll();
-			} else if (r.USY.getDistance() < 15) {
-				while (r.USY.getDistance() < 15) {
-					r.nav.moveDir(90);
+				bot.floatAll();
+			} else if (bot.USY.getDistance() < 15
+					&& bot.compass.getDegrees() == heading) {
+				while (bot.USY.getDistance() < 15) {
+					bot.nav.moveDir(90);
 				}
-				r.floatAll();
+				bot.floatAll();
 			}
 
 			if (i > 5) {
-				r.nav.pointToHeading((float) heading);
+				bot.nav.pointToHeading((float) heading);
 				i = 0;
 			} else {
 				i++;
 			}
 
-			if ((r.IR.getDirection() == 5) || (r.IR.getDirection() == 0)) {
-				r.stopAll();
-			} else if ((r.IR.getDirection() < 5) || (r.nav.normalizeMeasurement(r.USX.getDistance()) < 121)) {
+			if ((bot.IR.getDirection() == 5) || (bot.IR.getDirection() == 0)) {
+				bot.stopAll();
+			} else if ((bot.IR.getDirection() < 5)
+					|| (bot.nav.normalizeMeasurement(bot.USX.getDistance()) < 110)) {
 				// moves left, unless at edge of goal
-				r.io.debugln("Left");
-				r.nav.moveDir(180);
-			} else if ((r.IR.getDirection() > 5) || (r.nav.normalizeMeasurement(r.USX.getDistance()) > 64)) {
+				bot.io.debugln("Left");
+				bot.nav.moveDir(180);
+			} else if ((bot.IR.getDirection() > 5)
+					|| (bot.nav.normalizeMeasurement(bot.USX.getDistance()) > 64)) {
 				// moves right, unless at edge of goal
-				r.io.debugln("Right");
-				r.nav.moveDir(0);
+				bot.io.debugln("Right");
+				bot.nav.moveDir(0);
 			}
 		}
-		r.changeState(StateCommand.getInstance());
+		bot.changeState(StateCommand.getInstance());
 
 	}
 
