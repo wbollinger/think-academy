@@ -21,13 +21,15 @@ public class StateGoalie extends State {
 		while (Button.ENTER.isUp()) {
 
 			if (bot.USY.getDistance() > 20
-					&& bot.compass.getDegrees() == heading) {
+					&& bot.compass.getDegrees() + 5 > heading
+					&& bot.compass.getDegrees() - 5 < heading) {
 				while (bot.USY.getDistance() > 20) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
 			} else if (bot.USY.getDistance() < 15
-					&& bot.compass.getDegrees() == heading) {
+					&& bot.compass.getDegrees() + 5 > heading
+					&& bot.compass.getDegrees() - 5 < heading) {
 				while (bot.USY.getDistance() < 15) {
 					bot.nav.moveDir(90);
 				}

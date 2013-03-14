@@ -62,12 +62,12 @@ public class Navigator {
 		facingDegree = bot.compass.getDegrees();
 		facingDegree = (float) normalizeAngle(facingDegree);
 		heading = (float) normalizeAngle(heading);
-		//bot.io.debugln("Heading is: " + heading);
-		//bot.io.debugln("Robot is facing: " + facingDegree);
+		// bot.io.debugln("Heading is: " + heading);
+		// bot.io.debugln("Robot is facing: " + facingDegree);
 		float pointToDegree = heading - facingDegree;
 		pointToDegree = (float) normalizeAngle(pointToDegree);
 
-		//bot.io.debugln("Point to: " + pointToDegree);
+		// bot.io.debugln("Point to: " + pointToDegree);
 
 		rotateTo(pointToDegree);
 	}
@@ -77,9 +77,9 @@ public class Navigator {
 		facingDegree = bot.compass.getDegrees();
 		float targetDegree = facingDegree + turnDegree;
 		facingDegree = (float) normalizeAngle(facingDegree);
-		//bot.io.debugln("First Heading: " + facingDegree);
+		// bot.io.debugln("First Heading: " + facingDegree);
 		targetDegree = (float) normalizeAngle(targetDegree);
-		//bot.io.debugln("Target: " + targetDegree);
+		// bot.io.debugln("Target: " + targetDegree);
 
 		if (turnDegree > 0) {
 			bot.turnRight();
@@ -92,8 +92,8 @@ public class Navigator {
 
 			facingDegree = bot.compass.getDegrees();
 			facingDegree = (float) normalizeAngle(facingDegree);
-			//bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
-			//		+ normalize(targetDegree - facingDegree));
+			// bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
+			// + normalize(targetDegree - facingDegree));
 
 			if (targetDegree < facingDegree + 5
 					&& targetDegree > facingDegree - 5) {
@@ -114,20 +114,24 @@ public class Navigator {
 			}
 		}
 	}
-	
-	public void strafe(){
+
+	public void strafe() {
 		double heading = bot.compass.getDegrees();
 		int i = 0;
 		boolean flip = false;
-		
-		while(Button.ENTER.isUp()){
 
-			if (bot.USY.getDistance() > 20 && bot.compass.getDegrees() == heading) {
+		while (Button.ENTER.isUp()) {
+
+			if (bot.USY.getDistance() > 20
+					&& bot.compass.getDegrees() + 5 > heading
+					&& bot.compass.getDegrees() - 5 < heading) {
 				while (bot.USY.getDistance() > 20) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
-			} else if (bot.USY.getDistance() < 15 && bot.compass.getDegrees() == heading) {
+			} else if (bot.USY.getDistance() < 15
+					&& bot.compass.getDegrees() + 5 > heading
+					&& bot.compass.getDegrees() - 5 < heading) {
 				while (bot.USY.getDistance() < 15) {
 					bot.nav.moveDir(90);
 				}
@@ -145,14 +149,14 @@ public class Navigator {
 				// moves left, unless at edge of goal
 				bot.io.debugln("Left");
 				bot.nav.moveDir(180);
-			} else if ((normalizeMeasurement(bot.USX.getDistance()) > 64) && !flip) {
+			} else if ((normalizeMeasurement(bot.USX.getDistance()) > 64)
+					&& !flip) {
 				// moves right, unless at edge of goal
 				bot.io.debugln("Right");
 				bot.nav.moveDir(0);
-			}else{
+			} else {
 				flip = !flip;
 			}
-			
 
 		}
 		bot.stopAll();
@@ -175,7 +179,8 @@ public class Navigator {
 		bot.io.debugln("turned");
 		bot.sleep(1000);
 
-		return Math.sqrt(Math.pow(location[1], 2) + Math.pow(91 - location[0], 2));
+		return Math.sqrt(Math.pow(location[1], 2)
+				+ Math.pow(91 - location[0], 2));
 	}
 
 	public void setLocation() {
@@ -190,10 +195,11 @@ public class Navigator {
 		location[0] = xPos;
 		location[1] = yPos;
 	}
-	
+
 	public int getXLocation() {
 		return location[0];
 	}
+
 	public int getYLocation() {
 		return location[1];
 	}
@@ -221,14 +227,13 @@ public class Navigator {
 		bot.motB.resetTachoCount();
 		bot.motC.resetTachoCount();
 	}
-	
+
 	protected int normalizeMeasurement(int measure) {
-	if(measure < 60){
-		measure = measure + 60;
-	}	
+		if (measure < 60) {
+			measure = measure + 60;
+		}
 		return measure;
 	}
-
 
 	protected double normalizeAngle(double angle) {
 		while (angle >= 360) {
