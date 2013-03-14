@@ -60,12 +60,12 @@ public class Navigator {
 
 	public void pointToHeading(float heading) {
 		facingDegree = bot.compass.getDegrees();
-		facingDegree = (float) normalize(facingDegree);
-		heading = (float) normalize(heading);
+		facingDegree = (float) normalizeAngle(facingDegree);
+		heading = (float) normalizeAngle(heading);
 		//bot.io.debugln("Heading is: " + heading);
 		//bot.io.debugln("Robot is facing: " + facingDegree);
 		float pointToDegree = heading - facingDegree;
-		pointToDegree = (float) normalize(pointToDegree);
+		pointToDegree = (float) normalizeAngle(pointToDegree);
 
 		//bot.io.debugln("Point to: " + pointToDegree);
 
@@ -76,9 +76,9 @@ public class Navigator {
 
 		facingDegree = bot.compass.getDegrees();
 		float targetDegree = facingDegree + turnDegree;
-		facingDegree = (float) normalize(facingDegree);
+		facingDegree = (float) normalizeAngle(facingDegree);
 		//bot.io.debugln("First Heading: " + facingDegree);
-		targetDegree = (float) normalize(targetDegree);
+		targetDegree = (float) normalizeAngle(targetDegree);
 		//bot.io.debugln("Target: " + targetDegree);
 
 		if (turnDegree > 0) {
@@ -91,7 +91,7 @@ public class Navigator {
 		while (true) {
 
 			facingDegree = bot.compass.getDegrees();
-			facingDegree = (float) normalize(facingDegree);
+			facingDegree = (float) normalizeAngle(facingDegree);
 			//bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
 			//		+ normalize(targetDegree - facingDegree));
 
@@ -114,32 +114,12 @@ public class Navigator {
 			}
 		}
 	}
-
-	public void whoWantsSomePizza() {
-		double heading = bot.compass.getDegrees();
-		long timeOne = System.currentTimeMillis();
-		while (true) {
-			long timeTwo = System.currentTimeMillis();
-			if(timeOne - timeTwo > 1000){
-				moveDir(240);
-			}
-			if(timeOne - timeTwo < 1000){
-				moveDir(60);
-			}
-			
-			if (bot.compass.getDegrees() < heading + 5
-					&& bot.compass.getDegrees() > heading - 5) {
-				bot.nav.rotateTo((float) heading);
-
-			}
-
-		}
-	}
 	
 	public void strafe(){
 		double heading = bot.compass.getDegrees();
 
 		while(true){
+			
 			moveDir(0);
 			bot.sleep(1500);
 			pointToHeading((float)heading);
@@ -226,8 +206,16 @@ public class Navigator {
 		bot.motB.resetTachoCount();
 		bot.motC.resetTachoCount();
 	}
+	
+	protected int normalizeMeasurement(int measure) {
+	if(measure < 60){
+		measure = measure + 60;
+	}	
+		return measure;
+	}
 
-	protected double normalize(double angle) {
+
+	protected double normalizeAngle(double angle) {
 		while (angle >= 360) {
 			angle -= 360;
 		}
