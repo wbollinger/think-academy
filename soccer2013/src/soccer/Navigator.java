@@ -145,11 +145,11 @@ public class Navigator {
 				i++;
 			}
 
-			if ((normalizeMeasurement(bot.USX.getDistance()) < 110) && flip) {
+			if ((normalizeMeasurement(bot.USX.getDistance()) < 112) && flip) {
 				// moves left, unless at edge of goal
 				bot.io.debugln("Left");
 				bot.nav.moveDir(180);
-			} else if ((normalizeMeasurement(bot.USX.getDistance()) > 64)
+			} else if ((normalizeMeasurement(bot.USX.getDistance()) > 66)
 					&& !flip) {
 				// moves right, unless at edge of goal
 				bot.io.debugln("Right");
