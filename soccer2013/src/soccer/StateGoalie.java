@@ -16,20 +16,21 @@ public class StateGoalie extends State {
 	public void execute(Robot bot) {
 		int i = 0;
 		double heading = bot.compass.getDegrees();
+		int compass;
+		int IRDir;
 
 		bot.io.debugln("" + heading);
 		while (Button.ENTER.isUp()) {
+			compass = (int) bot.compass.getDegrees();
 
-			if (bot.USY.getDistance() > 20
-					&& bot.compass.getDegrees() + 5 > heading
-					&& bot.compass.getDegrees() - 5 < heading) {
+			if (bot.USY.getDistance() > 20 && compass + 5 > heading
+					&& compass - 5 < heading) {
 				while (bot.USY.getDistance() > 20) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
-			} else if (bot.USY.getDistance() < 15
-					&& bot.compass.getDegrees() + 5 > heading
-					&& bot.compass.getDegrees() - 5 < heading) {
+			} else if (bot.USY.getDistance() < 15 && compass + 5 > heading
+					&& compass - 5 < heading) {
 				while (bot.USY.getDistance() < 15) {
 					bot.nav.moveDir(90);
 				}
@@ -43,17 +44,19 @@ public class StateGoalie extends State {
 				i++;
 			}
 
-			if ((bot.IR.getDirection() == 5) || (bot.IR.getDirection() == 0)) {
+			IRDir = bot.IR.getDirection();
+
+			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
-			} else if ((bot.IR.getDirection() < 5)
+			} else if ((IRDir < 5)
 					&& (bot.nav.normalizeMeasurement(bot.USX.getDistance()) < 106)) {
 				// moves left, unless at edge of goal
-				//bot.io.debugln("Left");
+				// bot.io.debugln("Left");
 				bot.nav.moveDir(180);
-			} else if ((bot.IR.getDirection() > 5)
+			} else if ((IRDir > 5)
 					&& (bot.nav.normalizeMeasurement(bot.USX.getDistance()) > 75)) {
 				// moves right, unless at edge of goal
-				//bot.io.debugln("Right");
+				// bot.io.debugln("Right");
 				bot.nav.moveDir(0);
 			}
 		}
