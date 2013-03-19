@@ -23,25 +23,20 @@ public class StateGoalie extends State {
 		while (Button.ENTER.isUp()) {
 			compass = (int) bot.compass.getDegrees();
 
-			if (bot.USY.getDistance() > 20 && compass + 5 > heading
-					&& compass - 5 < heading) {
+			if (!(compass + 5 > heading && compass - 5 < heading)) {
+				bot.nav.pointToHeading((float) heading);
+			}
+
+			if (bot.USY.getDistance() > 20) {
 				while (bot.USY.getDistance() > 20) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
-			} else if (bot.USY.getDistance() < 15 && compass + 5 > heading
-					&& compass - 5 < heading) {
+			} else if (bot.USY.getDistance() < 15) {
 				while (bot.USY.getDistance() < 15) {
 					bot.nav.moveDir(90);
 				}
 				bot.floatAll();
-			}
-
-			if (i > 5) {
-				bot.nav.pointToHeading((float) heading);
-				i = 0;
-			} else {
-				i++;
 			}
 
 			IRDir = bot.IR.getDirection();
