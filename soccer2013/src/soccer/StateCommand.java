@@ -164,14 +164,13 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("getcompreading")) {
 				debugln("The compass is reading " + robot.compass.getDegrees());
 			} else if (command.equalsIgnoreCase("getIRreading")) {
-				debugln("The IR Seeker sees the ball in arc "
-						+ robot.IR.getDirection());
 				int[] values;
 				while (Button.ENTER.isUp()) {
+					debugln("Ball in arc " + robot.IR.getDirection());
 					values = robot.IR.getSensorValues();
 					for (int j = 0; j < 5; j++) {
 						debug("" + values[j] + " | ");
-						Thread.sleep(10);
+						Thread.sleep(50);
 					}
 					debugln("");
 				}
