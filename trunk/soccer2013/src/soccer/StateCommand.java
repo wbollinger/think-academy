@@ -150,14 +150,32 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("pointtogoal")) {
 				debugln("called");
 				robot.nav.pointToGoal();
-			}  else if (command.equalsIgnoreCase("getlocation")) {
+			} else if (command.equalsIgnoreCase("getlocation")) {
 				robot.nav.setLocation();
-				debugln(robot.nav.getXLocation()+" "+robot.nav.getYLocation());
-			}else if (command.equalsIgnoreCase("getusreading")) {
-				debugln("The y axis is reading "+robot.USY.getDistance());
-				debugln("The x axis is reading "+robot.USX.getDistance());
-				debugln("The x axis normalized is reading "+robot.nav.normalizeMeasurement(robot.USX.getDistance()));
-		
+				debugln(robot.nav.getXLocation() + " "
+						+ robot.nav.getYLocation());
+			} else if (command.equalsIgnoreCase("getusreading")) {
+				debugln("The y axis is reading " + robot.USY.getDistance());
+				debugln("The x axis is reading " + robot.USX.getDistance());
+				debugln("The x axis normalized is reading "
+						+ robot.nav.normalizeMeasurement(robot.USX
+								.getDistance()));
+
+			} else if (command.equalsIgnoreCase("getcompreading")) {
+				debugln("The compass is reading " + robot.compass.getDegrees());
+			} else if (command.equalsIgnoreCase("getIRreading")) {
+				debugln("The IR Seeker sees the ball in arc "
+						+ robot.IR.getDirection());
+				int[] values;
+				while (Button.ENTER.isUp()) {
+					values = robot.IR.getSensorValues();
+					for (int j = 0; j < 5; j++) {
+						debug("" + values[j] + " | ");
+						Thread.sleep(10);
+					}
+					debugln("");
+				}
+
 			} else if (command.equalsIgnoreCase("left")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeft();
@@ -192,10 +210,10 @@ public class StateCommand extends State {
 					robot.nav.rotateTo((float) rotate);
 				}
 
-			}else if (command.equalsIgnoreCase("strafe")) {
+			} else if (command.equalsIgnoreCase("strafe")) {
 				robot.nav.strafe();
 			}
-			
+
 			else if (command.equalsIgnoreCase("heading")) {
 				if (args.length > 0) {
 					double rotate = parseDouble(arg0);
@@ -203,13 +221,12 @@ public class StateCommand extends State {
 				}
 			} else if (command.equalsIgnoreCase("calibrate")) {
 				robot.nav.calibrate();
-			} else if (command.equalsIgnoreCase("setPower")){
+			} else if (command.equalsIgnoreCase("setPower")) {
 				if (args.length > 0) {
 					int power = parseInt(arg0);
 					robot.setPower(power);
 				}
-			}
-			else if (command.equalsIgnoreCase("reverse")
+			} else if (command.equalsIgnoreCase("reverse")
 					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
@@ -283,8 +300,8 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("prompt")) {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("readcomp")) {
-				debugln(""+robot.compass.getDegrees());
-			}else if (command.equalsIgnoreCase("debug")) {
+				debugln("" + robot.compass.getDegrees());
+			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
