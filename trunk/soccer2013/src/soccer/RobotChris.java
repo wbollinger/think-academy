@@ -22,9 +22,7 @@ public class RobotChris extends Robot {
 		USY = new UltrasonicSensor(SensorPort.S3);
 		USX = new UltrasonicSensor(SensorPort.S4);
 
-		motA.setPower(50);
-		motB.setPower(50);
-		motC.setPower(50);
+		setPower(80);
 		motA.stop();
 		motB.stop();
 		motC.stop();
@@ -61,18 +59,18 @@ public class RobotChris extends Robot {
 	}
 
 	public void moveForward() {
-		motA.setPower(50);
-		motB.setPower(50);
-		motC.setPower(50);
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
 		motC.forward();
 		motB.backward();
 		motA.stop();
 	}
 	
 	public void moveBackward() {
-		motA.setPower(50);
-		motB.setPower(50);
-		motC.setPower(50);
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
 		motC.backward();
 		motB.forward();
 		motA.stop();
@@ -85,18 +83,18 @@ public class RobotChris extends Robot {
 	}
 
 	public void turnRight() {
-		motA.setPower(50);
-		motB.setPower(50);
-		motC.setPower(50);
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
 		motA.forward();
 		motB.forward();
 		motC.forward();
 	}
 
 	public void turnLeft() {
-		motA.setPower(50);
-		motB.setPower(50);
-		motC.setPower(50);
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
 		motA.backward();
 		motB.backward();
 		motC.backward();

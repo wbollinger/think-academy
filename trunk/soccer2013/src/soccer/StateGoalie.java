@@ -16,18 +16,26 @@ public class StateGoalie extends State {
 	public void execute(Robot bot) {
 		int i = 0;
 		double heading = bot.compass.getDegrees();
-		int compass;
+		int compass = (int) bot.compass.getDegrees();;
 		int IRDir;
+		int USY = bot.USY.getDistance();
+		int USX;
 
 		bot.io.debugln("" + heading);
 		while (Button.ENTER.isUp()) {
-			compass = (int) bot.compass.getDegrees();
+			if(i == 5) {
+				compass = (int) bot.compass.getDegrees();
+				i = 0;
+			} else {
+				i++;
+			}
+			
 
 			if (!(compass + 5 > heading && compass - 5 < heading)) {
 				bot.nav.pointToHeading((float) heading);
 			}
 
-			if (bot.USY.getDistance() > 20) {
+			if (USY > 20) {
 				while (bot.USY.getDistance() > 20) {
 					bot.nav.moveDir(270);
 				}
