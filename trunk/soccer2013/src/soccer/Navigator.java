@@ -16,6 +16,9 @@ public class Navigator {
 	private int lastTachoA;
 	private int lastTachoB;
 	private int lastTachoC;
+	
+	private int xPos;
+	private int yPos;
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
@@ -167,7 +170,7 @@ public class Navigator {
 
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
-		setLocation();
+		getLocation();
 		bot.sleep(1000);
 		double angle = Math.atan2(91 - location[0], location[1]);
 		angle = (angle * 180) / Math.PI;
@@ -186,17 +189,17 @@ public class Navigator {
 				+ Math.pow(91 - location[0], 2));
 	}
 
-	public void setLocation() {
+	public void getLocation() {
+		
 		int wall1dist;
 		int wall2dist;
-		int xPos;
-		int yPos;
-		wall1dist = bot.USY.getDistance();
-		wall2dist = bot.USX.getDistance();
+		
+		pointToHeading(ENEMY_GOAL_HEADING);
+		
+		wall1dist = bot.getUSX();
+		wall2dist = bot.getUSX();
 		xPos = 182 - wall2dist;
 		yPos = 243 - wall1dist;
-		location[0] = xPos;
-		location[1] = yPos;
 	}
 
 	public int getXLocation() {
