@@ -9,7 +9,6 @@ public class StateStriker extends State{
 	//--------------------------------------------------------------------------------------
 	public void execute(Robot robot) {
 		robot.followBall();
-		robot.nav.pointToHeading(Navigator.ENEMY_GOAL_HEADING);//number will be the north of the field.
 		robot.nav.pointToGoal();
 		//moveForward will be changed to kick. 
 		robot.moveForward();
