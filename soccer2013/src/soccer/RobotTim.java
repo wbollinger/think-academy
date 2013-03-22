@@ -1,5 +1,6 @@
 package soccer;
 
+import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
@@ -11,17 +12,18 @@ import lejos.nxt.addon.IRSeekerV2;
 public class RobotTim extends Robot {
 
 	TouchSensor touch = new TouchSensor(SensorPort.S2);
-	
 
 	public RobotTim(String name) {
 		super(name);
-		
+
 		MOTOR_POWER = 100;
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
-		
-		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+
+		// IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+		EIR = new EnhIRSeekerV2(SensorPort.S1);
+
 		compass = new CompassHTSensor(SensorPort.S2);
 		USY = new UltrasonicSensor(SensorPort.S3);
 		USX = new UltrasonicSensor(SensorPort.S4);
@@ -35,23 +37,29 @@ public class RobotTim extends Robot {
 
 		r = 2.5;
 		b = 0;
-		
-	
+
 	}
 
 	public void followBall() {
-
-		while (true) {
-			if (touch.isPressed()) {
+		int dir;
+		int str;
+		
+		while (Button.ENTER.isUp()) {
+			EIR.update();
+			dir = EIR.getDir();
+			str = EIR.getStrength();
+			io.debugln("" + dir);
+			io.debugln("" + str);
+			if (str > 310) {
 				stopAll();
 				return;
 			} else {
 
-				if (IR.getDirection() == 5) {
+				if (dir == 5) {
 					moveForward();
-				} else if (IR.getDirection() < 5) {
+				} else if (dir < 5) {
 					turnLeft();
-				} else if (IR.getDirection() > 5) {
+				} else if (dir > 5) {
 					turnRight();
 				} else {
 					stopAll();
