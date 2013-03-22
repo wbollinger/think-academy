@@ -229,7 +229,7 @@ public class Navigator {
 	}
 
 	protected int normalizeMeasurement(int measure) {
-		if (measure < 60) {
+		if (measure < 57) {
 			measure = measure + 60;
 		}
 		return measure;
