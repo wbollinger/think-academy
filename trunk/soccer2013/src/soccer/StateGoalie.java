@@ -25,6 +25,7 @@ public class StateGoalie extends State {
 		while (Button.ENTER.isUp()) {
 			if(i == 5) {
 				compass = (int) bot.compass.getDegrees();
+				USY = bot.USY.getDistance();
 				i = 0;
 			} else {
 				i++;
