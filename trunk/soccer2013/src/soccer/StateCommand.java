@@ -84,7 +84,8 @@ public class StateCommand extends State {
 		try {
 			if (firstTime) {
 				float volts = Battery.getVoltage();
-				robot.io.outStream.writeUTF(robot.name + " battery: " + volts + "\n");
+				robot.io.outStream.writeUTF(robot.name + " battery: " + volts
+						+ "\n");
 				if (volts < 6.3f) {
 					Sound.beep();
 					Sound.beep();
@@ -151,11 +152,14 @@ public class StateCommand extends State {
 				robot.nav.pointToGoal();
 			} else if (command.equalsIgnoreCase("getlocation")) {
 				robot.nav.getLocation();
-				debugln(robot.nav.getXLocation() + " " + robot.nav.getYLocation());
+				debugln(robot.nav.getXLocation() + " "
+						+ robot.nav.getYLocation());
 			} else if (command.equalsIgnoreCase("getusreading")) {
 				debugln("The y axis is reading " + robot.USY.getDistance());
 				debugln("The x axis is reading " + robot.USX.getDistance());
-				debugln("The x axis normalized is reading " + robot.nav.normalizeMeasurement(robot.USX.getDistance()));
+				debugln("The x axis normalized is reading "
+						+ robot.nav.normalizeMeasurement(robot.USX
+								.getDistance()));
 
 			} else if (command.equalsIgnoreCase("getcompreading")) {
 				debugln("The compass is reading " + robot.compass.getDegrees());
@@ -238,7 +242,8 @@ public class StateCommand extends State {
 					int power = parseInt(arg0);
 					robot.setPower(power);
 				}
-			} else if (command.equalsIgnoreCase("reverse") || command.equalsIgnoreCase("backward")) {
+			} else if (command.equalsIgnoreCase("reverse")
+					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
 					// robot.backward(distance);
@@ -297,7 +302,8 @@ public class StateCommand extends State {
 				robot.changeState(StateStriker.getInstance());
 			} else if (command.equalsIgnoreCase("StateGoalie")) {
 				robot.changeState(StateGoalie.getInstance());
-			} else if (command.equalsIgnoreCase("exit") | command.equalsIgnoreCase("quit")) {
+			} else if (command.equalsIgnoreCase("exit")
+					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
 				isCommandLoopRunning = false;
 				robot.changeState(StateExit.getInstance());
@@ -313,6 +319,12 @@ public class StateCommand extends State {
 				debugln("" + robot.compass.getDegrees());
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
+			} else if (command.equalsIgnoreCase("disableDebug")) {
+				robot.io.setUseDebug(false);
+			} else if (command.equalsIgnoreCase("enableDebug")) {
+				robot.io.setUseDebug(true);
+			} else if (command.equalsIgnoreCase("toggleDebug")) {
+				robot.io.setUseDebug(false);
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
 			} else if (command.equalsIgnoreCase("play")) {
@@ -343,7 +355,8 @@ public class StateCommand extends State {
 				// int button = Integer.parseInt(args[2]);
 				// TODO: Get joystick control working again
 				// robot.joystickControl(x, y, button);
-			} else if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("?")) {
+			} else if (command.equalsIgnoreCase("help")
+					|| command.equalsIgnoreCase("?")) {
 				debugln("\n Navigation Commands:");
 				debugln("'stop' (Stops all motors.)");
 				debugln("'right' (Rotates the robot clockwise.)");
