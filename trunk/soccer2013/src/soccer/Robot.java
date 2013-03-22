@@ -142,6 +142,20 @@ public class Robot {
 		return distance;
 
 	}
+	public int getUSY() {
+		int distance = 0;
+
+		for (int i = 0; i < 4; i++) {
+			distance = USX.getDistance();
+			if (distance != 255) {
+				return distance;
+			}
+
+		}
+
+		return distance;
+
+	}
 
 	public void tacoMeterTurn() {
 	}
