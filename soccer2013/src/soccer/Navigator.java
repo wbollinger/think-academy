@@ -6,6 +6,8 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
 
 public class Navigator {
+	
+	public static final float ENEMY_GOAL_HEADING = 306.0f;
 
 	protected Robot bot;
 	private float facingDegree;
@@ -169,13 +171,14 @@ public class Navigator {
 		bot.sleep(1000);
 		double angle = Math.atan2(91 - location[0], location[1]);
 		angle = (angle * 180) / Math.PI;
-		LCD.drawInt((int) angle, 3, 3);
+		bot.io.debugln(""+angle);
 		bot.io.debugln("Angle calculated");
-		if (angle > 0) {
-			bot.turnLeftprecise(angle);
-		} else {
-			bot.turnRightprecise(Math.abs(angle));
-		}
+		rotateTo((float)angle);
+//		if (angle > 0) {
+//			bot.turnLeftprecise(angle);
+//		} else {
+//			bot.turnRightprecise(Math.abs(angle));
+//		}
 		bot.io.debugln("turned");
 		bot.sleep(1000);
 

@@ -17,7 +17,8 @@ public class RobotChris extends Robot {
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
 		
-		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+		//IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+		EIR = new EnhIRSeekerV2(SensorPort.S1);
 		compass = new CompassHTSensor(SensorPort.S2);
 		USY = new UltrasonicSensor(SensorPort.S3);
 		USX = new UltrasonicSensor(SensorPort.S4);
@@ -32,28 +33,29 @@ public class RobotChris extends Robot {
 	}
 
 	public void followBall() {
-
-		while (true) {
-			
-			//will return on push of orange button. ONLY FOR DEBUG.
-			if(Button.ENTER.isDown()) {
+		int dir;
+		int str;
+		
+		while (Button.ENTER.isUp()) {
+			EIR.update();
+			dir = EIR.getDir();
+			str = EIR.getStrength();
+			io.debugln("" + dir);
+			io.debugln("" + str);
+			if (str > 310) {
 				stopAll();
 				return;
-			}
-
-			if (IR.getDirection() == 5) {
-				if (IR.getSensorValue(3) > 180) {
-					stopAll();
-					return;
-				} else {
-					moveForward();
-				}
-			} else if (IR.getDirection() < 5) {
-				turnLeft();
-			} else if (IR.getDirection() > 5) {
-				turnRight();
 			} else {
-				stopAll();
+
+				if (dir == 5) {
+					moveForward();
+				} else if (dir < 5) {
+					turnLeft();
+				} else if (dir > 5) {
+					turnRight();
+				} else {
+					stopAll();
+				}
 			}
 		}
 	}
