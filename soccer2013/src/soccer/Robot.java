@@ -13,7 +13,7 @@ import lejos.nxt.addon.IRSeekerV2;
 public class Robot {
 
 	protected int MOTOR_POWER = 100;
-	
+
 	State current_state;
 	boolean exit;
 
@@ -23,7 +23,8 @@ public class Robot {
 	protected static double b;
 
 	public final static Vector2D F0 = new Vector2D(-1.0, 0.0);
-	public final static Vector2D F1 = new Vector2D(0.5, -1.0 * Math.sqrt(3) / 2.0);
+	public final static Vector2D F1 = new Vector2D(0.5, -1.0 * Math.sqrt(3)
+			/ 2.0);
 	public final static Vector2D F2 = new Vector2D(0.5, Math.sqrt(3) / 2.0);
 
 	public Navigator nav;
@@ -31,7 +32,7 @@ public class Robot {
 	NXTMotor motA;
 	NXTMotor motB;
 	NXTMotor motC;
-	
+
 	NXTRegulatedMotor regMotA;
 	NXTRegulatedMotor regMotB;
 	NXTRegulatedMotor regMotC;
@@ -83,12 +84,12 @@ public class Robot {
 
 	public void followBall() {
 	}
-	
+
 	public double pointToGoal() {
 		return 0.0;
 	}
-	
-	public void setPower(int power){
+
+	public void setPower(int power) {
 		MOTOR_POWER = power;
 	}
 
@@ -104,12 +105,13 @@ public class Robot {
 	public void stopAll() {
 	}
 
-	public void floatAll(){
-		
+	public void floatAll() {
+
 	}
+
 	public void turnLeft() {
 	}
-	
+
 	public void turnLeftprecise(double degrees) {
 	}
 
@@ -118,14 +120,29 @@ public class Robot {
 
 	public void turnRight() {
 	}
-	
+
 	public void turnRightprecise(double degrees) {
 	}
 
 	public void turnRight(int time) {
 	}
-	
-	public void tacoMeterTurn(){
+
+	public int getUSX() {
+		int distance = 0;
+
+		for (int i = 0; i < 4; i++) {
+			distance = USX.getDistance();
+			if (distance != 255) {
+				return distance;
+			}
+
+		}
+
+		return distance;
+
+	}
+
+	public void tacoMeterTurn() {
 	}
 
 	public void run() {

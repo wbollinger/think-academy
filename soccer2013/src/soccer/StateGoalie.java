@@ -53,12 +53,12 @@ public class StateGoalie extends State {
 			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
 			} else if ((IRDir < 5)
-					&& (bot.nav.normalizeMeasurement(bot.USX.getDistance()) < 106)) {
+					&& (bot.nav.normalizeMeasurement(bot.getUSX()) < 106)) {
 				// moves left, unless at edge of goal
 				// bot.io.debugln("Left");
 				bot.nav.moveDir(180);
 			} else if ((IRDir > 5)
-					&& (bot.nav.normalizeMeasurement(bot.USX.getDistance()) > 75)) {
+					&& (bot.nav.normalizeMeasurement(bot.getUSX()) > 75)) {
 				// moves right, unless at edge of goal
 				// bot.io.debugln("Right");
 				bot.nav.moveDir(0);
