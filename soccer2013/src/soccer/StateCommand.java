@@ -150,7 +150,7 @@ public class StateCommand extends State {
 				debugln("called");
 				robot.nav.pointToGoal();
 			} else if (command.equalsIgnoreCase("getlocation")) {
-				robot.nav.setLocation();
+				robot.nav.getLocation();
 				debugln(robot.nav.getXLocation() + " " + robot.nav.getYLocation());
 			} else if (command.equalsIgnoreCase("getusreading")) {
 				debugln("The y axis is reading " + robot.USY.getDistance());
