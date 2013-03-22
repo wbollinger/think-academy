@@ -40,6 +40,7 @@ public class Robot {
 	BrickIO io;
 
 	public IRSeekerV2 IR;
+	public EnhIRSeekerV2 EIR;
 	public CompassHTSensor compass;
 	public UltrasonicSensor USY;
 	public UltrasonicSensor USX;

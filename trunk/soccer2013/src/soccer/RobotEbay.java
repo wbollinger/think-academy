@@ -2,6 +2,7 @@ package soccer;
 
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
+import lejos.nxt.SensorPort;
 
 public class RobotEbay extends Robot {
 
@@ -11,6 +12,8 @@ public class RobotEbay extends Robot {
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
+
+		EIR = new EnhIRSeekerV2(SensorPort.S1);
 
 		motA.setPower(50);
 		motB.setPower(50);

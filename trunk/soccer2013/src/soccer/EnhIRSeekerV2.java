@@ -20,25 +20,26 @@
 //            To get approximate direction in degrees use:
 //                 (dir - 5) * 30
 //   strength A single strength value based on the strength of the
-//            IR signal.
+//            IR signal.  In DC mode the strength may range up to
+//            values of 390->400
 //
 //
 package soccer;
 
 import lejos.nxt.I2CSensor;
 import lejos.nxt.I2CPort;
-//import lejos.nxt.addon.IRSeekerV2;
 
 public class EnhIRSeekerV2 extends I2CSensor {
 
 	public static final byte address = 0x10;
-	byte[] buf = new byte[1];
-	byte[] respBuf = new byte[6];
-	public static final float noAngle = Float.NaN;
+	
+	byte[] byteBuf = new byte[6];  // Java treats bytes as "signed"
+	int[]  respBuf = new int[6];   // convert them to unsigned ints
 
 	// the values calculated from last sensor query
 	int dir;
 	int strength;
+	int mode;
 
 	public EnhIRSeekerV2(I2CPort port) {
 		super(port, address, I2CPort.STANDARD_MODE, TYPE_LOWSPEED);
@@ -50,6 +51,15 @@ public class EnhIRSeekerV2 extends I2CSensor {
 
 	public int getStrength() {
 		return strength;
+	}
+
+	/**
+	 * Check if last IR seeker measurement was DC or AC mode
+	 * 
+	 * @return 1 for DC mode (close), 2 for AC mode (far)
+	 */
+	public int getMode() {
+		return mode;
 	}
 
 	public static void sleep(int time) {
@@ -67,19 +77,21 @@ public class EnhIRSeekerV2 extends I2CSensor {
 
 		dir = 0;
 		strength = 0;
+		mode = -1;
 
 		// Read DC signal strengths (skip the dir).  6 bytes of data
 		int register = 0x43; // DC
-		rc = getData(register, respBuf, 6); // I2CBytes(port, cmdBuf, cResp,
-												// respBuf);
+		rc = getData(register, byteBuf, 6);
 		if (rc != 0) {
 			return;
 		}
 
-		// Find the max DC sig strength
+		// Make values unsigned and find the max DC sig strength
+		respBuf[0] = 0xFF & byteBuf[0];
+		respBuf[5] = 0xFF & byteBuf[5];
 		iMax = 0;
-
 		for (i = 1; i < 5; i++) {
+			respBuf[i] = 0xFF & byteBuf[i];
 			if (respBuf[i] > respBuf[iMax])
 				iMax = i;
 		}
@@ -108,23 +120,24 @@ public class EnhIRSeekerV2 extends I2CSensor {
 			dcStr = (dcSigSum / dcStr + dcStr) / 2; // sqrt approx
 		}
 		strength = (int) dcStr;
+		mode = 1;
 
 		// Decide if using DC strength or should read and use AC strength
 		if (strength <= 200) {
 			// Use AC Dir
 			dir = 0;
 			strength = 0;
-			// cmdBuf[1] = 0x49; // Recycle rest of cmdBuf from the DC read
-			// operation
+			mode = 2;
+			
+			// Reuse same buf from the DC read operation
 			register = 0x49;
-			rc = getData(register, respBuf, 6); // I2CBytes(port, cmdBuf,
-											    // cResp, respBuf);
+			rc = getData(register, byteBuf, 6);
 			if (rc == 0) {
-				dir = respBuf[0];
+				dir = 0xFF & byteBuf[0];
 				// Sum the sensor elements to get strength
 				if (dir > 0) {
 					for (i = 1; i <= 5; i++)
-						strength += respBuf[i];
+						strength += (0xFF & byteBuf[i]);
 				}
 			}
 		}
