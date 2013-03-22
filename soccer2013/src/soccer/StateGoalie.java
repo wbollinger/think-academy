@@ -58,7 +58,7 @@ public class StateGoalie extends State {
 				// bot.io.debugln("Left");
 				bot.nav.moveDir(180);
 			} else if ((IRDir > 5)
-					&& (bot.nav.normalizeMeasurement(bot.getUSX()) > 75)) {
+					&& (bot.nav.normalizeMeasurement(bot.getUSX()) > 64)) {
 				// moves right, unless at edge of goal
 				// bot.io.debugln("Right");
 				bot.nav.moveDir(0);
