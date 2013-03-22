@@ -15,14 +15,13 @@ public class StateGoalie extends State {
 	@Override
 	public void execute(Robot bot) {
 		int i = 0;
-		double heading = bot.compass.getDegrees();
 		int compass = (int) bot.compass.getDegrees();;
 		int IRDir;
 		int USY = bot.USY.getDistance();
 		int USX;
 
-		bot.io.debugln("" + heading);
 		while (Button.ENTER.isUp()) {
+			bot.EIR.update();
 			if(i == 5) {
 				compass = (int) bot.compass.getDegrees();
 				USY = bot.USY.getDistance();
@@ -32,8 +31,8 @@ public class StateGoalie extends State {
 			}
 			
 
-			if (!(compass + 5 > heading && compass - 5 < heading)) {
-				bot.nav.pointToHeading((float) heading);
+			if (!(compass + 5 > Navigator.ENEMY_GOAL_HEADING && compass - 5 < Navigator.ENEMY_GOAL_HEADING)) {
+				bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL_HEADING);
 			}
 
 			if (USY > 30) {
@@ -48,7 +47,7 @@ public class StateGoalie extends State {
 				bot.floatAll();
 			}
 
-			IRDir = bot.IR.getDirection();
+			IRDir = bot.EIR.getDir();
 
 			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
