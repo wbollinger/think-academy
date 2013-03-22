@@ -36,13 +36,13 @@ public class StateGoalie extends State {
 				bot.nav.pointToHeading((float) heading);
 			}
 
-			if (USY > 20) {
-				while (bot.USY.getDistance() > 20) {
+			if (USY > 30) {
+				while (bot.USY.getDistance() > 30) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
-			} else if (bot.USY.getDistance() < 15) {
-				while (bot.USY.getDistance() < 15) {
+			} else if (bot.USY.getDistance() < 25) {
+				while (bot.USY.getDistance() < 25) {
 					bot.nav.moveDir(90);
 				}
 				bot.floatAll();
