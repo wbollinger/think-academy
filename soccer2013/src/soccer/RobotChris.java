@@ -101,5 +101,15 @@ public class RobotChris extends Robot {
 		motB.backward();
 		motC.backward();
 	}
+	public void moveArcRight() {
+		motA.setPower(MOTOR_POWER);
+		motA.forward();
+
+	}
+	public void moveArcLeft() {
+		motA.setPower(MOTOR_POWER);
+		motA.backward();
+
+	}
 
 }

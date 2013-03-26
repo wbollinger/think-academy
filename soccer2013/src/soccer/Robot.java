@@ -128,6 +128,13 @@ public class Robot {
 	public void turnRight(int time) {
 	}
 
+	public void moveArcRight() {
+
+	}
+	public void moveArcLeft() {
+
+	}
+
 	public int getUSX() {
 		int distance = 0;
 
@@ -142,6 +149,7 @@ public class Robot {
 		return distance;
 
 	}
+
 	public int getUSY() {
 		int distance = 0;
 

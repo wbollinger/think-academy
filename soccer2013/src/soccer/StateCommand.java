@@ -205,9 +205,13 @@ public class StateCommand extends State {
 					double distance = parseDouble(arg0);
 					// robot.forward(distance);
 					return;
-				}
+				} 
 				robot.moveForward();
-			} else if (command.equalsIgnoreCase("movedir")) {
+			} else if (command.equalsIgnoreCase("moveArcR")) {
+				robot.moveArcRight();
+			}else if (command.equalsIgnoreCase("moveArcL")) {
+				robot.moveArcLeft();
+			}else if (command.equalsIgnoreCase("movedir")) {
 				if (args.length == 2) {
 					double dir = parseDouble(arg0);
 					int scale = parseInt(arg1);

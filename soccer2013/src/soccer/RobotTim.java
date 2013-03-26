@@ -28,9 +28,9 @@ public class RobotTim extends Robot {
 		USY = new UltrasonicSensor(SensorPort.S3);
 		USX = new UltrasonicSensor(SensorPort.S4);
 
-		motA.setPower(50);
-		motB.setPower(50);
-		motC.setPower(50);
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
 		motA.stop();
 		motB.stop();
 		motC.stop();
@@ -43,7 +43,7 @@ public class RobotTim extends Robot {
 	public void followBall() {
 		int dir;
 		int str;
-		
+
 		while (Button.ENTER.isUp()) {
 			EIR.update();
 			dir = EIR.getDir();
@@ -172,6 +172,17 @@ public class RobotTim extends Robot {
 		motA.stop();
 		motB.stop();
 		motC.stop();
+	}
+
+	public void moveArcRight() {
+		motA.setPower(MOTOR_POWER);
+		motA.forward();
+
+	}
+	public void moveArcLeft() {
+		motA.setPower(MOTOR_POWER);
+		motA.backward();
+
 	}
 
 }
