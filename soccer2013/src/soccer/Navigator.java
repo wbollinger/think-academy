@@ -6,7 +6,7 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
 
 public class Navigator {
-	
+
 	public static final float ENEMY_GOAL_HEADING = 306.0f;
 
 	protected Robot bot;
@@ -15,7 +15,7 @@ public class Navigator {
 	private int lastTachoA;
 	private int lastTachoB;
 	private int lastTachoC;
-	
+
 	private int xPos;
 	private int yPos;
 
@@ -75,7 +75,20 @@ public class Navigator {
 
 		rotateTo(pointToDegree);
 	}
-	
+
+	public void pointToHeadingArc(float heading) {
+		facingDegree = bot.compass.getDegrees();
+		facingDegree = (float) normalizeAngle(facingDegree);
+		heading = (float) normalizeAngle(heading);
+		// bot.io.debugln("Heading is: " + heading);
+		// bot.io.debugln("Robot is facing: " + facingDegree);
+		float pointToDegree = heading - facingDegree;
+		pointToDegree = (float) normalizeAngle(pointToDegree);
+
+		// bot.io.debugln("Point to: " + pointToDegree);
+
+		arcTo(pointToDegree);
+	}
 
 	public void rotateTo(float turnDegree) {
 
@@ -90,6 +103,37 @@ public class Navigator {
 			bot.turnRight();
 		} else {
 			bot.turnLeft();
+
+		}
+
+		while (true) {
+
+			facingDegree = bot.compass.getDegrees();
+			facingDegree = (float) normalizeAngle(facingDegree);
+			// bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
+			// + normalize(targetDegree - facingDegree));
+
+			if (targetDegree < facingDegree + 5
+					&& targetDegree > facingDegree - 5) {
+				break;
+			}
+		}
+		bot.stopAll();
+	}
+
+	public void arcTo(float turnDegree) {
+
+		facingDegree = bot.compass.getDegrees();
+		float targetDegree = facingDegree + turnDegree;
+		facingDegree = (float) normalizeAngle(facingDegree);
+		// bot.io.debugln("First Heading: " + facingDegree);
+		targetDegree = (float) normalizeAngle(targetDegree);
+		// bot.io.debugln("Target: " + targetDegree);
+
+		if (turnDegree > 0) {
+			bot.moveArcRight();
+		} else {
+			bot.moveArcLeft();
 
 		}
 
@@ -170,34 +214,30 @@ public class Navigator {
 
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
+		bot.nav.pointToHeadingArc(ENEMY_GOAL_HEADING);
 		getLocation();
 		bot.sleep(1000);
 		double angle = Math.atan2(91 - xPos, yPos);
 		angle = (angle * 180) / Math.PI;
-		bot.io.debugln(""+angle);
+		bot.io.debugln("" + angle);
 		bot.io.debugln("Angle calculated");
-		rotateTo((float)angle);
-//		if (angle > 0) {
-//			bot.turnLeftprecise(angle);
-//		} else {
-//			bot.turnRightprecise(Math.abs(angle));
-//		}
+		rotateTo((float) angle);
+		// if (angle > 0) {
+		// bot.turnLeftprecise(angle);
+		// } else {
+		// bot.turnRightprecise(Math.abs(angle));
+		// }
 		bot.io.debugln("turned");
 		bot.sleep(1000);
 
-		return Math.sqrt(Math.pow(yPos, 2)
-				+ Math.pow(91 - xPos, 2));
+		return Math.sqrt(Math.pow(yPos, 2) + Math.pow(91 - xPos, 2));
 	}
-	
-	
 
 	public void getLocation() {
-		
+
 		int wall1dist;
 		int wall2dist;
-		
-		pointToHeading(ENEMY_GOAL_HEADING);
-		
+
 		wall1dist = bot.getUSX();
 		wall2dist = bot.getUSY();
 		xPos = 182 - wall2dist;

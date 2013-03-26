@@ -52,6 +52,7 @@ public class RobotTim extends Robot {
 			io.debugln("" + str);
 			if (str > 310) {
 				stopAll();
+				forward(200);
 				return;
 			} else {
 
