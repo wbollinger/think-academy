@@ -42,8 +42,9 @@ public class RobotChris extends Robot {
 			str = EIR.getStrength();
 			io.debugln("" + dir);
 			io.debugln("" + str);
-			if (str > 310) {
+			if (str > 350) {
 				stopAll();
+				forward(200);
 				return;
 			} else {
 
@@ -67,6 +68,21 @@ public class RobotChris extends Robot {
 		motC.forward();
 		motB.backward();
 		motA.stop();
+	}
+	
+	public void forward(int time) {
+
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
+
+		motA.backward();
+		motB.forward();
+		motC.stop();
+		sleep(time);
+		motA.stop();
+		motB.stop();
+		motC.stop();
 	}
 	
 	public void moveBackward() {
