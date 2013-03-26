@@ -14,13 +14,14 @@ public class StateGoalie extends State {
 
 	@Override
 	public void execute(Robot bot) {
-		int i = 0;
-		int compass = (int) bot.compass.getDegrees();;
-		int IRDir;
-		int USY = bot.USY.getDistance();
-		int USX;
+		int i = 5;
+		int compass = 0;
+		int IRDir = 0;
+		int USY = 0;
+		int USX = 0;
 
 		while (Button.ENTER.isUp()) {
+			USX = bot.getUSX();
 			bot.EIR.update();
 			if(i == 5) {
 				compass = (int) bot.compass.getDegrees();
@@ -40,7 +41,7 @@ public class StateGoalie extends State {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
-			} else if (bot.USY.getDistance() < 25) {
+			} else if (USY < 25) {
 				while (bot.USY.getDistance() < 25) {
 					bot.nav.moveDir(90);
 				}
@@ -52,17 +53,18 @@ public class StateGoalie extends State {
 			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
 			} else if ((IRDir < 5)
-					&& (bot.nav.normalizeMeasurement(bot.getUSX()) < 106)) {
+					&& (bot.nav.normalizeMeasurement(USX) < 106)) {
 				// moves left, unless at edge of goal
 				// bot.io.debugln("Left");
 				bot.nav.moveDir(180);
 			} else if ((IRDir > 5)
-					&& (bot.nav.normalizeMeasurement(bot.getUSX()) > 64)) {
+					&& (bot.nav.normalizeMeasurement(USX) > 64)) {
 				// moves right, unless at edge of goal
 				// bot.io.debugln("Right");
 				bot.nav.moveDir(0);
 			}
 		}
+		
 		bot.changeState(StateCommand.getInstance());
 
 	}
@@ -72,7 +74,8 @@ public class StateGoalie extends State {
 	}
 
 	@Override
-	public void exit(Robot r) {
+	public void exit(Robot bot) {
+		bot.stopAll();
 		// TODO Auto-generated method stub
 
 	}
