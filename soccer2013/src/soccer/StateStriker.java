@@ -14,6 +14,7 @@ public class StateStriker extends State{
 		robot.moveForward();
 		while(Button.ENTER.isUp())
 			;
+		robot.stopAll();
 		robot.changeState(StateCommand.getInstance());
 	}
 	
