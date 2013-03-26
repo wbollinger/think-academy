@@ -31,8 +31,8 @@ public class StateGoalie extends State {
 			}
 			
 
-			if (!(compass + 5 > Navigator.ENEMY_GOAL_HEADING && compass - 5 < Navigator.ENEMY_GOAL_HEADING)) {
-				bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL_HEADING);
+			if (!(compass + 5 > Navigator.ALLY_GOAL_HEADING && compass - 5 < Navigator.ALLY_GOAL_HEADING)) {
+				bot.nav.pointToHeading((float) Navigator.ALLY_GOAL_HEADING);
 			}
 
 			if (USY > 30) {
