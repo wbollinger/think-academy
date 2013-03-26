@@ -36,7 +36,7 @@ public class Navigator {
 
 		double scale = 100.0 / max;
 
-		bot.io.debugln("" + Double.toString(scale));
+		//bbot.io.debugln("" + Double.toString(scale));
 
 		bot.motA.setPower((int) Math.round(w0 * scale));
 		bot.motB.setPower((int) Math.round(w1 * scale));
@@ -99,9 +99,12 @@ public class Navigator {
 		// bot.io.debugln("First Heading: " + facingDegree);
 		targetDegree = (float) normalizeAngle(targetDegree);
 		// bot.io.debugln("Target: " + targetDegree);
-
+		if (bot.name.equals("Tim")) {
+			bot.setPower(85);
+		}
 		if (turnDegree > 0) {
 			bot.turnRight();
+
 		} else {
 			bot.turnLeft();
 
@@ -277,7 +280,7 @@ public class Navigator {
 	}
 
 	protected int normalizeMeasurement(int measure) {
-		if (measure < 57) {
+		if (measure < 59) {
 			measure = measure + 60;
 		}
 		return measure;
