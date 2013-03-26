@@ -6,6 +6,7 @@ import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
@@ -131,6 +132,7 @@ public class Robot {
 	public void moveArcRight() {
 
 	}
+
 	public void moveArcLeft() {
 
 	}
@@ -220,4 +222,33 @@ public class Robot {
 		current_state.enter(this);
 	}
 
+	public void joystickControl(double x, double y, int button) {
+	
+		if (button == 128) {
+			
+		} else if (button == 64) {
+			
+		} else {
+			
+		}
+		if (button == 16) {
+			
+		} else if (button == 32) {
+			
+		}
+		if (button == 4096) {
+			
+		} else if (button == 16384) {
+			
+		}
+		if (button == 1) {
+			Sound.playTone(220, 100);
+		} else if (button == 2) {
+			Sound.playTone(330, 100);
+		} else if (button == 4) {
+			Sound.playTone(440, 100);
+		} else if (button == 8) {
+			Sound.playTone(550, 100);
+		}
+	}
 }
