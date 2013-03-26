@@ -161,8 +161,6 @@ public class StateCommand extends State {
 						+ robot.nav.normalizeMeasurement(robot.USX
 								.getDistance()));
 
-			} else if (command.equalsIgnoreCase("getcompreading")) {
-				debugln("The compass is reading " + robot.compass.getDegrees());
 			} else if (command.equalsIgnoreCase("getIRreading")) {
 				int[] values;
 				while (Button.ENTER.isUp()) {
@@ -242,7 +240,7 @@ public class StateCommand extends State {
 					double rotate = parseDouble(arg0);
 					robot.nav.pointToHeadingArc((float) rotate);
 				}
-			} else if (command.equalsIgnoreCase("calibrate")) {
+			} else if (command.equalsIgnoreCase("calibrateCompass")) {
 				robot.nav.calibrate();
 			} else if (command.equalsIgnoreCase("setPower")) {
 				if (args.length > 0) {
@@ -295,6 +293,13 @@ public class StateCommand extends State {
 				 * 
 				 * return; }
 				 */
+			} else if (command.equalsIgnoreCase("joydata")) {
+				showPrompt = false;
+				//debugln("joystick command detected");
+				double x = Double.parseDouble(args[0]);
+				double y = Double.parseDouble(args[1]);
+				int button = Integer.parseInt(args[2]);
+				robot.joystickControl(x, y, button);
 			} else if (command.equalsIgnoreCase("bat")) {
 				debug("Battery: " + Battery.getVoltage() + "\n");
 			} else if (command.equalsIgnoreCase("echo")) {
@@ -364,7 +369,7 @@ public class StateCommand extends State {
 				// robot.joystickControl(x, y, button);
 			} else if (command.equalsIgnoreCase("help")
 					|| command.equalsIgnoreCase("?")) {
-				debugln("\n Navigation Commands:");
+				debugln("\n Movement Commands:");
 				debugln("'stop' (Stops all motors.)");
 				debugln("'right' (Rotates the robot clockwise.)");
 				debugln("'rightprecise' (Rotates the robot clockwise for desired degrees.)");
@@ -372,28 +377,37 @@ public class StateCommand extends State {
 				debugln("'leftprecise' (Rotates the robot counterclockwise for desired degrees.)");
 				debugln("'forward' (Moves the robot forwardr.)");
 				debugln("'backward' or 'reverse' (Moves the robot backward.)");
-				debugln("'calibrate' (Starts calibration. End the calibration by pressoing the enter button.)");
-				debugln("'heading' (Rotates the robot to a fixed degree.)");
 				debugln("'rotate [degree]' (Rotates to a degree. Positve numbers turn right while negitve numbers turn left.)");
 				debugln("'pointToGoal' (Points the robot towards the goal.)");
 				debugln("'moveDir [direction], [speed]' (Moves the robot in any direction 0-359 at a set speed.)");
-				debugln("'followBall' (Follows the IR ball [currently buggy!]) \n");
-				debugln("'getcompreading' (Displays what the compass is reading.)");
+				debugln("'heading' (Rotates the robot to a fixed degree.)");
+				debugln("'followBall' (Follows the IR ball) \n");
+				
+				debugln("/n Sensor Commands:");
+				debugln("'calibrateCompass' (Starts calibration. End the calibration by pressoing the enter button.)");
+				debugln("'comp' (Displays what the compass is reading.)");
 				debugln("'getusreading' (Displays what the Ultrasonic is reading.)");
-				debugln("System Check Commands:");
+				debugln("'getIRreading' (Displays what the IR SeekerV2 is reading without modification)");
+				debugln("'ir' (Displays IR Seeker values w/ improved processing)");
+				
+				debugln("System Commands:");
 				debugln("'bat' (Displays the current battery voltage.)");
 				debugln("'mem' (Displays the amount of free, total, and used memory in the NXT Brick.)");
 				debugln("'debug' (Not implemented)");
-				debugln("'prop' (Displays basic properties of the NXT Brick such as name and volume.) \n");
-				debugln("State Commands:");
-				debugln("'quit' or 'exit' (Exits the current state.)");
-				debugln("'StateStriker' (Changes state to StateStriker.)");
-				debugln("'StateGoalie' (Changes state to StateGoalie.) \n");
-				debugln("Misc. Commands:");
+				
 				debugln("'shutdown' (Turns the NXT off.)");
 				debugln("'prompt' (Toggles the prompt.)");
+				debugln("'quit' or 'exit' (Ends the program.)");
 				debugln("'play [tone] [length]' (Plays a note of the specified tone and length.)");
+				
+				debugln("State Commands:");
+				debugln("'StateStriker' (Changes state to StateStriker.)");
+				debugln("'StateGoalie' (Changes state to StateGoalie.) \n");
+				
+				debugln("Misc. Commands:");
+				debugln("'prop' (Displays basic properties of the NXT Brick such as name and volume.) \n");
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
+				
 			} else {
 				debugln("?");
 				// // 4.5 Check if it is a filename:
