@@ -75,6 +75,7 @@ public class Navigator {
 
 		rotateTo(pointToDegree);
 	}
+	
 
 	public void rotateTo(float turnDegree) {
 
@@ -187,6 +188,8 @@ public class Navigator {
 		return Math.sqrt(Math.pow(yPos, 2)
 				+ Math.pow(91 - xPos, 2));
 	}
+	
+	
 
 	public void getLocation() {
 		
