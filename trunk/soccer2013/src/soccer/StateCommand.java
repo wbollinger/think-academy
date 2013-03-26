@@ -198,7 +198,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("leftprecise")) {
 				double degrees = parseDouble(arg0);
 				robot.turnLeftprecise(degrees);
-			} else if (command.equalsIgnoreCase("follow_ball")) {
+			} else if (command.equalsIgnoreCase("followBall")) {
 				robot.followBall();
 			} else if (command.equalsIgnoreCase("forward")) {
 				if (args.length > 0) {
@@ -232,12 +232,15 @@ public class StateCommand extends State {
 
 			} else if (command.equalsIgnoreCase("strafe")) {
 				robot.nav.strafe();
-			}
-
-			else if (command.equalsIgnoreCase("heading")) {
+			} else if (command.equalsIgnoreCase("heading")) {
 				if (args.length > 0) {
 					double rotate = parseDouble(arg0);
 					robot.nav.pointToHeading((float) rotate);
+				}
+			} else if (command.equalsIgnoreCase("arcHeading")) {
+				if (args.length > 0) {
+					double rotate = parseDouble(arg0);
+					robot.nav.pointToHeadingArc((float) rotate);
 				}
 			} else if (command.equalsIgnoreCase("calibrate")) {
 				robot.nav.calibrate();
@@ -319,7 +322,7 @@ public class StateCommand extends State {
 				debug(File.freeMemory() + " disk\n");
 			} else if (command.equalsIgnoreCase("prompt")) {
 				showPrompt = !showPrompt;
-			} else if (command.equalsIgnoreCase("readcomp")) {
+			} else if (command.equalsIgnoreCase("comp")) {
 				debugln("" + robot.compass.getDegrees());
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
@@ -374,7 +377,7 @@ public class StateCommand extends State {
 				debugln("'rotate [degree]' (Rotates to a degree. Positve numbers turn right while negitve numbers turn left.)");
 				debugln("'pointToGoal' (Points the robot towards the goal.)");
 				debugln("'moveDir [direction], [speed]' (Moves the robot in any direction 0-359 at a set speed.)");
-				debugln("'follow_ball' (Follows the IR ball [currently buggy!]) \n");
+				debugln("'followBall' (Follows the IR ball [currently buggy!]) \n");
 				debugln("'getcompreading' (Displays what the compass is reading.)");
 				debugln("'getusreading' (Displays what the Ultrasonic is reading.)");
 				debugln("System Check Commands:");
