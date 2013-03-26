@@ -44,7 +44,7 @@ public class RobotChris extends Robot {
 			io.debugln("" + str);
 			if (str > 350) {
 				stopAll();
-				forward(200);
+				forward(300);
 				return;
 			} else {
 
@@ -71,14 +71,8 @@ public class RobotChris extends Robot {
 	}
 	
 	public void forward(int time) {
-
-		motA.setPower(MOTOR_POWER);
-		motB.setPower(MOTOR_POWER);
-		motC.setPower(MOTOR_POWER);
-
-		motA.backward();
-		motB.forward();
-		motC.stop();
+		moveForward();
+		
 		sleep(time);
 		motA.stop();
 		motB.stop();

@@ -214,7 +214,6 @@ public class Navigator {
 
 	public double pointToGoal() {
 		bot.io.debugln("went into pointToGoal");
-		bot.nav.pointToHeadingArc(ENEMY_GOAL_HEADING);
 		getLocation();
 		bot.sleep(1000);
 		double angle = Math.atan2(91 - xPos, yPos);
