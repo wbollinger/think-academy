@@ -3,7 +3,7 @@
 	<name>ardurcj</name>
 	<comment></comment>
 	<projects>
-		<project>Arduino_Duemilanove_w__ATmega328</project>
+		<project>Arduino_Uno</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
