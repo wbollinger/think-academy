@@ -19,7 +19,7 @@
  *  Lego NXT IIC operates at approximately 9600Baud, but as we are  
  *  the slave we don't have to do anything specific for this.
  *  RobotC can support faster IIC operation, this device can
- *  work with the "sensorI2CCustomFast" configuraiton.
+ *  work with the "sensorI2CCustomFast" configuration.
  *
  *  All messages start with our slave address which is defined
  *  by ARDUNXT_I2C_ADDRESS (the twi4nxt.c code takes care
@@ -36,7 +36,7 @@
  *  The NXT reads and writes data from/to memory 
  *  mapped registers, using an 8 bit register address.
  *  Multiple bytes can be read or written at a time, with
- *  sutiable NXT code, as the register address is automatically
+ *  suitable NXT code, as the register address is automatically
  *  incremented after each byte has been read/written.
  *  While a data transfer is in progress the shared memory is not
  *  updated by the ArduNXT, this is to avoid any multi-byte
@@ -48,7 +48,7 @@
  *  this code is very efficient - it wastes no time in loops.
  *
  *  Constant strings for the Device, Manufacturer and version
- *  which can be read by the NXT can be customised.
+ *  which can be read by the NXT can be customized.
  *
  ************************************************************/
 

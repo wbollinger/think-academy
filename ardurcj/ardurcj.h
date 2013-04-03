@@ -6,7 +6,7 @@
 
 #ifndef ardurcj_H_
 #define ardurcj_H_
-#include "Arduino.h"
+#include <Arduino.h>
 //add your includes for the project ardurcj here
 
 // Function Prototypes for integration with twi4nxt code
