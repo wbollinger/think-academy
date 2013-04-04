@@ -14,8 +14,10 @@ public class RobotJake extends Robot {
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
-		IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
+		
+		arduino = new ArduSoccer(SensorPort.S1);
 		compass = new CompassHTSensor(SensorPort.S2);
+		IR = new IRSeekerV2(SensorPort.S3, IRSeekerV2.Mode.AC);
 
 		motA.setPower(50);
 		motB.setPower(50);
