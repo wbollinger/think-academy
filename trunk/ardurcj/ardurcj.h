@@ -26,7 +26,7 @@
 #define NUM_SERVO_CH		(4U)		   // total number of servo output channels
 //#define ATTINY_IN_USE                    // If you do not hold the ATTiny in reset, on the Ardupilot prototype,
                                            // then it is in contrl of the multiplexer
-#define MINDSENSORS_NXT_SERVO_COMPATIBLE   // If you want FULL compatibility with Mindsensors NXT Servo Sensor (I2C address and Servo Position Readback)
+//#define MINDSENSORS_NXT_SERVO_COMPATIBLE   // If you want FULL compatibility with Mindsensors NXT Servo Sensor (I2C address and Servo Position Readback)
                                            // Some of the code has been migrated from a previous project which uses the following type definitions:
 typedef signed char INT_8;
 typedef unsigned char UINT_8;

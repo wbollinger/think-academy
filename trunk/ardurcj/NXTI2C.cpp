@@ -523,7 +523,7 @@ static void NXTUpdateValues(void)
 		if (g_DigitalFlags[i].bUpdate) {
 			// Digital value (may) have been updated
 			m_NXTInterfaceData.Fields.i8DigitalValue[i] = (INT_8) Digital_getChannel(i);
-			g_AnalogFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
+			g_DigitalFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
 		}
 
 	}
