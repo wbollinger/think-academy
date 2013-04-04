@@ -81,7 +81,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 	private LCDDisplay lcd;
 	
 	Joystick joy;
-	JoystickPoller poll;
+	KeyboardPoller poll;
 
 	/**
 	 * Constructor builds GUI
@@ -104,7 +104,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 
 		cmdConn = new NXTConnector();
 		rconComm = new ConsoleViewComms(ui, debug, true);
-		joy = Joystick.createInstance();
+		//joy = Joystick.createInstance();
 		
 	}
 
@@ -218,7 +218,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 							theScrollPane.setViewportView(theConsole);
 							if (useJoystick) {
 								try {
-									poll = new JoystickPoller(joy, btOut);
+									poll = new KeyboardPoller(btOut);
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
