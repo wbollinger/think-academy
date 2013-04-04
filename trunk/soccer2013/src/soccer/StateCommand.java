@@ -84,8 +84,7 @@ public class StateCommand extends State {
 		try {
 			if (firstTime) {
 				float volts = Battery.getVoltage();
-				robot.io.outStream.writeUTF(robot.name + " battery: " + volts
-						+ "\n");
+				robot.io.outStream.writeUTF(robot.name + " battery: " + volts + "\n");
 				if (volts < 6.3f) {
 					Sound.beep();
 					Sound.beep();
@@ -152,14 +151,11 @@ public class StateCommand extends State {
 				robot.nav.pointToGoal();
 			} else if (command.equalsIgnoreCase("getlocation")) {
 				robot.nav.getLocation();
-				debugln(robot.nav.getXLocation() + " "
-						+ robot.nav.getYLocation());
+				debugln(robot.nav.getXLocation() + " " + robot.nav.getYLocation());
 			} else if (command.equalsIgnoreCase("getusreading")) {
 				debugln("The y axis is reading " + robot.USY.getDistance());
 				debugln("The x axis is reading " + robot.USX.getDistance());
-				debugln("The x axis normalized is reading "
-						+ robot.nav.normalizeMeasurement(robot.USX
-								.getDistance()));
+				debugln("The x axis normalized is reading " + robot.nav.normalizeMeasurement(robot.USX.getDistance()));
 
 			} else if (command.equalsIgnoreCase("getIRreading")) {
 				int[] values;
@@ -203,13 +199,13 @@ public class StateCommand extends State {
 					double distance = parseDouble(arg0);
 					// robot.forward(distance);
 					return;
-				} 
+				}
 				robot.moveForward();
 			} else if (command.equalsIgnoreCase("moveArcR")) {
 				robot.moveArcRight();
-			}else if (command.equalsIgnoreCase("moveArcL")) {
+			} else if (command.equalsIgnoreCase("moveArcL")) {
 				robot.moveArcLeft();
-			}else if (command.equalsIgnoreCase("movedir")) {
+			} else if (command.equalsIgnoreCase("movedir")) {
 				if (args.length == 2) {
 					double dir = parseDouble(arg0);
 					int scale = parseInt(arg1);
@@ -247,8 +243,7 @@ public class StateCommand extends State {
 					int power = parseInt(arg0);
 					robot.setPower(power);
 				}
-			} else if (command.equalsIgnoreCase("reverse")
-					|| command.equalsIgnoreCase("backward")) {
+			} else if (command.equalsIgnoreCase("reverse") || command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
 					// robot.backward(distance);
@@ -295,7 +290,7 @@ public class StateCommand extends State {
 				 */
 			} else if (command.equalsIgnoreCase("joydata")) {
 				showPrompt = false;
-				//debugln("joystick command detected");
+				// debugln("joystick command detected");
 				double x = Double.parseDouble(args[0]);
 				double y = Double.parseDouble(args[1]);
 				int button = Integer.parseInt(args[2]);
@@ -314,8 +309,7 @@ public class StateCommand extends State {
 				robot.changeState(StateStriker.getInstance());
 			} else if (command.equalsIgnoreCase("StateGoalie")) {
 				robot.changeState(StateGoalie.getInstance());
-			} else if (command.equalsIgnoreCase("exit")
-					| command.equalsIgnoreCase("quit")) {
+			} else if (command.equalsIgnoreCase("exit") | command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
 				isCommandLoopRunning = false;
 				robot.changeState(StateExit.getInstance());
@@ -339,6 +333,19 @@ public class StateCommand extends State {
 				robot.io.setUseDebug(false);
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
+			} else if (command.equalsIgnoreCase("pingLoop")) {
+				while (!Button.ENTER.isDown()) {
+					int val = robot.arduino.readLightLeft();
+					int val2 = robot.arduino.readLightRight();
+					int val3 = robot.arduino.readPing();
+					//int val4 = 0;
+					debugln("" + val + " " + val2 + " " + val3); // + " " +
+									   // val4);
+					robot.sleep(50);
+				}
+			} else if (command.equalsIgnoreCase("readArduino")) {
+				int[] val = robot.arduino.readAddressValues((byte) parseInt(arg0));
+				debugln("" + val[0] + " " + val[1] + " " + val[2]);
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;
@@ -367,8 +374,7 @@ public class StateCommand extends State {
 				// int button = Integer.parseInt(args[2]);
 				// TODO: Get joystick control working again
 				// robot.joystickControl(x, y, button);
-			} else if (command.equalsIgnoreCase("help")
-					|| command.equalsIgnoreCase("?")) {
+			} else if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("?")) {
 				debugln("\n Movement Commands:");
 				debugln("'stop' (Stops all motors.)");
 				debugln("'right' (Rotates the robot clockwise.)");
@@ -382,32 +388,32 @@ public class StateCommand extends State {
 				debugln("'moveDir [direction], [speed]' (Moves the robot in any direction 0-359 at a set speed.)");
 				debugln("'heading' (Rotates the robot to a fixed degree.)");
 				debugln("'followBall' (Follows the IR ball) \n");
-				
+
 				debugln("/n Sensor Commands:");
 				debugln("'calibrateCompass' (Starts calibration. End the calibration by pressoing the enter button.)");
 				debugln("'comp' (Displays what the compass is reading.)");
 				debugln("'getusreading' (Displays what the Ultrasonic is reading.)");
 				debugln("'getIRreading' (Displays what the IR SeekerV2 is reading without modification)");
 				debugln("'ir' (Displays IR Seeker values w/ improved processing)");
-				
+
 				debugln("System Commands:");
 				debugln("'bat' (Displays the current battery voltage.)");
 				debugln("'mem' (Displays the amount of free, total, and used memory in the NXT Brick.)");
 				debugln("'debug' (Not implemented)");
-				
+
 				debugln("'shutdown' (Turns the NXT off.)");
 				debugln("'prompt' (Toggles the prompt.)");
 				debugln("'quit' or 'exit' (Ends the program.)");
 				debugln("'play [tone] [length]' (Plays a note of the specified tone and length.)");
-				
+
 				debugln("State Commands:");
 				debugln("'StateStriker' (Changes state to StateStriker.)");
 				debugln("'StateGoalie' (Changes state to StateGoalie.) \n");
-				
+
 				debugln("Misc. Commands:");
 				debugln("'prop' (Displays basic properties of the NXT Brick such as name and volume.) \n");
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
-				
+
 			} else {
 				debugln("?");
 				// // 4.5 Check if it is a filename:

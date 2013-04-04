@@ -40,6 +40,7 @@ public class Robot {
 
 	BrickIO io;
 
+	public ArduSoccer arduino;
 	public IRSeekerV2 IR;
 	public EnhIRSeekerV2 EIR;
 	public CompassHTSensor compass;
