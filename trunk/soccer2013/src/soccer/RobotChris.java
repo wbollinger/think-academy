@@ -40,8 +40,7 @@ public class RobotChris extends Robot {
 			EIR.update();
 			dir = EIR.getDir();
 			str = EIR.getStrength();
-			io.debugln("" + dir);
-			io.debugln("" + str);
+			io.debugln("" + dir + ":" + str);
 			if (str > 350) {
 				stopAll();
 				forward(300);
