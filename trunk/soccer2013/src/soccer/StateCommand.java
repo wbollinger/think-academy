@@ -415,7 +415,12 @@ public class StateCommand extends State {
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
 
 			} else {
-				debugln("?");
+				for (i = 0; i < args.length; i++) {
+					if (i > 0)
+						debug(" ");
+					debug(args[i] + "! I have no clue what that is foo!");
+				}
+				debug("\n");
 				// // 4.5 Check if it is a filename:
 				// File f = new File(command);
 				// if (f.exists()) {
