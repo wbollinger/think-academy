@@ -84,7 +84,8 @@ public class StateCommand extends State {
 		try {
 			if (firstTime) {
 				float volts = Battery.getVoltage();
-				robot.io.outStream.writeUTF(robot.name + " battery: " + volts + "\n");
+				robot.io.outStream.writeUTF(robot.name + " battery: " + volts
+						+ "\n");
 				if (volts < 6.3f) {
 					Sound.beep();
 					Sound.beep();
@@ -151,11 +152,14 @@ public class StateCommand extends State {
 				robot.nav.pointToGoal();
 			} else if (command.equalsIgnoreCase("getlocation")) {
 				robot.nav.getLocation();
-				debugln(robot.nav.getXLocation() + " " + robot.nav.getYLocation());
+				debugln(robot.nav.getXLocation() + " "
+						+ robot.nav.getYLocation());
 			} else if (command.equalsIgnoreCase("getusreading")) {
 				debugln("The y axis is reading " + robot.USY.getDistance());
 				debugln("The x axis is reading " + robot.USX.getDistance());
-				debugln("The x axis normalized is reading " + robot.nav.normalizeMeasurement(robot.USX.getDistance()));
+				debugln("The x axis normalized is reading "
+						+ robot.nav.normalizeMeasurement(robot.USX
+								.getDistance()));
 
 			} else if (command.equalsIgnoreCase("getIRreading")) {
 				int[] values;
@@ -243,7 +247,8 @@ public class StateCommand extends State {
 					int power = parseInt(arg0);
 					robot.setPower(power);
 				}
-			} else if (command.equalsIgnoreCase("reverse") || command.equalsIgnoreCase("backward")) {
+			} else if (command.equalsIgnoreCase("reverse")
+					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
 					// robot.backward(distance);
@@ -309,7 +314,8 @@ public class StateCommand extends State {
 				robot.changeState(StateStriker.getInstance());
 			} else if (command.equalsIgnoreCase("StateGoalie")) {
 				robot.changeState(StateGoalie.getInstance());
-			} else if (command.equalsIgnoreCase("exit") | command.equalsIgnoreCase("quit")) {
+			} else if (command.equalsIgnoreCase("exit")
+					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
 				isCommandLoopRunning = false;
 				robot.changeState(StateExit.getInstance());
@@ -338,13 +344,14 @@ public class StateCommand extends State {
 					int val = robot.arduino.readLightLeft();
 					int val2 = robot.arduino.readLightRight();
 					int val3 = robot.arduino.readPing();
-					//int val4 = 0;
+					// int val4 = 0;
 					debugln("" + val + " " + val2 + " " + val3); // + " " +
-									   // val4);
+					// val4);
 					robot.sleep(50);
 				}
 			} else if (command.equalsIgnoreCase("readArduino")) {
-				int[] val = robot.arduino.readAddressValues((byte) parseInt(arg0));
+				int[] val = robot.arduino
+						.readAddressValues((byte) parseInt(arg0));
 				debugln("" + val[0] + " " + val[1] + " " + val[2]);
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
@@ -374,7 +381,8 @@ public class StateCommand extends State {
 				// int button = Integer.parseInt(args[2]);
 				// TODO: Get joystick control working again
 				// robot.joystickControl(x, y, button);
-			} else if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("?")) {
+			} else if (command.equalsIgnoreCase("help")
+					|| command.equalsIgnoreCase("?")) {
 				debugln("\n Movement Commands:");
 				debugln("'stop' (Stops all motors.)");
 				debugln("'right' (Rotates the robot clockwise.)");
@@ -415,12 +423,14 @@ public class StateCommand extends State {
 				debugln("'echo [phrase]' (Displays whatever you type in as the phrase.)");
 
 			} else {
-				for (i = 0; i < args.length; i++) {
-					if (i >= 0)
-						debug(" ");
-					debug(args[i] + "! I have no clue what that is foo!");
-				}
-				debug("\n");
+				debug("?");
+//				for (i = 0; i < args.length; i++) {
+//					if (i > 0) {
+//						debug(" ");
+//					}
+//					debug(args[i] + "! I have no clue what that is foo!");
+//				}
+//				debug("\n");
 				// // 4.5 Check if it is a filename:
 				// File f = new File(command);
 				// if (f.exists()) {
