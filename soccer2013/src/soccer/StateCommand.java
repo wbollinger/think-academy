@@ -416,7 +416,7 @@ public class StateCommand extends State {
 
 			} else {
 				for (i = 0; i < args.length; i++) {
-					if (i > 0)
+					if (i >= 0)
 						debug(" ");
 					debug(args[i] + "! I have no clue what that is foo!");
 				}
