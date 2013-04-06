@@ -125,16 +125,16 @@ static union {
 
 		// Initial structure was compatible with the Mindsensors NXT Servo Sensor
 		// for NUM_SERVOS == 8
-		volatile UINT_16 u16ServoPosition[NUM_SERVOS]; // 0x42 - 0x51 16bit PWM Servo Position Registers (time in uS)
+		volatile UINT_16 u16ServoPosition[NUM_SERVOS]; // 0x32 - 0x41 16bit PWM Servo Position Registers (time in uS)
 
-		volatile byte u8PingReadings[NUM_PINGS]; // 0x5A - 0x61 8bit Ping Sensor values
+		volatile byte u8PingReadings[NUM_PINGS]; // 0x4A - 0x51 8bit Ping Sensor values
 		volatile byte u8Dummy[8 - NUM_PINGS];    // For alignment, should be 8 bytes total
 
 		// Extension fields
 
 		// Analog Measurement Inputs
-		UINT_16 u16AnalogValue[NUM_ANALOG_CH]; // 0x62 - 0x6F Analog Input (Raw value from 0 to 1023)
-		INT_8 i8DigitalValue[NUM_DIGITAL_CH]; // 0x70 - 0x76 Digital Input (was 8 bit scaled value in original code)
+		UINT_16 u16AnalogValue[NUM_ANALOG_CH]; // 0x52 - 0x5F Analog Input (Raw value from 0 to 1023)
+		INT_8 i8DigitalValue[NUM_DIGITAL_CH]; // 0x60 - 0x66 Digital Input (was 8 bit scaled value in original code)
 
 	} Fields;
 } m_NXTInterfaceData;

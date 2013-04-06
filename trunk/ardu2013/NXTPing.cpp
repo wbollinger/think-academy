@@ -24,7 +24,7 @@ unsigned char g_u8Ping[NUM_PING_CH];
 //extern unsigned int g_u16Analog[NUM_ANALOG_CH];
 
 void echoCheck();
-//void oneSensorCycle();
+void oneSensorCycle();
 
 //---------------------------------------------------------------------
 // Configure the Digital Input code
@@ -59,8 +59,8 @@ void Ping_Handler(void) {
 	for (uint8_t i = 0; i < NUM_PING_CH; i++) { // Loop through all the sensors.
 		if (millis() >= pingTimer[i]) { // Is it this sensor's time to ping?
 			pingTimer[i] += PING_INTERVAL * NUM_PING_CH; // Set next time this sensor will be pinged.
-//			if (i == 0 && currentSensor == NUM_PING_CH - 1)
-//				oneSensorCycle(); // Sensor ping cycle complete, do something with the results.
+			if (i == 0 && currentSensor == NUM_PING_CH - 1)
+				oneSensorCycle(); // Sensor ping cycle complete, do something with the results.
 			sonar[currentSensor].timer_stop(); // Make sure previous timer is canceled before starting a new ping (insurance).
 			currentSensor = i; // Sensor being accessed.
 			g_u8Ping[currentSensor] = 0; // Make distance zero in case there's no ping echo for this sensor.
@@ -84,14 +84,12 @@ void echoCheck() { // If ping received, set the sensor distance to array.
 	g_PingFlags[currentSensor].bUpdate = TRUE;
 }
 
-/*
- void oneSensorCycle() { // Sensor ping cycle complete, do something with the results.
- for (uint8_t i = 0; i < NUM_PING_CH; i++) {
- Serial.print(i);
- Serial.print("=");
- Serial.print(g_u8Ping[i]);
- Serial.print("cm ");
- }
- Serial.println();
- }
- */
+void oneSensorCycle() { // Sensor ping cycle complete, do something with the results.
+	for (uint8_t i = 0; i < NUM_PING_CH; i++) {
+		Serial.print(i);
+		Serial.print("=");
+		Serial.print(g_u8Ping[i]);
+		Serial.print("cm ");
+	}
+	Serial.println();
+}
