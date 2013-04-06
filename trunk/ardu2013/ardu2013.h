@@ -25,6 +25,7 @@ extern int debug;
 
 #define NUM_ANALOG_CH		(4U)		   // Number of Analog Input Channels
 #define NUM_DIGITAL_CH		(4U)		   // Number of Digital Input Channels
+#define NUM_PING_CH			(4U)		   // Number of Ping Input Channels
 
 // Some of the code has been migrated from a previous project which uses the following type definitions:
 typedef signed char INT_8;
@@ -89,15 +90,24 @@ typedef union {
 	};
 } DigitalInputFlags;
 
+typedef union {
+	struct {
+		// High level
+		unsigned bValid :1; // Flag to indicate that the channel is being used
+		unsigned bUpdate :1; // Flag to indicate that data has been updated
+	};
+	struct {
+		UINT_8 u8Value;
+	};
+} PingInputFlags;
+
 /***************************************************************************
  * General Global variables used by the main program
  **************************************************************************/
 extern volatile AnalogInputFlags g_AnalogFlags[NUM_ANALOG_CH]; // Analog Input channel flags
 extern volatile DigitalInputFlags g_DigitalFlags[NUM_DIGITAL_CH]; // Digital Input channel flags
+extern volatile PingInputFlags g_PingFlags[NUM_DIGITAL_CH]; // Digital Input channel flags
 extern DiagnosticsFlags g_DiagnosticsFlags;
-
-class NewPing;
-extern NewPing* sonar;
 
 #ifdef __cplusplus
 extern "C" {
@@ -113,6 +123,7 @@ void setup();
 //add your function definitions for the project here
 unsigned      Analog_getChannel(unsigned char u8Ch);
 unsigned char Digital_getChannel(unsigned char u8Ch);
+unsigned char Ping_getChannel(unsigned char u8Ch);
 
 
 //Do not add code below this line

@@ -40,12 +40,6 @@ void Analog_Handler(void)
 	//g_u16Analog[2] = analogRead(A2);
 	//g_AnalogFlags[2].bUpdate = TRUE;
 
-	// Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
-	delay(50);
-	unsigned int uS = sonar->ping(); // Send ping, get ping time in microseconds (uS).
-	g_u16Analog[2] = (uS / US_ROUNDTRIP_CM); // Convert ping time to distance in cm and print result (0 = outside set distance range)
-	g_AnalogFlags[2].bUpdate = TRUE;
-
 	// Read optional fourth analog sensor
 	//g_u16Analog[3] = analogRead(A3);
 	//g_AnalogFlags[3].bUpdate = TRUE;
