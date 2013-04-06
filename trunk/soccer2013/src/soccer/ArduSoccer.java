@@ -32,7 +32,7 @@ public class ArduSoccer extends I2CSensor {
 		portConnected = port;
 
 		bufReadResponse = new byte[6];
-		sensors = new int[3];
+		sensors = new int[4];
 	}
 
 	/**
@@ -58,6 +58,23 @@ public class ArduSoccer extends I2CSensor {
 		sensors[0] = sensorOne;
 		sensors[1] = sensorTwo;
 		sensors[2] = sensorThree;
+
+		return (sensors);
+	}
+
+	public int[] readAddressBytes(byte startByte) {
+
+		getData(startByte, bufReadResponse, 4);
+
+		int sensorOne = (0xFF & bufReadResponse[0]);
+		int sensorTwo = (0xFF & bufReadResponse[1]);
+		int sensorThree = (0xFF & bufReadResponse[2]);
+		int sensorFour = (0xFF & bufReadResponse[3]);
+
+		sensors[0] = sensorOne;
+		sensors[1] = sensorTwo;
+		sensors[2] = sensorThree;
+		sensors[3] = sensorFour;
 
 		return (sensors);
 	}
