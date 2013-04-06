@@ -411,6 +411,15 @@ static void NXTUpdateValues(void)
 		}
 
 	}
+
+	for (byte i = 0; i < NUM_PING_CH; i++) {
+			if (g_PingFlags[i].bUpdate) {
+				// Digital value (may) have been updated
+				m_NXTInterfaceData.Fields.u8PingReadings[i] = (INT_8) Ping_getChannel(i);
+				g_PingFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
+			}
+
+		}
 }
 
 //---------------------------------------------------------------------

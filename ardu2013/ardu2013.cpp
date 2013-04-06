@@ -17,22 +17,24 @@ int debug = DEBUG;
 #define ECHO_PIN     10  // Arduino pin tied to echo pin on the ultrasonic sensor.
 #define MAX_DISTANCE 255 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
-// static constructor to setup NewPing pins and maximum distance
-NewPing sonar_0(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
-NewPing* sonar = NULL;
-
 /***************************************************************************
  * General variables
  **************************************************************************/
 volatile AnalogInputFlags g_AnalogFlags[NUM_ANALOG_CH]; // Analog Input channel flags
 volatile DigitalInputFlags g_DigitalFlags[NUM_DIGITAL_CH]; // Digital Input channel flags
+volatile PingInputFlags g_PingFlags[NUM_PING_CH]; // Digital Input channel flags
 DiagnosticsFlags   g_DiagnosticsFlags;
 ConfigurationFlags g_ConfigurationFlags;
 
 // Functions in NXTAnalog
+void Init_Analog(void);
 void Analog_Handler(void);
 // Functions in NXTDigital
+void Init_Digital(void);
 void Digital_Handler(void);
+// Functions in NXTPing
+void Init_Ping(void);
+void Ping_Handler(void);
 
 // Functions in NXTI2C
 void NXT_Handler(void);
@@ -95,8 +97,9 @@ void setup()
 	Init_ArduSoccer();
 	Init_Diagnostics();
 
-	// initialize global pointer to Ping
-	sonar = &sonar_0;
+	Init_Analog();
+	Init_Digital();
+	Init_Ping();
 }
 
 //-----------------------------------------------------------------------------
@@ -113,6 +116,7 @@ void loop()
 
 	Analog_Handler();
 	Digital_Handler();
+	Ping_Handler();
 
 	NXT_Handler();
 
