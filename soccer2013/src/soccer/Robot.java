@@ -37,6 +37,9 @@ public class Robot {
 	NXTRegulatedMotor regMotA;
 	NXTRegulatedMotor regMotB;
 	NXTRegulatedMotor regMotC;
+	
+	LightSensor lightLeft;
+	LightSensor lightRight;
 
 	BrickIO io;
 
