@@ -350,9 +350,13 @@ public class StateCommand extends State {
 					robot.sleep(50);
 				}
 			} else if (command.equalsIgnoreCase("readArduino")) {
-				int[] val = robot.arduino
-						.readAddressValues((byte) parseInt(arg0));
-				debugln("" + val[0] + " " + val[1] + " " + val[2]);
+				// use 82 to read Analog
+				byte address = (byte) parseInt(arg0);
+				while (!Button.ENTER.isDown()) {
+					int[] val = robot.arduino.readAddressValues(address);
+					debugln("" + val[0] + " " + val[1] + " " + val[2]);
+					robot.sleep(50);
+				}
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;
@@ -424,13 +428,13 @@ public class StateCommand extends State {
 
 			} else {
 				debug("?");
-//				for (i = 0; i < args.length; i++) {
-//					if (i > 0) {
-//						debug(" ");
-//					}
-//					debug(args[i] + "! I have no clue what that is foo!");
-//				}
-//				debug("\n");
+				// for (i = 0; i < args.length; i++) {
+				// if (i > 0) {
+				// debug(" ");
+				// }
+				// debug(args[i] + "! I have no clue what that is foo!");
+				// }
+				// debug("\n");
 				// // 4.5 Check if it is a filename:
 				// File f = new File(command);
 				// if (f.exists()) {
