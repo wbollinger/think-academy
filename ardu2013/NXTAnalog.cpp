@@ -29,11 +29,11 @@ void Analog_Handler(void)
 { 
 	// Read both light sensors; make them match by adding an offset
 	// FIXME
-	g_u16Analog[0] = 11; //analogRead(A0) + 35;	// Right or left?
+	g_u16Analog[0] = 11; //analogRead(A0);	// Right or left?
 	g_AnalogFlags[0].bUpdate = TRUE;
 
 	// FIXME
-	g_u16Analog[1] = 22; // analogRead(A1);
+	g_u16Analog[1] = 22; //analogRead(A1);
 	g_AnalogFlags[1].bUpdate = TRUE;
 
 	// For Rescue, Read EOPD sensor
