@@ -110,7 +110,7 @@ public class Navigator {
 
 		}
 
-		while (true) {
+		while (Button.ENTER.isUp()) {
 
 			facingDegree = bot.compass.getDegrees();
 			facingDegree = (float) normalizeAngle(facingDegree);
