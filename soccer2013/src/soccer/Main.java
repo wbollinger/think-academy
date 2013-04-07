@@ -27,6 +27,17 @@ public class Main {
 		
 		// create a robot
 		Robot robot = Robot.getRobot();
+		
+		while(Button.LEFT.isUp() && Button.RIGHT.isUp())
+			;
+		
+		if(Button.LEFT.isDown()) {
+			robot.nav.ENEMY_GOAL = Navigator.BLUE_GOAL_HEADING;
+			robot.nav.ALLY_GOAL = Navigator.YELLOW_GOAL_HEADING;
+		} else {
+			robot.nav.ENEMY_GOAL = Navigator.YELLOW_GOAL_HEADING;
+			robot.nav.ALLY_GOAL = Navigator.BLUE_GOAL_HEADING;
+		}
 
 		//if (buttons == Button.ID_ENTER) {
 		//	// Run in autonomous mode
