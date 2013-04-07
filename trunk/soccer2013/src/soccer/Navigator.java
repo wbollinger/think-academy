@@ -7,8 +7,11 @@ import lejos.nxt.addon.CompassHTSensor;
 
 public class Navigator {
 
-	public static final float ENEMY_GOAL_HEADING = 306.0f;
-	public static final float ALLY_GOAL_HEADING = 113.0f;
+	public static final float YELLOW_GOAL_HEADING = 247.0f;
+	public static final float BLUE_GOAL_HEADING = 167.0f;
+	
+	public float ENEMY_GOAL;
+	public float ALLY_GOAL;
 
 	protected Robot bot;
 	private float facingDegree;
