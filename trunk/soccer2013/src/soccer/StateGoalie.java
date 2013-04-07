@@ -31,8 +31,8 @@ public class StateGoalie extends State {
 				i++;
 			}
 
-			if (!(compass + 5 > Navigator.BLUE_GOAL_HEADING && compass - 5 < Navigator.BLUE_GOAL_HEADING)) {
-				bot.nav.pointToHeading((float) Navigator.BLUE_GOAL_HEADING);
+			if (!(compass + 5 > Navigator.ALLY_GOAL && compass - 5 < Navigator.ALLY_GOAL)) {
+				bot.nav.pointToHeading((float) Navigator.ALLY_GOAL);
 			}
 
 			if (USY > 20) {
@@ -61,7 +61,9 @@ public class StateGoalie extends State {
 				bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(USX)
 						+ ":" + USX);
 				bot.nav.moveDir(0);
-			} else {
+			} else if((IRDir == 0) && (bot.EIR.getStrength() > 350)){
+				bot.moveForward(1000);
+			}else {
 				bot.stopAll();
 			}
 		}
