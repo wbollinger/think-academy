@@ -343,9 +343,9 @@ public class StateCommand extends State {
 				while (!Button.ENTER.isDown()) {
 					int val = robot.arduino.readLightLeft();
 					int val2 = robot.arduino.readLightRight();
-					int val3 = robot.arduino.readPing();
+					//int val3 = robot.arduino.readPing();
 					// int val4 = 0;
-					debugln("" + val + " " + val2 + " " + val3); // + " " +
+					//debugln("" + val + " " + val2 + " " + val3); // + " " +
 					// val4);
 					robot.sleep(50);
 				}
