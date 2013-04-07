@@ -29,12 +29,15 @@ void Analog_Handler(void)
 { 
 	// Read both light sensors; make them match by adding an offset
 	// FIXME
-	g_u16Analog[0] = 11; //analogRead(A0);	// Right or left?
+	g_u16Analog[0] = analogRead(A0);	// Right or left?
 	g_AnalogFlags[0].bUpdate = TRUE;
+	Serial.print(g_u16Analog[0]);
+	Serial.print(":");
 
 	// FIXME
-	g_u16Analog[1] = 22; //analogRead(A1);
+	g_u16Analog[1] = analogRead(A1);
 	g_AnalogFlags[1].bUpdate = TRUE;
+	Serial.println(g_u16Analog[1]);
 
 	// For Rescue, Read EOPD sensor
 	//g_u16Analog[2] = analogRead(A2);
