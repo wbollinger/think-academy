@@ -31,8 +31,8 @@ void Init_Digital(void)
 	digitalWrite(11, HIGH);
 	pinMode(12, INPUT);
 	digitalWrite(12, HIGH);
-	pinMode(13, INPUT);
-	digitalWrite(13, HIGH);
+	pinMode(9, OUTPUT);
+	digitalWrite(9, HIGH);
 
 }
 

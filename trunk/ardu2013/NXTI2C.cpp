@@ -355,15 +355,20 @@ void NXT_Handler(void)
 
 			// Decode and handle COMMANDS from NXT
 			switch (m_NXTInterfaceData.Fields.u8Command) {
-			case 1: // Set RCInput Center values to current stick positions
-				//RCInput_SetCentre();
+			case 1: // Power dribbler wheel
+				Serial.println("DRIBBLER ON");
+				digitalWrite(9, LOW);
+
 				break;
 
-			case 2:
-//			  Serial.println("Rq Command 2");
+			case 2: // Power kicker solenoid
+				Serial.println("DRIBBLER OFF");
+				digitalWrite(9, HIGH);
+
 				break;
 
 			default:
+				//Serial.println(m_NXTInterfaceData.Fields.u8Command);
 				break;
 			}
 			m_NXTInterfaceData.Fields.u8Command = 0; // Clear any command now that we have done it

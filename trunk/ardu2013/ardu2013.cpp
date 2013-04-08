@@ -68,8 +68,8 @@ void Init_ArduSoccer(void)
 	// Optional settings
 	g_DiagnosticsFlags.bAnalogInput = TRUE;
 
-	g_DiagnosticsFlags.bNXTInterface = FALSE;  // show Rx: and Rq: byte counts
-	g_DiagnosticsFlags.bPerformance = TRUE;
+	g_DiagnosticsFlags.bNXTInterface = TRUE;  // show Rx: and Rq: byte counts
+	g_DiagnosticsFlags.bPerformance = FALSE;
 	g_DiagnosticsFlags.bExecutionMS = FALSE;
 
 	// Initialize all modules
