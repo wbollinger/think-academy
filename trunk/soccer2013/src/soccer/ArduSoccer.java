@@ -168,6 +168,16 @@ public class ArduSoccer extends I2CSensor {
 
 		return (value);
 	}
+	
+	public boolean writeCommand(byte addr, byte command) {
+		if(sendData((byte) addr, command) == 0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
 	public void update(){
 		
 	}

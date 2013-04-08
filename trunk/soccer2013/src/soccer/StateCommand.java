@@ -365,6 +365,11 @@ public class StateCommand extends State {
 					debugln("" + val[0] + " " + val[1] + " " + val[2] + " " + val[3]);
 					robot.sleep(50);
 				}
+			} else if (command.equalsIgnoreCase("writeArduinoCommands")) {
+				// use 82 to read Analog
+				byte command_num = (byte) 0x41;
+				byte address = (byte) parseInt(arg0);
+				robot.arduino.writeCommand(address, command_num);
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;
