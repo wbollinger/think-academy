@@ -110,7 +110,7 @@ public class ArduSoccer extends I2CSensor {
 
 	public int readLightLeft() {
 
-		getData((byte) 0x64, bufReadResponse, 2);
+		getData((byte) 82, bufReadResponse, 2);
 
 		int sensorLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
 
@@ -119,7 +119,7 @@ public class ArduSoccer extends I2CSensor {
 
 	public int readLightRight() {
 
-		getData((byte) 0x62, bufReadResponse, 2);
+		getData((byte) 84, bufReadResponse, 2);
 
 		int sensorRight = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
 
@@ -128,25 +128,25 @@ public class ArduSoccer extends I2CSensor {
 
 	public int readPingYBack() {
 
-		getData((byte) 0x66, bufReadResponse, 2);
+		getData((byte) 75, bufReadResponse, 1);
 
-		int sensorPing = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+		int sensorPing = 0xFF & bufReadResponse[0];
 
 		return (sensorPing);
 	}
 	public int readPingXLeft() {
 
-		getData((byte) 0x66, bufReadResponse, 2);
+		getData((byte) 76, bufReadResponse, 1);
 
-		int sensorPing = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+		int sensorPing = 0xFF & bufReadResponse[0];
 
 		return (sensorPing);
 	}
 	public int readPingXRight() {
 
-		getData((byte) 0x66, bufReadResponse, 2);
+		getData((byte) 74, bufReadResponse, 1);
 
-		int sensorPing = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+		int sensorPing = 0xFF & bufReadResponse[0];
 
 		return (sensorPing);
 	}
