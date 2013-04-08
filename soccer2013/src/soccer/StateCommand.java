@@ -329,6 +329,12 @@ public class StateCommand extends State {
 				showPrompt = !showPrompt;
 			} else if (command.equalsIgnoreCase("comp")) {
 				debugln("" + robot.compass.getDegrees());
+			} else if (command.equalsIgnoreCase("readUSY")) {
+				debugln("" + robot.arduino.readPingYBack());
+			} else if (command.equalsIgnoreCase("readUSXLeft")) {
+				debugln("" + robot.arduino.readPingXLeft());
+			} else if (command.equalsIgnoreCase("readUSXRight")) {
+				debugln("" + robot.arduino.readPingXRight());
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
 			} else if (command.equalsIgnoreCase("disableDebug")) {
@@ -343,9 +349,9 @@ public class StateCommand extends State {
 				while (!Button.ENTER.isDown()) {
 					int val = robot.arduino.readLightLeft();
 					int val2 = robot.arduino.readLightRight();
-					//int val3 = robot.arduino.readPing();
+					// int val3 = robot.arduino.readPing();
 					// int val4 = 0;
-					//debugln("" + val + " " + val2 + " " + val3); // + " " +
+					// debugln("" + val + " " + val2 + " " + val3); // + " " +
 					// val4);
 					robot.sleep(50);
 				}
@@ -362,7 +368,8 @@ public class StateCommand extends State {
 				byte address = (byte) parseInt(arg0);
 				while (!Button.ENTER.isDown()) {
 					int[] val = robot.arduino.readAddressBytes(address);
-					debugln("" + val[0] + " " + val[1] + " " + val[2] + " " + val[3]);
+					debugln("" + val[0] + " " + val[1] + " " + val[2] + " "
+							+ val[3]);
 					robot.sleep(50);
 				}
 			} else if (command.equalsIgnoreCase("writeArduinoCommands")) {
