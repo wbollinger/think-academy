@@ -24,9 +24,11 @@ public class RobotTim extends Robot {
 		// IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		EIR = new EnhIRSeekerV2(SensorPort.S1);
 
+		arduino = new ArduSoccer(SensorPort.S4);
+
 		compass = new CompassHTSensor(SensorPort.S2);
-		USY = new UltrasonicSensor(SensorPort.S3);
-		USX = new UltrasonicSensor(SensorPort.S4);
+		// USY = new UltrasonicSensor(SensorPort.S3);
+		// USX = new UltrasonicSensor(SensorPort.S4);
 
 		motA.setPower(MOTOR_POWER);
 		motB.setPower(MOTOR_POWER);
@@ -180,6 +182,7 @@ public class RobotTim extends Robot {
 		motA.forward();
 
 	}
+
 	public void moveArcLeft() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
