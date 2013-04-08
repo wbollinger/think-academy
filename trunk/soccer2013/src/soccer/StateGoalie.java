@@ -20,10 +20,12 @@ public class StateGoalie extends State {
 		int USY = 0;
 		int USLeft = 0;
 		int USRight = 0;
+		
 
 		while (Button.ENTER.isUp()) {
 			USLeft = bot.arduino.getDisXLeft();
 			USRight = bot.arduino.getDisXRight();
+			USY = bot.arduino.getDisYBack();
 			bot.EIR.update();
 			if (i == 5) {
 				compass = (int) bot.compass.getDegrees();
@@ -63,9 +65,7 @@ public class StateGoalie extends State {
 				bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(USRight)
 						+ ":" + USRight);
 				bot.nav.moveDir(0);
-			} else if((IRDir == 0) && (bot.EIR.getStrength() > 350)){
-				bot.moveForward(1000);
-			}else {
+			} else{
 				bot.stopAll();
 			}
 		}
