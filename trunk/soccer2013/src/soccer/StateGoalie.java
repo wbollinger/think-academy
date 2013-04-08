@@ -23,13 +23,13 @@ public class StateGoalie extends State {
 		
 
 		while (Button.ENTER.isUp()) {
-			USLeft = bot.arduino.getDisXLeft();
-			USRight = bot.arduino.getDisXRight();
-			USY = bot.arduino.getDisYBack();
+			USLeft = bot.arduino.readPingXLeft();
+			USRight = bot.arduino.readPingXRight();
+			
 			bot.EIR.update();
 			if (i == 5) {
 				compass = (int) bot.compass.getDegrees();
-				USY = bot.arduino.getDisYBack();
+				USY = bot.arduino.readPingYBack();
 				i = 0;
 			} else {
 				i++;
@@ -40,12 +40,12 @@ public class StateGoalie extends State {
 			}
 
 			if (USY > 20) {
-				while (bot.arduino.getDisYBack() > 20) {
+				while (bot.arduino.readPingYBack() > 20) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
 			} else if (USY < 15) {
-				while (bot.arduino.getDisYBack() < 15) {
+				while (bot.arduino.readPingYBack() < 15) {
 					bot.nav.moveDir(90);
 				}
 				bot.floatAll();
