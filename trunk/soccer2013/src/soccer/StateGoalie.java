@@ -18,14 +18,16 @@ public class StateGoalie extends State {
 		int compass = 0;
 		int IRDir = 0;
 		int USY = 0;
-		int USX = 0;
+		int USLeft = 0;
+		int USRight = 0;
 
 		while (Button.ENTER.isUp()) {
-			USX = bot.getUSX();
+			USLeft = bot.arduino.getDisXLeft();
+			USRight = bot.arduino.getDisXRight();
 			bot.EIR.update();
 			if (i == 5) {
 				compass = (int) bot.compass.getDegrees();
-				USY = bot.USY.getDistance();
+				USY = bot.arduino.getDisYBack();
 				i = 0;
 			} else {
 				i++;
@@ -36,12 +38,12 @@ public class StateGoalie extends State {
 			}
 
 			if (USY > 20) {
-				while (bot.USY.getDistance() > 20) {
+				while (bot.arduino.getDisYBack() > 20) {
 					bot.nav.moveDir(270);
 				}
 				bot.floatAll();
 			} else if (USY < 15) {
-				while (bot.USY.getDistance() < 15) {
+				while (bot.arduino.getDisYBack() < 15) {
 					bot.nav.moveDir(90);
 				}
 				bot.floatAll();
@@ -51,15 +53,15 @@ public class StateGoalie extends State {
 
 			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
-			} else if ((IRDir < 5) && (bot.nav.normalizeMeasurement(USX) < 106)) {
+			} else if ((IRDir < 5) && (bot.nav.normalizeMeasurement(USLeft) > 62)) {
 				// moves left, unless at edge of goal
-				bot.io.debugln("Left:" + bot.nav.normalizeMeasurement(USX)
-						+ ":" + USX);
+				bot.io.debugln("Left:" + bot.nav.normalizeMeasurement(USLeft)
+						+ ":" + USLeft);
 				bot.nav.moveDir(180);
-			} else if ((IRDir > 5) && (bot.nav.normalizeMeasurement(USX) > 62)) {
+			} else if ((IRDir > 5) && (bot.nav.normalizeMeasurement(USRight) > 62)) {
 				// moves right, unless at edge of goal
-				bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(USX)
-						+ ":" + USX);
+				bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(USRight)
+						+ ":" + USRight);
 				bot.nav.moveDir(0);
 			} else if((IRDir == 0) && (bot.EIR.getStrength() > 350)){
 				bot.moveForward(1000);
