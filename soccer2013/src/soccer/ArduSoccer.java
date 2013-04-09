@@ -108,57 +108,57 @@ public class ArduSoccer extends I2CSensor {
 		return touch;
 	}
 
-	public int readLightLeft() {
-
-		getData((byte) 82, bufReadResponse, 2);
-
-		int sensorLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
-
-		return (sensorLeft);
-	}
-
-	public int readLightRight() {
-
-		getData((byte) 84, bufReadResponse, 2);
-
-		int sensorRight = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
-
-		return (sensorRight);
-	}
-
-	public int readPingYBack() {
-
-		getData((byte) 75, bufReadResponse, 1);
-
-		int sensorPing = 0xFF & bufReadResponse[0];
-
-		return (sensorPing);
-	}
-	public int readPingXLeft() {
-
-		getData((byte) 76, bufReadResponse, 1);
-
-		int sensorPing = 0xFF & bufReadResponse[0];
-
-		return (sensorPing);
-	}
-	public int readPingXRight() {
-
-		getData((byte) 74, bufReadResponse, 1);
-
-		int sensorPing = 0xFF & bufReadResponse[0];
-
-		return (sensorPing);
-	}
-
-	public int readTouch() {
-
-		getData((byte) 0x6C, bufReadResponse, 2);
-
-		int sensorTouch = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
-
-		return (sensorTouch);
-	}
+//	public int readLightLeft() {
+//
+//		getData((byte) 82, bufReadResponse, 2);
+//
+//		int sensorLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+//
+//		return (sensorLeft);
+//	}
+//
+//	public int readLightRight() {
+//
+//		getData((byte) 84, bufReadResponse, 2);
+//
+//		int sensorRight = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+//
+//		return (sensorRight);
+//	}
+//
+//	public int readPingYBack() {
+//
+//		getData((byte) 75, bufReadResponse, 1);
+//
+//		int sensorPing = 0xFF & bufReadResponse[0];
+//
+//		return (sensorPing);
+//	}
+//	public int readPingXLeft() {
+//
+//		getData((byte) 76, bufReadResponse, 1);
+//
+//		int sensorPing = 0xFF & bufReadResponse[0];
+//
+//		return (sensorPing);
+//	}
+//	public int readPingXRight() {
+//
+//		getData((byte) 74, bufReadResponse, 1);
+//
+//		int sensorPing = 0xFF & bufReadResponse[0];
+//
+//		return (sensorPing);
+//	}
+//
+//	public int readTouch() {
+//
+//		getData((byte) 0x6C, bufReadResponse, 2);
+//
+//		int sensorTouch = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+//
+//		return (sensorTouch);
+//	}
 
 	public int readAddress(byte addr) {
 
@@ -179,7 +179,18 @@ public class ArduSoccer extends I2CSensor {
 	}
 	
 	public void update(){
+		getData((byte) 74, bufReadResponse, 3);
+
+		disXRight = 0xFF & bufReadResponse[0];
+		disYBack = 0xFF & bufReadResponse[1];
+		disXLeft = 0xFF & bufReadResponse[2];
 		
+		getData((byte) 82, bufReadResponse, 4);
+
+		lightLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
+		lightRight = (((0xFF & bufReadResponse[3]) << 8) | ((0xFF & bufReadResponse[2])));
+		
+
 	}
 
 }

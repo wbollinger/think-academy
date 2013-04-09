@@ -330,11 +330,11 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("comp")) {
 				debugln("" + robot.compass.getDegrees());
 			} else if (command.equalsIgnoreCase("readUSY")) {
-				debugln("" + robot.arduino.readPingYBack());
+				debugln("" + robot.arduino.getDisYBack());
 			} else if (command.equalsIgnoreCase("readUSXLeft")) {
-				debugln("" + robot.arduino.readPingXLeft());
+				debugln("" + robot.arduino.getDisXLeft());
 			} else if (command.equalsIgnoreCase("readUSXRight")) {
-				debugln("" + robot.arduino.readPingXRight());
+				debugln("" + robot.arduino.getDisXRight());
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
 			} else if (command.equalsIgnoreCase("disableDebug")) {
@@ -347,8 +347,8 @@ public class StateCommand extends State {
 				robot.tacoMeterTurn();
 			} else if (command.equalsIgnoreCase("pingLoop")) {
 				while (!Button.ENTER.isDown()) {
-					int val = robot.arduino.readLightLeft();
-					int val2 = robot.arduino.readLightRight();
+					int val = robot.arduino.getLightLeft();
+					int val2 = robot.arduino.getLightRight();
 					// int val3 = robot.arduino.readPing();
 					// int val4 = 0;
 					// debugln("" + val + " " + val2 + " " + val3); // + " " +
