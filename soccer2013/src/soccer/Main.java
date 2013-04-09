@@ -31,7 +31,7 @@ public class Main {
 		while(Button.LEFT.isUp() && Button.RIGHT.isUp())
 			;
 		
-		if(Button.LEFT.isDown()) {
+		if(Button.RIGHT.isDown()) {
 			robot.nav.ENEMY_GOAL = Navigator.BLUE_GOAL_HEADING;
 			robot.nav.ALLY_GOAL = Navigator.YELLOW_GOAL_HEADING;
 		} else {
