@@ -5,21 +5,15 @@ import lejos.nxt.Button;
 public class StateGoalie extends State {
 
 	private static StateGoalie instance = new StateGoalie();
-	
+
 	private static enum ZONE {
-		LEFT,
-		MID_LEFT,
-		MIDDLE,
-		MID_RIGHT,
-		RIGHT
+		LEFT, MID_LEFT, MIDDLE, MID_RIGHT, RIGHT
 	}
-	
+
 	private static enum DIRECTION {
-		LEFT,
-		RIGHT,
-		STOPPED
+		LEFT, RIGHT, STOPPED
 	}
-	
+
 	ZONE currentZone;
 	DIRECTION currentDirection;
 
@@ -35,21 +29,27 @@ public class StateGoalie extends State {
 		int i = 5;
 		int compass = 0;
 		int IRDir = 0;
-		
 
 		while (Button.ENTER.isUp()) {
 			bot.arduino.update();
 			bot.EIR.update();
-			
-			if((bot.arduino.getDisXLeft()+bot.arduino.getDisXRight()) > 150) { // if both pings are reading correctly
+
+			if ((bot.arduino.getDisXLeft() + bot.arduino.getDisXRight()) > 150) { // if both pings are reading correctly
 				currentZone = ZONE.MIDDLE;
-			} else if(currentDirection == DIRECTION.LEFT) {
-				currentZone = ZONE.MID_LEFT;
-			} else if(currentDirection == DIRECTION.RIGHT) {
-				currentZone = ZONE.MID_RIGHT;
+			} else if (currentDirection == DIRECTION.LEFT) {
+				if (bot.arduino.getDisXLeft() < 40) {
+					currentZone = ZONE.LEFT;
+				} else {
+					currentZone = ZONE.MID_LEFT;
+				}
+			} else if (currentDirection == DIRECTION.RIGHT) {
+				if (bot.arduino.getDisXRight() < 40) {
+					currentZone = ZONE.RIGHT;
+				} else {
+					currentZone = ZONE.MID_RIGHT;
+				}
 			}
-			
-			
+
 			if (i == 5) {
 				compass = (int) bot.compass.getDegrees();
 				i = 0;
@@ -61,15 +61,17 @@ public class StateGoalie extends State {
 				bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
 			}
 
-			if ((bot.arduino.getDisYBack() > 20) && 
-					!((currentZone == ZONE.LEFT) || (currentZone == ZONE.RIGHT))) {
+			if ((bot.arduino.getDisYBack() > 20)
+					&& !((currentZone == ZONE.LEFT) || (currentZone == ZONE.RIGHT))) {
 				while (bot.arduino.getDisYBack() > 20) {
 					bot.nav.moveDir(270);
+					bot.arduino.update();
 				}
 				bot.floatAll();
 			} else if (bot.arduino.getDisYBack() < 15) {
 				while (bot.arduino.getDisYBack() < 15) {
 					bot.nav.moveDir(90);
+					bot.arduino.update();
 				}
 				bot.floatAll();
 			}
@@ -79,25 +81,30 @@ public class StateGoalie extends State {
 			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
 				currentDirection = DIRECTION.STOPPED;
-			} else if ((IRDir < 5) && (bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft()) > 62)) {
+			} else if ((IRDir < 5)
+					&& (bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft()) > 62)) {
 				// moves left, unless at edge of goal
-				//bot.io.debugln("Left:" + bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft())
-				//		+ ":" + bot.arduino.getDisXLeft());
+				// bot.io.debugln("Left:" +
+				// bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft())
+				// + ":" + bot.arduino.getDisXLeft());
 				bot.nav.moveDir(180);
 				currentDirection = DIRECTION.LEFT;
-			} else if ((IRDir > 5) && (bot.nav.normalizeMeasurement(bot.arduino.getDisXRight()) > 62)) {
+			} else if ((IRDir > 5)
+					&& (bot.nav
+							.normalizeMeasurement(bot.arduino.getDisXRight()) > 62)) {
 				// moves right, unless at edge of goal
-				//bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(bot.arduino.getDisXRight())
-				//		+ ":" + bot.arduino.getDisXRight());
+				// bot.io.debugln("Right:" +
+				// bot.nav.normalizeMeasurement(bot.arduino.getDisXRight())
+				// + ":" + bot.arduino.getDisXRight());
 				bot.nav.moveDir(0);
 				currentDirection = DIRECTION.RIGHT;
-			} else{
+			} else {
 				bot.stopAll();
 				currentDirection = DIRECTION.STOPPED;
 			}
-			
-			debug(""+currentZone+": "+currentDirection);
-			
+
+			debugln("" + currentZone + ": " + currentDirection);
+
 		}
 
 		bot.changeState(StateCommand.getInstance());
