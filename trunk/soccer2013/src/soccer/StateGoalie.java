@@ -75,6 +75,16 @@ public class StateGoalie extends State {
 				}
 				bot.floatAll();
 			}
+			 if((bot.arduino.getLightLeft() > bot.WHITE_VALUE) && (bot.arduino.getLightRight() > bot.WHITE_VALUE)) {
+				bot.nav.moveDir(270);
+				bot.sleep(1000);
+			} else if (bot.arduino.getLightLeft() > bot.WHITE_VALUE) {
+				bot.nav.moveDir(340);
+				bot.sleep(200);
+			} else if (bot.arduino.getLightRight() > bot.WHITE_VALUE) {
+				bot.nav.moveDir(180);
+				bot.sleep(200);
+			}
 
 			IRDir = bot.EIR.getDir();
 
@@ -91,7 +101,7 @@ public class StateGoalie extends State {
 				currentDirection = DIRECTION.LEFT;
 			} else if ((IRDir > 5)
 					&& (bot.nav
-							.normalizeMeasurement(bot.arduino.getDisXRight()) > 62)) {
+							.normalizeMeasurement(bot.arduino.getDisXLeft()) > 62)) {
 				// moves right, unless at edge of goal
 				// bot.io.debugln("Right:" +
 				// bot.nav.normalizeMeasurement(bot.arduino.getDisXRight())

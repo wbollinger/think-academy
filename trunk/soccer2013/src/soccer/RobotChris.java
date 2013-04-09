@@ -11,8 +11,6 @@ import lejos.nxt.addon.CompassHTSensor;
 
 public class RobotChris extends Robot {
 
-	public final int WHITE_VALUE = 42;
-
 	public RobotChris(String name) {
 		super(name);
 		motA = new NXTMotor(MotorPort.A);
