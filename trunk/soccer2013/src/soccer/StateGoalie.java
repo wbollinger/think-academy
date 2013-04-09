@@ -14,7 +14,14 @@ public class StateGoalie extends State {
 		RIGHT
 	}
 	
+	private static enum DIRECTION {
+		LEFT,
+		RIGHT,
+		STOPPED
+	}
+	
 	ZONE currentZone;
+	DIRECTION currentDirection;
 
 	@Override
 	public void enter(Robot bot) {
@@ -34,8 +41,12 @@ public class StateGoalie extends State {
 			bot.arduino.update();
 			bot.EIR.update();
 			
-			if((bot.arduino.getDisXLeft()+bot.arduino.getDisXRight()) > 150) {
-				
+			if((bot.arduino.getDisXLeft()+bot.arduino.getDisXRight()) > 150) { // if both pings are reading correctly
+				currentZone = ZONE.MIDDLE;
+			} else if(currentDirection == DIRECTION.LEFT) {
+				currentZone = ZONE.MID_LEFT;
+			} else if(currentDirection == DIRECTION.RIGHT) {
+				currentZone = ZONE.MID_RIGHT;
 			}
 			
 			
@@ -50,7 +61,8 @@ public class StateGoalie extends State {
 				bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
 			}
 
-			if ((bot.arduino.getDisYBack() > 20)&&!(false)) {
+			if ((bot.arduino.getDisYBack() > 20) && 
+					!((currentZone == ZONE.LEFT) || (currentZone == ZONE.RIGHT))) {
 				while (bot.arduino.getDisYBack() > 20) {
 					bot.nav.moveDir(270);
 				}
@@ -66,19 +78,26 @@ public class StateGoalie extends State {
 
 			if ((IRDir == 5) || (IRDir == 0)) {
 				bot.stopAll();
+				currentDirection = DIRECTION.STOPPED;
 			} else if ((IRDir < 5) && (bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft()) > 62)) {
 				// moves left, unless at edge of goal
-				bot.io.debugln("Left:" + bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft())
-						+ ":" + bot.arduino.getDisXLeft());
+				//bot.io.debugln("Left:" + bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft())
+				//		+ ":" + bot.arduino.getDisXLeft());
 				bot.nav.moveDir(180);
+				currentDirection = DIRECTION.LEFT;
 			} else if ((IRDir > 5) && (bot.nav.normalizeMeasurement(bot.arduino.getDisXRight()) > 62)) {
 				// moves right, unless at edge of goal
-				bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(bot.arduino.getDisXRight())
-						+ ":" + bot.arduino.getDisXRight());
+				//bot.io.debugln("Right:" + bot.nav.normalizeMeasurement(bot.arduino.getDisXRight())
+				//		+ ":" + bot.arduino.getDisXRight());
 				bot.nav.moveDir(0);
+				currentDirection = DIRECTION.RIGHT;
 			} else{
 				bot.stopAll();
+				currentDirection = DIRECTION.STOPPED;
 			}
+			
+			debug(""+currentZone+": "+currentDirection);
+			
 		}
 
 		bot.changeState(StateCommand.getInstance());
