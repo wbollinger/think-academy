@@ -355,15 +355,15 @@ void NXT_Handler(void)
 
 			// Decode and handle COMMANDS from NXT
 			switch (m_NXTInterfaceData.Fields.u8Command) {
-			case 1: // Power dribbler wheel
+			case 1: // Power dribbler wheel (disabled for goalie)
 				Serial.println("DRIBBLER ON");
-				digitalWrite(9, LOW);
+				//digitalWrite(8, LOW);
 
 				break;
 
-			case 2: // Power kicker solenoid
+			case 2: // Power kicker solenoid (disabled for goalie)
 				Serial.println("DRIBBLER OFF");
-				digitalWrite(9, HIGH);
+				//digitalWrite(8, HIGH);
 
 				break;
 

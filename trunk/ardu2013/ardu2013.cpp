@@ -11,12 +11,6 @@
 // See #define DEBUG in header file
 int debug = DEBUG;
 
-#include <NewPing.h>
-
-#define TRIGGER_PIN  10  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     10  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 255 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
-
 /***************************************************************************
  * General variables
  **************************************************************************/

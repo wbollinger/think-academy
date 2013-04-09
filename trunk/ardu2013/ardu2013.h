@@ -17,7 +17,7 @@
 extern int debug;
 
 #define TITLE_STRING    "Arduino NXT Soccer"
-#define VERSION_STRING  "V2.00"            // This is NOT the same as the version reported over the NXT interface
+#define VERSION_STRING  "V2.03"            // This is NOT the same as the version reported over the NXT interface
                                            // which is defined in NXTI2C.cpp
 
 // Select the Baud rate you want to use:
