@@ -330,10 +330,13 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("comp")) {
 				debugln("" + robot.compass.getDegrees());
 			} else if (command.equalsIgnoreCase("readUSY")) {
+				robot.arduino.update();
 				debugln("" + robot.arduino.getDisYBack());
 			} else if (command.equalsIgnoreCase("readUSXLeft")) {
+				robot.arduino.update();
 				debugln("" + robot.arduino.getDisXLeft());
 			} else if (command.equalsIgnoreCase("readUSXRight")) {
+				robot.arduino.update();
 				debugln("" + robot.arduino.getDisXRight());
 			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
