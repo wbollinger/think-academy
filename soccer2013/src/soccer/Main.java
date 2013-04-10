@@ -28,15 +28,23 @@ public class Main {
 		// create a robot
 		Robot robot = Robot.getRobot();
 		
-		while(Button.LEFT.isUp() && Button.RIGHT.isUp())
+		while(Button.LEFT.isUp() && Button.RIGHT.isUp() && Button.ENTER.isUp())
 			;
 		
 		if(Button.RIGHT.isDown()) {
 			robot.nav.ENEMY_GOAL = Navigator.BLUE_GOAL_HEADING;
 			robot.nav.ALLY_GOAL = Navigator.YELLOW_GOAL_HEADING;
-		} else {
+		} else if(Button.LEFT.isDown()){
 			robot.nav.ENEMY_GOAL = Navigator.YELLOW_GOAL_HEADING;
 			robot.nav.ALLY_GOAL = Navigator.BLUE_GOAL_HEADING;
+		} else if(Button.ENTER.isDown()){
+			if(robot.compass.getDegrees() > robot.nav.YELLOW_GOAL_HEADING-45 && robot.compass.getDegrees() < robot.nav.YELLOW_GOAL_HEADING+45){
+				robot.nav.ENEMY_GOAL = Navigator.YELLOW_GOAL_HEADING;
+				robot.nav.ALLY_GOAL = Navigator.BLUE_GOAL_HEADING;
+			} else if(robot.compass.getDegrees() > robot.nav.BLUE_GOAL_HEADING-45 && robot.compass.getDegrees() < robot.nav.BLUE_GOAL_HEADING+45){
+				robot.nav.ENEMY_GOAL = Navigator.BLUE_GOAL_HEADING;
+				robot.nav.ALLY_GOAL = Navigator.YELLOW_GOAL_HEADING;
+			} // have to do something if not facing the right way.
 		}
 
 		//if (buttons == Button.ID_ENTER) {
