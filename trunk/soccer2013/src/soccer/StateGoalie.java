@@ -6,103 +6,83 @@ public class StateGoalie extends State {
 
 	private static StateGoalie instance = new StateGoalie();
 
-	public static enum ZONE {
-		LEFT, MID_LEFT, MIDDLE, MID_RIGHT, RIGHT
-	}
-
-	public static enum DIRECTION {
-		LEFT, RIGHT, STOPPED
-	}
-
-	 ZONE currentZone;
-	 DIRECTION currentDirection;
+	int compass;
 
 	@Override
 	public void enter(Robot bot) {
 		debugln("Entered stategoalie");
-		currentZone = ZONE.MIDDLE;
+		bot.nav.currentZone = Navigator.ZONE.MIDDLE;
+		compass = 0;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void execute(Robot bot) {
-		int i = 5;
-		int compass = 0;
-		int IRDir = 0;
 
-		while (Button.ENTER.isUp()) {
-			bot.arduino.update();
-			bot.EIR.update();
+		bot.arduino.update();
+		bot.EIR.update();
+		compass = (int) bot.compass.getDegrees();
 
-			if ((bot.arduino.getDisXLeft() + bot.arduino.getDisXRight()) > 150) { // if both pings are reading correctly
-				currentZone = ZONE.MIDDLE;
-			} else if (currentDirection == DIRECTION.LEFT) {
-				if (bot.arduino.getDisXLeft() < 50) {
-					currentZone = ZONE.LEFT;
-				} else {
-					currentZone = ZONE.MID_LEFT;
-				}
-			} else if (currentDirection == DIRECTION.RIGHT) {
-				if (bot.arduino.getDisXRight() < 50) {
-					currentZone = ZONE.RIGHT;
-				} else {
-					currentZone = ZONE.MID_RIGHT;
-				}
-			}
-
-			if (i == 5) {
-				compass = (int) bot.compass.getDegrees();
-				i = 0;
+		if ((bot.arduino.getDisXLeft() + bot.arduino.getDisXRight()) > 150) {
+			bot.nav.currentZone = Navigator.ZONE.MIDDLE;
+		} else if (bot.nav.currentDirection == Navigator.DIRECTION.LEFT) {
+			if (bot.arduino.getDisXLeft() < 50) {
+				bot.nav.currentZone = Navigator.ZONE.LEFT;
 			} else {
-				i++;
+				bot.nav.currentZone = Navigator.ZONE.MID_LEFT;
 			}
-
-			if (!(compass + 5 > Navigator.ENEMY_GOAL && compass - 5 < Navigator.ENEMY_GOAL)) {
-				bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
-			}
-
-			if ((bot.arduino.getDisYBack() > 20)
-					&& !((currentZone == ZONE.LEFT) || (currentZone == ZONE.RIGHT))) {
-				bot.changeState(StateGoalieReposition.getInstance());
-			} else if (bot.arduino.getDisYBack() < 15) {
-				bot.changeState(StateGoalieReposition.getInstance());
-			}
-
-			IRDir = bot.EIR.getDir();
-
-			if ((IRDir == 5) || (IRDir == 0)) {
-				bot.stopAll();
-				currentDirection = DIRECTION.STOPPED;
-			} else if ((IRDir < 5)
-					&& (bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft()) > 62)) {
-				// moves left, unless at edge of goal
-				// bot.io.debugln("Left:" +
-				// bot.nav.normalizeMeasurement(bot.arduino.getDisXLeft())
-				// + ":" + bot.arduino.getDisXLeft());
-				bot.nav.moveDir(180);
-				currentDirection = DIRECTION.LEFT;
-			} else if ((IRDir > 5)
-					&& (bot.nav
-							.normalizeMeasurement(bot.arduino.getDisXLeft()) > 62)) {
-				// moves right, unless at edge of goal
-				// bot.io.debugln("Right:" +
-				// bot.nav.normalizeMeasurement(bot.arduino.getDisXRight())
-				// + ":" + bot.arduino.getDisXRight());
-				bot.nav.moveDir(0);
-				currentDirection = DIRECTION.RIGHT;
+		} else if (bot.nav.currentDirection == Navigator.DIRECTION.RIGHT) {
+			if (bot.arduino.getDisXRight() < 50) {
+				bot.nav.currentZone = Navigator.ZONE.RIGHT;
 			} else {
-				bot.stopAll();
-				currentDirection = DIRECTION.STOPPED;
+				bot.nav.currentZone = Navigator.ZONE.MID_RIGHT;
 			}
-
-			debugln("" + currentZone + ": " + currentDirection);
-
+		}
+		
+		if (!(((compass + 5) > Navigator.ENEMY_GOAL) && ((compass - 5) < Navigator.ENEMY_GOAL))) {
+			bot.changeState(StateGoalieReposition.getInstance());
+			return;
 		}
 
-		bot.changeState(StateCommand.getInstance());
+		if ((bot.arduino.getDisYBack() > 20)
+				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || (bot.nav.currentZone == Navigator.ZONE.RIGHT))) {
+			bot.changeState(StateGoalieReposition.getInstance());
+			return;
+		} else if (bot.arduino.getDisYBack() < 15) {
+			bot.changeState(StateGoalieReposition.getInstance());
+			return;
+		}
+
+		if ((bot.arduino.getLightLeft() < bot.WHITE_VALUE)
+				|| (bot.arduino.getLightRight() < bot.WHITE_VALUE)) {
+			debugln("hit line");
+			bot.changeState(StateGoalieReposition.getInstance());
+			return;
+		}
+
+		if (bot.EIR.getDir() == 5) {
+			bot.stopAll();
+			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
+		} else if ((bot.EIR.getDir() < 5) && (bot.arduino.getDisXLeft() > 62)) {
+			// moves left, unless at edge of goal
+			bot.nav.moveDir(180);
+			bot.nav.currentDirection = Navigator.DIRECTION.LEFT;
+		} else if ((bot.EIR.getDir() > 5) && (bot.arduino.getDisXLeft() > 62)) {
+			// moves right, unless at edge of goal
+			// + ":" + bot.arduino.getDisXRight());
+			bot.nav.moveDir(0);
+			bot.nav.currentDirection = Navigator.DIRECTION.RIGHT;
+		} else if(bot.EIR.getDir() == 0){
+			bot.stopAll();
+			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
+		}
+
+		debugln("" + bot.nav.currentZone + ": " + bot.nav.currentDirection);
 
 	}
+
+	// bot.changeState(StateCommand.getInstance());
 
 	public static StateGoalie getInstance() {
 		return instance;
