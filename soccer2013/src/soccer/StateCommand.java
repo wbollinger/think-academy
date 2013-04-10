@@ -314,6 +314,8 @@ public class StateCommand extends State {
 				robot.changeState(StateStriker.getInstance());
 			} else if (command.equalsIgnoreCase("StateGoalie")) {
 				robot.changeState(StateGoalie.getInstance());
+			} else if (command.equalsIgnoreCase("StateFollowBall")) {
+				robot.changeState(StateFollowBall.getInstance());
 			} else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit
