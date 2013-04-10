@@ -94,6 +94,7 @@ void setup()
 	Init_Analog();
 	Init_Digital();
 	Init_Ping();
+	Serial.println("Setup complete");
 }
 
 //-----------------------------------------------------------------------------

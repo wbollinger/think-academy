@@ -27,10 +27,10 @@ void Init_Digital(void)
 
 	// initialize the switch pin as an input:
 	// Turn on internal pull-up resister for switch connected to Digital input
-	pinMode(11, INPUT);
-	digitalWrite(11, HIGH);
-	pinMode(12, INPUT);
-	digitalWrite(12, HIGH);
+	//pinMode(11, INPUT);
+	//digitalWrite(11, HIGH);
+	//pinMode(12, INPUT);
+	//digitalWrite(12, HIGH);
 
 	// For Roboduino, use non-PWM pins.  Avoid 3, 5, 6, 9, 10, 11
 	//no relay needed on goalie; disabled
