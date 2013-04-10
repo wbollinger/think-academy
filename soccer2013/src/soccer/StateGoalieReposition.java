@@ -61,13 +61,13 @@ public class StateGoalieReposition extends State {
 			bot.nav.moveDir(270);
 			debugln("Backing Up: B:" + bot.arduino.getDisYBack() + ":L:"
 					+ bot.arduino.getDisXLeft() + ":R:"
-					+ bot.arduino.getDisXRight());
+					+ bot.arduino.getDisXRight(), 0x02);
 
 		} else if (bot.arduino.getDisYBack() < 15) {
 			bot.nav.moveDir(90);
 			debugln("Moving Up:" + bot.arduino.getDisYBack() + ":L:"
 					+ bot.arduino.getDisXLeft() + ":R:"
-					+ bot.arduino.getDisXRight());
+					+ bot.arduino.getDisXRight(), 0x02);
 
 		} else {
 			bot.changeState(StateGoalie.getInstance());

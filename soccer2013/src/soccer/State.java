@@ -29,9 +29,17 @@ public abstract class State {
 	public void debug(String msg) {
 		Robot.getRobot().io.debug(msg);
 	}
-
+	
 	public void debugln(String msg) {
 		debug(msg + "\n");
+	}
+	
+	public void debug(String msg, int flags) {
+		Robot.getRobot().io.debug(msg, flags);
+	}
+
+	public void debugln(String msg, int flags) {
+		debug(msg + "\n", flags);
 	}
 
 	
