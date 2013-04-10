@@ -45,13 +45,13 @@ public class StateGoalieReposition extends State {
 			debugln("hit line left");
 			bot.nav.moveDir(90);
 			bot.sleep(1000);
-			bot.nav.moveDir(180);
+			bot.nav.moveDir(0);
 			bot.sleep(1000);
 		} else if (bot.arduino.getLightRight() < bot.WHITE_VALUE) {
 			debugln("hit line right");
 			bot.nav.moveDir(90);
 			bot.sleep(1000);
-			bot.nav.moveDir(0);
+			bot.nav.moveDir(180);
 			bot.sleep(1000);
 		} else if (!(compass + 5 > Navigator.ENEMY_GOAL && compass - 5 < Navigator.ENEMY_GOAL)) {
 			bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
