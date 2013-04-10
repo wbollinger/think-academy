@@ -2,33 +2,32 @@ package soccer;
 
 import lejos.nxt.Button;
 
-public class StateStriker extends State{
+public class StateStriker extends State {
 
 	private static StateStriker instance = new StateStriker();
 
-	//--------------------------------------------------------------------------------------
-	public void execute(Robot robot) {
-		robot.changeState(StateFollowBall.getInstance());
-		robot.nav.pointToHeadingArc(Navigator.ENEMY_GOAL);
-		robot.nav.pointToGoal();
-		//moveForward will be changed to kick. 
-		robot.moveForward();
-		
-		
-		robot.changeState(StateCommand.getInstance());
+	public void enter(Robot robot) {
+		debugln("Entered StateStriker");
 	}
-	
+
+	// --------------------------------------------------------------------------------------
+	public void execute(Robot bot) {
+		// moveForward will be changed to kick.
+
+		if (Button.ENTER.isDown()) {
+			bot.changeState(StateCommand.getInstance());
+			return;
+		}
+		bot.changeState(StateFollowBall.getInstance());
+
+	}
+
 	public static StateStriker getInstance() {
 		return instance;
 	}
 
-	public void enter(Robot robot) {
-		
-	}
-
-	
 	public void exit(Robot robot) {
-		
+		debugln("Exited StateStriker");
 	}
 
 }

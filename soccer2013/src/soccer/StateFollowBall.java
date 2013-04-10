@@ -1,5 +1,7 @@
 package soccer;
 
+import lejos.nxt.Button;
+
 public class StateFollowBall extends State {
 
 	private static StateFollowBall instance = new StateFollowBall();
@@ -11,9 +13,12 @@ public class StateFollowBall extends State {
 
 	@Override
 	public void execute(Robot bot) {
+		if (Button.ENTER.isDown()) {
+			bot.changeState(StateCommand.getInstance());
+			return;
+		}
 		bot.followBall();
-		bot.changeState(StateStriker.getInstance());
-		
+		bot.changeState(StatePointToGoal.getInstance());
 	}
 
 	public static StateFollowBall getInstance() {
@@ -23,7 +28,7 @@ public class StateFollowBall extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StateFollowBall");
-	
+
 	}
 
 }
