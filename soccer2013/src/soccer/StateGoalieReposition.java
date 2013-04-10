@@ -17,6 +17,11 @@ public class StateGoalieReposition extends State {
 
 	@Override
 	public void execute(Robot bot) {
+		
+		if(Button.ENTER.isDown()) {
+			bot.changeState(StateCommand.getInstance());
+			return;
+		}
 
 		compass = (int) bot.compass.getDegrees();
 		bot.arduino.update();
@@ -24,14 +29,16 @@ public class StateGoalieReposition extends State {
 		
 		if (!(compass + 5 > Navigator.ENEMY_GOAL && compass - 5 < Navigator.ENEMY_GOAL)) {
 			bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
+			debugln("Correcting Heading");
 		}
 
 		if ((bot.arduino.getDisYBack() > 20)) {
-			debugln("y is greater than 20");
 			bot.nav.moveDir(270);
+			debugln("Y is "+bot.arduino.getDisYBack());
 			
 		} else if (bot.arduino.getDisYBack() < 15) {
 			bot.nav.moveDir(90);
+			debugln("Y is "+bot.arduino.getDisYBack());
 			
 		} else if ((bot.arduino.getLightLeft() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightRight() < bot.WHITE_VALUE)) {
@@ -44,7 +51,7 @@ public class StateGoalieReposition extends State {
 			debugln("hit line");
 			bot.stopAll();
 		} else {
-			bot.changeState(StateCommand.getInstance());
+			bot.changeState(StateGoalie.getInstance());
 			return;
 		}
 

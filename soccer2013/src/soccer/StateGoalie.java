@@ -19,6 +19,11 @@ public class StateGoalie extends State {
 
 	@Override
 	public void execute(Robot bot) {
+		
+		if(Button.ENTER.isDown()) {
+			bot.changeState(StateCommand.getInstance());
+			return;
+		}
 
 		bot.arduino.update();
 		bot.EIR.update();
