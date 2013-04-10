@@ -99,7 +99,7 @@ public class ArduSoccer extends I2CSensor {
 		
 	}
 	public int getLightRight(){
-		return lightRight;
+		return lightRight+ 60;
 	}
 	public int getLightLeft(){
 		return lightLeft;

@@ -11,7 +11,7 @@ public class StateGoalie extends State {
 	@Override
 	public void enter(Robot bot) {
 		debugln("Entered stategoalie");
-		bot.nav.currentZone = Navigator.ZONE.MIDDLE;
+
 		compass = 0;
 		// TODO Auto-generated method stub
 
@@ -19,8 +19,9 @@ public class StateGoalie extends State {
 
 	@Override
 	public void execute(Robot bot) {
-		
-		if(Button.ENTER.isDown()) {
+
+		if (Button.ENTER.isDown()) {
+			debugln("Breaking into StateCommand");
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
@@ -43,18 +44,32 @@ public class StateGoalie extends State {
 			} else {
 				bot.nav.currentZone = Navigator.ZONE.MID_RIGHT;
 			}
+		} else {
+			bot.nav.currentZone = Navigator.ZONE.MIDDLE;
 		}
 		
-		if (!(((compass + 5) > Navigator.ENEMY_GOAL) && ((compass - 5) < Navigator.ENEMY_GOAL))) {
+		if ((bot.nav.currentZone != bot.nav.lastZone)
+				|| (bot.nav.currentDirection != bot.nav.lastDirection)) {
+			
+			debugln("" + bot.nav.currentZone + ": " + bot.nav.currentDirection);
+		}
+
+		bot.nav.lastZone = bot.nav.currentZone;
+		bot.nav.lastDirection = bot.nav.currentDirection;
+
+		if (!(((compass + 10) > Navigator.ENEMY_GOAL) && ((compass - 10) < Navigator.ENEMY_GOAL))) {
+			debugln("Incorrect heading: breaking to StateGoalieReposition");
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
 		}
 
-		if ((bot.arduino.getDisYBack() > 20)
+		if ((bot.arduino.getDisYBack() > 25)
 				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || (bot.nav.currentZone == Navigator.ZONE.RIGHT))) {
+			debugln("Too far forward: breaking to StateGoalieReposition");
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
-		} else if (bot.arduino.getDisYBack() < 15) {
+		} else if (bot.arduino.getDisYBack() < 10) {
+			debugln("Too close to goal: breaking to StateGoalieReposition");
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
 		}
@@ -65,7 +80,8 @@ public class StateGoalie extends State {
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
 		}
-
+		
+		debugln("IR|DIR:"+bot.EIR.getDir()+"|STR:"+bot.EIR.getStrength());
 		if (bot.EIR.getDir() == 5) {
 			bot.stopAll();
 			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
@@ -73,17 +89,17 @@ public class StateGoalie extends State {
 			// moves left, unless at edge of goal
 			bot.nav.moveDir(180);
 			bot.nav.currentDirection = Navigator.DIRECTION.LEFT;
-		} else if ((bot.EIR.getDir() > 5) && (bot.arduino.getDisXLeft() > 62)) {
+		} else if ((bot.EIR.getDir() > 5) && (bot.arduino.getDisXRight() > 62)) {
 			// moves right, unless at edge of goal
 			// + ":" + bot.arduino.getDisXRight());
 			bot.nav.moveDir(0);
 			bot.nav.currentDirection = Navigator.DIRECTION.RIGHT;
-		} else if(bot.EIR.getDir() == 0){
+		} else if (bot.EIR.getDir() == 0) {
 			bot.stopAll();
 			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
 		}
 
-		debugln("" + bot.nav.currentZone + ": " + bot.nav.currentDirection);
+		
 
 	}
 
