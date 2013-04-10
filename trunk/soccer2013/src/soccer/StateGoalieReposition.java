@@ -7,7 +7,7 @@ public class StateGoalieReposition extends State {
 	private static StateGoalieReposition instance = new StateGoalieReposition();
 
 	int compass;
-	
+
 	@Override
 	public void enter(Robot bot) {
 		debugln("Entered stategoaliereposition");
@@ -17,8 +17,9 @@ public class StateGoalieReposition extends State {
 
 	@Override
 	public void execute(Robot bot) {
-		
-		if(Button.ENTER.isDown()) {
+
+		if (Button.ENTER.isDown()) {
+			debugln("Breaking into StateCommand");
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
@@ -26,30 +27,47 @@ public class StateGoalieReposition extends State {
 		compass = (int) bot.compass.getDegrees();
 		bot.arduino.update();
 		bot.EIR.update();
-		
-		if (!(compass + 5 > Navigator.ENEMY_GOAL && compass - 5 < Navigator.ENEMY_GOAL)) {
-			bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
-			debugln("Correcting Heading");
-		}
 
-		if ((bot.arduino.getDisYBack() > 20)) {
-			bot.nav.moveDir(270);
-			debugln("Y is "+bot.arduino.getDisYBack());
-			
-		} else if (bot.arduino.getDisYBack() < 15) {
-			bot.nav.moveDir(90);
-			debugln("Y is "+bot.arduino.getDisYBack());
-			
-		} else if ((bot.arduino.getLightLeft() < bot.WHITE_VALUE)
+		if ((bot.arduino.getLightLeft() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightRight() < bot.WHITE_VALUE)) {
 			debugln("hit line");
-			bot.stopAll();
+			bot.nav.moveDir(90);
+			bot.sleep(1000);
+			if (bot.nav.currentZone == Navigator.ZONE.LEFT) {
+				bot.nav.moveDir(180);
+				bot.sleep(1000);
+			} else if (bot.nav.currentZone == Navigator.ZONE.RIGHT) {
+				bot.nav.moveDir(0);
+				bot.sleep(1000);
+			}
+
 		} else if (bot.arduino.getLightLeft() < bot.WHITE_VALUE) {
-			debugln("hit line");
-			bot.stopAll();
+			debugln("hit line left");
+			bot.nav.moveDir(90);
+			bot.sleep(1000);
+			bot.nav.moveDir(180);
+			bot.sleep(1000);
 		} else if (bot.arduino.getLightRight() < bot.WHITE_VALUE) {
-			debugln("hit line");
-			bot.stopAll();
+			debugln("hit line right");
+			bot.nav.moveDir(90);
+			bot.sleep(1000);
+			bot.nav.moveDir(0);
+			bot.sleep(1000);
+		} else if (!(compass + 5 > Navigator.ENEMY_GOAL && compass - 5 < Navigator.ENEMY_GOAL)) {
+			bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
+			debugln("Heading Corrected");
+		} else if ((bot.arduino.getDisYBack() > 20)) {
+			bot.nav.moveDir(270);
+			debugln("Backing Up: B:" + bot.arduino.getDisYBack() + ":L:"
+					+ bot.arduino.getDisXLeft() + ":R:"
+					+ bot.arduino.getDisXRight());
+
+		} else if (bot.arduino.getDisYBack() < 15) {
+			bot.nav.moveDir(90);
+			debugln("Moving Up:" + bot.arduino.getDisYBack() + ":L:"
+					+ bot.arduino.getDisXLeft() + ":R:"
+					+ bot.arduino.getDisXRight());
+
 		} else {
 			bot.changeState(StateGoalie.getInstance());
 			return;

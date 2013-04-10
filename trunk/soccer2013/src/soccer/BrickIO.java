@@ -17,6 +17,8 @@ public class BrickIO {
 	private boolean useCommands;
 	private boolean useDebug;
 	
+	private int enabledDebug = 0xFF;
+	
 	
 	public void debug(String msg) {
 		if (useDebug == false)
