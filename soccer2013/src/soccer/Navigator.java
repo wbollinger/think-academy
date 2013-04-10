@@ -22,6 +22,17 @@ public class Navigator {
 
 	private int xPos;
 	private int yPos;
+	
+	public static enum ZONE {
+		LEFT, MID_LEFT, MIDDLE, MID_RIGHT, RIGHT
+	}
+
+	public static enum DIRECTION {
+		LEFT, RIGHT, STOPPED
+	}
+
+	ZONE currentZone;
+	DIRECTION currentDirection;
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
