@@ -58,7 +58,7 @@ public class StateGoalie extends State {
 		if ((bot.nav.currentZone != bot.nav.lastZone)
 				|| (bot.nav.currentDirection != bot.nav.lastDirection)) {
 			
-			debugln("" + bot.nav.currentZone + ": " + bot.nav.currentDirection);
+			debugln("" + bot.nav.currentZone + ": " + bot.nav.currentDirection, 0x10);
 		}
 
 		bot.nav.lastZone = bot.nav.currentZone;
@@ -88,7 +88,7 @@ public class StateGoalie extends State {
 			return;
 		}
 		
-		debugln("IR|DIR:"+bot.EIR.getDir()+"|STR:"+bot.EIR.getStrength());
+		debugln("IR|DIR:"+bot.EIR.getDir()+"|STR:"+bot.EIR.getStrength(), 0x01);
 		if (bot.EIR.getDir() == 5) {
 			bot.stopAll();
 			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;

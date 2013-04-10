@@ -19,14 +19,14 @@ public class BrickIO {
 	
 	private int debugFlags = 0xFF;
 	/*
-	 * 0000 0001 IR data
-	 * 0000 0010 Ping data
-	 * 0000 0100 Light sensor data
-	 * 0000 1000 Compass data
-	 * 0001 0000 Zone data
-	 * 0010 0000 Unassigned
-	 * 0100 0000 Unassigned
-	 * 1000 0000 Unassigned
+	 * 0x01  1   IR data
+	 * 0x02  2   Ping data
+	 * 0x04  4   Light sensor data
+	 * 0x08  8   Compass data
+	 * 0x10  16  Zone data
+	 * 0x20  32  Unassigned
+	 * 0x40  64  Unassigned
+	 * 0x80  128 Unassigned
 	 */
 	
 	
