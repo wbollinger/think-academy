@@ -6,19 +6,20 @@ public class StateGoalie extends State {
 
 	private static StateGoalie instance = new StateGoalie();
 
-	private static enum ZONE {
+	public static enum ZONE {
 		LEFT, MID_LEFT, MIDDLE, MID_RIGHT, RIGHT
 	}
 
-	private static enum DIRECTION {
+	public static enum DIRECTION {
 		LEFT, RIGHT, STOPPED
 	}
 
-	ZONE currentZone;
-	DIRECTION currentDirection;
+	 ZONE currentZone;
+	 DIRECTION currentDirection;
 
 	@Override
 	public void enter(Robot bot) {
+		debugln("Entered stategoalie");
 		currentZone = ZONE.MIDDLE;
 		// TODO Auto-generated method stub
 
@@ -37,13 +38,13 @@ public class StateGoalie extends State {
 			if ((bot.arduino.getDisXLeft() + bot.arduino.getDisXRight()) > 150) { // if both pings are reading correctly
 				currentZone = ZONE.MIDDLE;
 			} else if (currentDirection == DIRECTION.LEFT) {
-				if (bot.arduino.getDisXLeft() < 40) {
+				if (bot.arduino.getDisXLeft() < 50) {
 					currentZone = ZONE.LEFT;
 				} else {
 					currentZone = ZONE.MID_LEFT;
 				}
 			} else if (currentDirection == DIRECTION.RIGHT) {
-				if (bot.arduino.getDisXRight() < 40) {
+				if (bot.arduino.getDisXRight() < 50) {
 					currentZone = ZONE.RIGHT;
 				} else {
 					currentZone = ZONE.MID_RIGHT;
@@ -63,27 +64,9 @@ public class StateGoalie extends State {
 
 			if ((bot.arduino.getDisYBack() > 20)
 					&& !((currentZone == ZONE.LEFT) || (currentZone == ZONE.RIGHT))) {
-				while (bot.arduino.getDisYBack() > 20) {
-					bot.nav.moveDir(270);
-					bot.arduino.update();
-				}
-				bot.floatAll();
+				bot.changeState(StateGoalieReposition.getInstance());
 			} else if (bot.arduino.getDisYBack() < 15) {
-				while (bot.arduino.getDisYBack() < 15) {
-					bot.nav.moveDir(90);
-					bot.arduino.update();
-				}
-				bot.floatAll();
-			}
-			 if((bot.arduino.getLightLeft() > bot.WHITE_VALUE) && (bot.arduino.getLightRight() > bot.WHITE_VALUE)) {
-				bot.nav.moveDir(270);
-				bot.sleep(1000);
-			} else if (bot.arduino.getLightLeft() > bot.WHITE_VALUE) {
-				bot.nav.moveDir(340);
-				bot.sleep(200);
-			} else if (bot.arduino.getLightRight() > bot.WHITE_VALUE) {
-				bot.nav.moveDir(180);
-				bot.sleep(200);
+				bot.changeState(StateGoalieReposition.getInstance());
 			}
 
 			IRDir = bot.EIR.getDir();

@@ -13,7 +13,7 @@ import lejos.nxt.addon.IRSeekerV2;
 
 public class Robot {
 
-	public final int WHITE_VALUE = 650;
+	public final int WHITE_VALUE = 500;
 	
 	protected int MOTOR_POWER = 100;
 
