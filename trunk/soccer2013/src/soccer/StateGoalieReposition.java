@@ -1,5 +1,6 @@
 package soccer;
 
+import soccer.Navigator.ZONE;
 import lejos.nxt.Button;
 
 public class StateGoalieReposition extends State {
@@ -56,7 +57,7 @@ public class StateGoalieReposition extends State {
 		} else if (!(compass + 5 > Navigator.ENEMY_GOAL && compass - 5 < Navigator.ENEMY_GOAL)) {
 			bot.nav.pointToHeading((float) Navigator.ENEMY_GOAL);
 			debugln("Heading Corrected");
-		} else if ((bot.arduino.getDisYBack() > 20)) {
+		} else if ((bot.arduino.getDisYBack() > 20 && bot.nav.currentZone == Navigator.ZONE.MIDDLE)) {
 			bot.nav.moveDir(270);
 			debugln("Backing Up: B:" + bot.arduino.getDisYBack() + ":L:"
 					+ bot.arduino.getDisXLeft() + ":R:"
