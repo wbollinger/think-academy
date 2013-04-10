@@ -8,7 +8,7 @@ public class StateStriker extends State{
 
 	//--------------------------------------------------------------------------------------
 	public void execute(Robot robot) {
-		robot.followBall();
+		robot.changeState(StateFollowBall.getInstance());
 		robot.nav.pointToHeadingArc(Navigator.ENEMY_GOAL);
 		robot.nav.pointToGoal();
 		//moveForward will be changed to kick. 
