@@ -10,6 +10,8 @@ import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.IRSeekerV2;
+import lejos.nxt.addon.MMXMotor;
+import lejos.nxt.addon.NXTMMX;
 
 public class Robot {
 
@@ -35,6 +37,9 @@ public class Robot {
 	NXTMotor motA;
 	NXTMotor motB;
 	NXTMotor motC;
+	
+	NXTMMX mux;
+	MMXMotor dribbler;
 
 	NXTRegulatedMotor regMotA;
 	NXTRegulatedMotor regMotB;

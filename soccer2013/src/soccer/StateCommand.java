@@ -198,6 +198,10 @@ public class StateCommand extends State {
 				robot.turnLeftPrecise(degrees);
 			} else if (command.equalsIgnoreCase("followBall")) {
 				robot.followBall();
+			} else if (command.equalsIgnoreCase("vroom")) {
+				robot.dribbler.forward();
+			} else if (command.equalsIgnoreCase("unvroom")) {
+				robot.dribbler.stop();
 			} else if (command.equalsIgnoreCase("forward")) {
 				if (args.length > 0) {
 					double distance = parseDouble(arg0);
