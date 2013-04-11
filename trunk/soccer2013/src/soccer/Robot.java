@@ -17,6 +17,11 @@ public class Robot {
 
 	public final int WHITE_VALUE = 500;
 	
+	public static final byte CONNECT_CAPS_CHARGER = (byte) 1;
+	public static final byte DISCONNECT_CAPS_CHARGER = (byte) 2;
+	public static final byte CONNECT_CAPS_SOLENOID = (byte) 3;
+	public static final byte DISCONNECT_CAPS_SOLENOID = (byte) 4;
+	
 	protected int MOTOR_POWER = 100;
 
 	State current_state;

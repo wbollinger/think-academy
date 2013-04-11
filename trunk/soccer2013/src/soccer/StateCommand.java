@@ -408,10 +408,8 @@ public class StateCommand extends State {
 					robot.sleep(50);
 				}
 			} else if (command.equalsIgnoreCase("writeArduinoCommands")) {
-				// use 82 to read Analog
-				byte address = (byte) 0x41;
 				byte command_num = (byte) parseInt(arg0);
-				robot.arduino.writeCommand(address, command_num);
+				robot.arduino.writeCommand(command_num);
 			} else if (command.equalsIgnoreCase("play")) {
 				int freq = parseInt(arg0);
 				int time = 200;

@@ -19,10 +19,15 @@ public class StateStriker extends State {
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
+
+		// getDisY will be getUSBall
+		if (!(bot.arduino.getDisBall() < 10)) {
+			bot.changeState(StateFollowBall.getInstance());
+			return;
+		}
 		
-		//getDisY will be getUSBall
-		if(bot.arduino.getDisYBack() < 7){
-		bot.changeState(StateFollowBall.getInstance());
+		if(bot.arduino.getDisBall() < 10) {
+			bot.changeState(StatePointToGoal.getInstance());
 		}
 	}
 
