@@ -20,8 +20,8 @@ public class RobotChris extends Robot {
 		// IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		EIR = new EnhIRSeekerV2(SensorPort.S1);
 		compass = new CompassHTSensor(SensorPort.S2);
-		//lightLeft = new LightSensor(SensorPort.S3);
-		//lightRight = new LightSensor(SensorPort.S4);
+		// lightLeft = new LightSensor(SensorPort.S3);
+		// lightRight = new LightSensor(SensorPort.S4);
 		arduino = new ArduSoccer(SensorPort.S4);
 		// USY = new UltrasonicSensor(SensorPort.S3);
 		// USX = new UltrasonicSensor(SensorPort.S4);
@@ -47,13 +47,13 @@ public class RobotChris extends Robot {
 			str = EIR.getStrength();
 			left = lightLeft.readValue();
 			right = lightRight.readValue();
-			io.debugln(""+left+":"+right);
-			//io.debugln("" + dir + ":" + str);
+			io.debugln("" + left + ":" + right);
+			// io.debugln("" + dir + ":" + str);
 			if (str > 350) {
 				stopAll();
 				forward(300);
 				return;
-			} else if((right > WHITE_VALUE) && (left > WHITE_VALUE)) {
+			} else if ((right > WHITE_VALUE) && (left > WHITE_VALUE)) {
 				nav.moveDir(270);
 				sleep(1000);
 			} else if (right > WHITE_VALUE) {
@@ -119,6 +119,22 @@ public class RobotChris extends Robot {
 		motC.forward();
 	}
 
+	public void turnRightprecise(double degrees) {
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		double count = 3.14 * degrees;
+		while (Math.abs(motA.getTachoCount()) < count) {
+			motA.forward();
+			motB.forward();
+			motC.forward();
+		}
+		stopAll();
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+	}
+
 	public void turnLeft() {
 		motA.setPower(MOTOR_POWER);
 		motB.setPower(MOTOR_POWER);
@@ -126,6 +142,22 @@ public class RobotChris extends Robot {
 		motA.backward();
 		motB.backward();
 		motC.backward();
+	}
+
+	public void turnLeftprecise(double degrees) {
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		double count = 3.14 * degrees;
+		while (Math.abs(motA.getTachoCount()) < count) {
+			motA.backward();
+			motB.backward();
+			motC.backward();
+		}
+		stopAll();
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
 	}
 
 	public void moveArcRight() {

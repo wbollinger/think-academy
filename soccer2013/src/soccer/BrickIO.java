@@ -25,8 +25,8 @@ public class BrickIO {
 	 * 0x08  8   Compass data
 	 * 0x10  16  Zone data
 	 * 0x20  32  Unassigned
-	 * 0x40  64  Unassigned
-	 * 0x80  128 Unassigned
+	 * 0x40  64  Status alerts
+	 * 0x80  128 State transfer alerts
 	 */
 	
 	

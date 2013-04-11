@@ -146,7 +146,7 @@ public class StateCommand extends State {
 				robot.turnRight();
 			} else if (command.equalsIgnoreCase("rightprecise")) {
 				double degrees = parseDouble(arg0);
-				robot.turnRightprecise(degrees);
+				robot.turnRightPrecise(degrees);
 			} else if (command.equalsIgnoreCase("pointtogoal")) {
 				debugln("called");
 				robot.nav.pointToGoal();
@@ -195,7 +195,7 @@ public class StateCommand extends State {
 				robot.turnLeft();
 			} else if (command.equalsIgnoreCase("leftprecise")) {
 				double degrees = parseDouble(arg0);
-				robot.turnLeftprecise(degrees);
+				robot.turnLeftPrecise(degrees);
 			} else if (command.equalsIgnoreCase("followBall")) {
 				robot.followBall();
 			} else if (command.equalsIgnoreCase("forward")) {
@@ -358,6 +358,24 @@ public class StateCommand extends State {
 				robot.io.setUseDebug(false);
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
+			}else if (command.equalsIgnoreCase("pollallsensors")) {
+				while (!Button.ENTER.isDown()) {
+					robot.EIR.update();
+					robot.arduino.update();
+					debug(" || IRDIR = " + robot.EIR.getDir(), 1);
+					debug(" || IRSTR = " + robot.EIR.getStrength(), 1);
+					debug(" || LP = " + robot.arduino.getDisXLeft(), 2);
+					debug(" || RP = " + robot.arduino.getDisXRight(), 2);
+					debug(" || BP = " + robot.arduino.getDisYBack(), 2);
+					debug(" || LL = " + robot.arduino.getLightLeft(), 4);
+					debug(" || RL = " + robot.arduino.getLightRight(), 4);
+					debug(" || COMP = " + robot.compass.getDegrees(), 8);
+					
+					debugln("");
+					
+					robot.sleep(20);
+
+				}
 			} else if (command.equalsIgnoreCase("pingLoop")) {
 				while (!Button.ENTER.isDown()) {
 					int val = robot.arduino.getLightLeft();

@@ -7,8 +7,8 @@ import lejos.nxt.addon.CompassHTSensor;
 
 public class Navigator {
 
-	public static final float YELLOW_GOAL_HEADING = 286.0f;
-	public static final float BLUE_GOAL_HEADING = 120.0f;
+	public static final float YELLOW_GOAL_HEADING = 297.0f;
+	public static final float BLUE_GOAL_HEADING = 115.0f;
 	
 	public static float ENEMY_GOAL;
 	public static float ALLY_GOAL;
@@ -39,6 +39,12 @@ public class Navigator {
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
+		
+		currentZone = Navigator.ZONE.MIDDLE;
+		lastZone = Navigator.ZONE.MIDDLE;
+		currentDirection = Navigator.DIRECTION.STOPPED;
+		lastDirection = Navigator.DIRECTION.STOPPED;
+
 	}
 
 	public void moveDir(double dir) {
@@ -120,13 +126,13 @@ public class Navigator {
 			bot.setPower(85);
 		}
 		if (turnDegree > 0) {
-			bot.turnRight();
+			bot.turnRightPrecise((double)turnDegree);
 
 		} else {
-			bot.turnLeft();
+			bot.turnLeftPrecise((double)Math.abs(turnDegree));
 
 		}
-
+/*
 		while (Button.ENTER.isUp()) {
 
 			facingDegree = bot.compass.getDegrees();
@@ -134,12 +140,13 @@ public class Navigator {
 			// bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
 			// + normalize(targetDegree - facingDegree));
 
-			if (targetDegree < facingDegree + 5
-					&& targetDegree > facingDegree - 5) {
+			if ((targetDegree < facingDegree + 3)
+					&& (targetDegree > facingDegree - 3)) {
 				break;
 			}
 		}
 		bot.stopAll();
+*/
 	}
 
 	public void arcTo(float turnDegree) {
