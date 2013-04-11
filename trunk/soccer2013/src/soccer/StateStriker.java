@@ -13,13 +13,17 @@ public class StateStriker extends State {
 	// --------------------------------------------------------------------------------------
 	public void execute(Robot bot) {
 		// moveForward will be changed to kick.
+		bot.arduino.update();
 
 		if (Button.ENTER.isDown()) {
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
+		
+		//getDisY will be getUSBall
+		if(bot.arduino.getDisYBack() < 7){
 		bot.changeState(StateFollowBall.getInstance());
-
+		}
 	}
 
 	public static StateStriker getInstance() {

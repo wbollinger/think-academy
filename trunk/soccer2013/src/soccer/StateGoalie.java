@@ -74,7 +74,7 @@ public class StateGoalie extends State {
 			return;
 		}
 
-		if ((bot.arduino.getDisYBack() > 25)
+		if ((bot.arduino.getDisYBack() > 22)
 				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || (bot.nav.currentZone == Navigator.ZONE.RIGHT))) {
 			debugln("Too far forward: breaking to StateGoalieReposition", 0x40);
 			bot.changeState(StateGoalieReposition.getInstance());

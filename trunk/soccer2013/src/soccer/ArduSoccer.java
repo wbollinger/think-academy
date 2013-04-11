@@ -22,6 +22,7 @@ public class ArduSoccer extends I2CSensor {
 	int disYBack;
 	int disXRight;
 	int disXLeft;
+	int disBall;
 	int lightRight;
 	int lightLeft;
 	int touch;
@@ -96,7 +97,9 @@ public class ArduSoccer extends I2CSensor {
 	}
 	public int getDisXLeft(){
 		return disXLeft;
-		
+	}
+	public int getDisBall(){
+		return disBall;
 	}
 	public int getLightRight(){
 		return lightRight+ 60;
