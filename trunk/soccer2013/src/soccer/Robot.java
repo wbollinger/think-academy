@@ -120,7 +120,7 @@ public class Robot {
 	public void turnLeft() {
 	}
 
-	public void turnLeftprecise(double degrees) {
+	public void turnLeftPrecise(double degrees) {
 	}
 
 	public void turnLeft(int time) {
@@ -129,7 +129,7 @@ public class Robot {
 	public void turnRight() {
 	}
 
-	public void turnRightprecise(double degrees) {
+	public void turnRightPrecise(double degrees) {
 	}
 
 	public void turnRight(int time) {
