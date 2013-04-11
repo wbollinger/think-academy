@@ -18,6 +18,7 @@ public class BrickIO {
 	private boolean useDebug;
 	
 	private int debugFlags = 0xFF;
+	
 	/*
 	 * 0x01  1   IR data
 	 * 0x02  2   Ping data

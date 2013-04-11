@@ -13,15 +13,19 @@ public class StatePointToGoal extends State {
 
 	@Override
 	public void execute(Robot bot) {
-		if(Button.ENTER.isDown()){
-		bot.changeState(StateCommand.getInstance());
-		return;
+		if (Button.ENTER.isDown()) {
+			bot.changeState(StateCommand.getInstance());
+			return;
 		}
+
 		bot.nav.pointToHeadingArc(Navigator.ENEMY_GOAL);
 		bot.nav.pointToGoal();
 		
-		bot.changeState(StateFollowBall.getInstance());
-		
+		bot.moveForward();
+		while(Button.ENTER.isUp());
+
+		bot.changeState(StateCommand.getInstance());
+
 	}
 
 	public static StatePointToGoal getInstance() {
@@ -31,6 +35,6 @@ public class StatePointToGoal extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StatePointToGoal");
-	
+
 	}
 }
