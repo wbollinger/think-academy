@@ -187,6 +187,8 @@ public class ArduSoccer extends I2CSensor {
 		disXRight = 0xFF & bufReadResponse[0];
 		disYBack = 0xFF & bufReadResponse[1];
 		disXLeft = 0xFF & bufReadResponse[2];
+		//TODO
+		disBall = 0xFF & bufReadResponse[3];
 		
 		getData((byte) 82, bufReadResponse, 4);
 
