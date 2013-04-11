@@ -30,6 +30,10 @@ public class RobotChris extends Robot {
 		motA.stop();
 		motB.stop();
 		motC.stop();
+		
+		arduino.writeCommand(Robot.DISCONNECT_CAPS_SOLENOID);
+		sleep(50); // wait for the relay to open
+		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
 
 		r = 2.5;
 		b = 0;
@@ -75,6 +79,16 @@ public class RobotChris extends Robot {
 				}
 			}
 		}
+	}
+	
+	public void fireSolenoid() {
+		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
+		sleep(50); // wait for the relay to open
+		arduino.writeCommand(Robot.CONNECT_CAPS_SOLENOID);
+		sleep(1000);
+		arduino.writeCommand(Robot.DISCONNECT_CAPS_SOLENOID);
+		sleep(50); // wait for the relay to open
+		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
 	}
 
 	public void moveForward() {
