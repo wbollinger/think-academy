@@ -9,6 +9,7 @@ public class StateFollowBall extends State {
 	@Override
 	public void enter(Robot bot) {
 		bot.io.debugln("Entered StateFollowBall");
+		bot.dribbler.forward();
 	}
 
 	@Override
