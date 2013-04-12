@@ -126,17 +126,11 @@ public class Navigator {
 			bot.setPower(85);
 		}
 		
-		bot.io.debugln("DOIN SUMTHING W/ DIS NUMBAR: "+turnDegree);
 		if (turnDegree > 0) {
-			bot.io.debugln("woot");
 			bot.turnRightPrecise((double) turnDegree);
 
 		} else {
-			bot.io.debugln("yeah");
-			bot.io.debugln(""+Math.abs(turnDegree));
 			bot.turnLeftPrecise((double) Math.abs(turnDegree));
-			bot.io.debugln("HAHAHAHA");
-
 		}
 		/*
 		 * while (Button.ENTER.isUp()) {
@@ -243,7 +237,7 @@ public class Navigator {
 	}
 
 	public double pointToGoal() {
-		bot.io.debugln("went into pointToGoal");
+		//bot.io.debugln("went into pointToGoal");
 		getLocation();
 		bot.sleep(1000);
 		double angle = Math.atan2(91 - xPos, yPos);
@@ -256,7 +250,7 @@ public class Navigator {
 		} else {
 			bot.turnRightPrecise(Math.abs(angle));
 		}
-		bot.io.debugln("turned");
+		//bot.io.debugln("turned");
 		bot.sleep(1000);
 
 		return Math.sqrt(Math.pow(yPos, 2) + Math.pow(91 - xPos, 2));
