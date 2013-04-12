@@ -118,6 +118,7 @@ public class RobotTim extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void stopAll() {
 
 		motA.stop();
@@ -125,6 +126,7 @@ public class RobotTim extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void floatAll() {
 
 		motA.flt();
@@ -132,6 +134,7 @@ public class RobotTim extends Robot {
 		motC.flt();
 	}
 
+	@Override
 	public void turnLeft() {
 
 		motA.setPower(MOTOR_POWER);
@@ -144,6 +147,7 @@ public class RobotTim extends Robot {
 
 	}
 
+	@Override
 	public void turnLeft(int time) {
 
 		motA.setPower(MOTOR_POWER);
@@ -159,6 +163,7 @@ public class RobotTim extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void turnRight() {
 
 		motA.setPower(MOTOR_POWER);
@@ -171,6 +176,7 @@ public class RobotTim extends Robot {
 
 	}
 
+	@Override
 	public void turnRight(int time) {
 
 		motA.setPower(MOTOR_POWER);
@@ -186,12 +192,14 @@ public class RobotTim extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void moveArcRight() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
 
 	}
 
+	@Override
 	public void moveArcLeft() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
