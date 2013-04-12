@@ -8,6 +8,8 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.IRSeekerV2;
 import lejos.nxt.addon.CompassHTSensor;
+import lejos.nxt.addon.MMXMotor;
+import lejos.nxt.addon.NXTMMX;
 
 public class RobotChris extends Robot {
 
@@ -20,14 +22,11 @@ public class RobotChris extends Robot {
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
 
-		// IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		EIR = new EnhIRSeekerV2(SensorPort.S1);
 		compass = new CompassHTSensor(SensorPort.S2);
-		// lightLeft = new LightSensor(SensorPort.S3);
-		// lightRight = new LightSensor(SensorPort.S4);
+		mux = new NXTMMX(SensorPort.S3);
+		dribbler = new MMXMotor(mux, NXTMMX.MMX_MOTOR_1);
 		arduino = new ArduSoccer(SensorPort.S4);
-		// USY = new UltrasonicSensor(SensorPort.S3);
-		// USX = new UltrasonicSensor(SensorPort.S4);
 
 		setPower(80);
 		motA.stop();
@@ -86,11 +85,11 @@ public class RobotChris extends Robot {
 	
 	public void fireSolenoid() {
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
-		sleep(50); // wait for the relay to open
+		sleep(200); // wait for the relay to open
 		arduino.writeCommand(Robot.CONNECT_CAPS_SOLENOID);
 		sleep(1000);
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_SOLENOID);
-		sleep(50); // wait for the relay to open
+		sleep(200); // wait for the relay to open
 		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
 	}
 
