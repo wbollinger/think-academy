@@ -22,10 +22,13 @@ public class StatePointToGoal extends State {
 		debugln("Facing Enemy Goal");
 		bot.nav.pointToGoal();
 		
-		//bot.moveForward();
-		while(Button.ENTER.isUp());
-
-		bot.changeState(StateCommand.getInstance());
+		if(bot.nav.getYLocation() < 50) {
+			bot.fireSolenoid();
+			bot.changeState(StateCommand.getInstance());
+			return;
+		} else {
+			bot.moveForward();
+		}
 
 	}
 

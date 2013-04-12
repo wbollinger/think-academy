@@ -270,8 +270,8 @@ public class Navigator {
 		bot.arduino.update();
 		wall1dist = bot.arduino.getDisXRight();
 		wall2dist = bot.arduino.getDisYBack();
-		xPos = 182 - wall2dist;
-		yPos = 243 - wall1dist;
+		xPos = 182 - wall1dist;
+		yPos = 243 - wall2dist;
 	}
 
 	public int getXLocation() {
