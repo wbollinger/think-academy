@@ -104,6 +104,9 @@ public class Robot {
 
 	public void followBall() {
 	}
+	
+	public void fireSolenoid() {
+	}
 
 	public double pointToGoal() {
 		return 0.0;

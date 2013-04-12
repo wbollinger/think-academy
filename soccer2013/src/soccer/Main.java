@@ -1,6 +1,7 @@
 package soccer;
 
 import lejos.nxt.Button;
+import lejos.nxt.LCD;
 
 public class Main {
 	public final boolean checkButtons = false;
@@ -27,7 +28,7 @@ public class Main {
 		
 		// create a robot
 		Robot robot = Robot.getRobot();
-		
+		LCD.drawString("Waiting for button press", 0, 0);
 		while(Button.LEFT.isUp() && Button.RIGHT.isUp() && Button.ENTER.isUp())
 			;
 		
