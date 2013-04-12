@@ -95,7 +95,7 @@ public class StateGoalie extends State {
 
 		debugln("IR|DIR:" + bot.EIR.getDir() + "|STR:" + bot.EIR.getStrength(),
 				0x01);
-		if (bot.EIR.getDir() == 5) {
+		if (bot.EIR.getDir() == centeredHeading) {
 			bot.stopAll();
 			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
 		} else if ((bot.EIR.getDir() < centeredHeading)

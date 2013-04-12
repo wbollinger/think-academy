@@ -13,6 +13,9 @@ public class RobotChris extends Robot {
 
 	public RobotChris(String name) {
 		super(name);
+		
+		LightCorrection = 90;
+		
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
