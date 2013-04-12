@@ -8,6 +8,7 @@ import lejos.nxt.addon.MServo;
  * to the NXT via i2c
  */
 public class ArduSoccer extends I2CSensor {
+
 	public static final byte NXTSERVO_ADDRESS = (byte) 0xb0;
 	public static final byte ArduRCJ_VBATT = 0x41;// I2C Register to read
 													// battery
@@ -18,7 +19,6 @@ public class ArduSoccer extends I2CSensor {
 	byte[] bufReadResponse;
 	int[] sensors;
 
-
 	int disYBack;
 	int disXRight;
 	int disXLeft;
@@ -26,8 +26,7 @@ public class ArduSoccer extends I2CSensor {
 	int lightRight;
 	int lightLeft;
 	int touch;
-	
-	
+
 	/**
 	 * 
 	 * Constructor
@@ -88,80 +87,91 @@ public class ArduSoccer extends I2CSensor {
 
 		return (sensors);
 	}
-	
-	public int getDisYBack(){
+
+	public int getDisYBack() {
 		return disYBack;
 	}
-	public int getDisXRight(){
+
+	public int getDisXRight() {
 		return disXRight;
 	}
-	public int getDisXLeft(){
+
+	public int getDisXLeft() {
 		return disXLeft;
 	}
-	public int getDisBall(){
+
+	public int getDisBall() {
 		return disBall;
 	}
-	public int getLightRight(){
-		return lightRight+ 60;
+
+	public int getLightRight() {
+
+		return lightRight + Robot.getRobot().LightCorrection;
+
 	}
-	public int getLightLeft(){
+
+	public int getLightLeft() {
 		return lightLeft;
 	}
-	public int getTouch(){
+
+	public int getTouch() {
 		return touch;
 	}
 
-//	public int readLightLeft() {
-//
-//		getData((byte) 82, bufReadResponse, 2);
-//
-//		int sensorLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
-//
-//		return (sensorLeft);
-//	}
-//
-//	public int readLightRight() {
-//
-//		getData((byte) 84, bufReadResponse, 2);
-//
-//		int sensorRight = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
-//
-//		return (sensorRight);
-//	}
-//
-//	public int readPingYBack() {
-//
-//		getData((byte) 75, bufReadResponse, 1);
-//
-//		int sensorPing = 0xFF & bufReadResponse[0];
-//
-//		return (sensorPing);
-//	}
-//	public int readPingXLeft() {
-//
-//		getData((byte) 76, bufReadResponse, 1);
-//
-//		int sensorPing = 0xFF & bufReadResponse[0];
-//
-//		return (sensorPing);
-//	}
-//	public int readPingXRight() {
-//
-//		getData((byte) 74, bufReadResponse, 1);
-//
-//		int sensorPing = 0xFF & bufReadResponse[0];
-//
-//		return (sensorPing);
-//	}
-//
-//	public int readTouch() {
-//
-//		getData((byte) 0x6C, bufReadResponse, 2);
-//
-//		int sensorTouch = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
-//
-//		return (sensorTouch);
-//	}
+	// public int readLightLeft() {
+	//
+	// getData((byte) 82, bufReadResponse, 2);
+	//
+	// int sensorLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF &
+	// bufReadResponse[0])));
+	//
+	// return (sensorLeft);
+	// }
+	//
+	// public int readLightRight() {
+	//
+	// getData((byte) 84, bufReadResponse, 2);
+	//
+	// int sensorRight = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF &
+	// bufReadResponse[0])));
+	//
+	// return (sensorRight);
+	// }
+	//
+	// public int readPingYBack() {
+	//
+	// getData((byte) 75, bufReadResponse, 1);
+	//
+	// int sensorPing = 0xFF & bufReadResponse[0];
+	//
+	// return (sensorPing);
+	// }
+	// public int readPingXLeft() {
+	//
+	// getData((byte) 76, bufReadResponse, 1);
+	//
+	// int sensorPing = 0xFF & bufReadResponse[0];
+	//
+	// return (sensorPing);
+	// }
+	// public int readPingXRight() {
+	//
+	// getData((byte) 74, bufReadResponse, 1);
+	//
+	// int sensorPing = 0xFF & bufReadResponse[0];
+	//
+	// return (sensorPing);
+	// }
+	//
+	// public int readTouch() {
+	//
+	// getData((byte) 0x6C, bufReadResponse, 2);
+	//
+	// int sensorTouch = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF &
+	// bufReadResponse[0])));
+	//
+	// return (sensorTouch);
+	// }
 
 	public int readAddress(byte addr) {
 
@@ -171,30 +181,29 @@ public class ArduSoccer extends I2CSensor {
 
 		return (value);
 	}
-	
+
 	public boolean writeCommand(byte command) {
-		if(sendData((byte) 0x41, command) == 0) {
+		if (sendData((byte) 0x41, command) == 0) {
 			return true;
 		} else {
 			return false;
 		}
-		
+
 	}
-	
-	public void update(){
+
+	public void update() {
 		getData((byte) 74, bufReadResponse, 3);
 
 		disXRight = 0xFF & bufReadResponse[0];
 		disYBack = 0xFF & bufReadResponse[1];
 		disXLeft = 0xFF & bufReadResponse[2];
-		//TODO
+		// TODO
 		disBall = 0xFF & bufReadResponse[3];
-		
+
 		getData((byte) 82, bufReadResponse, 4);
 
 		lightLeft = (((0xFF & bufReadResponse[1]) << 8) | ((0xFF & bufReadResponse[0])));
 		lightRight = (((0xFF & bufReadResponse[3]) << 8) | ((0xFF & bufReadResponse[2])));
-		
 
 	}
 

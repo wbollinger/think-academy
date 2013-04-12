@@ -15,6 +15,8 @@ import lejos.nxt.addon.NXTMMX;
 
 public class Robot {
 
+	public int LightCorrection;
+	
 	public final int WHITE_VALUE = 500;
 	
 	public static final byte CONNECT_CAPS_CHARGER = (byte) 1;

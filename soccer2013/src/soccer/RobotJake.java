@@ -11,6 +11,8 @@ public class RobotJake extends Robot {
 
 	public RobotJake(String name) {
 		super(name);
+		
+		LightCorrection = 40;
 
 		MOTOR_POWER = 100;
 		motA = new NXTMotor(MotorPort.A);
