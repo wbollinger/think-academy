@@ -46,7 +46,8 @@ public class RobotTim extends Robot {
 		b = 0;
 
 	}
-
+	
+	@Override
 	public void followBall() {
 		int dir;
 		int str;
@@ -76,6 +77,7 @@ public class RobotTim extends Robot {
 		}
 	}
 
+	@Override
 	public void moveForward() {
 
 		motA.setPower(MOTOR_POWER);
@@ -88,6 +90,7 @@ public class RobotTim extends Robot {
 
 	}
 
+	@Override
 	public void moveBackward() {
 
 		motA.setPower(MOTOR_POWER);
@@ -99,6 +102,7 @@ public class RobotTim extends Robot {
 		motA.stop();
 	}
 
+	@Override
 	public void forward(int time) {
 
 		motA.setPower(MOTOR_POWER);

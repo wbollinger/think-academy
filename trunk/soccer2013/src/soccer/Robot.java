@@ -286,4 +286,8 @@ public class Robot {
 		bFudge = b;
 		cFudge = c;
 	}
+
+	public void forward(int time) {
+		
+	}
 }

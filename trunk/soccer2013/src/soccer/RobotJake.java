@@ -40,6 +40,7 @@ public class RobotJake extends Robot {
 
 	}
 
+	@Override
 	public void followBall() {
 		int dir;
 		int str;
@@ -69,6 +70,7 @@ public class RobotJake extends Robot {
 		}
 	}
 
+	@Override
 	public void moveForward() {
 
 		motA.setPower(MOTOR_POWER);
@@ -81,6 +83,7 @@ public class RobotJake extends Robot {
 
 	}
 
+	@Override
 	public void moveBackward() {
 
 		motA.setPower(MOTOR_POWER);
@@ -92,6 +95,7 @@ public class RobotJake extends Robot {
 		motA.stop();
 	}
 
+	@Override
 	public void forward(int time) {
 
 		motA.setPower(MOTOR_POWER);
@@ -107,6 +111,7 @@ public class RobotJake extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void stopAll() {
 
 		motA.stop();
@@ -114,6 +119,7 @@ public class RobotJake extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void floatAll() {
 
 		motA.flt();
@@ -121,6 +127,7 @@ public class RobotJake extends Robot {
 		motC.flt();
 	}
 
+	@Override
 	public void turnLeft() {
 
 		motA.setPower(MOTOR_POWER);
@@ -133,6 +140,7 @@ public class RobotJake extends Robot {
 
 	}
 
+	@Override
 	public void turnLeftPrecise(double degrees) {
 		//io.debugln("TURNING LEFTISH "+degrees+" DEGREES!!");
 		motA.resetTachoCount();
@@ -154,6 +162,7 @@ public class RobotJake extends Robot {
 		//io.debugln("TURNING DUNNED!!");
 	}
 
+	@Override
 	public void turnLeft(int time) {
 
 		motA.setPower(MOTOR_POWER);
@@ -169,6 +178,7 @@ public class RobotJake extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void turnRight() {
 
 		motA.setPower(MOTOR_POWER);
@@ -181,6 +191,7 @@ public class RobotJake extends Robot {
 
 	}
 
+	@Override
 	public void turnRight(int time) {
 
 		motA.setPower(MOTOR_POWER);
@@ -196,6 +207,7 @@ public class RobotJake extends Robot {
 		motC.stop();
 	}
 
+	@Override
 	public void turnRightPrecise(double degrees) {
 		//io.debugln("TURNING RIGHTISH "+degrees+" DEGREES!!");
 		motA.resetTachoCount();
@@ -217,11 +229,13 @@ public class RobotJake extends Robot {
 		//io.debugln("TURNING DUNNED!!");
 	}
 
+	@Override
 	public void moveArcRight() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
 	}
 
+	@Override
 	public void moveArcLeft() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
