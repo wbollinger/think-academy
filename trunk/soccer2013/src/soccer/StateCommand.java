@@ -211,6 +211,11 @@ public class StateCommand extends State {
 					return;
 				}
 				robot.moveForward();
+			} else if (command.equalsIgnoreCase("setFudge")) {
+				robot.aFudge = parseInt(arg0);
+				robot.bFudge = parseInt(arg1);
+				robot.cFudge = parseInt(arg2);
+				debugln(""+robot.aFudge+":"+robot.bFudge+":"+robot.cFudge);
 			} else if (command.equalsIgnoreCase("moveArcR")) {
 				robot.moveArcRight();
 			} else if (command.equalsIgnoreCase("moveArcL")) {

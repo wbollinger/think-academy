@@ -45,6 +45,10 @@ public class Robot {
 	NXTMotor motB;
 	NXTMotor motC;
 	
+	int aFudge;
+	int bFudge;
+	int cFudge;
+	
 	NXTMMX mux;
 	MMXMotor dribbler;
 
@@ -83,6 +87,10 @@ public class Robot {
 		io = new BrickIO();
 		exit = false;
 		nav = new Navigator(this);
+		
+		aFudge = 0;
+		bFudge = 0;
+		cFudge = 0;
 	}
 
 	public void sleep(int time) {
@@ -271,5 +279,11 @@ public class Robot {
 		} else if (button == 8) {
 			Sound.playTone(550, 100);
 		}
+	}
+	
+	public void setFudge(int a, int b, int c) {
+		aFudge = a;
+		bFudge = b;
+		cFudge = c;
 	}
 }

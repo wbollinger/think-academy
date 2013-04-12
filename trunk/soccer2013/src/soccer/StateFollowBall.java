@@ -19,6 +19,7 @@ public class StateFollowBall extends State {
 			return;
 		}
 		bot.EIR.update();
+		bot.arduino.update();
 		bot.io.debugln("IR direction value is:" + bot.EIR.getDir(), 0x01);
 		bot.io.debugln("IR strength value is:" + bot.EIR.getStrength(), 0x01);
 		bot.io.debugln("Left light value is:" + bot.arduino.getLightLeft(), 0x04);
@@ -61,6 +62,7 @@ public class StateFollowBall extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StateFollowBall");
+		bot.stopAll();
 
 	}
 

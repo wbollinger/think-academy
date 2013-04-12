@@ -4,6 +4,7 @@ import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
+import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.IRSeekerV2;
@@ -13,6 +14,10 @@ import lejos.nxt.addon.NXTMMX;
 
 public class RobotChris extends Robot {
 
+	//NXTRegulatedMotor regMotA; 
+	//NXTRegulatedMotor regMotB;
+	//NXTRegulatedMotor regMotC;
+	
 	public RobotChris(String name) {
 		super(name);
 		
@@ -21,17 +26,30 @@ public class RobotChris extends Robot {
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
+		
+		setPower(80);
+		motA.stop();
+		motB.stop();
+		motC.stop();
+		
+		//regMotA = new NXTRegulatedMotor(MotorPort.A);
+		//regMotB = new NXTRegulatedMotor(MotorPort.B);
+		//regMotC = new NXTRegulatedMotor(MotorPort.C);
+		
+		//regMotA.setAcceleration(1000);
+		//regMotB.setAcceleration(1000);
+		//regMotC.setAcceleration(1000);
+		
+		//regMotA.setSpeed(1000);
+		//regMotB.setSpeed(1000);
+		//regMotC.setSpeed(1000);
 
+		
 		EIR = new EnhIRSeekerV2(SensorPort.S1);
 		compass = new CompassHTSensor(SensorPort.S2);
 		mux = new NXTMMX(SensorPort.S3);
 		dribbler = new MMXMotor(mux, NXTMMX.MMX_MOTOR_1);
 		arduino = new ArduSoccer(SensorPort.S4);
-
-		setPower(80);
-		motA.stop();
-		motB.stop();
-		motC.stop();
 		
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_SOLENOID);
 		sleep(50); // wait for the relay to open
@@ -41,47 +59,48 @@ public class RobotChris extends Robot {
 		b = 0;
 	}
 
-	public void followBall() {
-		int dir;
-		int str;
-		int left;
-		int right;
-
-		while (Button.ENTER.isUp()) {
-			EIR.update();
-			dir = EIR.getDir();
-			str = EIR.getStrength();
-			left = lightLeft.readValue();
-			right = lightRight.readValue();
-			io.debugln("" + left + ":" + right);
-			// io.debugln("" + dir + ":" + str);
-			if (str > 350) {
-				stopAll();
-				forward(300);
-				return;
-			} else if ((right > WHITE_VALUE) && (left > WHITE_VALUE)) {
-				nav.moveDir(270);
-				sleep(1000);
-			} else if (right > WHITE_VALUE) {
-				nav.moveDir(340);
-				sleep(200);
-			} else if (left > WHITE_VALUE) {
-				nav.moveDir(180);
-				sleep(200);
-			} else {
-
-				if (dir == 5) {
-					moveForward();
-				} else if (dir < 5) {
-					turnLeft();
-				} else if (dir > 5) {
-					turnRight();
-				} else {
-					stopAll();
-				}
-			}
-		}
-	}
+//	public void followBall() {
+//		int dir;
+//		int str;
+//		int left;
+//		int right;
+//
+//		while (Button.ENTER.isUp()) {
+//			EIR.update();
+//			dir = EIR.getDir();
+//			str = EIR.getStrength();
+//			left = lightLeft.readValue();
+//			right = lightRight.readValue();
+//			io.debugln("" + left + ":" + right);
+//			// io.debugln("" + dir + ":" + str);
+//			if (str > 350) {
+//				stopAll();
+//				dribbler.forward();
+//				forward(300);
+//				return;
+//			} else if ((right > WHITE_VALUE) && (left > WHITE_VALUE)) {
+//				nav.moveDir(270);
+//				sleep(1000);
+//			} else if (right > WHITE_VALUE) {
+//				nav.moveDir(340);
+//				sleep(200);
+//			} else if (left > WHITE_VALUE) {
+//				nav.moveDir(180);
+//				sleep(200);
+//			} else {
+//
+//				if (dir == 5) {
+//					moveForward();
+//				} else if (dir < 5) {
+//					turnLeft();
+//				} else if (dir > 5) {
+//					turnRight();
+//				} else {
+//					stopAll();
+//				}
+//			}
+//		}
+//	}
 	
 	public void fireSolenoid() {
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
@@ -94,11 +113,17 @@ public class RobotChris extends Robot {
 	}
 
 	public void moveForward() {
-		motA.setPower(MOTOR_POWER);
-		motB.setPower(MOTOR_POWER);
-		motC.setPower(MOTOR_POWER);
-		motC.forward();
+		motA.setPower(MOTOR_POWER+aFudge);
+		motB.setPower(MOTOR_POWER+bFudge);
+		motC.setPower(MOTOR_POWER+cFudge);
+		
+		//regMotA.setSpeed(1000);
+		//regMotB.setSpeed(1000);
+		//regMotC.setSpeed(1000);
+		
+	
 		motB.backward();
+		motC.forward();
 		motA.stop();
 	}
 
@@ -112,9 +137,14 @@ public class RobotChris extends Robot {
 	}
 
 	public void moveBackward() {
-		motA.setPower(MOTOR_POWER);
-		motB.setPower(MOTOR_POWER);
-		motC.setPower(MOTOR_POWER);
+		motA.setPower(MOTOR_POWER+aFudge);
+		motB.setPower(MOTOR_POWER+bFudge);
+		motC.setPower(MOTOR_POWER+cFudge);
+		
+		//regMotA.setSpeed(1000);
+		//regMotB.setSpeed(1000);
+		//regMotC.setSpeed(1000);
+		
 		motC.backward();
 		motB.forward();
 		motA.stop();
@@ -124,12 +154,17 @@ public class RobotChris extends Robot {
 		motA.stop();
 		motB.stop();
 		motC.stop();
+		
+		//regMotA.stop();
+		//regMotB.stop();
+		//regMotC.stop();
 	}
 
 	public void turnRight() {
-		motA.setPower(MOTOR_POWER);
-		motB.setPower(MOTOR_POWER);
-		motC.setPower(MOTOR_POWER);
+		motA.setPower(MOTOR_POWER+aFudge);
+		motB.setPower(MOTOR_POWER+bFudge);
+		motC.setPower(MOTOR_POWER+cFudge);
+		
 		motA.forward();
 		motB.forward();
 		motC.forward();
@@ -152,9 +187,9 @@ public class RobotChris extends Robot {
 	}
 
 	public void turnLeft() {
-		motA.setPower(MOTOR_POWER);
-		motB.setPower(MOTOR_POWER);
-		motC.setPower(MOTOR_POWER);
+		motA.setPower(MOTOR_POWER+aFudge);
+		motB.setPower(MOTOR_POWER+bFudge);
+		motC.setPower(MOTOR_POWER+cFudge);
 		motA.backward();
 		motB.backward();
 		motC.backward();
