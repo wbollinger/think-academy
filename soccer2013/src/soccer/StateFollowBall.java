@@ -15,6 +15,7 @@ public class StateFollowBall extends State {
 	@Override
 	public void execute(Robot bot) {
 		if (Button.ENTER.isDown()) {
+			bot.dribbler.stop();
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
@@ -26,17 +27,18 @@ public class StateFollowBall extends State {
 		bot.io.debugln("Right light value is:" + bot.arduino.getLightRight(), 0x04);
 		bot.io.debugln(""+bot.arduino.getLightLeft()+":"+bot.arduino.getLightRight());
 		//io.debugln("" + dir + ":" + str);
-		if (bot.EIR.getStrength() > 350) {
+		if (bot.arduino.disBall < 4) {
 			bot.stopAll();
 			bot.moveForward(300);
+			bot.changeState(StatePointToGoal.getInstance());
 			return;
-		} else if((bot.arduino.getLightRight() > bot.WHITE_VALUE) && (bot.arduino.getLightLeft() > bot.WHITE_VALUE)) {
+		} else if((bot.arduino.getLightRight() < bot.WHITE_VALUE) && (bot.arduino.getLightLeft() < bot.WHITE_VALUE)) {
 			bot.nav.moveDir(270);
 			bot.sleep(1000);
-		} else if (bot.arduino.getLightRight() > bot.WHITE_VALUE) {
+		} else if (bot.arduino.getLightRight() < bot.WHITE_VALUE) {
 			bot.nav.moveDir(340);
 			bot.sleep(200);
-		} else if (bot.arduino.getLightLeft() > bot.WHITE_VALUE) {
+		} else if (bot.arduino.getLightLeft() < bot.WHITE_VALUE) {
 			bot.nav.moveDir(180);
 			bot.sleep(200);
 		} else {
@@ -51,8 +53,6 @@ public class StateFollowBall extends State {
 				bot.stopAll();
 			}
 		}
-
-		bot.changeState(StatePointToGoal.getInstance());
 	}
 
 	public static StateFollowBall getInstance() {

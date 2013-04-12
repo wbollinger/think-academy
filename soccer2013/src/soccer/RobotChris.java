@@ -102,6 +102,7 @@ public class RobotChris extends Robot {
 //		}
 //	}
 	
+	@Override
 	public void fireSolenoid() {
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
 		sleep(200); // wait for the relay to open
@@ -112,6 +113,7 @@ public class RobotChris extends Robot {
 		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
 	}
 
+	@Override
 	public void moveForward() {
 		motA.setPower(MOTOR_POWER+aFudge);
 		motB.setPower(MOTOR_POWER+bFudge);
@@ -127,6 +129,7 @@ public class RobotChris extends Robot {
 		motA.stop();
 	}
 
+	@Override
 	public void forward(int time) {
 		moveForward();
 
@@ -135,7 +138,8 @@ public class RobotChris extends Robot {
 		motB.stop();
 		motC.stop();
 	}
-
+	
+	@Override
 	public void moveBackward() {
 		motA.setPower(MOTOR_POWER+aFudge);
 		motB.setPower(MOTOR_POWER+bFudge);
@@ -150,6 +154,7 @@ public class RobotChris extends Robot {
 		motA.stop();
 	}
 
+	@Override
 	public void stopAll() {
 		motA.stop();
 		motB.stop();
@@ -160,6 +165,7 @@ public class RobotChris extends Robot {
 		//regMotC.stop();
 	}
 
+	@Override
 	public void turnRight() {
 		motA.setPower(MOTOR_POWER+aFudge);
 		motB.setPower(MOTOR_POWER+bFudge);
@@ -170,7 +176,9 @@ public class RobotChris extends Robot {
 		motC.forward();
 	}
 
-	public void turnRightprecise(double degrees) {
+	@Override
+	public void turnRightPrecise(double degrees) {
+		io.debugln("I'm a gonna turn right");
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
@@ -186,6 +194,7 @@ public class RobotChris extends Robot {
 		motC.resetTachoCount();
 	}
 
+	@Override
 	public void turnLeft() {
 		motA.setPower(MOTOR_POWER+aFudge);
 		motB.setPower(MOTOR_POWER+bFudge);
@@ -195,7 +204,9 @@ public class RobotChris extends Robot {
 		motC.backward();
 	}
 
-	public void turnLeftprecise(double degrees) {
+	@Override
+	public void turnLeftPrecise(double degrees) {
+		io.debugln("I'm a gonna turn left");
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
@@ -211,13 +222,29 @@ public class RobotChris extends Robot {
 		motC.resetTachoCount();
 	}
 
+	@Override
 	public void moveArcRight() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
 
 	}
+	
+	//@Override
+	public void moveArcRightPrecise() {
+		motA.setPower(MOTOR_POWER);
+		motA.forward();
 
+	}
+	
+	@Override
 	public void moveArcLeft() {
+		motA.setPower(MOTOR_POWER);
+		motA.backward();
+
+	}
+	
+	//@Override
+	public void moveArcLeftPrecise() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
 

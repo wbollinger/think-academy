@@ -8,8 +8,8 @@ import lejos.nxt.addon.CompassHTSensor;
 public class Navigator {
 
 	public static final float YELLOW_GOAL_HEADING = 297.0f;
-	public static final float BLUE_GOAL_HEADING = 115.0f;
-	
+	public static final float BLUE_GOAL_HEADING = 107.0f;
+
 	public static float ENEMY_GOAL;
 	public static float ALLY_GOAL;
 
@@ -22,7 +22,7 @@ public class Navigator {
 
 	private int xPos;
 	private int yPos;
-	
+
 	public static enum ZONE {
 		LEFT, MID_LEFT, MIDDLE, MID_RIGHT, RIGHT
 	}
@@ -33,13 +33,13 @@ public class Navigator {
 
 	ZONE currentZone;
 	ZONE lastZone;
-	
+
 	DIRECTION currentDirection;
 	DIRECTION lastDirection;
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
-		
+
 		currentZone = Navigator.ZONE.MIDDLE;
 		lastZone = Navigator.ZONE.MIDDLE;
 		currentDirection = Navigator.DIRECTION.STOPPED;
@@ -59,7 +59,7 @@ public class Navigator {
 
 		double scale = 100.0 / max;
 
-		//bbot.io.debugln("" + Double.toString(scale));
+		// bbot.io.debugln("" + Double.toString(scale));
 
 		bot.motA.setPower((int) Math.round(w0 * scale));
 		bot.motB.setPower((int) Math.round(w1 * scale));
@@ -96,7 +96,7 @@ public class Navigator {
 		pointToDegree = (float) normalizeAngle(pointToDegree);
 
 		// bot.io.debugln("Point to: " + pointToDegree);
-
+		bot.io.debugln("I'M GONNA TURN BY "+pointToDegree+ " DEGREES");
 		rotateTo(pointToDegree);
 	}
 
@@ -125,28 +125,30 @@ public class Navigator {
 		if (bot.name.equals("Tim")) {
 			bot.setPower(85);
 		}
+		
+		bot.io.debugln("DOIN SUMTHING W/ DIS NUMBAR: "+turnDegree);
 		if (turnDegree > 0) {
-			bot.turnRightPrecise((double)turnDegree);
+			bot.io.debugln("woot");
+			bot.turnRightPrecise((double) turnDegree);
 
 		} else {
-			bot.turnLeftPrecise((double)Math.abs(turnDegree));
+			bot.io.debugln("yeah");
+			bot.io.debugln(""+Math.abs(turnDegree));
+			bot.turnLeftPrecise((double) Math.abs(turnDegree));
+			bot.io.debugln("HAHAHAHA");
 
 		}
-/*
-		while (Button.ENTER.isUp()) {
-
-			facingDegree = bot.compass.getDegrees();
-			facingDegree = (float) normalizeAngle(facingDegree);
-			// bot.io.debugln("Heading: " + facingDegree + " Remaining Angle: "
-			// + normalize(targetDegree - facingDegree));
-
-			if ((targetDegree < facingDegree + 3)
-					&& (targetDegree > facingDegree - 3)) {
-				break;
-			}
-		}
-		bot.stopAll();
-*/
+		/*
+		 * while (Button.ENTER.isUp()) {
+		 * 
+		 * facingDegree = bot.compass.getDegrees(); facingDegree = (float)
+		 * normalizeAngle(facingDegree); // bot.io.debugln("Heading: " +
+		 * facingDegree + " Remaining Angle: " // + normalize(targetDegree -
+		 * facingDegree));
+		 * 
+		 * if ((targetDegree < facingDegree + 3) && (targetDegree > facingDegree
+		 * - 3)) { break; } } bot.stopAll();
+		 */
 	}
 
 	public void arcTo(float turnDegree) {
@@ -248,12 +250,12 @@ public class Navigator {
 		angle = (angle * 180) / Math.PI;
 		bot.io.debugln("" + angle);
 		bot.io.debugln("Angle calculated");
-		rotateTo((float) angle);
-		// if (angle > 0) {
-		// bot.turnLeftprecise(angle);
-		// } else {
-		// bot.turnRightprecise(Math.abs(angle));
-		// }
+		// rotateTo((float) angle);
+		if (angle > 0) {
+			bot.turnLeftPrecise(angle);
+		} else {
+			bot.turnRightPrecise(Math.abs(angle));
+		}
 		bot.io.debugln("turned");
 		bot.sleep(1000);
 
@@ -264,7 +266,7 @@ public class Navigator {
 
 		int wall1dist;
 		int wall2dist;
-		
+
 		bot.arduino.update();
 		wall1dist = bot.arduino.getDisXRight();
 		wall2dist = bot.arduino.getDisYBack();

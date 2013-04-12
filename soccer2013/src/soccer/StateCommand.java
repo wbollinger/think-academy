@@ -377,7 +377,8 @@ public class StateCommand extends State {
 					debug(" || IRSTR = " + robot.EIR.getStrength(), 1);
 					debug(" || LP = " + robot.arduino.getDisXLeft(), 2);
 					debug(" || RP = " + robot.arduino.getDisXRight(), 2);
-					debug(" || BP = " + robot.arduino.getDisYBack(), 2);
+					debug(" || YP = " + robot.arduino.getDisYBack(), 2);
+					debug(" || BP = " + robot.arduino.getDisBall(), 2);
 					debug(" || LL = " + robot.arduino.getLightLeft(), 4);
 					debug(" || RL = " + robot.arduino.getLightRight(), 4);
 					debug(" || COMP = " + robot.compass.getDegrees(), 8);
