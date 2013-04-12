@@ -178,7 +178,7 @@ public class RobotChris extends Robot {
 
 	@Override
 	public void turnRightPrecise(double degrees) {
-		io.debugln("I'm a gonna turn right");
+		//io.debugln("I'm a gonna turn right");
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
@@ -206,7 +206,7 @@ public class RobotChris extends Robot {
 
 	@Override
 	public void turnLeftPrecise(double degrees) {
-		io.debugln("I'm a gonna turn left");
+		//io.debugln("I'm a gonna turn left");
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
