@@ -19,9 +19,10 @@ public class StatePointToGoal extends State {
 		}
 
 		bot.nav.pointToHeadingArc(Navigator.ENEMY_GOAL);
+		debugln("Facing Enemy Goal");
 		bot.nav.pointToGoal();
 		
-		bot.moveForward();
+		//bot.moveForward();
 		while(Button.ENTER.isUp());
 
 		bot.changeState(StateCommand.getInstance());
@@ -35,6 +36,7 @@ public class StatePointToGoal extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StatePointToGoal");
+		bot.dribbler.stop();
 
 	}
 }
