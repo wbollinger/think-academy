@@ -1,7 +1,6 @@
 package soccer;
 
 import lejos.nxt.*;
-import lejos.nxt.addon.MServo;
 
 /**
  * This class is used to query devices attached to an Arduino that is connected
@@ -14,7 +13,7 @@ public class ArduSoccer extends I2CSensor {
 													// battery
 
 	// I2C
-	private SensorPort portConnected;
+	//private SensorPort portConnected;
 
 	byte[] bufReadResponse;
 	int[] sensors;
@@ -38,7 +37,7 @@ public class ArduSoccer extends I2CSensor {
 	public ArduSoccer(SensorPort port) {
 		super(port, NXTSERVO_ADDRESS, I2CPort.STANDARD_MODE, TYPE_LOWSPEED_9V);
 
-		portConnected = port;
+		//portConnected = port;
 
 		bufReadResponse = new byte[6];
 		sensors = new int[4];

@@ -1,9 +1,7 @@
 package soccer;
 
-import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
-import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.MMXMotor;

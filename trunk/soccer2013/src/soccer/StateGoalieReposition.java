@@ -1,6 +1,5 @@
 package soccer;
 
-import soccer.Navigator.ZONE;
 import lejos.nxt.Button;
 
 public class StateGoalieReposition extends State {
