@@ -4,17 +4,17 @@ import lejos.nxt.Button;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
-import lejos.nxt.TouchSensor;
 import lejos.nxt.addon.CompassHTSensor;
-import lejos.nxt.addon.MMXMotor;
-import lejos.nxt.addon.NXTMMX;
 
 public class RobotTim extends Robot {
 
-	TouchSensor touch = new TouchSensor(SensorPort.S2);
-
 	public RobotTim(String name) {
 		super(name);
+
+		LightCorrection = 40;
+		
+		yellowGoalHeading = 300.0f;
+		blueGoalHeading = 119.0f;
 
 		MOTOR_POWER = 100;
 		motA = new NXTMotor(MotorPort.A);
@@ -23,9 +23,6 @@ public class RobotTim extends Robot {
 
 		// IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		EIR = new EnhIRSeekerV2(SensorPort.S1);
-
-		mux = new NXTMMX(SensorPort.S3);
-		dribbler = new MMXMotor(mux, NXTMMX.MMX_MOTOR_1);
 
 		arduino = new ArduSoccer(SensorPort.S4);
 
@@ -146,6 +143,28 @@ public class RobotTim extends Robot {
 	}
 
 	@Override
+	public void turnLeftPrecise(double degrees) {
+		// io.debugln("TURNING LEFTISH "+degrees+" DEGREES!!");
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
+		double count = 3.14 * degrees;
+		while (Math.abs(motA.getTachoCount()) < count) {
+			motA.backward();
+			motB.backward();
+			motC.backward();
+		}
+		stopAll();
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		// io.debugln("TURNING DUNNED!!");
+	}
+
+	@Override
 	public void turnLeft(int time) {
 
 		motA.setPower(MOTOR_POWER);
@@ -191,17 +210,36 @@ public class RobotTim extends Robot {
 	}
 
 	@Override
+	public void turnRightPrecise(double degrees) {
+		// io.debugln("TURNING RIGHTISH "+degrees+" DEGREES!!");
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
+		double count = 3.14 * degrees;
+		while (Math.abs(motA.getTachoCount()) < count) {
+			motA.forward();
+			motB.forward();
+			motC.forward();
+		}
+		stopAll();
+		motA.resetTachoCount();
+		motB.resetTachoCount();
+		motC.resetTachoCount();
+		// io.debugln("TURNING DUNNED!!");
+	}
+
+	@Override
 	public void moveArcRight() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
-
 	}
 
 	@Override
 	public void moveArcLeft() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
-
 	}
-
 }
