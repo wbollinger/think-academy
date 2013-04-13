@@ -67,7 +67,7 @@ public class StateGoalie extends State {
 		bot.nav.lastZone = bot.nav.currentZone;
 		bot.nav.lastDirection = bot.nav.currentDirection;
 
-		if (!(((compass + 7) > Navigator.ENEMY_GOAL) && ((compass - 7) < Navigator.ENEMY_GOAL))) {
+		if (!(((compass + 7) > bot.nav.ENEMY_GOAL) && ((compass - 7) < bot.nav.ENEMY_GOAL))) {
 			debugln("Incorrect heading: breaking to StateGoalieReposition",
 					0x40);
 			bot.changeState(StateGoalieReposition.getInstance());

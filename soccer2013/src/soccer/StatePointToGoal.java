@@ -18,7 +18,7 @@ public class StatePointToGoal extends State {
 			return;
 		}
 
-		bot.nav.pointToHeadingArc(Navigator.ENEMY_GOAL);
+		bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
 		debugln("Facing Enemy Goal");
 		bot.nav.pointToGoal();
 		
