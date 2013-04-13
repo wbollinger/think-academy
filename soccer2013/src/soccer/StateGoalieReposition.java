@@ -64,7 +64,7 @@ public class StateGoalieReposition extends State {
 				bot.nav.moveDir(180);
 				bot.sleep(1000);
 			}
-		} else if (!(((compass + 5) > bot.nav.ENEMY_GOAL) && ((compass - 5) < bot.nav.ENEMY_GOAL))) {
+		} else if (!(((compass + 4) > bot.nav.ENEMY_GOAL) && ((compass - 4) < bot.nav.ENEMY_GOAL))) {
 			bot.nav.pointToHeading((float) bot.nav.ENEMY_GOAL);
 			debugln("Heading Corrected", 0x40);
 		} else if ((bot.arduino.getDisYBack() > 15 && bot.nav.currentZone == Navigator.ZONE.MIDDLE)) {
