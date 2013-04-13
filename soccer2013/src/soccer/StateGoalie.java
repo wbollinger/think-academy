@@ -33,15 +33,15 @@ public class StateGoalie extends State {
 		
 		debugln("IR|DIR:" + bot.EIR.getDir() + "|STR:" + bot.EIR.getStrength(),
 				0x01);
-		if (bot.EIR.getDir() == centeredHeading) {
+		if (bot.EIR.getDir() == centeredHeading || bot.EIR.getDir() == 5) {
 			bot.stopAll();
 			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
-		} else if ((bot.EIR.getDir() < centeredHeading)
+		} else if ((bot.EIR.getDir() < centeredHeading || bot.EIR.getDir() < 5)
 				&& (bot.arduino.getDisXLeft() > 62)) {
 			// moves left, unless at edge of goal
 			bot.nav.moveDir(180);
 			bot.nav.currentDirection = Navigator.DIRECTION.LEFT;
-		} else if ((bot.EIR.getDir() > centeredHeading)
+		} else if ((bot.EIR.getDir() > centeredHeading || bot.EIR.getDir() > 5)
 				&& (bot.arduino.getDisXRight() > 62)) {
 			// moves right, unless at edge of goal
 			// + ":" + bot.arduino.getDisXRight());
@@ -88,7 +88,7 @@ public class StateGoalie extends State {
 		bot.nav.lastZone = bot.nav.currentZone;
 		bot.nav.lastDirection = bot.nav.currentDirection;
 
-		if (!(((compass + 7) > bot.nav.ENEMY_GOAL) && ((compass - 7) < bot.nav.ENEMY_GOAL))) {
+		if (!(((compass + 9) > bot.nav.ENEMY_GOAL) && ((compass - 9) < bot.nav.ENEMY_GOAL))) {
 			debugln("Incorrect heading: breaking to StateGoalieReposition",
 					0x40);
 			bot.changeState(StateGoalieReposition.getInstance());
