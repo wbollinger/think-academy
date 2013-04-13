@@ -142,7 +142,7 @@ public class StateCommand extends State {
 			if (command.equalsIgnoreCase("stop")) {
 				robot.stopAll();
 			} else if (command.equalsIgnoreCase("right")) {
-				double degrees = parseDouble(arg0);
+				// double degrees = parseDouble(arg0);
 				robot.turnRight();
 			} else if (command.equalsIgnoreCase("rightprecise")) {
 				double degrees = parseDouble(arg0);
@@ -191,7 +191,7 @@ public class StateCommand extends State {
 					Thread.sleep(200);
 				}
 			} else if (command.equalsIgnoreCase("left")) {
-				double degrees = parseDouble(arg0);
+				// double degrees = parseDouble(arg0);
 				robot.turnLeft();
 			} else if (command.equalsIgnoreCase("leftprecise")) {
 				double degrees = parseDouble(arg0);
@@ -206,7 +206,7 @@ public class StateCommand extends State {
 				robot.fireSolenoid();
 			} else if (command.equalsIgnoreCase("forward")) {
 				if (args.length > 0) {
-					double distance = parseDouble(arg0);
+					// double distance = parseDouble(arg0);
 					// robot.forward(distance);
 					return;
 				}
@@ -215,7 +215,8 @@ public class StateCommand extends State {
 				robot.aFudge = parseInt(arg0);
 				robot.bFudge = parseInt(arg1);
 				robot.cFudge = parseInt(arg2);
-				debugln(""+robot.aFudge+":"+robot.bFudge+":"+robot.cFudge);
+				debugln("" + robot.aFudge + ":" + robot.bFudge + ":"
+						+ robot.cFudge);
 			} else if (command.equalsIgnoreCase("moveArcR")) {
 				robot.moveArcRight();
 			} else if (command.equalsIgnoreCase("moveArcL")) {
@@ -261,7 +262,7 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("reverse")
 					|| command.equalsIgnoreCase("backward")) {
 				if (args.length > 0) {
-					double distance = parseDouble(arg0);
+					// double distance = parseDouble(arg0);
 					// robot.backward(distance);
 					return;
 				}
@@ -327,7 +328,7 @@ public class StateCommand extends State {
 				robot.changeState(StateGoalie.getInstance());
 			} else if (command.equalsIgnoreCase("StateFollowBall")) {
 				robot.changeState(StateFollowBall.getInstance());
-			} else if(command.equalsIgnoreCase("setDebugFlags")) {
+			} else if (command.equalsIgnoreCase("setDebugFlags")) {
 				robot.io.setDebugFlags(parseInt(arg0));
 			} else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
@@ -355,11 +356,11 @@ public class StateCommand extends State {
 				debugln("" + robot.arduino.getDisXRight());
 			} else if (command.equalsIgnoreCase("readLightRight")) {
 				robot.arduino.update();
-				debugln(""+ robot.arduino.getLightRight());
+				debugln("" + robot.arduino.getLightRight());
 			} else if (command.equalsIgnoreCase("readLightLeft")) {
 				robot.arduino.update();
-				debugln(""+ robot.arduino.getLightLeft());
-			}else if (command.equalsIgnoreCase("debug")) {
+				debugln("" + robot.arduino.getLightLeft());
+			} else if (command.equalsIgnoreCase("debug")) {
 				debug("Not implemented\n");
 			} else if (command.equalsIgnoreCase("disableDebug")) {
 				robot.io.setUseDebug(false);
@@ -369,7 +370,7 @@ public class StateCommand extends State {
 				robot.io.setUseDebug(false);
 			} else if (command.equalsIgnoreCase("tacoMeterTurn")) {
 				robot.tacoMeterTurn();
-			}else if (command.equalsIgnoreCase("pollallsensors")) {
+			} else if (command.equalsIgnoreCase("pollallsensors")) {
 				while (!Button.ENTER.isDown()) {
 					robot.EIR.update();
 					robot.arduino.update();
@@ -382,23 +383,21 @@ public class StateCommand extends State {
 					debug(" || LL = " + robot.arduino.getLightLeft(), 4);
 					debug(" || RL = " + robot.arduino.getLightRight(), 4);
 					debug(" || COMP = " + robot.compass.getDegrees(), 8);
-					
+
 					debugln("");
-					
+
 					robot.sleep(20);
 
 				}
-			} else if (command.equalsIgnoreCase("pingLoop")) {
-				while (!Button.ENTER.isDown()) {
-					int val = robot.arduino.getLightLeft();
-					int val2 = robot.arduino.getLightRight();
-					// int val3 = robot.arduino.readPing();
-					// int val4 = 0;
-					// debugln("" + val + " " + val2 + " " + val3); // + " " +
-					// val4);
-					robot.sleep(50);
-				}
-			} else if (command.equalsIgnoreCase("readArduino")) {
+			} /*
+			 * else if (command.equalsIgnoreCase("pingLoop")) { while
+			 * (!Button.ENTER.isDown()) { int val =
+			 * robot.arduino.getLightLeft(); int val2 =
+			 * robot.arduino.getLightRight(); // int val3 =
+			 * robot.arduino.readPing(); // int val4 = 0; // debugln("" + val +
+			 * " " + val2 + " " + val3); // + " " + // val4); robot.sleep(50); }
+			 * }
+			 */else if (command.equalsIgnoreCase("readArduino")) {
 				// use 82 to read Analog
 				byte address = (byte) parseInt(arg0);
 				while (!Button.ENTER.isDown()) {
