@@ -1,7 +1,5 @@
 package soccer;
 
-import lejos.nxt.comm.RConsole;
-
 //------------------------------------------------------------------------
 //  robot starting state - decides what to do when robot is turned on
 //------------------------------------------------------------------------
