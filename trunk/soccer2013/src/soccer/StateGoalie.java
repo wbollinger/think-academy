@@ -30,7 +30,7 @@ public class StateGoalie extends State {
 		bot.arduino.update();
 		bot.EIR.update();
 		compass = (int) bot.compass.getDegrees();
-		
+
 		debugln("IR|DIR:" + bot.EIR.getDir() + "|STR:" + bot.EIR.getStrength(),
 				0x01);
 		if (bot.EIR.getDir() == centeredHeading || bot.EIR.getDir() == 5) {
@@ -88,7 +88,8 @@ public class StateGoalie extends State {
 		bot.nav.lastZone = bot.nav.currentZone;
 		bot.nav.lastDirection = bot.nav.currentDirection;
 
-		if (!(((compass + 9) > bot.nav.ENEMY_GOAL) && ((compass - 9) < bot.nav.ENEMY_GOAL))) {
+		if (!(((compass + 10) > bot.nav.ENEMY_GOAL) && ((compass - 10) < bot.nav.ENEMY_GOAL))
+				&& (bot.EIR.getDir() == 5)) {
 			debugln("Incorrect heading: breaking to StateGoalieReposition",
 					0x40);
 			bot.changeState(StateGoalieReposition.getInstance());
@@ -105,11 +106,12 @@ public class StateGoalie extends State {
 //		}
 		
 		if ((bot.arduino.getDisYBack() > 22)
-				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || (bot.nav.currentZone == Navigator.ZONE.RIGHT))) {
+				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || !(bot.nav.currentZone == Navigator.ZONE.RIGHT))
+				&& (bot.EIR.getDir() == 5)) {
 			debugln("Too far forward: breaking to StateGoalieReposition", 0x40);
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
-		} else if (bot.arduino.getDisYBack() < 10) {
+		} else if (bot.arduino.getDisYBack() < 10 && (bot.EIR.getDir() == 5)) {
 			debugln("Too close to goal: breaking to StateGoalieReposition",
 					0x40);
 			bot.changeState(StateGoalieReposition.getInstance());
