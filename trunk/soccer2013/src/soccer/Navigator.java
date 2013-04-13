@@ -13,9 +13,9 @@ public class Navigator {
 	protected Robot bot;
 	private float facingDegree;
 
-	private int lastTachoA;
-	private int lastTachoB;
-	private int lastTachoC;
+//	private int lastTachoA;
+//	private int lastTachoB;
+//	private int lastTachoC;
 
 	private int xPos;
 	private int yPos;
@@ -272,7 +272,7 @@ public class Navigator {
 	public int getYLocation() {
 		return yPos;
 	}
-
+/*
 	public void updateLocation() {
 		int tachoA = bot.motA.getTachoCount();
 		int tachoB = bot.motB.getTachoCount();
@@ -296,7 +296,8 @@ public class Navigator {
 		bot.motB.resetTachoCount();
 		bot.motC.resetTachoCount();
 	}
-
+*/
+	
 	protected int normalizeMeasurement(int measure) {
 		if (measure < 59) {
 			measure = measure + 60;
