@@ -5,13 +5,12 @@ import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.CompassHTSensor;
-import lejos.nxt.addon.IRSeekerV2;
 
 public class RobotJake extends Robot {
 
 	public RobotJake(String name) {
 		super(name);
-		
+
 		LightCorrection = 40;
 
 		MOTOR_POWER = 100;
@@ -142,7 +141,7 @@ public class RobotJake extends Robot {
 
 	@Override
 	public void turnLeftPrecise(double degrees) {
-		//io.debugln("TURNING LEFTISH "+degrees+" DEGREES!!");
+		// io.debugln("TURNING LEFTISH "+degrees+" DEGREES!!");
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
@@ -159,7 +158,7 @@ public class RobotJake extends Robot {
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
-		//io.debugln("TURNING DUNNED!!");
+		// io.debugln("TURNING DUNNED!!");
 	}
 
 	@Override
@@ -209,7 +208,7 @@ public class RobotJake extends Robot {
 
 	@Override
 	public void turnRightPrecise(double degrees) {
-		//io.debugln("TURNING RIGHTISH "+degrees+" DEGREES!!");
+		// io.debugln("TURNING RIGHTISH "+degrees+" DEGREES!!");
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
@@ -226,7 +225,7 @@ public class RobotJake extends Robot {
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
-		//io.debugln("TURNING DUNNED!!");
+		// io.debugln("TURNING DUNNED!!");
 	}
 
 	@Override

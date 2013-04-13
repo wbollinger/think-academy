@@ -5,9 +5,7 @@ import lejos.nxt.MotorPort;
 import lejos.nxt.NXTMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
-import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.addon.CompassHTSensor;
-import lejos.nxt.addon.IRSeekerV2;
 import lejos.nxt.addon.MMXMotor;
 import lejos.nxt.addon.NXTMMX;
 
@@ -25,7 +23,7 @@ public class RobotTim extends Robot {
 
 		// IR = new IRSeekerV2(SensorPort.S1, IRSeekerV2.Mode.AC);
 		EIR = new EnhIRSeekerV2(SensorPort.S1);
-		
+
 		mux = new NXTMMX(SensorPort.S3);
 		dribbler = new MMXMotor(mux, NXTMMX.MMX_MOTOR_1);
 
@@ -46,7 +44,7 @@ public class RobotTim extends Robot {
 		b = 0;
 
 	}
-	
+
 	@Override
 	public void followBall() {
 		int dir;
