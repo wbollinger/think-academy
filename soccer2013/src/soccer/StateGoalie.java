@@ -94,7 +94,16 @@ public class StateGoalie extends State {
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
 		}
-
+		
+//		if (!((compass + 9) > bot.nav.ENEMY_GOAL)) {
+//			debugln("Incorrect heading: breaking to StateGoalieReposition",
+//					0x40);
+//			bot.changeState(StateGoalieReposition.getInstance());
+//			return;
+//		} else if(((compass - 9) < bot.nav.ENEMY_GOAL)){
+//			
+//		}
+		
 		if ((bot.arduino.getDisYBack() > 22)
 				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || (bot.nav.currentZone == Navigator.ZONE.RIGHT))) {
 			debugln("Too far forward: breaking to StateGoalieReposition", 0x40);
