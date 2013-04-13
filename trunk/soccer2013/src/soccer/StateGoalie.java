@@ -30,6 +30,27 @@ public class StateGoalie extends State {
 		bot.arduino.update();
 		bot.EIR.update();
 		compass = (int) bot.compass.getDegrees();
+		
+		debugln("IR|DIR:" + bot.EIR.getDir() + "|STR:" + bot.EIR.getStrength(),
+				0x01);
+		if (bot.EIR.getDir() == centeredHeading) {
+			bot.stopAll();
+			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
+		} else if ((bot.EIR.getDir() < centeredHeading)
+				&& (bot.arduino.getDisXLeft() > 62)) {
+			// moves left, unless at edge of goal
+			bot.nav.moveDir(180);
+			bot.nav.currentDirection = Navigator.DIRECTION.LEFT;
+		} else if ((bot.EIR.getDir() > centeredHeading)
+				&& (bot.arduino.getDisXRight() > 62)) {
+			// moves right, unless at edge of goal
+			// + ":" + bot.arduino.getDisXRight());
+			bot.nav.moveDir(0);
+			bot.nav.currentDirection = Navigator.DIRECTION.RIGHT;
+		} else if (bot.EIR.getDir() == 0) {
+			bot.stopAll();
+			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
+		}
 
 		if ((Math.abs(bot.arduino.getDisXLeft() - bot.arduino.getDisXRight()) < 40)
 				&& ((bot.arduino.getDisXLeft() + bot.arduino.getDisXRight()) > 150)) {
@@ -91,27 +112,6 @@ public class StateGoalie extends State {
 			debugln("hit line", 0x40);
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
-		}
-
-		debugln("IR|DIR:" + bot.EIR.getDir() + "|STR:" + bot.EIR.getStrength(),
-				0x01);
-		if (bot.EIR.getDir() == centeredHeading) {
-			bot.stopAll();
-			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
-		} else if ((bot.EIR.getDir() < centeredHeading)
-				&& (bot.arduino.getDisXLeft() > 62)) {
-			// moves left, unless at edge of goal
-			bot.nav.moveDir(180);
-			bot.nav.currentDirection = Navigator.DIRECTION.LEFT;
-		} else if ((bot.EIR.getDir() > centeredHeading)
-				&& (bot.arduino.getDisXRight() > 62)) {
-			// moves right, unless at edge of goal
-			// + ":" + bot.arduino.getDisXRight());
-			bot.nav.moveDir(0);
-			bot.nav.currentDirection = Navigator.DIRECTION.RIGHT;
-		} else if (bot.EIR.getDir() == 0) {
-			bot.stopAll();
-			bot.nav.currentDirection = Navigator.DIRECTION.STOPPED;
 		}
 
 	}
