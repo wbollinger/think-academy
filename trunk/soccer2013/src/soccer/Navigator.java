@@ -7,8 +7,8 @@ public class Navigator {
 	public static final float YELLOW_GOAL_HEADING = 297.0f;
 	public static final float BLUE_GOAL_HEADING = 107.0f;
 
-	public static float ENEMY_GOAL;
-	public static float ALLY_GOAL;
+	public float ENEMY_GOAL;
+	public float ALLY_GOAL;
 
 	protected Robot bot;
 	private float facingDegree;
