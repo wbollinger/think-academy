@@ -17,7 +17,7 @@
 extern int debug;
 
 #define TITLE_STRING    "Arduino NXT Soccer"
-#define VERSION_STRING  "V2.04R"           // This is NOT the same as the version reported over the NXT interface
+#define VERSION_STRING  "V2.05"           // This is NOT the same as the version reported over the NXT interface
                                            // which is defined in NXTI2C.cpp
 
 // Select the Baud rate you want to use:
@@ -25,7 +25,7 @@ extern int debug;
 
 #define NUM_ANALOG_CH		(4U)		   // Number of Analog Input Channels
 #define NUM_DIGITAL_CH		(4U)		   // Number of Digital Input Channels
-#define NUM_PING_CH			(3U)		   // Number of Ping Input Channels
+#define NUM_PING_CH			(4U)		   // Number of Ping Input Channels
 
 // Some of the code has been migrated from a previous project which uses the following type definitions:
 typedef signed char INT_8;

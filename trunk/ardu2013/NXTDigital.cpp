@@ -33,9 +33,12 @@ void Init_Digital(void)
 	//digitalWrite(12, HIGH);
 
 	// For Roboduino, use non-PWM pins.  Avoid 3, 5, 6, 9, 10, 11
-	//no relay needed on goalie; disabled
-	//pinMode(8, OUTPUT);
-	//digitalWrite(8, HIGH);
+	//no relay needed on goalie; disable
+
+	pinMode(2, OUTPUT);
+	digitalWrite(2, HIGH);
+	pinMode(3, OUTPUT);
+	digitalWrite(3, HIGH);
 
 }
 

@@ -71,7 +71,6 @@
 #define NXT_LED_PIN              			   (13) // (13) default, A3 for LED matrix
 #define NUM_SERVOS                             (4)  // dummy value so addresses in shared data don't move
 #define NUM_PINGS                              (4)    // Number of Ping sensors
-
 //---------------------------------------------------------------------
 // Macro Definitions
 //---------------------------------------------------------------------
@@ -128,7 +127,7 @@ static union {
 		volatile UINT_16 u16ServoPosition[NUM_SERVOS]; // 0x32 - 0x41 16bit PWM Servo Position Registers (time in uS)
 
 		volatile byte u8PingReadings[NUM_PINGS]; // 0x4A - 0x51 8bit Ping Sensor values
-		volatile byte u8Dummy[8 - NUM_PINGS];    // For alignment, should be 8 bytes total
+		volatile byte u8Dummy[8 - NUM_PINGS]; // For alignment, should be 8 bytes total
 
 		// Extension fields
 
@@ -184,8 +183,7 @@ static void NXTDiagnostics(void);
 //---------------------------------------------------------------------
 #define OFFSETOF(type, field)    ((unsigned long) &(((type *) 0)->field))
 
-void Init_NXTIIC(void)
-{
+void Init_NXTIIC(void) {
 	int i;
 
 	// Initialize the Wire Library (this is the I2C (TWI/SMBus) library
@@ -230,8 +228,7 @@ void Init_NXTIIC(void)
 //---------------------------------------------------------------------
 // Callback function for when NXT requests a byte from us
 //---------------------------------------------------------------------
-void NXTOnRequest(void)
-{
+void NXTOnRequest(void) {
 	if (!m_bNXTAlive) {
 		// Connection not yet in use - we should receive an address before any read requests
 		twi4nxt_transmitConst(&m_NXTInterfaceConstData.au8Raw[7], 1); // Dummy error return (/0) to avoid causing IIC to stall
@@ -278,8 +275,7 @@ void NXTOnRequest(void)
 // All bytes received up to the IIC "stop" signal are received here in one go
 // hence we do not need bData to be static retained across multiple calls.
 //---------------------------------------------------------------------
-void NXTOnReceive(byte *u8Received, uint8_t NumBytesReceived)
-{
+void NXTOnReceive(byte *u8Received, uint8_t NumBytesReceived) {
 	bool bData = false;
 
 	if (!m_bNXTAlive) {
@@ -325,8 +321,7 @@ void NXTOnReceive(byte *u8Received, uint8_t NumBytesReceived)
 //---------------------------------------------------------------------
 // Handler to synchronize data between NXT shared memory and other parts of the system
 //---------------------------------------------------------------------
-void NXT_Handler(void)
-{
+void NXT_Handler(void) {
 	if (m_bNXTAlive) {
 		NXT_LED(HIGH);
 		// Switch NXT status LED On
@@ -356,14 +351,26 @@ void NXT_Handler(void)
 			// Decode and handle COMMANDS from NXT
 			switch (m_NXTInterfaceData.Fields.u8Command) {
 			case 1: // Power dribbler wheel (disabled for goalie)
-				Serial.println("DRIBBLER ON");
-				//digitalWrite(8, LOW);
+				Serial.println("Capacitors connected to charger");
+				digitalWrite(3, LOW);
 
 				break;
 
 			case 2: // Power kicker solenoid (disabled for goalie)
-				Serial.println("DRIBBLER OFF");
-				//digitalWrite(8, HIGH);
+				Serial.println("Capacitors disconnected from charger");
+				digitalWrite(3, HIGH);
+
+				break;
+
+			case 3: // Power kicker solenoid (disabled for goalie)
+				Serial.println("Capacitors connected to solenoid");
+				digitalWrite(2, HIGH);
+
+				break;
+
+			case 4: // Power kicker solenoid (disabled for goalie)
+				Serial.println("Capacitors disconnected from solenoid");
+				digitalWrite(2, LOW);
 
 				break;
 
@@ -394,15 +401,14 @@ void NXT_Handler(void)
 //---------------------------------------------------------------------
 // Function to update fields in the NXT shared memory area
 //---------------------------------------------------------------------
-static void NXTUpdateValues(void)
-{
+static void NXTUpdateValues(void) {
 	for (byte i = 0; i < NUM_ANALOG_CH; i++) {
 		if (g_AnalogFlags[i].bUpdate) {
 			// Analog value (may) have been updated
 			//int i16AnalogScaled = (int) Analog_getChannel(i) / 4;  // Will scale this value
 			//m_NXTInterfaceData.Fields.i8AnalogValue[i] = (INT_8) i16AnalogScaled; // 8 bit version of Signed Radio Control input (units of 4uS)
 
-			m_NXTInterfaceData.Fields.u16AnalogValue[i] = Analog_getChannel(i);     // Read raw Analog Value
+			m_NXTInterfaceData.Fields.u16AnalogValue[i] = Analog_getChannel(i); // Read raw Analog Value
 
 			g_AnalogFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
 		}
@@ -411,27 +417,28 @@ static void NXTUpdateValues(void)
 	for (byte i = 0; i < NUM_DIGITAL_CH; i++) {
 		if (g_DigitalFlags[i].bUpdate) {
 			// Digital value (may) have been updated
-			m_NXTInterfaceData.Fields.i8DigitalValue[i] = (INT_8) Digital_getChannel(i);
+			m_NXTInterfaceData.Fields.i8DigitalValue[i] =
+					(INT_8) Digital_getChannel(i);
 			g_DigitalFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
 		}
 
 	}
 
 	for (byte i = 0; i < NUM_PING_CH; i++) {
-			if (g_PingFlags[i].bUpdate) {
-				// Digital value (may) have been updated
-				m_NXTInterfaceData.Fields.u8PingReadings[i] = (INT_8) Ping_getChannel(i);
-				g_PingFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
-			}
-
+		if (g_PingFlags[i].bUpdate) {
+			// Digital value (may) have been updated
+			m_NXTInterfaceData.Fields.u8PingReadings[i] =
+					(INT_8) Ping_getChannel(i);
+			g_PingFlags[i].bUpdate = FALSE; // Clear Flag to indicate that value has been updated
 		}
+
+	}
 }
 
 //---------------------------------------------------------------------
 // Low level NXT I2C Diagnostics
 //---------------------------------------------------------------------
-static void NXTDiagnostics(void)
-{
+static void NXTDiagnostics(void) {
 	if (m_u8NXTNumReceived) {
 		// Number of bytes received from NXT in monitoring period (excluding the device addressing byte)
 		Serial.print("Rx ");

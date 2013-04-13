@@ -10,10 +10,10 @@ unsigned long pingTimer[NUM_PING_CH]; // Holds the times when the next ping shou
 uint8_t currentSensor = 0; // Keeps track of which sensor is active.
 
 NewPing sonar[NUM_PING_CH] = { // Sensor object array.
-		NewPing(2, 3, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
-		NewPing(4, 5, MAX_DISTANCE),
-		NewPing(7, 8, MAX_DISTANCE),
-		NewPing(12, 11, MAX_DISTANCE),
+		NewPing(5, 5, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
+		NewPing(6, 6, MAX_DISTANCE),
+		NewPing(7, 7, MAX_DISTANCE),
+		NewPing(8, 8, MAX_DISTANCE),
 };
 
 unsigned char g_u8Ping[NUM_PING_CH];
