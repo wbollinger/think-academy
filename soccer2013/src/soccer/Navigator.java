@@ -4,8 +4,7 @@ import lejos.nxt.Button;
 
 public class Navigator {
 
-	public static final float YELLOW_GOAL_HEADING = 297.0f;
-	public static final float BLUE_GOAL_HEADING = 107.0f;
+	
 
 	public float ENEMY_GOAL;
 	public float ALLY_GOAL;

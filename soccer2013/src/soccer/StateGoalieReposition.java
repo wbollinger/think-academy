@@ -43,11 +43,11 @@ public class StateGoalieReposition extends State {
 
 		} else if (bot.arduino.getLightLeft() < bot.WHITE_VALUE) {
 			debugln("hit line left", 0x40);
-			if (bot.nav.currentZone == Navigator.ZONE.LEFT) {
-				bot.nav.moveDir(0);
-				bot.sleep(1000);
-			} else if (bot.nav.currentZone == Navigator.ZONE.RIGHT) {
+			if (bot.nav.currentZone == Navigator.ZONE.RIGHT) {
 				bot.nav.moveDir(180);
+				bot.sleep(1000);
+			} else {
+				bot.nav.moveDir(0);
 				bot.sleep(1000);
 			}
 		} else if (bot.arduino.getLightRight() < bot.WHITE_VALUE) {
@@ -55,7 +55,7 @@ public class StateGoalieReposition extends State {
 			if (bot.nav.currentZone == Navigator.ZONE.LEFT) {
 				bot.nav.moveDir(0);
 				bot.sleep(1000);
-			} else if (bot.nav.currentZone == Navigator.ZONE.RIGHT) {
+			} else {
 				bot.nav.moveDir(180);
 				bot.sleep(1000);
 			}

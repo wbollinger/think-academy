@@ -33,18 +33,19 @@ public class Main {
 			;
 		
 		if(Button.RIGHT.isDown()) {
-			robot.nav.ENEMY_GOAL = Navigator.BLUE_GOAL_HEADING;
-			robot.nav.ALLY_GOAL = Navigator.YELLOW_GOAL_HEADING;
+			
+			robot.nav.ENEMY_GOAL = robot.blueGoalHeading;
+			robot.nav.ALLY_GOAL = robot.yellowGoalHeading;;
 		} else if(Button.LEFT.isDown()){
-			robot.nav.ENEMY_GOAL = Navigator.YELLOW_GOAL_HEADING;
-			robot.nav.ALLY_GOAL = Navigator.BLUE_GOAL_HEADING;
+			robot.nav.ENEMY_GOAL = robot.yellowGoalHeading;;
+			robot.nav.ALLY_GOAL = robot.blueGoalHeading;
 		} else if(Button.ENTER.isDown()){
-			if(robot.compass.getDegrees() > Navigator.YELLOW_GOAL_HEADING-45 && robot.compass.getDegrees() < Navigator.YELLOW_GOAL_HEADING+45){
-				robot.nav.ENEMY_GOAL = Navigator.YELLOW_GOAL_HEADING;
-				robot.nav.ALLY_GOAL = Navigator.BLUE_GOAL_HEADING;
-			} else if(robot.compass.getDegrees() > Navigator.BLUE_GOAL_HEADING-45 && robot.compass.getDegrees() < Navigator.BLUE_GOAL_HEADING+45){
-				robot.nav.ENEMY_GOAL = Navigator.BLUE_GOAL_HEADING;
-				robot.nav.ALLY_GOAL = Navigator.YELLOW_GOAL_HEADING;
+			if(robot.compass.getDegrees() > robot.yellowGoalHeading-45 && robot.compass.getDegrees() < robot.yellowGoalHeading+45){
+				robot.nav.ENEMY_GOAL = robot.yellowGoalHeading;
+				robot.nav.ALLY_GOAL = robot.blueGoalHeading;
+			} else if(robot.compass.getDegrees() > robot.blueGoalHeading-45 && robot.compass.getDegrees() < robot.blueGoalHeading+45){
+				robot.nav.ENEMY_GOAL = robot.blueGoalHeading;
+				robot.nav.ALLY_GOAL = robot.yellowGoalHeading;
 			} // have to do something if not facing the right way.
 		}
 
