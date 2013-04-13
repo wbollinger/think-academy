@@ -4,17 +4,15 @@ import lejos.nxt.Button;
 
 public class Navigator {
 
-	
-
 	public float ENEMY_GOAL;
 	public float ALLY_GOAL;
 
 	protected Robot bot;
 	private float facingDegree;
 
-//	private int lastTachoA;
-//	private int lastTachoB;
-//	private int lastTachoC;
+	// private int lastTachoA;
+	// private int lastTachoB;
+	// private int lastTachoC;
 
 	private int xPos;
 	private int yPos;
@@ -92,7 +90,6 @@ public class Navigator {
 		pointToDegree = (float) normalizeAngle(pointToDegree);
 
 		// bot.io.debugln("Point to: " + pointToDegree);
-		bot.io.debugln("I'M GONNA TURN BY "+pointToDegree+ " DEGREES");
 		rotateTo(pointToDegree);
 	}
 
@@ -121,7 +118,7 @@ public class Navigator {
 		if (bot.name.equals("Tim")) {
 			bot.setPower(85);
 		}
-		
+
 		if (turnDegree > 0) {
 			bot.turnRightPrecise((double) turnDegree);
 
@@ -233,7 +230,7 @@ public class Navigator {
 	}
 
 	public double pointToGoal() {
-		//bot.io.debugln("went into pointToGoal");
+		// bot.io.debugln("went into pointToGoal");
 		getLocation();
 		bot.sleep(1000);
 		double angle = Math.atan2(91 - xPos, yPos);
@@ -246,7 +243,7 @@ public class Navigator {
 		} else {
 			bot.turnRightPrecise(Math.abs(angle));
 		}
-		//bot.io.debugln("turned");
+		// bot.io.debugln("turned");
 		bot.sleep(1000);
 
 		return Math.sqrt(Math.pow(yPos, 2) + Math.pow(91 - xPos, 2));
@@ -271,32 +268,24 @@ public class Navigator {
 	public int getYLocation() {
 		return yPos;
 	}
-/*
-	public void updateLocation() {
-		int tachoA = bot.motA.getTachoCount();
-		int tachoB = bot.motB.getTachoCount();
-		int tachoC = bot.motC.getTachoCount();
 
-		int tachoDiffA = lastTachoA - tachoA;
-		int tachoDiffB = lastTachoB - tachoB;
-		int tachoDiffC = lastTachoC - tachoC;
+	/*
+	 * public void updateLocation() { int tachoA = bot.motA.getTachoCount(); int
+	 * tachoB = bot.motB.getTachoCount(); int tachoC = bot.motC.getTachoCount();
+	 * 
+	 * int tachoDiffA = lastTachoA - tachoA; int tachoDiffB = lastTachoB -
+	 * tachoB; int tachoDiffC = lastTachoC - tachoC;
+	 * 
+	 * double moveDistA = tachoDiffA * bot.getR(); double moveDistB = tachoDiffB
+	 * * bot.getR(); double moveDistC = tachoDiffC * bot.getR();
+	 * 
+	 * }
+	 * 
+	 * public void resetLocation() { lastTachoA = 0; lastTachoB = 0; lastTachoC
+	 * = 0; bot.motA.resetTachoCount(); bot.motB.resetTachoCount();
+	 * bot.motC.resetTachoCount(); }
+	 */
 
-		double moveDistA = tachoDiffA * bot.getR();
-		double moveDistB = tachoDiffB * bot.getR();
-		double moveDistC = tachoDiffC * bot.getR();
-
-	}
-
-	public void resetLocation() {
-		lastTachoA = 0;
-		lastTachoB = 0;
-		lastTachoC = 0;
-		bot.motA.resetTachoCount();
-		bot.motB.resetTachoCount();
-		bot.motC.resetTachoCount();
-	}
-*/
-	
 	protected int normalizeMeasurement(int measure) {
 		if (measure < 59) {
 			measure = measure + 60;

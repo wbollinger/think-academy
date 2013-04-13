@@ -23,11 +23,16 @@ public class StateGoalieReposition extends State {
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
-
+		
 		compass = (int) bot.compass.getDegrees();
 		bot.arduino.update();
 		bot.EIR.update();
 
+		if(bot.EIR.getDir() != 5){
+			bot.changeState(StateGoalie.getInstance());
+			return;
+		}
+		
 		if ((bot.arduino.getLightLeft() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightRight() < bot.WHITE_VALUE)) {
 			debugln("hit line", 0x40);
