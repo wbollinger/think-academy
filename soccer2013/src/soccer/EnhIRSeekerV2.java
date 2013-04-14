@@ -73,7 +73,7 @@ public class EnhIRSeekerV2 extends I2CSensor {
 	public void update() {
 		int rc;
 		int i, iMax;
-		long dcSigSum, dcStr;
+		long dcSigSum;
 
 		dir = 0;
 		strength = 0;
@@ -114,12 +114,16 @@ public class EnhIRSeekerV2 extends I2CSensor {
 
 		// Make DC strength compatible with AC strength. use: sqrt(dcSigSum*500)
 		dcSigSum *= 500;
-		dcStr = 1;
+		
+		// The old NXC way of computing sqr root
+//		long dcStr = 1;
+//
+//		for (i = 0; i < 10; i++) {
+//			dcStr = (dcSigSum / dcStr + dcStr) / 2; // sqrt approx
+//		}
+//		strength = (int) dcStr;
 
-		for (i = 0; i < 10; i++) {
-			dcStr = (dcSigSum / dcStr + dcStr) / 2; // sqrt approx
-		}
-		strength = (int) dcStr;
+		strength = (int) Math.sqrt((double) dcSigSum);
 		mode = 1;
 
 		// Decide if using DC strength or should read and use AC strength
