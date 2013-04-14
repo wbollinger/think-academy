@@ -14,7 +14,7 @@ public class StateFollowBall extends State {
 
 	@Override
 	public void execute(Robot bot) {
-		if (Button.ENTER.isDown()) {
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
 			bot.dribbler.stop();
 			bot.changeState(StateCommand.getInstance());
 			return;
@@ -37,7 +37,7 @@ public class StateFollowBall extends State {
 			return;
 		} else if (bot.EIR.getStrength() > 200) {
 			bot.setPower(75);
-		}else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
+		} else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightLeft() < bot.WHITE_VALUE)) {
 			bot.nav.moveDir(270);
 			bot.sleep(1000);
@@ -79,7 +79,7 @@ public class StateFollowBall extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StateFollowBall");
-		//bot.stopAll();
+		// bot.stopAll();
 
 	}
 
