@@ -16,13 +16,20 @@ public class RobotChris extends Robot {
 	public RobotChris(String name) {
 		super(name);
 		
+		MOTOR_POWER = 100;
+		
+		yellowGoalHeading = 282.0f;
+		blueGoalHeading = 109.0f;
+		
 		LightCorrection = 90;
 		
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
 		motC = new NXTMotor(MotorPort.C);
 		
-		setPower(80);
+		motA.setPower(MOTOR_POWER);
+		motB.setPower(MOTOR_POWER);
+		motC.setPower(MOTOR_POWER);
 		motA.stop();
 		motB.stop();
 		motC.stop();
@@ -173,7 +180,9 @@ public class RobotChris extends Robot {
 
 	@Override
 	public void turnRightPrecise(double degrees) {
-		//io.debugln("I'm a gonna turn right");
+		motA.setPower(MOTOR_POWER+aFudge);
+		motB.setPower(MOTOR_POWER+bFudge);
+		motC.setPower(MOTOR_POWER+cFudge);
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
@@ -201,7 +210,9 @@ public class RobotChris extends Robot {
 
 	@Override
 	public void turnLeftPrecise(double degrees) {
-		//io.debugln("I'm a gonna turn left");
+		motA.setPower(MOTOR_POWER+aFudge);
+		motB.setPower(MOTOR_POWER+bFudge);
+		motC.setPower(MOTOR_POWER+cFudge);
 		motA.resetTachoCount();
 		motB.resetTachoCount();
 		motC.resetTachoCount();
