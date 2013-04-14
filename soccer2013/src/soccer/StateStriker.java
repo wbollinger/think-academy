@@ -20,7 +20,6 @@ public class StateStriker extends State {
 			return;
 		}
 
-		bot.changeState(StateFollowBall.getInstance());
 		if (!(bot.arduino.getDisBall() < 4)) { // we don't have the ball yet
 			bot.changeState(StateFollowBall.getInstance());
 			return;

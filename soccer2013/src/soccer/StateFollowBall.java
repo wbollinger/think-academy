@@ -23,16 +23,22 @@ public class StateFollowBall extends State {
 		bot.arduino.update();
 		bot.io.debugln("IR direction value is:" + bot.EIR.getDir(), 0x01);
 		bot.io.debugln("IR strength value is:" + bot.EIR.getStrength(), 0x01);
-		bot.io.debugln("Left light value is:" + bot.arduino.getLightLeft(), 0x04);
-		bot.io.debugln("Right light value is:" + bot.arduino.getLightRight(), 0x04);
-		bot.io.debugln(""+bot.arduino.getLightLeft()+":"+bot.arduino.getLightRight());
-		//io.debugln("" + dir + ":" + str);
+		bot.io.debugln("Left light value is:" + bot.arduino.getLightLeft(),
+				0x04);
+		bot.io.debugln("Right light value is:" + bot.arduino.getLightRight(),
+				0x04);
+		bot.io.debugln("" + bot.arduino.getLightLeft() + ":"
+				+ bot.arduino.getLightRight());
+		// io.debugln("" + dir + ":" + str);
 		if (bot.arduino.disBall < 4) {
 			bot.stopAll();
 			bot.moveForward(500);
 			bot.changeState(StatePointToGoal.getInstance());
 			return;
-		} else if((bot.arduino.getLightRight() < bot.WHITE_VALUE) && (bot.arduino.getLightLeft() < bot.WHITE_VALUE)) {
+		} else if (bot.EIR.getStrength() > 200) {
+			bot.setPower(75);
+		}else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
+				&& (bot.arduino.getLightLeft() < bot.WHITE_VALUE)) {
 			bot.nav.moveDir(270);
 			bot.sleep(1000);
 		} else if (bot.arduino.getLightRight() < bot.WHITE_VALUE) {
@@ -42,15 +48,26 @@ public class StateFollowBall extends State {
 			bot.nav.moveDir(180);
 			bot.sleep(200);
 		} else {
-
 			if (bot.EIR.getDir() == 5) {
-				bot.moveForward();
-			} else if (bot.EIR.getDir() < 5) {
-				bot.turnLeft();
-			} else if (bot.EIR.getDir() > 5) {
-				bot.turnRight();
+				bot.nav.moveDir(95);
+			} else if (bot.EIR.getDir() == 4) {
+				bot.turnLeftPrecise(20);
+			} else if (bot.EIR.getDir() == 3) {
+				bot.turnLeftPrecise(40);
+			} else if (bot.EIR.getDir() == 2) {
+				bot.turnLeftPrecise(90);
+			} else if (bot.EIR.getDir() == 1) {
+				bot.turnLeftPrecise(90);
+			} else if (bot.EIR.getDir() == 6) {
+				bot.turnRightPrecise(20);
+			} else if (bot.EIR.getDir() == 7) {
+				bot.turnRightPrecise(40);
+			} else if (bot.EIR.getDir() == 8) {
+				bot.turnRightPrecise(90);
+			} else if (bot.EIR.getDir() == 9) {
+				bot.turnRightPrecise(90);
 			} else {
-				bot.stopAll();
+				bot.nav.moveDir(95);
 			}
 		}
 	}
@@ -62,7 +79,7 @@ public class StateFollowBall extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StateFollowBall");
-		bot.stopAll();
+		//bot.stopAll();
 
 	}
 

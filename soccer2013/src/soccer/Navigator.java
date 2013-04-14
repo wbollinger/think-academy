@@ -239,11 +239,11 @@ public class Navigator {
 		bot.io.debugln("Angle calculated");
 		// rotateTo((float) angle);
 		if (angle > 0) {
-			bot.turnLeftPrecise(angle);
+			bot.turnRightPrecise(angle);
 		} else {
-			bot.turnRightPrecise(Math.abs(angle));
+			bot.turnLeftPrecise(Math.abs(angle));
 		}
-		// bot.io.debugln("turned");
+		 bot.io.debugln("turned");
 		bot.sleep(1000);
 
 		return Math.sqrt(Math.pow(yPos, 2) + Math.pow(91 - xPos, 2));
