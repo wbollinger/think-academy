@@ -105,6 +105,10 @@ public class BrickIO {
 		this.useDebug = useDebug;
 	}
 	
+	public void getDebugFlags() {
+		debugln("" + debugFlags);
+	}
+
 	public void setDebugFlags(int flags) {
 		debugFlags = flags;
 	}

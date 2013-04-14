@@ -181,12 +181,10 @@ public class StateCommand extends State {
 					dir = -1;
 					str = -1;
 					mode = -1;
-					if (robot.EIR != null) {
-						robot.EIR.update();
-						dir = robot.EIR.getDir();
-						str = robot.EIR.getStrength();
-						mode = robot.EIR.getMode();
-					}
+					robot.EIR.update();
+					dir = robot.EIR.getDir();
+					str = robot.EIR.getStrength();
+					mode = robot.EIR.getMode();
 					debugln("" + dir + " " + str + " " + mode);
 					Thread.sleep(200);
 				}
@@ -330,6 +328,8 @@ public class StateCommand extends State {
 				robot.changeState(StateFollowBall.getInstance());
 			} else if (command.equalsIgnoreCase("setDebugFlags")) {
 				robot.io.setDebugFlags(parseInt(arg0));
+			} else if (command.equalsIgnoreCase("getDebugFlags")) {
+				robot.io.getDebugFlags();
 			} else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit

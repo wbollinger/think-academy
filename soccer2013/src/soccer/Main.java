@@ -4,6 +4,7 @@ import lejos.nxt.Button;
 import lejos.nxt.LCD;
 
 public class Main {
+	/*
 	public final boolean checkButtons = false;
 
 	public static int checkButtons() {
@@ -21,6 +22,7 @@ public class Main {
 		// tell main() to run 
 		//return Button.ID_RIGHT;
 	}
+	*/
 
 	public static void main(String[] args) {
 		
@@ -28,8 +30,8 @@ public class Main {
 		
 		// create a robot
 		Robot robot = Robot.getRobot();
-		LCD.drawString("Waiting for button press", 0, 0);
-		while(Button.LEFT.isUp() && Button.RIGHT.isUp() && Button.ENTER.isUp())
+		LCD.drawString("Waiting for press", 0, 0);
+		while(Button.LEFT.isUp() && Button.RIGHT.isUp())
 			;
 		
 		if(Button.RIGHT.isDown()) {
@@ -39,7 +41,7 @@ public class Main {
 		} else if(Button.LEFT.isDown()){
 			robot.nav.ENEMY_GOAL = robot.yellowGoalHeading;;
 			robot.nav.ALLY_GOAL = robot.blueGoalHeading;
-		} else if(Button.ENTER.isDown()){
+		} /*else if(Button.ENTER.isDown()){
 			if(robot.compass.getDegrees() > robot.yellowGoalHeading-45 && robot.compass.getDegrees() < robot.yellowGoalHeading+45){
 				robot.nav.ENEMY_GOAL = robot.yellowGoalHeading;
 				robot.nav.ALLY_GOAL = robot.blueGoalHeading;
@@ -47,6 +49,8 @@ public class Main {
 				robot.nav.ENEMY_GOAL = robot.blueGoalHeading;
 				robot.nav.ALLY_GOAL = robot.yellowGoalHeading;
 			} // have to do something if not facing the right way.
+			
+			// Disable BlueTooth command loop
 			robot.io.setUseCommands(false);
 			robot.io.setUseDebug(false);
 			if(robot.name.equals("LineBacker")||robot.name.equals("Tim")) {
@@ -56,7 +60,7 @@ public class Main {
 				robot.changeState(StateStriker.getInstance());
 				robot.run();
 			}
-		}
+		}*/
 
 		//if (buttons == Button.ID_ENTER) {
 		//	// Run in autonomous mode
