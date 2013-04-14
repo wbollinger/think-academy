@@ -1,5 +1,7 @@
 package soccer;
 
+import lejos.nxt.LCD;
+
 //------------------------------------------------------------------------
 //  robot starting state - decides what to do when robot is turned on
 //------------------------------------------------------------------------
@@ -24,8 +26,13 @@ public class StateStart extends State {
 			// setup BT command loop
 			robot.changeState(StateCommand.getInstance());
 		} else {
-			// jump straight into first state (for now, exit)
-			robot.changeState(StateExit.getInstance());
+			LCD.drawString("BT disabled...", 0, 1);
+			// jump straight into appropriate state based on robot position
+			if (robot.name.equals("LineBacker") || robot.name.equals("Tim")) {
+				robot.changeState(StateGoalie.getInstance());
+			} else if (robot.name.equals("bbot") || robot.name.equals("JPNXT")) {
+				robot.changeState(StateStriker.getInstance());
+			}
 		}
 	}
 

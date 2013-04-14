@@ -18,7 +18,7 @@ public class StateGoalieReposition extends State {
 	@Override
 	public void execute(Robot bot) {
 
-		if (Button.ENTER.isDown()) {
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
 			debugln("Breaking into StateCommand", 0x80);
 			bot.changeState(StateCommand.getInstance());
 			return;

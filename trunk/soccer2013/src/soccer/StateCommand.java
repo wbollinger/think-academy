@@ -330,6 +330,14 @@ public class StateCommand extends State {
 				robot.io.setDebugFlags(parseInt(arg0));
 			} else if (command.equalsIgnoreCase("getDebugFlags")) {
 				robot.io.getDebugFlags();
+			} else if (command.equalsIgnoreCase("setEnemyGoal")) {
+				if(arg0.equalsIgnoreCase("blue")) {
+					robot.nav.ENEMY_GOAL = robot.blueGoalHeading;
+					robot.nav.ALLY_GOAL = robot.yellowGoalHeading;
+				} else if(arg0.equalsIgnoreCase("yellow")) {
+					robot.nav.ENEMY_GOAL = robot.yellowGoalHeading;
+					robot.nav.ALLY_GOAL = robot.blueGoalHeading;
+				}
 			} else if (command.equalsIgnoreCase("exit")
 					| command.equalsIgnoreCase("quit")) {
 				// clear flag so that exit will really exit

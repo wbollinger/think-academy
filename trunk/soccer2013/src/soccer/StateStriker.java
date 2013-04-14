@@ -15,7 +15,7 @@ public class StateStriker extends State {
 		// moveForward will be changed to kick.
 		bot.arduino.update();
 
-		if (Button.ENTER.isDown()) {
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}

@@ -21,7 +21,7 @@ public class StateGoalie extends State {
 	@Override
 	public void execute(Robot bot) {
 
-		if (Button.ENTER.isDown()) {
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
 			debugln("Breaking into StateCommand", 0x80);
 			bot.changeState(StateCommand.getInstance());
 			return;
@@ -95,16 +95,16 @@ public class StateGoalie extends State {
 			bot.changeState(StateGoalieReposition.getInstance());
 			return;
 		}
-		
-//		if (!((compass + 9) > bot.nav.ENEMY_GOAL)) {
-//			debugln("Incorrect heading: breaking to StateGoalieReposition",
-//					0x40);
-//			bot.changeState(StateGoalieReposition.getInstance());
-//			return;
-//		} else if(((compass - 9) < bot.nav.ENEMY_GOAL)){
-//			
-//		}
-		
+
+		// if (!((compass + 9) > bot.nav.ENEMY_GOAL)) {
+		// debugln("Incorrect heading: breaking to StateGoalieReposition",
+		// 0x40);
+		// bot.changeState(StateGoalieReposition.getInstance());
+		// return;
+		// } else if(((compass - 9) < bot.nav.ENEMY_GOAL)){
+		//
+		// }
+
 		if ((bot.arduino.getDisYBack() > 22)
 				&& !((bot.nav.currentZone == Navigator.ZONE.LEFT) || !(bot.nav.currentZone == Navigator.ZONE.RIGHT))
 				&& (bot.EIR.getDir() == 5)) {

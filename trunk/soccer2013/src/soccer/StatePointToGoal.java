@@ -20,7 +20,8 @@ public class StatePointToGoal extends State {
 	public void execute(Robot bot) {
 		time = System.currentTimeMillis();
 		elapsedTime = System.currentTimeMillis() - time;
-		if (Button.ENTER.isDown()) {
+		
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
