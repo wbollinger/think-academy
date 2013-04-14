@@ -47,6 +47,15 @@ public class Main {
 				robot.nav.ENEMY_GOAL = robot.blueGoalHeading;
 				robot.nav.ALLY_GOAL = robot.yellowGoalHeading;
 			} // have to do something if not facing the right way.
+			robot.io.setUseCommands(false);
+			robot.io.setUseDebug(false);
+			if(robot.name.equals("LineBacker")||robot.name.equals("Tim")) {
+				robot.changeState(StateGoalie.getInstance());
+				robot.run();
+			} else if(robot.name.equals("bbot")||robot.name.equals("JPNXT")) {
+				robot.changeState(StateStriker.getInstance());
+				robot.run();
+			}
 		}
 
 		//if (buttons == Button.ID_ENTER) {
