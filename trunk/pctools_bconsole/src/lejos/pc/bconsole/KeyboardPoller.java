@@ -50,7 +50,7 @@ public class KeyboardPoller extends Thread implements KeyListener {
 	
 	public void startPolling() {
 		this.setName("KeyboardPoller");
-		this.start();
+		this.run();
 	}
 	
 	public void run() {
