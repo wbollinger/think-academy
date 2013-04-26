@@ -28,10 +28,16 @@ public class StatePointToGoal extends State {
 
 		bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
 		debugln("Facing Enemy Goal");
-		bot.nav.pointToGoal();
+		//bot.nav.pointToGoal();
 
-		debugln("Fired");
-		bot.fireSolenoid();
+		//debugln("Fired");
+		//bot.fireSolenoid(); SOLENOID BROKEN
+		
+		if(bot.arduino.getDisBall() < 4) {
+			bot.nav.moveDir(95);
+			bot.sleep(2000);
+			//bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
+	}
 		bot.changeState(StateStriker.getInstance());
 
 	}

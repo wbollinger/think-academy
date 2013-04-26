@@ -25,6 +25,8 @@ public class Robot {
 	public static final byte DISCONNECT_CAPS_CHARGER = (byte) 2;
 	public static final byte CONNECT_CAPS_SOLENOID = (byte) 3;
 	public static final byte DISCONNECT_CAPS_SOLENOID = (byte) 4;
+//	public static final byte CONNECT_CHARGER = (byte) 5;
+//	public static final byte DISCONNECT_CHARGER = (byte) 6;
 	
 	protected int MOTOR_POWER = 100;
 
@@ -116,6 +118,10 @@ public class Robot {
 	}
 	
 	public void fireSolenoid() {
+	}
+	
+	public void chargeCaps() {
+		
 	}
 
 	public double pointToGoal() {
