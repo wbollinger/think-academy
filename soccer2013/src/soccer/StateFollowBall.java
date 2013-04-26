@@ -31,13 +31,13 @@ public class StateFollowBall extends State {
 				+ bot.arduino.getLightRight());
 		// io.debugln("" + dir + ":" + str);
 		if (bot.arduino.disBall < 4) {
+			bot.moveForward(300);
 			bot.stopAll();
-			bot.moveForward(500);
 			bot.changeState(StatePointToGoal.getInstance());
 			return;
-		} else if (bot.EIR.getStrength() > 200) {
+		} /* else if (bot.EIR.getStrength() > 200) {
 			bot.setPower(75);
-		} else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
+		} */ else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightLeft() < bot.WHITE_VALUE)) {
 			bot.nav.moveDir(270);
 			bot.sleep(1000);

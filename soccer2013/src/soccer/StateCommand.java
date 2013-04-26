@@ -202,6 +202,8 @@ public class StateCommand extends State {
 				robot.dribbler.stop();
 			} else if (command.equalsIgnoreCase("kick")) {
 				robot.fireSolenoid();
+			} else if (command.equalsIgnoreCase("charge")) {
+				robot.chargeCaps();
 			} else if (command.equalsIgnoreCase("forward")) {
 				if (args.length > 0) {
 					// double distance = parseDouble(arg0);

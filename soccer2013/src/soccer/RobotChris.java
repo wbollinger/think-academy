@@ -18,10 +18,10 @@ public class RobotChris extends Robot {
 		
 		MOTOR_POWER = 100;
 		
-		yellowGoalHeading = 282.0f;
-		blueGoalHeading = 109.0f;
+		yellowGoalHeading = 151.0f;
+		blueGoalHeading = 338.0f;
 		
-		LightCorrection = 90;
+		LightCorrection = 20;
 		
 		motA = new NXTMotor(MotorPort.A);
 		motB = new NXTMotor(MotorPort.B);
@@ -55,7 +55,7 @@ public class RobotChris extends Robot {
 		
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_SOLENOID);
 		sleep(50); // wait for the relay to open
-		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
+		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
 
 		r = 2.5;
 		b = 0;
@@ -106,14 +106,24 @@ public class RobotChris extends Robot {
 	
 	@Override
 	public void fireSolenoid() {
-		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
-		sleep(200); // wait for the relay to open
+		//sleep(200); // wait for the relay to open
 		arduino.writeCommand(Robot.CONNECT_CAPS_SOLENOID);
-		sleep(1000);
+		sleep(500);
 		arduino.writeCommand(Robot.DISCONNECT_CAPS_SOLENOID);
 		sleep(200); // wait for the relay to open
 		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
+		sleep(4000);
+		arduino.writeCommand(RobotChris.DISCONNECT_CAPS_CHARGER);
 	}
+	
+//	@Override
+//	public void chargeCaps() {
+//		arduino.writeCommand(Robot.CONNECT_CAPS_CHARGER);
+//		arduino.writeCommand(Robot.CONNECT_CHARGER);
+//		sleep(2000);
+//		arduino.writeCommand(Robot.DISCONNECT_CHARGER);
+//		arduino.writeCommand(Robot.DISCONNECT_CAPS_CHARGER);
+//	}
 
 	@Override
 	public void moveForward() {
