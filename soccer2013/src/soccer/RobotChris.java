@@ -16,10 +16,10 @@ public class RobotChris extends Robot {
 	public RobotChris(String name) {
 		super(name);
 		
-		MOTOR_POWER = 100;
+		MOTOR_POWER = 80;
 		
-		yellowGoalHeading = 151.0f;
-		blueGoalHeading = 338.0f;
+		yellowGoalHeading = 284.0f;
+		blueGoalHeading = 115.0f;
 		
 		LightCorrection = 20;
 		
@@ -179,10 +179,10 @@ public class RobotChris extends Robot {
 
 	@Override
 	public void turnRight() {
-		motA.setPower(MOTOR_POWER+aFudge);
-		motB.setPower(MOTOR_POWER+bFudge);
-		motC.setPower(MOTOR_POWER+cFudge);
-		
+		motA.setPower(MOTOR_POWER + aFudge);
+		motB.setPower(MOTOR_POWER + bFudge);
+		motC.setPower(MOTOR_POWER + cFudge);
+
 		motA.forward();
 		motB.forward();
 		motC.forward();

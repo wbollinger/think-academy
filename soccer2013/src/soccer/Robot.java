@@ -259,7 +259,7 @@ public class Robot {
 		current_state.enter(this);
 	}
 
-	public void joystickControl(double x, double y, int button) {
+	public void joystickControl(double x, double y, double x2, double y2, int button) {
 	
 		if (button == 128) {
 			
@@ -286,6 +286,17 @@ public class Robot {
 			Sound.playTone(440, 100);
 		} else if (button == 8) {
 			Sound.playTone(550, 100);
+		}
+		if(x > 0.5) {
+			nav.moveDir(0, x2);
+		} else if(x < -0.5) {
+			nav.moveDir(180, x2);
+		} else if(y > 0.5) {
+			nav.moveDir(270, x2);
+		} else if(y < -0.5) {
+			nav.moveDir(90, x2);
+		} else {
+			stopAll();
 		}
 	}
 	

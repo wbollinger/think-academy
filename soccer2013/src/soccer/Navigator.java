@@ -80,6 +80,28 @@ public class Navigator {
 		bot.motC.forward();
 	}
 
+	public void moveDir(double dir, double turn) {
+		Vector2D v = new Vector2D(Vector2D.toRadian(dir));
+
+		double w0 = v.dot(Robot.F0) / bot.getR();
+		double w1 = v.dot(Robot.F1) / bot.getR();
+		double w2 = v.dot(Robot.F2) / bot.getR();
+		
+		turn = turn*60;
+
+		double max = Math.max(Math.abs(w0)+turn,
+				Math.max(Math.abs(w1)+turn, Math.abs(w2)+turn));
+
+		double scale = 100.0 / max;
+
+		bot.motA.setPower((int) (Math.round(w0 * scale)+Math.round(turn)));
+		bot.motB.setPower((int) (Math.round(w1 * scale)+Math.round(turn)));
+		bot.motC.setPower((int) (Math.round(w2 * scale)+Math.round(turn)));
+		bot.motA.forward();
+		bot.motB.forward();
+		bot.motC.forward();
+	}
+
 	public void pointToHeading(float heading) {
 		facingDegree = bot.compass.getDegrees();
 		facingDegree = (float) normalizeAngle(facingDegree);
@@ -243,7 +265,7 @@ public class Navigator {
 		} else {
 			bot.turnLeftPrecise(Math.abs(angle));
 		}
-		 bot.io.debugln("turned");
+		bot.io.debugln("turned");
 		bot.sleep(1000);
 
 		return Math.sqrt(Math.pow(yPos, 2) + Math.pow(91 - xPos, 2));
