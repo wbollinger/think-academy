@@ -120,7 +120,7 @@ public class StateCommand extends State {
 		String command = st.nextToken();
 
 		// Check for command line arguments; support simple access to arg0
-		String arg0 = null, arg1 = null, arg2 = null;
+		String arg0 = null, arg1 = null, arg2 = null, arg3 = null, arg4 = null;
 		String[] args = new String[st.countTokens()];
 		for (i = 0; i < args.length; i++) {
 			args[i] = st.nextToken();
@@ -133,6 +133,12 @@ public class StateCommand extends State {
 				break;
 			case 2:
 				arg2 = args[2];
+			case 3:
+				arg3 = args[3];
+				break;
+			case 4:
+				arg4 = args[4];
+				break;
 			}
 
 		}
@@ -308,10 +314,12 @@ public class StateCommand extends State {
 			} else if (command.equalsIgnoreCase("joydata")) {
 				showPrompt = false;
 				// debugln("joystick command detected");
-				double x = Double.parseDouble(args[0]);
-				double y = Double.parseDouble(args[1]);
-				int button = Integer.parseInt(args[2]);
-				robot.joystickControl(x, y, button);
+				double x1 = Double.parseDouble(args[0]);
+				double y1 = Double.parseDouble(args[1]);
+				double x2 = Double.parseDouble(args[2]);
+				double y2 = Double.parseDouble(args[3]);
+				int button = Integer.parseInt(args[4]);
+				robot.joystickControl(x1, y1, x2, y2, button);
 			} else if (command.equalsIgnoreCase("bat")) {
 				debug("Battery: " + Battery.getVoltage() + "\n");
 			} else if (command.equalsIgnoreCase("echo")) {

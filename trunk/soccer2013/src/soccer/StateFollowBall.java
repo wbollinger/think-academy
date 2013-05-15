@@ -37,7 +37,7 @@ public class StateFollowBall extends State {
 			return;
 		} /* else if (bot.EIR.getStrength() > 200) {
 			bot.setPower(75);
-		} */ else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
+		}  else if ((bot.arduino.getLightRight() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightLeft() < bot.WHITE_VALUE)) {
 			bot.nav.moveDir(270);
 			bot.sleep(1000);
@@ -47,28 +47,56 @@ public class StateFollowBall extends State {
 		} else if (bot.arduino.getLightLeft() < bot.WHITE_VALUE) {
 			bot.nav.moveDir(180);
 			bot.sleep(200);
-		} else {
+		} */ else {
+			
 			if (bot.EIR.getDir() == 5) {
 				bot.nav.moveDir(95);
-			} else if (bot.EIR.getDir() == 4) {
-				bot.turnLeftPrecise(20);
+			} else if(bot.EIR.getDir() == 1) {
+				bot.MOTOR_POWER -= 40;
+				bot.turnRight();
+			} else if(bot.EIR.getDir() == 9) {
+				bot.MOTOR_POWER -= 40;
+				bot.turnLeft();
+			} else if(bot.EIR.getDir() == 2) {
+				bot.MOTOR_POWER -= 45;
+				bot.turnRight();
+			} else if(bot.EIR.getDir() == 8) {
+				bot.MOTOR_POWER -= 45;
+				bot.turnLeft();
+			} else if(bot.EIR.getDir() == 3) {
+				bot.MOTOR_POWER -= 50;
+				bot.turnRight();
+			} else if(bot.EIR.getDir() == 7) {
+				bot.MOTOR_POWER -= 50;
+				bot.turnLeft();
+			} else if(bot.EIR.getDir() == 4) {
+				bot.MOTOR_POWER -= 55;
+				bot.turnRight();
+			} else if(bot.EIR.getDir() == 6) {
+				bot.MOTOR_POWER -= 55;
+				bot.turnLeft();
+			}
+			
+			
+			/* else if (bot.EIR.getDir() == 4) {
+				bot.turnLeft();
 			} else if (bot.EIR.getDir() == 3) {
-				bot.turnLeftPrecise(40);
+				bot.turnLeft();
 			} else if (bot.EIR.getDir() == 2) {
 				bot.turnLeftPrecise(90);
 			} else if (bot.EIR.getDir() == 1) {
 				bot.turnLeftPrecise(90);
 			} else if (bot.EIR.getDir() == 6) {
-				bot.turnRightPrecise(20);
+				bot.turnRight();
 			} else if (bot.EIR.getDir() == 7) {
-				bot.turnRightPrecise(40);
+				bot.turnRight();
 			} else if (bot.EIR.getDir() == 8) {
 				bot.turnRightPrecise(90);
 			} else if (bot.EIR.getDir() == 9) {
 				bot.turnRightPrecise(90);
 			} else {
 				bot.nav.moveDir(95);
-			}
+			} */
 		}
 	}
 
@@ -78,6 +106,7 @@ public class StateFollowBall extends State {
 
 	@Override
 	public void exit(Robot bot) {
+		bot.MOTOR_POWER = 100;
 		bot.io.debugln("Exited StateFollowBall");
 		// bot.stopAll();
 
