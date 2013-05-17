@@ -11,17 +11,20 @@ public class StatePointToGoal extends State {
 	@Override
 	public void enter(Robot bot) {
 		bot.io.debugln("Entered StatePointToGoal");
-		bot.setPower(100);
+		bot.setPower(bot.MAX_MOTOR_POWER);
 		time = System.currentTimeMillis();
-		
+
 	}
 
 	@Override
 	public void execute(Robot bot) {
 		time = System.currentTimeMillis();
 		elapsedTime = System.currentTimeMillis() - time;
-		
-		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
+
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to
+																// stateCommand
+																// if commands
+																// enabled
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
@@ -30,14 +33,14 @@ public class StatePointToGoal extends State {
 		debugln("Facing Enemy Goal");
 		//bot.nav.pointToGoal();
 
-		//debugln("Fired");
-		//bot.fireSolenoid(); SOLENOID BROKEN
-		
-		if(bot.arduino.getDisBall() < 4) {
+		// debugln("Fired");
+		// bot.fireSolenoid(); SOLENOID BROKEN
+
+		if (bot.arduino.getDisBall() < 4) {
 			bot.nav.moveDir(95);
 			bot.sleep(2000);
-			//bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
-	}
+			// bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
+		}
 		bot.changeState(StateStriker.getInstance());
 
 	}

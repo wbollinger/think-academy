@@ -16,8 +16,8 @@ public class RobotChris extends Robot {
 	public RobotChris(String name) {
 		super(name);
 		
-		MOTOR_POWER = 80;
-		
+		MAX_MOTOR_POWER = 80;
+		MOTOR_POWER = MAX_MOTOR_POWER;
 		yellowGoalHeading = 284.0f;
 		blueGoalHeading = 115.0f;
 		
@@ -242,6 +242,8 @@ public class RobotChris extends Robot {
 	public void moveArcRight() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
+		motB.forward();
+		motC.forward();
 
 	}
 	
@@ -249,13 +251,16 @@ public class RobotChris extends Robot {
 	public void moveArcRightPrecise() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
-
+		motB.stop();
+		motC.stop();
 	}
 	
 	@Override
 	public void moveArcLeft() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
+		motB.stop();
+		motC.stop();
 
 	}
 	
@@ -263,6 +268,8 @@ public class RobotChris extends Robot {
 	public void moveArcLeftPrecise() {
 		motA.setPower(MOTOR_POWER);
 		motA.backward();
+		motB.backward();
+		motC.backward();
 
 	}
 
