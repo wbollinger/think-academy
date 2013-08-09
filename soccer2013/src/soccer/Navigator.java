@@ -30,6 +30,8 @@ public class Navigator {
 
 	DIRECTION currentDirection;
 	DIRECTION lastDirection;
+	
+	int centeredHeading = 5;
 
 	public Navigator(Robot bot) {
 		this.bot = bot;
@@ -88,6 +90,8 @@ public class Navigator {
 		double w2 = v.dot(Robot.F2) / bot.getR();
 		
 		turn = turn*60;
+		
+		bot.setPower((int)turn);
 
 		double max = Math.max(Math.abs(w0)+turn,
 				Math.max(Math.abs(w1)+turn, Math.abs(w2)+turn));
@@ -137,8 +141,8 @@ public class Navigator {
 		// bot.io.debugln("First Heading: " + facingDegree);
 		targetDegree = (float) normalizeAngle(targetDegree);
 		// bot.io.debugln("Target: " + targetDegree);
-		if (bot.name.equals("Tim")) {
-			bot.setPower(85);
+		if (bot.name.equals("LineBacker")) {
+			bot.setPower(80);
 		}
 
 		if (turnDegree > 0) {

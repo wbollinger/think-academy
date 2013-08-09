@@ -288,14 +288,23 @@ public class Robot {
 		} else if (button == 8) {
 			Sound.playTone(550, 100);
 		}
-		if(x > 0.5) {
-			nav.moveDir(0, x2);
+		
+		if((Math.abs(x) < 0.5) && (Math.abs(y) < 0.5)) {
+			if(x2 < -0.5) {
+				turnLeft();
+			} else if (x2 > 0.5) {
+				turnRight();
+			} else {
+				stopAll();
+			}
+		} else if(x > 0.5) {
+			nav.moveDir(0);
 		} else if(x < -0.5) {
-			nav.moveDir(180, x2);
+			nav.moveDir(180);
 		} else if(y > 0.5) {
-			nav.moveDir(270, x2);
+			nav.moveDir(270);
 		} else if(y < -0.5) {
-			nav.moveDir(90, x2);
+			nav.moveDir(90);
 		} else {
 			stopAll();
 		}

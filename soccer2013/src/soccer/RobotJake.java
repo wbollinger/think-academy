@@ -13,8 +13,8 @@ public class RobotJake extends Robot {
 
 		LightCorrection = 40;
 		
-		yellowGoalHeading = 151.0f;
-		blueGoalHeading = 337.0f;
+		yellowGoalHeading = 194.0f;
+		blueGoalHeading = 0.0f;
 
 		MOTOR_POWER = 100;
 		motA = new NXTMotor(MotorPort.A);
