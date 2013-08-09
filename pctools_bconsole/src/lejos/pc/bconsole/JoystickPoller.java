@@ -61,7 +61,7 @@ public class JoystickPoller extends Thread {
 		for (;;) {
 			joy.poll();
 			
-			msg = "joydata " + joy.getX() + " " + joy.getY() + " " + joy.getButtons();
+			msg = "joydata " + joy.getX() + " " + joy.getY() + " " + joy.getZ() + " " + joy.getR() + " " + joy.getButtons();
 			System.out.println(msg);
 
 			try {
