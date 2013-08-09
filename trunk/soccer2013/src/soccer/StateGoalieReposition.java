@@ -18,24 +18,33 @@ public class StateGoalieReposition extends State {
 	@Override
 	public void execute(Robot bot) {
 
-		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to stateCommand if commands enabled
+		if (Button.ENTER.isDown() && bot.io.getUseCommands()) { // break to
+																// stateCommand
+																// if commands
+																// enabled
 			debugln("Breaking into StateCommand", 0x80);
 			bot.changeState(StateCommand.getInstance());
 			return;
 		}
-		
+
 		compass = (int) bot.compass.getDegrees();
 		bot.arduino.update();
 		bot.EIR.update();
 
-		if(bot.EIR.getDir() != 5){
+		if (((bot.EIR.getDir() < (bot.nav.centeredHeading - 1)) || (bot.EIR
+				.getDir() > (bot.nav.centeredHeading + 1)))
+				&& (bot.EIR.getDir() != 0)) {
+			debugln("Ball is off center in sector: " + bot.EIR.getDir()
+					+ ". Return to StateGoalie");
+			debugln("Should be in sector: " + bot.nav.centeredHeading);
 			bot.changeState(StateGoalie.getInstance());
 			return;
 		}
-		
+
 		if ((bot.arduino.getLightLeft() < bot.WHITE_VALUE)
 				&& (bot.arduino.getLightRight() < bot.WHITE_VALUE)) {
-			debugln("hit line", 0x40);
+			debugln("hit line: L:" + bot.arduino.getLightRight() + " R:"
+					+ bot.arduino.getLightRight(), 0x40);
 			bot.nav.moveDir(90);
 			bot.sleep(1000);
 			// if (bot.nav.currentZone == Navigator.ZONE.LEFT) {
@@ -67,7 +76,8 @@ public class StateGoalieReposition extends State {
 		} else if (!(((compass + 4) > bot.nav.ENEMY_GOAL) && ((compass - 4) < bot.nav.ENEMY_GOAL))) {
 			bot.nav.pointToHeading((float) bot.nav.ENEMY_GOAL);
 			debugln("Heading Corrected", 0x40);
-		} else if ((bot.arduino.getDisYBack() > 15 && bot.nav.currentZone == Navigator.ZONE.MIDDLE)) {
+		} else if (bot.arduino.getDisYBack() > 15
+				&& (bot.nav.currentZone == Navigator.ZONE.MIDDLE)) {
 			bot.nav.moveDir(270);
 			debugln("Backing Up: B:" + bot.arduino.getDisYBack() + ":L:"
 					+ bot.arduino.getDisXLeft() + ":R:"
@@ -80,6 +90,7 @@ public class StateGoalieReposition extends State {
 					+ bot.arduino.getDisXRight(), 0x02);
 
 		} else {
+			debugln("Robot is correctly oriented: returning to StateGoalie");
 			bot.changeState(StateGoalie.getInstance());
 			return;
 		}

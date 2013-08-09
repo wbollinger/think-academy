@@ -392,7 +392,7 @@ public class StateCommand extends State {
 				while (!Button.ENTER.isDown()) {
 					robot.EIR.update();
 					robot.arduino.update();
-					debug(" || IRDIR = " + robot.EIR.getDir(), 1);
+					debug("IRDIR = " + robot.EIR.getDir(), 1);
 					debug(" || IRSTR = " + robot.EIR.getStrength(), 1);
 					debug(" || LP = " + robot.arduino.getDisXLeft(), 2);
 					debug(" || RP = " + robot.arduino.getDisXRight(), 2);
@@ -532,6 +532,8 @@ public class StateCommand extends State {
 	public void enter(Robot robot) {
 		// Note: debug support is not yet running at this point
 
+		robot.stopAll();
+	
 		int buttons = Button.ID_ENTER;
 		/*
 		 * int i = 0; while ((checkPress = Button.readButtons()) == 0) { if (i %

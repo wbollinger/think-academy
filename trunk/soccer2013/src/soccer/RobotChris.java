@@ -18,8 +18,8 @@ public class RobotChris extends Robot {
 		
 		MAX_MOTOR_POWER = 80;
 		MOTOR_POWER = MAX_MOTOR_POWER;
-		yellowGoalHeading = 284.0f;
-		blueGoalHeading = 115.0f;
+		yellowGoalHeading = 178.0f;
+		blueGoalHeading = 358.0f;
 		
 		LightCorrection = 20;
 		
@@ -242,8 +242,8 @@ public class RobotChris extends Robot {
 	public void moveArcRight() {
 		motA.setPower(MOTOR_POWER);
 		motA.forward();
-		motB.forward();
-		motC.forward();
+		motB.stop();
+		motC.stop();
 
 	}
 	

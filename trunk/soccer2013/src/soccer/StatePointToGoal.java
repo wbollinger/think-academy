@@ -31,17 +31,25 @@ public class StatePointToGoal extends State {
 
 		bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
 		debugln("Facing Enemy Goal");
-		//bot.nav.pointToGoal();
+		
+		if (!(bot.arduino.getDisBall() < 4)) { // we don't have the ball
+			bot.changeState(StateStriker.getInstance());
+			return;
+		}
+		
+		bot.nav.pointToGoal();
 
+		if (!(bot.arduino.getDisBall() < 4)) { // we don't have the ball
+			bot.changeState(StateStriker.getInstance());
+			return;
+		}
+		
 		// debugln("Fired");
 		// bot.fireSolenoid(); SOLENOID BROKEN
-
-		if (bot.arduino.getDisBall() < 4) {
-			bot.nav.moveDir(95);
-			bot.sleep(2000);
-			// bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
-		}
-		bot.changeState(StateStriker.getInstance());
+		
+		bot.nav.moveDir(95);
+		bot.sleep(2000);
+		// bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
 
 	}
 
@@ -52,7 +60,7 @@ public class StatePointToGoal extends State {
 	@Override
 	public void exit(Robot bot) {
 		bot.io.debugln("Exited StatePointToGoal");
-		bot.dribbler.stop();
+		//bot.dribbler.stop();
 
 	}
 }

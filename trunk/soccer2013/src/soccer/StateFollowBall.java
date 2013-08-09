@@ -25,12 +25,10 @@ public class StateFollowBall extends State {
 		}
 		bot.EIR.update();
 		bot.arduino.update();
-		bot.io.debugln("IR direction value is:" + bot.EIR.getDir(), 0x01);
-		bot.io.debugln("IR strength value is:" + bot.EIR.getStrength(), 0x01);
-		// bot.io.debugln("Left light value is:" + bot.arduino.getLightLeft(),
-		// 0x04);
-		// bot.io.debugln("Right light value is:" + bot.arduino.getLightRight(),
-		// 0x04);
+		bot.io.debugln(
+				"IR dir:" + bot.EIR.getDir() + ", str:" + bot.EIR.getStrength(),
+				0x01);
+
 		bot.io.debugln(
 				"" + bot.arduino.getLightLeft() + ":"
 						+ bot.arduino.getLightRight(), 0x04);
@@ -88,7 +86,7 @@ public class StateFollowBall extends State {
 				bot.setPower(bot.MAX_MOTOR_POWER - 35);
 				bot.turnRight();
 			}
-			//debugln("" + bot.MOTOR_POWER);
+			// debugln("" + bot.MOTOR_POWER);
 
 			/*
 			 * else if (bot.EIR.getDir() == 4) { bot.turnLeft(); } else if
