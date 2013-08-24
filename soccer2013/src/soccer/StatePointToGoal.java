@@ -47,7 +47,7 @@ public class StatePointToGoal extends State {
 		// debugln("Fired");
 		// bot.fireSolenoid(); SOLENOID BROKEN
 		
-		bot.nav.moveDir(95);
+		bot.nav.moveDir(100);
 		bot.sleep(2000);
 		// bot.nav.pointToHeadingArc(bot.nav.ENEMY_GOAL);
 

@@ -264,7 +264,7 @@ public class Navigator {
 		bot.io.debugln("" + angle);
 		bot.io.debugln("Angle calculated");
 		// rotateTo((float) angle);
-		bot.setPower(bot.MAX_MOTOR_POWER / 2);
+		bot.setPower((int)(bot.MAX_MOTOR_POWER / 1.5));
 		if (angle > 0) {
 			bot.turnRightPrecise(angle);
 		} else {
