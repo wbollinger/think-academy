@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/jars/lejos_nxj/lib/pc/jtools.jar"/>
+	<classpathentry kind="lib" path="C:/jars/lejos_nxj/lib/pc/pccomm.jar"/>
+	<classpathentry kind="lib" path="C:/jars/lejos_nxj/lib/pc/pctools.jar"/>
+	<classpathentry kind="lib" path="C:/jars/lejos_nxj/lib/pc/3rdparty/commons-cli.jar"/>
+	<classpathentry kind="lib" path="C:/jars/joystick/Joystick.jar" sourcepath="/jars/joystick">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/jars/joystick/docs/html/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/jars/joystick/lib/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/jars/lejos_nxj/lib/pc/3rdparty/bluecove.jar"/>
+	<classpathentry kind="lib" path="C:/jars/lejos_nxj/lib/pc/3rdparty/bluecove-gpl.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
