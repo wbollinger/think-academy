@@ -1,7 +1,6 @@
 package lejos.pc.bconsole;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -17,7 +16,6 @@ import java.lang.reflect.Modifier;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,7 +35,6 @@ import lejos.pc.tools.ConsoleViewerSwingUI;
 import lejos.pc.tools.ConsoleViewerUI;
 import lejos.pc.tools.LCDDisplay;
 
-import com.centralnexus.input.*;
 
 /**
  * Downloads data over a BlueTooth connection to a NXT.<br>
@@ -58,7 +55,6 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 	private JButton connectButton = new JButton(S_CONNECT);
 	private JRadioButton rconsoleButton = new JRadioButton("RConsole");
 	private JRadioButton btButton = new JRadioButton("Command BT");
-	private JCheckBox doJoystick = new JCheckBox("Use Joystick control", true);
 
 	private JLabel statusField = new JLabel();
 
@@ -80,9 +76,6 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 	// private JTextArea theCmd;
 	private LCDDisplay lcd;
 	
-	Joystick joy;
-	JoystickPoller poll;
-
 	/**
 	 * Constructor builds GUI
 	 * 
@@ -104,8 +97,6 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 
 		cmdConn = new NXTConnector();
 		rconComm = new ConsoleViewComms(ui, debug, true);
-		joy = Joystick.createInstance();
-		
 	}
 
 	public void buildGui() {
@@ -121,7 +112,7 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 
 		connectPanel2.add(btButton);
 		connectPanel2.add(rconsoleButton);
-		connectPanel2.add(doJoystick);
+
 		connectPanel1.add(new JLabel(" Name"));
 		connectPanel1.add(nameField);
 		connectButton.addActionListener(this);
@@ -195,7 +186,6 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 			final String name = nameField.getText();
 			final String address = addrField.getText();
 			final boolean _useRConsole = rconsoleButton.isSelected();
-			final boolean useJoystick = doJoystick.isSelected();
 
 			// the thread is so that the GUI will update the button label, etc.
 			// while the connection is being established.
@@ -216,14 +206,6 @@ public class BConsoleViewer extends JFrame implements ActionListener, ChangeList
 							//
 							theConsole = new JConsole(btIn, btOut); 
 							theScrollPane.setViewportView(theConsole);
-							if (useJoystick) {
-								try {
-									poll = new JoystickPoller(joy, btOut);
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-								poll.startPolling();
-							}
 						} else {
 							btOut = null;
 							btIn = null;

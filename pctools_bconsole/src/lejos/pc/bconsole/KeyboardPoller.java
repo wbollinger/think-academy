@@ -27,14 +27,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.centralnexus.input.*;
 
 public class KeyboardPoller extends Thread implements KeyListener {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3295186028202390147L;
-
 	DataOutputStream out;
 	
 	ArrayList<Character> keysPressed;
